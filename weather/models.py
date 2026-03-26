@@ -106,8 +106,20 @@ class OpenMeteoClient:
         forecast = client.get_historical_forecast(station, date(2026, 1, 20), lead_days=5)
     """
     
-    def __init__(self, rate_limit_delay: float = 0.15):
+    def __init__(self, rate_limit_delay: float = 0.15, max_retries: int = 3):
+        from requests.adapters import HTTPAdapter
+        from urllib3.util.retry import Retry
+        
+        retry_strategy = Retry(
+            total=max_retries,
+            backoff_factor=1,       # 1s, 2s, 4s between retries
+            status_forcelist=[429, 500, 502, 503, 504],
+            allowed_methods=["GET"],
+        )
+        adapter = HTTPAdapter(max_retries=retry_strategy)
+        
         self.session = requests.Session()
+        self.session.mount("https://", adapter)
         self.session.headers.update({
             "Accept": "application/json",
             "User-Agent": "PolymarketEdge-Weather/1.0",
