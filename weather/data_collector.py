@@ -107,9 +107,8 @@ class WeatherDataCollector:
         import time
         elapsed = time.time() - self._last_request
         if elapsed < 0.5:
-            import time as t
-            t.sleep(0.5 - elapsed)
-        self._last_request = __import__("time").time()
+            time.sleep(0.5 - elapsed)
+        self._last_request = time.time()
     
     def _get(self, url: str, params: dict = None) -> Optional[dict | list]:
         self._throttle()
@@ -179,7 +178,7 @@ class WeatherDataCollector:
         from weather.utils import build_event_slug
         slug = build_event_slug(station.city, target_date)
         
-        market_data = self._get(f"{self.GAMMA_URL}/events/{slug}")
+        market_data = self._get(f"{self.GAMMA_URL}/events/slug/{slug}")
         
         market_probs = {}
         bucket_labels = []
@@ -204,9 +203,12 @@ class WeatherDataCollector:
                 if label and prices:
                     market_probs[label] = prices[0]  # Yes price
                     bucket_labels.append(label)
+        else:
+            logger.debug(f"  {station.city} {target_date}: event not found (slug: {slug})")
         
         if not market_probs:
-            logger.debug(f"  {station.city} {target_date}: no market data found")
+            if market_data:
+                logger.debug(f"  {station.city} {target_date}: event found but no bucket prices")
             return None
         
         # Normalize market prices
