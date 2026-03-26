@@ -90,7 +90,7 @@ python run_pipeline.py --report
 ## How It Works
 
 ### 1. Market Scanner (`market_scanner.py`)
-Fetches active markets from the Gamma API and scores them on four dimensions:
+Fetches active markets from the Gamma API and scores them on four dimensions::
 liquidity (can you get in and out?), edge potential (is the price in an
 interesting range?), timing (resolving soon enough to matter, not so soon you
 can't exit), and order book imbalance (are informed traders accumulating?).
