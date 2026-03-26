@@ -7,6 +7,7 @@ information sources before making probability estimates.
 """
 
 import logging
+import re
 import time
 from typing import Optional
 
@@ -156,6 +157,7 @@ class EnrichedEdgeDetector:
         min_edge: float = 0.05,
         min_scanner_score: float = 0.3,
         max_signals: int = 10,
+        max_cluster_exposure: float = 0.20,
         use_live_llm: bool = False,
         llm_skill_level: float = 0.35,
         data_dir: str = "data",
@@ -164,6 +166,7 @@ class EnrichedEdgeDetector:
         self.min_edge = min_edge
         self.min_scanner_score = min_scanner_score
         self.max_signals = max_signals
+        self.max_cluster_exposure = max_cluster_exposure  # Max % of initial bankroll per theme
         
         self.client = PolymarketClient()
         self.scanner = MarketScanner(client=self.client)
@@ -279,28 +282,44 @@ class EnrichedEdgeDetector:
         # Step 4: Enter paper trades
         tradeable = [s for s in signals if s["should_trade"]]
         trades_entered = 0
+        trades_blocked_cluster = 0
+        
+        # Precompute existing open trade IDs
+        existing_ids = {
+            t.market_id for t in self.trader.trades if t.status == "OPEN"
+        }
         
         for s in tradeable[:self.max_signals]:
+            question = s["market"].question
+            market_id = s["estimate"].market_id
+            dollar_amount = s["position"].dollar_amount
+            
             # Skip markets we already have an open trade in
-            existing_ids = {
-                t.market_id for t in self.trader.trades if t.status == "OPEN"
-            }
-            if s["estimate"].market_id in existing_ids:
+            if market_id in existing_ids:
                 logger.info(
                     f"  Skipping duplicate: already have open trade in "
-                    f"{s['market'].question[:40]}..."
+                    f"{question[:40]}..."
                 )
+                continue
+            
+            # Correlation guard — check cluster exposure
+            allowed, reason = self._can_enter_trade(question, dollar_amount)
+            if not allowed:
+                trades_blocked_cluster += 1
+                print(f"    🚫 Blocked: {question[:40]}... — {reason}")
                 continue
             
             trade = self.trader.enter_trade(s["estimate"], s["position"])
             if trade:
                 trades_entered += 1
+                existing_ids.add(market_id)  # Prevent further duplicates this run
         
         total_time = time.time() - t0
         
         # Summary
         print(f"\n{'=' * 70}")
-        print(f"  RESULTS: {len(tradeable)} signals, {trades_entered} new trades entered ({total_time:.1f}s)")
+        blocked_msg = f", {trades_blocked_cluster} blocked by correlation guard" if trades_blocked_cluster else ""
+        print(f"  RESULTS: {len(tradeable)} signals, {trades_entered} new trades entered{blocked_msg} ({total_time:.1f}s)")
         print(f"{'=' * 70}\n")
         
         if tradeable:
@@ -340,8 +359,10 @@ class EnrichedEdgeDetector:
         Check open trades for market resolution.
         
         Fetches each open trade's market from the Gamma API.
-        If the market is closed, determines the outcome from final prices
-        and resolves the trade.
+        Resolution states:
+            - closed=True, price near 0 or 1 → cleanly resolved, record outcome
+            - closed=True, price mid-range → disputed/in review, skip for now
+            - closed=False → still active, skip
         """
         open_trades = [t for t in self.trader.trades if t.status == "OPEN"]
         if not open_trades:
@@ -349,6 +370,7 @@ class EnrichedEdgeDetector:
         
         print(f"\n🔍 Checking {len(open_trades)} open trade(s) for resolution...")
         resolved_count = 0
+        disputed_count = 0
         
         for trade in open_trades:
             try:
@@ -356,31 +378,34 @@ class EnrichedEdgeDetector:
                 if market is None:
                     continue
                 
-                if market.closed:
-                    # Determine outcome from final prices
-                    # When resolved: yes_price → 1.0 means Yes won, → 0.0 means No won
-                    yes_price = market.yes_price
-                    if yes_price > 0.90:
-                        outcome = True   # Yes won
-                    elif yes_price < 0.10:
-                        outcome = False  # No won
-                    else:
-                        # Market closed but not clearly resolved (voided?)
-                        logger.warning(
-                            f"  ⚠ Market closed with ambiguous price {yes_price:.2f}: "
-                            f"{trade.question[:40]}..."
-                        )
-                        continue
-                    
-                    pnl = self.trader.resolve_trade(trade.trade_id, outcome)
-                    if pnl is not None:
-                        resolved_count += 1
-                        status = "✅ WIN" if pnl > 0 else "❌ LOSS"
-                        print(
-                            f"  {status} {trade.trade_id}: {trade.side} "
-                            f"'{trade.question[:35]}...' → "
-                            f"PnL ${pnl:+.2f}"
-                        )
+                if not market.closed:
+                    continue
+                
+                # Market is closed — check if cleanly resolved or disputed
+                yes_price = market.yes_price
+                
+                if yes_price > 0.95:
+                    outcome = True   # Yes won
+                elif yes_price < 0.05:
+                    outcome = False  # No won
+                else:
+                    # Closed but prices haven't settled — disputed or in review
+                    disputed_count += 1
+                    print(
+                        f"  ⏸ {trade.trade_id}: '{trade.question[:40]}...' "
+                        f"closed but in review (price: {yes_price:.2f})"
+                    )
+                    continue
+                
+                pnl = self.trader.resolve_trade(trade.trade_id, outcome)
+                if pnl is not None:
+                    resolved_count += 1
+                    status = "✅ WIN" if pnl > 0 else "❌ LOSS"
+                    print(
+                        f"  {status} {trade.trade_id}: {trade.side} "
+                        f"'{trade.question[:35]}...' → "
+                        f"PnL ${pnl:+.2f}"
+                    )
             except Exception as e:
                 logger.debug(f"Resolution check failed for {trade.trade_id}: {e}")
                 continue
@@ -388,9 +413,108 @@ class EnrichedEdgeDetector:
         if resolved_count > 0:
             print(f"  Resolved {resolved_count} trade(s). "
                   f"Bankroll: ${self.trader.bankroll:,.2f}")
+        elif disputed_count > 0:
+            print(f"  No clean resolutions. {disputed_count} market(s) in review.")
         else:
             print("  No resolutions found.")
     
+    # ─── Correlation Guard ─────────────────────────────────
+    
+    _STOPWORDS = {
+        "will", "the", "a", "an", "in", "on", "by", "be", "is", "are",
+        "this", "that", "to", "of", "for", "with", "have", "has", "does",
+        "do", "did", "before", "after", "during", "than", "more", "less",
+        "what", "when", "where", "how", "who", "which", "would", "could",
+        "there", "or", "and", "not", "no", "yes", "any", "end", "hit",
+        "reach", "march", "april", "may", "june", "july", "2026", "2025",
+        "longer", "fewer",
+    }
+    
+    # Normalize variants to a common stem for correlation matching
+    _STEM_MAP = {
+        "iranian": "iran", "iranians": "iran",
+        "chinese": "china",
+        "russian": "russia", "russians": "russia",
+        "ukrainian": "ukraine",
+        "israeli": "israel", "israelis": "israel",
+        "lebanese": "lebanon",
+        "forces": "military", "invade": "military", "invasion": "military",
+        "troops": "military", "strikes": "military", "attack": "military",
+        "ceasefire": "peace", "truce": "peace", "negotiations": "peace",
+        "crude": "oil", "petroleum": "oil",
+        "bitcoin": "btc", "ethereum": "eth",
+    }
+    
+    @staticmethod
+    def _extract_theme_keywords(question: str) -> set[str]:
+        """
+        Extract thematic keywords from a market question.
+        Removes stopwords, normalizes stems, and filters short words.
+        """
+        words = set(re.findall(r'[a-z]+', question.lower()))
+        keywords = words - EnrichedEdgeDetector._STOPWORDS
+        keywords = {w for w in keywords if len(w) >= 3}
+        
+        # Apply stem normalization
+        normalized = set()
+        for w in keywords:
+            normalized.add(EnrichedEdgeDetector._STEM_MAP.get(w, w))
+        
+        return normalized
+    
+    @staticmethod
+    def _questions_are_correlated(q1: str, q2: str, min_overlap: int = 2) -> bool:
+        """Check if two questions share enough thematic keywords."""
+        kw1 = EnrichedEdgeDetector._extract_theme_keywords(q1)
+        kw2 = EnrichedEdgeDetector._extract_theme_keywords(q2)
+        overlap = kw1 & kw2
+        return len(overlap) >= min_overlap
+    
+    def _get_cluster_exposure(self, question: str) -> tuple[float, list[str]]:
+        """
+        Calculate total dollar exposure to markets correlated with the given question.
+        
+        Checks all open trades for thematic similarity.
+        
+        Returns:
+            (total_dollars, list of correlated trade questions)
+        """
+        open_trades = [t for t in self.trader.trades if t.status == "OPEN"]
+        total = 0.0
+        correlated = []
+        
+        for trade in open_trades:
+            if self._questions_are_correlated(question, trade.question):
+                total += trade.dollar_amount
+                correlated.append(trade.question)
+        
+        return total, correlated
+    
+    def _can_enter_trade(self, question: str, dollar_amount: float) -> tuple[bool, str]:
+        """
+        Check if entering a trade would exceed the cluster exposure cap.
+        
+        Args:
+            question: The market question to check
+            dollar_amount: How much the new trade would cost
+            
+        Returns:
+            (allowed, reason_if_blocked)
+        """
+        max_dollars = self.trader.initial_bankroll * self.max_cluster_exposure
+        current_exposure, correlated = self._get_cluster_exposure(question)
+        
+        if current_exposure + dollar_amount > max_dollars:
+            return False, (
+                f"Cluster exposure ${current_exposure + dollar_amount:.0f} "
+                f"would exceed ${max_dollars:.0f} cap "
+                f"({len(correlated)} correlated open trades)"
+            )
+        
+        return True, ""
+    
+    # ─── Helpers ─────────────────────────────────────────
+
     def _scored_to_dict(self, scored: ScoredMarket) -> dict:
         """Convert a ScoredMarket to a flat dict for enrichment."""
         m = scored.market
