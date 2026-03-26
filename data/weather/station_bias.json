@@ -1,0 +1,222 @@
+{
+  "Houston": {
+    "gfs_seamless": {
+      "mean": 0.0,
+      "std": 0.0,
+      "n_samples": 3
+    },
+    "icon_seamless": {
+      "mean": -0.7,
+      "std": 0.0,
+      "n_samples": 3
+    },
+    "gem_seamless": {
+      "mean": 1.8,
+      "std": 0.0,
+      "n_samples": 3
+    },
+    "jma_seamless": {
+      "mean": -4.1,
+      "std": 0.0,
+      "n_samples": 3
+    }
+  },
+  "Denver": {
+    "gfs_seamless": {
+      "mean": 0.0,
+      "std": 0.0,
+      "n_samples": 3
+    },
+    "icon_seamless": {
+      "mean": 1.1,
+      "std": 0.0,
+      "n_samples": 3
+    },
+    "gem_seamless": {
+      "mean": 1.4,
+      "std": 0.0,
+      "n_samples": 3
+    },
+    "jma_seamless": {
+      "mean": -2.3,
+      "std": 0.0,
+      "n_samples": 3
+    }
+  },
+  "Hong Kong": {
+    "gfs_seamless": {
+      "mean": -2.32,
+      "std": 0.56,
+      "n_samples": 26
+    },
+    "icon_seamless": {
+      "mean": 0.0,
+      "std": 0.0,
+      "n_samples": 26
+    },
+    "gem_seamless": {
+      "mean": 0.39,
+      "std": 0.75,
+      "n_samples": 26
+    },
+    "jma_seamless": {
+      "mean": -0.22,
+      "std": 0.99,
+      "n_samples": 26
+    }
+  },
+  "Munich": {
+    "gfs_seamless": {
+      "mean": -0.63,
+      "std": 0.62,
+      "n_samples": 59
+    },
+    "icon_seamless": {
+      "mean": 0.0,
+      "std": 0.0,
+      "n_samples": 59
+    },
+    "gem_seamless": {
+      "mean": -0.43,
+      "std": 0.47,
+      "n_samples": 59
+    },
+    "jma_seamless": {
+      "mean": -0.62,
+      "std": 1.06,
+      "n_samples": 59
+    }
+  },
+  "Wellington": {
+    "gfs_seamless": {
+      "mean": 0.51,
+      "std": 1.04,
+      "n_samples": 88
+    },
+    "icon_seamless": {
+      "mean": 0.0,
+      "std": 0.0,
+      "n_samples": 88
+    },
+    "gem_seamless": {
+      "mean": 1.31,
+      "std": 1.33,
+      "n_samples": 88
+    },
+    "jma_seamless": {
+      "mean": -0.4,
+      "std": 0.86,
+      "n_samples": 88
+    }
+  },
+  "Atlanta": {
+    "gfs_seamless": {
+      "mean": 0.0,
+      "std": 0.0,
+      "n_samples": 88
+    },
+    "icon_seamless": {
+      "mean": -1.4,
+      "std": 1.75,
+      "n_samples": 88
+    },
+    "gem_seamless": {
+      "mean": -1.2,
+      "std": 2.3,
+      "n_samples": 88
+    },
+    "jma_seamless": {
+      "mean": -3.49,
+      "std": 2.63,
+      "n_samples": 88
+    }
+  },
+  "NYC": {
+    "gfs_seamless": {
+      "mean": 0.0,
+      "std": 0.0,
+      "n_samples": 88
+    },
+    "icon_seamless": {
+      "mean": -0.96,
+      "std": 2.1,
+      "n_samples": 88
+    },
+    "gem_seamless": {
+      "mean": -1.7,
+      "std": 2.99,
+      "n_samples": 88
+    },
+    "jma_seamless": {
+      "mean": -1.13,
+      "std": 4.83,
+      "n_samples": 88
+    }
+  },
+  "Seoul": {
+    "gfs_seamless": {
+      "mean": 0.09,
+      "std": 0.55,
+      "n_samples": 88
+    },
+    "icon_seamless": {
+      "mean": 1.68,
+      "std": 1.3,
+      "n_samples": 88
+    },
+    "gem_seamless": {
+      "mean": 3.29,
+      "std": 1.61,
+      "n_samples": 88
+    },
+    "jma_seamless": {
+      "mean": 0.0,
+      "std": 0.0,
+      "n_samples": 88
+    }
+  },
+  "London": {
+    "gfs_seamless": {
+      "mean": 0.07,
+      "std": 0.96,
+      "n_samples": 88
+    },
+    "icon_seamless": {
+      "mean": -0.15,
+      "std": 0.49,
+      "n_samples": 88
+    },
+    "gem_seamless": {
+      "mean": -0.44,
+      "std": 0.67,
+      "n_samples": 88
+    },
+    "jma_seamless": {
+      "mean": -0.5,
+      "std": 1.12,
+      "n_samples": 88
+    }
+  },
+  "Beijing": {
+    "gfs_seamless": {
+      "mean": 0.3,
+      "std": 0.53,
+      "n_samples": 12
+    },
+    "icon_seamless": {
+      "mean": 0.0,
+      "std": 0.0,
+      "n_samples": 12
+    },
+    "gem_seamless": {
+      "mean": 1.52,
+      "std": 1.19,
+      "n_samples": 12
+    },
+    "jma_seamless": {
+      "mean": -0.41,
+      "std": 0.3,
+      "n_samples": 12
+    }
+  }
+}
