@@ -7,6 +7,9 @@ Usage:
     python run_pipeline.py --scan-only        # Just scan and show opportunities
     python run_pipeline.py --enriched         # Enriched pipeline (with context enrichment)
     python run_pipeline.py --enriched --live  # Enriched + real Claude API calls
+    python run_pipeline.py --enriched --whale-profiles  # Enriched + profile-aware whale signals
+    python run_pipeline.py --profile-whales   # Build/refresh whale behavioral profiles
+    python run_pipeline.py --whale-report     # Show whale profiler report
     python run_pipeline.py --enrich-demo      # Demo the context enrichment sources
     python run_pipeline.py --report           # Show paper trading report
     python run_pipeline.py --demo             # Run with simulated data (no API calls)
@@ -27,6 +30,12 @@ def main():
     
     if "--demo" in args:
         run_demo()
+    elif "--profile-whales" in args:
+        run_whale_profiler()
+    elif "--whale-report" in args:
+        from core.whale_profiler import WhaleProfiler
+        profiler = WhaleProfiler()
+        print(profiler.report())
     elif "--report" in args:
         from core.paper_trader import PaperTrader
         trader = PaperTrader()
@@ -37,13 +46,53 @@ def main():
     elif "--enriched" in args:
         from strategies.enriched_edge_detector import run_enriched_pipeline
         use_live = "--live" in args
-        run_enriched_pipeline(bankroll=1000, use_live_llm=use_live)
+        use_profiles = "--whale-profiles" in args
+        run_enriched_pipeline(
+            bankroll=1000,
+            use_live_llm=use_live,
+            use_whale_profiles=use_profiles,
+        )
     elif "--enrich-demo" in args:
         from core.context_enricher import demo as enrich_demo
         enrich_demo()
     else:
         from strategies.edge_detector import run_pipeline
         run_pipeline()
+
+
+def run_whale_profiler():
+    """
+    Build or refresh whale behavioral profiles.
+    
+    Fetches leaderboards (overall + per-category), then for each whale
+    fetches their open and closed positions to compute behavioral metrics,
+    win rates, category specialization, and strategy classification.
+    
+    Profiles persist to data/whale_profiles.json and accumulate over time.
+    Run this periodically (e.g. daily) as a data collection step, then
+    use --whale-profiles with --enriched to activate profile-aware signals.
+    
+    Takes ~5-8 minutes for 30 whales due to API rate limiting.
+    """
+    from core.whale_profiler import WhaleProfiler
+    
+    print("\n" + "=" * 70)
+    print("  WHALE PROFILER — Building Behavioral Profiles")
+    print("=" * 70)
+    
+    profiler = WhaleProfiler(data_dir="data")
+    
+    existing = profiler.profile_count
+    if existing > 0:
+        print(f"\n  📂 Found {existing} existing profiles — will update/merge")
+    
+    print(f"\n  🐋 Fetching leaderboards and position data...")
+    print(f"     This takes ~5-8 minutes (API rate limiting)\n")
+    
+    count = profiler.build_profiles(max_whales=30)
+    
+    print(f"\n✅ Profiled {count} whales (total in database: {profiler.profile_count})")
+    print(profiler.report())
 
 
 def run_demo():

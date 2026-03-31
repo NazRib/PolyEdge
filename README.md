@@ -41,7 +41,8 @@ polymarket_edge/
 │   ├── llm_estimator.py         # Claude-powered probability estimation + calibration
 │   ├── probability.py           # Ensemble framework, Bayesian updating, calibration tracking
 │   ├── kelly.py                 # Kelly Criterion position sizing (fractional Kelly)
-│   └── paper_trader.py          # Paper trading engine with P&L and Brier score tracking
+│   ├── paper_trader.py          # Paper trading engine with P&L and Brier score tracking
+│   └── whale_profiler.py        # Behavioral profiling of top traders
 ├── strategies/
 │   ├── edge_detector.py         # Basic pipeline (no enrichment)
 │   └── enriched_edge_detector.py # Full pipeline with enrichment + live LLM
@@ -49,7 +50,8 @@ polymarket_edge/
 └── data/                        # Generated at runtime
     ├── paper_trades.json
     ├── calibration_log.json
-    └── markets_cache.json
+    ├── markets_cache.json
+    └── whale_profiles.json      # Persistent whale behavioral profiles
 ```
 
 ## Quick Start
@@ -83,6 +85,10 @@ python run_pipeline.py --report
 | `--scan-only` | Scans Polymarket for top candidates, prints scores |
 | `--enriched` | Enriched pipeline with simulated LLM (no Claude API needed) |
 | `--enriched --live` | Full pipeline: news search, whale tracking, live Claude estimation |
+| `--enriched --whale-profiles` | Enriched pipeline with profile-aware whale signals |
+| `--enriched --live --whale-profiles` | Full pipeline with profiled whales + live Claude |
+| `--profile-whales` | Build/refresh whale behavioral profiles (~5-8 min) |
+| `--whale-report` | Print whale profiler report (strategy breakdown, top signals) |
 | `--enrich-demo` | Demos the enrichment sources on sample markets |
 | `--report` | Prints paper trading P&L and calibration report |
 | *(no flags)* | Basic pipeline without context enrichment |
@@ -103,7 +109,17 @@ For each candidate market, five enrichment sources run in sequence:
 - **Kalshi cross-platform pricing** — Searches for the same or similar market on Kalshi. A significant price difference signals potential mispricing.
 - **FRED economic indicators** — Pulls relevant macroeconomic data (Fed Funds rate, CPI, unemployment, GDP, etc.) for economics-related markets.
 - **Related markets** — Finds other Polymarket markets in the same event or with keyword overlap, checking for pricing consistency.
-- **Whale tracker** — Fetches the Polymarket leaderboard (top profitable traders) once per pipeline run, then for each market checks if any of these whales hold positions. Cross-references holder wallets against the whale registry to produce signals with direction, size, and trader credibility (lifetime PnL).
+- **Whale tracker** — Fetches the Polymarket leaderboard (top profitable traders) once per pipeline run, then for each market checks if any of these whales hold positions. Cross-references holder wallets against the whale registry to produce signals with direction, size, and trader credibility (lifetime PnL). When whale profiles are enabled (see below), signals are enriched with strategy type, category-specific win rates, and credibility scores.
+
+### 2b. Whale Profiler (`whale_profiler.py`) — optional
+Builds rich behavioral profiles for top traders by analyzing their positions across categories. Run periodically with `--profile-whales` to build/refresh profiles. Profiles persist to `data/whale_profiles.json` and accumulate over time.
+
+For each whale, the profiler computes: position count and sizing distributions, YES/NO balance, category concentration (Herfindahl index), win rates (overall and per-category), and a strategy classification:
+
+- **CONVICTION** — Few large positions, high average size. Most informative signal.
+- **SPECIALIST** — Concentrated in one category (60%+ of positions). High value in their specialty, low value elsewhere.
+- **DIVERSIFIED** — Many positions across categories. Moderate signal.
+- **MARKET_MAKER** — Very high position count, balanced YES/NO, high volume/PnL ratio. Signal is noise — these wallets provide liquidity, not conviction. Heavily discounted.
 
 ### 3. Probability Estimation (`llm_estimator.py` + `probability.py`)
 An ensemble of estimators produces a final probability for each market:
@@ -112,7 +128,7 @@ An ensemble of estimators produces a final probability for each market:
 - **Base rate estimator** (15%) — Anchors on the current market price as a prior.
 - **Momentum estimator** (20%) — Detects recent price trends from CLOB price history.
 - **Book imbalance estimator** (15%) — Measures asymmetry in the order book.
-- **Whale tracker estimator** (10%) — Weights whale positions by their historical profitability and position size to produce a directional signal.
+- **Whale tracker estimator** (10%) — Basic mode: weights whale positions by PnL and size. Profiled mode: uses `profiled_whale_estimator` which weights by category-specific credibility, strategy type, and win rate. Market makers are discounted; conviction traders in their specialty category get the strongest weight.
 
 ### 4. Position Sizing (`kelly.py`)
 Applies fractional Kelly Criterion given the estimated probability, market
@@ -142,7 +158,7 @@ Edit `config.py` to adjust trading parameters:
 - **Edge**: The difference between your estimated probability and the market price. A 5% edge on a 50¢ market means you think the true probability is 55%.
 - **Brier Score**: Measures calibration quality — 0.25 is a coin flip, below 0.20 is decent, below 0.15 is good.
 - **Kelly Criterion**: The mathematically optimal bet size given your edge and the odds. Full Kelly is aggressive; fractional Kelly (0.25x) trades off growth rate for lower variance.
-- **Whale signal**: When traders with strong historical track records take large positions, it may indicate private information or superior analysis.
+- **Whale signal**: When traders with strong historical track records take large positions, it may indicate private information or superior analysis. The profiled version distinguishes conviction traders (informative) from market makers (noise) and weights signals by category-specific credibility.
 
 ## API Dependencies
 

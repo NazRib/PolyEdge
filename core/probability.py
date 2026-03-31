@@ -376,6 +376,88 @@ def whale_tracker_estimator(context: dict) -> tuple[float, float]:
     return projected, confidence
 
 
+def profiled_whale_estimator(context: dict) -> tuple[float, float]:
+    """
+    Profile-aware whale signal: uses behavioral profiles to weight whale
+    positions by category-specific credibility and strategy type.
+    
+    This is a strict upgrade over whale_tracker_estimator. Market makers
+    get heavily discounted (their positions are liquidity, not conviction).
+    Specialists get boosted in their category. Conviction traders with
+    high win rates in the relevant category get the most weight.
+    
+    Requires 'whale_positions' in context, where each position dict
+    may optionally include profile data:
+        - 'profile_strategy': str (CONVICTION, MARKET_MAKER, etc.)
+        - 'profile_signal_weight': float (0-1, pre-computed by WhaleProfile)
+        - 'profile_category_credibility': float (0-1, for this market's category)
+        - 'profile_win_rate': float or None
+    
+    Falls back to the basic PnL-based weighting if profile data is absent,
+    so this is backward-compatible with the old WhaleEnricher output.
+    """
+    whale_positions = context.get("whale_positions", [])
+    
+    if not whale_positions:
+        return context.get("market_price", 0.5), 0.0
+    
+    yes_signal = 0.0
+    no_signal = 0.0
+    total_credible_whales = 0
+    
+    for wp in whale_positions:
+        # Use profile-derived signal weight if available
+        signal_weight = wp.get("profile_signal_weight")
+        
+        if signal_weight is not None:
+            # ─── Profile-aware path ──────────────────────
+            # Signal weight already accounts for strategy type,
+            # category credibility, and win rate. Just scale by
+            # position size.
+            size_weight = min(1.0, wp.get("size", 0) / 5000)
+            signal = signal_weight * size_weight
+            
+            # Skip market makers entirely if their signal weight is tiny
+            strategy = wp.get("profile_strategy", "UNKNOWN")
+            if strategy == "MARKET_MAKER" and signal_weight < 0.2:
+                continue
+            
+            total_credible_whales += 1
+        else:
+            # ─── Fallback: basic PnL-based weighting ─────
+            # Same as the old whale_tracker_estimator
+            credibility = min(1.0, max(0.0, wp.get("trader_pnl", 0) / 10000))
+            size_weight = min(1.0, wp.get("size", 0) / 5000)
+            signal = credibility * size_weight
+            total_credible_whales += 1
+        
+        side = wp.get("side", "").upper()
+        if side in ("YES", "BUY"):
+            yes_signal += signal
+        else:
+            no_signal += signal
+    
+    total = yes_signal + no_signal
+    if total == 0:
+        return context.get("market_price", 0.5), 0.0
+    
+    whale_lean = yes_signal / total  # 0 = all No, 1 = all Yes
+    
+    market_price = context.get("market_price", 0.5)
+    
+    # The blend weight depends on how many credible whales we have.
+    # 1 whale → conservative blend (80% market / 20% whale)
+    # 3+ whales → stronger blend (65% market / 35% whale)
+    whale_blend = min(0.35, 0.15 + total_credible_whales * 0.07)
+    projected = (1 - whale_blend) * market_price + whale_blend * whale_lean
+    projected = max(0.01, min(0.99, projected))
+    
+    # Confidence scales with signal strength AND number of credible whales
+    confidence = min(0.7, total * 0.15 + total_credible_whales * 0.05)
+    
+    return projected, confidence
+
+
 def create_default_ensemble() -> EnsembleEstimator:
     """Create an ensemble with all built-in estimators."""
     ensemble = EnsembleEstimator()
@@ -383,6 +465,24 @@ def create_default_ensemble() -> EnsembleEstimator:
     ensemble.add_estimator("momentum", momentum_estimator, weight=0.25)
     ensemble.add_estimator("book_imbalance", book_imbalance_estimator, weight=0.20)
     ensemble.add_estimator("whale_tracker", whale_tracker_estimator, weight=0.25)
+    return ensemble
+
+
+def create_profiled_ensemble() -> EnsembleEstimator:
+    """
+    Create an ensemble that uses the profile-aware whale estimator.
+    
+    Compared to the default ensemble:
+    - Uses profiled_whale_estimator instead of whale_tracker_estimator
+    - Gives the whale signal slightly more weight (0.30 vs 0.25) because
+      profile-aware signals are higher quality (market makers filtered out)
+    - Reduces base_rate weight slightly to compensate
+    """
+    ensemble = EnsembleEstimator()
+    ensemble.add_estimator("base_rate", base_rate_estimator, weight=0.25)
+    ensemble.add_estimator("momentum", momentum_estimator, weight=0.25)
+    ensemble.add_estimator("book_imbalance", book_imbalance_estimator, weight=0.20)
+    ensemble.add_estimator("whale_profiled", profiled_whale_estimator, weight=0.30)
     return ensemble
 
 

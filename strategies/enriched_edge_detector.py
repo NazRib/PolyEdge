@@ -148,6 +148,10 @@ class EnrichedEdgeDetector:
     Usage:
         detector = EnrichedEdgeDetector(bankroll=1000)
         signals = detector.run()
+    
+    With whale profiling:
+        detector = EnrichedEdgeDetector(bankroll=1000, use_whale_profiles=True)
+        signals = detector.run()
     """
     
     def __init__(
@@ -159,6 +163,7 @@ class EnrichedEdgeDetector:
         max_signals: int = 10,
         max_cluster_exposure: float = 0.20,
         use_live_llm: bool = False,
+        use_whale_profiles: bool = False,
         llm_skill_level: float = 0.35,
         data_dir: str = "data",
     ):
@@ -174,13 +179,29 @@ class EnrichedEdgeDetector:
         # Paper trader — loads persisted state (bankroll, open trades, calibration)
         self.trader = PaperTrader(bankroll=bankroll, data_dir=data_dir)
         
-        # Context enricher
+        # Whale profiler (optional — loads from disk if profiles exist)
+        self.whale_profiler = None
+        if use_whale_profiles:
+            from core.whale_profiler import WhaleProfiler
+            self.whale_profiler = WhaleProfiler(data_dir=data_dir)
+            if self.whale_profiler.profile_count > 0:
+                logger.info(
+                    f"🐋 Whale profiler active: {self.whale_profiler.profile_count} profiles loaded"
+                )
+            else:
+                logger.info(
+                    "🐋 Whale profiler enabled but no profiles found. "
+                    "Run --profile-whales first to build profiles."
+                )
+        
+        # Context enricher (with profiler if available)
         self.enricher = ContextEnricher(
             enable_news=use_live_llm,
             enable_kalshi=True,
             enable_fred=True,
             enable_related=True,
             enable_whales=True,
+            whale_profiler=self.whale_profiler,
         )
         
         # Build ensemble
@@ -200,7 +221,17 @@ class EnrichedEdgeDetector:
         self.ensemble.add_estimator("base_rate", base_rate_estimator, weight=0.15)
         self.ensemble.add_estimator("momentum", momentum_estimator, weight=0.20)
         self.ensemble.add_estimator("book_imbalance", book_imbalance_estimator, weight=0.15)
-        self.ensemble.add_estimator("whale_tracker", whale_tracker_estimator, weight=0.10)
+        
+        # Use profiled whale estimator if profiler is available, else basic
+        if self.whale_profiler and self.whale_profiler.profile_count > 0:
+            from core.probability import profiled_whale_estimator
+            self.ensemble.add_estimator(
+                "whale_profiled", profiled_whale_estimator, weight=0.10
+            )
+        else:
+            self.ensemble.add_estimator(
+                "whale_tracker", whale_tracker_estimator, weight=0.10
+            )
     
     def run(self, fetch_order_books: bool = True) -> list[dict]:
         """Run the full enriched pipeline: scan → enrich → estimate → size → trade."""

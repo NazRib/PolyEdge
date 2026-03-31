@@ -673,8 +673,10 @@ class WhaleEnricher:
            a "whale registry" — a mapping of wallet → PnL.
         2. For each candidate market, call the /holders endpoint to get top
            holders, then cross-reference against the whale registry.
-        3. Return whale positions in the format the ensemble's
-           whale_tracker_estimator expects.
+        3. If a WhaleProfiler is attached, enrich each whale position with
+           profile data (strategy type, category credibility, signal weight).
+        4. Return whale positions in the format the ensemble's
+           profiled_whale_estimator expects.
     
     This is the only enricher that requires a PolymarketClient instance,
     since it uses the Data API.
@@ -688,6 +690,7 @@ class WhaleEnricher:
         time_period: str = "ALL",
         min_pnl: float = 5000.0,
         rate_limit_delay: float = 0.5,
+        profiler: "WhaleProfiler | None" = None,
     ):
         """
         Args:
@@ -695,16 +698,18 @@ class WhaleEnricher:
             time_period: Leaderboard window — DAY, WEEK, MONTH, or ALL.
             min_pnl: Minimum PnL (USD) to qualify as a whale.
             rate_limit_delay: Seconds between API calls.
+            profiler: Optional WhaleProfiler instance for profile-enriched signals.
         """
         self.top_n_whales = top_n_whales
         self.time_period = time_period
         self.min_pnl = min_pnl
         self.rate_limit_delay = rate_limit_delay
+        self.profiler = profiler
         
         self.session = requests.Session()
         self.session.headers.update({
             "Accept": "application/json",
-            "User-Agent": "PolymarketEdge/1.0",
+            "User-Agent": "PolymarketEdge/2.0",
         })
         self._last_request = 0.0
         
@@ -760,9 +765,10 @@ class WhaleEnricher:
                     }
             
             self._registry_loaded = True
+            profiler_status = f", profiler: {self.profiler.profile_count} profiles" if self.profiler else ""
             logger.info(
                 f"🐋 Whale registry loaded: {len(self._whale_registry)} whales "
-                f"(top {self.top_n_whales} by PnL, min ${self.min_pnl:,.0f})"
+                f"(top {self.top_n_whales} by PnL, min ${self.min_pnl:,.0f}{profiler_status})"
             )
             return len(self._whale_registry)
         
@@ -771,16 +777,30 @@ class WhaleEnricher:
             self._whale_registry = {}
             return 0
     
-    def get_whale_positions(self, condition_id: str) -> list[dict]:
+    def get_whale_positions(
+        self, condition_id: str, market_category: str = ""
+    ) -> list[dict]:
         """
         For a given market, find which whales hold positions.
         
+        If a WhaleProfiler is attached, each position dict is enriched with:
+            - profile_strategy: str (CONVICTION, MARKET_MAKER, etc.)
+            - profile_signal_weight: float (0-1)
+            - profile_category_credibility: float (0-1)
+            - profile_win_rate: float or None
+            - profile_primary_category: str
+        
+        These fields are consumed by profiled_whale_estimator in probability.py
+        and by the LLM prompt builder in to_prompt_section().
+        
         Args:
             condition_id: The market's condition ID (the Market.id field)
+            market_category: Category of the market being evaluated (e.g. "POLITICS")
             
-        Returns list of dicts compatible with whale_tracker_estimator:
+        Returns list of dicts compatible with profiled_whale_estimator:
             [{"side": "YES"/"NO", "size": float, "trader_pnl": float, 
-              "whale_name": str, "whale_rank": str}, ...]
+              "whale_name": str, "whale_rank": str, 
+              "profile_strategy": str, "profile_signal_weight": float, ...}, ...]
         """
         if not self._registry_loaded:
             self.load_whale_registry()
@@ -817,19 +837,37 @@ class WhaleEnricher:
                     outcome_idx = holder.get("outcomeIndex", 0)
                     side = "YES" if outcome_idx == 0 else "NO"
                     
-                    whale_positions.append({
+                    position = {
                         "side": side,
                         "size": float(holder.get("amount", 0)),
                         "trader_pnl": whale_info["pnl"],
                         "whale_name": whale_info.get("userName", holder.get("name", "")),
                         "whale_rank": whale_info["rank"],
                         "whale_volume": whale_info["vol"],
-                    })
+                    }
+                    
+                    # Enrich with profile data if available
+                    if self.profiler:
+                        profile = self.profiler.get_profile(wallet)
+                        if profile:
+                            position["profile_strategy"] = profile.strategy
+                            position["profile_signal_weight"] = profile.signal_weight(market_category)
+                            position["profile_category_credibility"] = profile.credibility_for_category(market_category)
+                            position["profile_win_rate"] = profile.global_win_rate
+                            position["profile_primary_category"] = profile.primary_category
+                            position["profile_open_positions"] = profile.open_position_count
+                            position["profile_strategy_confidence"] = profile.strategy_confidence
+                    
+                    whale_positions.append(position)
         
         if whale_positions:
-            signals_desc = ", ".join(
-                f"{wp['side']} ${wp['size']:,.0f}" for wp in whale_positions[:3]
-            )
+            # Log with profile info if available
+            signals = []
+            for wp in whale_positions[:3]:
+                strat = wp.get("profile_strategy", "")
+                strat_tag = f" [{strat}]" if strat else ""
+                signals.append(f"{wp['side']} ${wp['size']:,.0f}{strat_tag}")
+            signals_desc = ", ".join(signals)
             logger.info(
                 f"  🐋 Found {len(whale_positions)} whale(s) in market "
                 f"(top signals: {signals_desc})"
@@ -929,25 +967,80 @@ class EnrichedContext:
                 )
             sections.append("")
         
-        # Whale positions
+        # Whale positions (profile-enriched when available)
         if self.whale_positions:
             yes_whales = [w for w in self.whale_positions if w.get("side") == "YES"]
             no_whales = [w for w in self.whale_positions if w.get("side") == "NO"]
             total_yes = sum(w.get("size", 0) for w in yes_whales)
             total_no = sum(w.get("size", 0) for w in no_whales)
             
-            sections.append("WHALE TRACKER (top profitable traders with positions in this market):")
+            has_profiles = any(w.get("profile_strategy") for w in self.whale_positions)
+            
+            if has_profiles:
+                sections.append("WHALE TRACKER (profiled — strategy type affects signal reliability):")
+            else:
+                sections.append("WHALE TRACKER (top profitable traders with positions in this market):")
+            
             for wp in self.whale_positions[:6]:
                 name = wp.get("whale_name", "Anonymous")
                 rank = wp.get("whale_rank", "?")
-                sections.append(
-                    f"  #{rank} {name}: {wp['side']} ${wp['size']:,.0f} "
-                    f"(lifetime PnL: ${wp['trader_pnl']:,.0f})"
-                )
+                
+                if wp.get("profile_strategy"):
+                    # Profile-enriched display
+                    strategy = wp["profile_strategy"]
+                    signal_w = wp.get("profile_signal_weight", 0)
+                    wr = wp.get("profile_win_rate")
+                    wr_str = f", win rate: {wr:.0%}" if wr is not None else ""
+                    primary = wp.get("profile_primary_category", "")
+                    primary_str = f", specializes in: {primary}" if primary else ""
+                    
+                    # Flag market makers explicitly so the LLM knows to discount
+                    if strategy == "MARKET_MAKER":
+                        sections.append(
+                            f"  #{rank} {name}: {wp['side']} ${wp['size']:,.0f} "
+                            f"⚠ MARKET MAKER (signal unreliable — likely providing liquidity, "
+                            f"not expressing conviction)"
+                        )
+                    else:
+                        sections.append(
+                            f"  #{rank} {name}: {wp['side']} ${wp['size']:,.0f} "
+                            f"[{strategy}] signal weight: {signal_w:.2f} "
+                            f"(PnL: ${wp['trader_pnl']:,.0f}{wr_str}{primary_str})"
+                        )
+                else:
+                    # Basic display (no profile)
+                    sections.append(
+                        f"  #{rank} {name}: {wp['side']} ${wp['size']:,.0f} "
+                        f"(lifetime PnL: ${wp['trader_pnl']:,.0f})"
+                    )
+            
             sections.append(f"  Net whale lean: YES ${total_yes:,.0f} vs NO ${total_no:,.0f}")
             if total_yes + total_no > 0:
                 pct_yes = total_yes / (total_yes + total_no)
                 sections.append(f"  Whale consensus: {pct_yes:.0%} YES / {1-pct_yes:.0%} NO")
+            
+            # Add profile-aware summary for the LLM
+            if has_profiles:
+                conviction_whales = [
+                    w for w in self.whale_positions
+                    if w.get("profile_strategy") in ("CONVICTION", "SPECIALIST")
+                    and w.get("profile_signal_weight", 0) > 0.2
+                ]
+                mm_whales = [
+                    w for w in self.whale_positions
+                    if w.get("profile_strategy") == "MARKET_MAKER"
+                ]
+                if conviction_whales:
+                    conv_yes = sum(1 for w in conviction_whales if w.get("side") == "YES")
+                    conv_no = len(conviction_whales) - conv_yes
+                    sections.append(
+                        f"  → {len(conviction_whales)} conviction/specialist trader(s) "
+                        f"({conv_yes} YES, {conv_no} NO) — these are the most reliable signals"
+                    )
+                if mm_whales:
+                    sections.append(
+                        f"  → {len(mm_whales)} market maker(s) detected — discount their positions"
+                    )
             sections.append("")
         
         if not sections:
@@ -985,6 +1078,12 @@ class ContextEnricher:
         enricher = ContextEnricher()
         enriched = enricher.enrich(market_data)
         print(enriched.to_prompt_section())
+    
+    With whale profiling:
+        from core.whale_profiler import WhaleProfiler
+        profiler = WhaleProfiler()
+        profiler.build_profiles()
+        enricher = ContextEnricher(whale_profiler=profiler)
     """
     
     def __init__(
@@ -996,12 +1095,14 @@ class ContextEnricher:
         enable_whales: bool = True,
         anthropic_api_key: Optional[str] = None,
         fred_api_key: Optional[str] = None,
+        whale_profiler: "WhaleProfiler | None" = None,
     ):
         self.news_enricher = NewsEnricher(api_key=anthropic_api_key) if enable_news else None
         self.kalshi_enricher = KalshiPriceEnricher() if enable_kalshi else None
         self.fred_enricher = EconomicEnricher(api_key=fred_api_key) if enable_fred else None
         self.related_enricher = RelatedMarketsEnricher() if enable_related else None
-        self.whale_enricher = WhaleEnricher() if enable_whales else None
+        self.whale_enricher = WhaleEnricher(profiler=whale_profiler) if enable_whales else None
+        self.whale_profiler = whale_profiler
         
         # Pre-load the whale registry so it's ready for the pipeline loop
         if self.whale_enricher:
@@ -1075,8 +1176,9 @@ class ContextEnricher:
             sources_used.append("whales")
         elif self.whale_enricher and self.whale_enricher.registry_size > 0:
             logger.info(f"  🐋 Checking whale positions...")
+            market_category = market_data.get("category", "")
             ctx.whale_positions = self.whale_enricher.get_whale_positions(
-                str(market_id)
+                str(market_id), market_category=market_category
             )
             if ctx.whale_positions:
                 sources_used.append("whales")
@@ -1120,6 +1222,14 @@ IMPORTANT INSTRUCTIONS:
 - Economic indicators provide context for macro-related markets — interpret their 
   trend and level, not just the number.
 - Related market prices should be logically consistent with your estimate.
+- WHALE SIGNALS: If whale positions include strategy profiles, weight them accordingly:
+  * CONVICTION and SPECIALIST traders with high signal weights are informative — 
+    their positions likely reflect genuine analysis or private information.
+  * MARKET MAKER positions are noise — they provide liquidity on both sides and 
+    their positions do NOT indicate directional conviction. Discount heavily.
+  * Pay attention to category specialization — a politics specialist's signal on 
+    a politics market is far more valuable than their signal on a crypto market.
+  * If multiple conviction traders agree on a direction, that's a strong signal.
 
 Respond with ONLY this JSON structure, no other text:
 {{
@@ -1127,6 +1237,7 @@ Respond with ONLY this JSON structure, no other text:
     "base_rate_reasoning": "<1-2 sentences>",
     "news_impact": "<how does the recent news affect the probability? 1-2 sentences>",
     "cross_platform_note": "<any cross-platform signal? 1 sentence, or 'N/A'>",
+    "whale_signal_note": "<how did you weight the whale signals? Which traders were most credible for this market? 1-2 sentences, or 'N/A'>",
     "factors_for": ["<factor 1 supporting YES>", "<factor 2>", ...],
     "factors_against": ["<factor 1 supporting NO>", "<factor 2>", ...],
     "probability": <float between 0.01 and 0.99>,
