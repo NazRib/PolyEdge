@@ -134,15 +134,24 @@ class OpenMeteoClient:
         self._last_request_time = time.time()
     
     def _get(self, url: str, params: dict) -> Optional[dict]:
-        """Make a throttled GET request, returning None on failure."""
-        self._throttle()
-        try:
-            resp = self.session.get(url, params=params, timeout=20)
-            resp.raise_for_status()
-            return resp.json()
-        except requests.RequestException as e:
-            logger.warning(f"Open-Meteo request failed: {e}")
-            return None
+        """Make a throttled GET request with retry on SSL/connection errors."""
+        for attempt in range(3):
+            self._throttle()
+            try:
+                resp = self.session.get(url, params=params, timeout=20)
+                resp.raise_for_status()
+                return resp.json()
+            except (requests.exceptions.SSLError, requests.exceptions.ConnectionError) as e:
+                if attempt < 2:
+                    wait = (attempt + 1) * 2  # 2s, 4s
+                    logger.debug(f"SSL/connection error (attempt {attempt+1}/3), retrying in {wait}s...")
+                    time.sleep(wait)
+                else:
+                    logger.warning(f"Open-Meteo request failed after 3 attempts: {e}")
+                    return None
+            except requests.RequestException as e:
+                logger.warning(f"Open-Meteo request failed: {e}")
+                return None
     
     # ─── Live Forecasts ──────────────────────────────────
     

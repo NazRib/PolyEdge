@@ -1,7 +1,7 @@
 {
-  "bankroll": 440.97999999999996,
+  "bankroll": 385.0605999999999,
   "initial_bankroll": 1000,
-  "trade_counter": 15,
+  "trade_counter": 20,
   "trades": [
     {
       "trade_id": "PT-0001",
@@ -232,10 +232,10 @@
       "edge_at_entry": 0.07297389394496434,
       "confidence": 0.9158418886201668,
       "timestamp": "2026-03-25T23:08:13.745808+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_WIN",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0
+      "resolution": true,
+      "pnl": 16.120600000000003
     },
     {
       "trade_id": "PT-0014",
@@ -272,7 +272,104 @@
       "exit_price": null,
       "resolution": null,
       "pnl": 0.0
+    },
+    {
+      "trade_id": "PT-0016",
+      "market_id": "1499933",
+      "question": "Islanders vs. Sabres",
+      "side": "YES",
+      "entry_price": 0.385,
+      "shares": 68.5062,
+      "dollar_amount": 26.37,
+      "estimated_probability": 0.5588683270146567,
+      "market_price_at_entry": 0.385,
+      "edge_at_entry": 0.1738683270146567,
+      "confidence": 0.7718698336577543,
+      "timestamp": "2026-03-30T11:01:24.839684+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0
+    },
+    {
+      "trade_id": "PT-0017",
+      "market_id": "1702303",
+      "question": "LoL: Hanwha Life Esports vs HANJIN BRION (BO3) - LCK Rounds 1-2",
+      "side": "NO",
+      "entry_price": 0.10499999999999998,
+      "shares": 110.7565,
+      "dollar_amount": 11.63,
+      "estimated_probability": 0.7981307808126559,
+      "market_price_at_entry": 0.895,
+      "edge_at_entry": -0.09686921918734415,
+      "confidence": 0.8889854759083844,
+      "timestamp": "2026-03-30T11:01:24.843405+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0
+    },
+    {
+      "trade_id": "PT-0018",
+      "market_id": "1668613",
+      "question": "Will Elon Musk post 220-239 tweets from March 24 to March 31, 2026?",
+      "side": "NO",
+      "entry_price": 0.5405,
+      "shares": 56.9057,
+      "dollar_amount": 30.76,
+      "estimated_probability": 0.3105622852856365,
+      "market_price_at_entry": 0.4595,
+      "edge_at_entry": -0.1489377147143635,
+      "confidence": 0.7851114364818693,
+      "timestamp": "2026-03-30T11:01:24.846309+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0
+    },
+    {
+      "trade_id": "PT-0019",
+      "market_id": "1570163",
+      "question": "Will Tisza win 80\u201389 seats in the Hungarian National Assembly in this election?",
+      "side": "YES",
+      "entry_price": 0.0695,
+      "shares": 103.0541,
+      "dollar_amount": 7.16,
+      "estimated_probability": 0.1296739055452959,
+      "market_price_at_entry": 0.0695,
+      "edge_at_entry": 0.06017390554529589,
+      "confidence": 0.9163406618928033,
+      "timestamp": "2026-03-30T11:01:24.850621+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0
+    },
+    {
+      "trade_id": "PT-0020",
+      "market_id": "1499928",
+      "question": "Devils vs. Rangers",
+      "side": "YES",
+      "entry_price": 0.505,
+      "shares": 44.5165,
+      "dollar_amount": 22.48,
+      "estimated_probability": 0.6108302387538367,
+      "market_price_at_entry": 0.505,
+      "edge_at_entry": 0.10583023875383668,
+      "confidence": 0.8699743119434651,
+      "timestamp": "2026-03-30T11:01:24.854037+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0
     }
   ],
-  "calibration": []
+  "calibration": [
+    {
+      "predicted": 0.6934738939449644,
+      "actual": 1,
+      "market_id": "1633348",
+      "time": "2026-03-30T10:29:34.184978+00:00"
+    }
+  ]
 }

@@ -416,6 +416,12 @@ class WeatherScanner:
         all_trades = []
         trades_entered = 0
         trades_skipped = 0
+        trades_deduped = 0
+        
+        # Build set of market_ids we already have open trades in
+        open_market_ids = {
+            t.market_id for t in self.trader.trades if t.status == "OPEN"
+        }
         
         for event in events:
             edges = event.tradeable_edges
@@ -426,6 +432,11 @@ class WeatherScanner:
             city_exposure = self._get_city_exposure(event.city, event.target_date)
             
             for edge_info in edges:
+                # Skip if we already have an open trade on this exact bucket
+                if edge_info["market_id"] in open_market_ids:
+                    trades_deduped += 1
+                    continue
+                
                 # Check city exposure cap
                 if city_exposure >= self.max_city_exposure:
                     trades_skipped += 1
@@ -496,6 +507,7 @@ class WeatherScanner:
                 if trade:
                     city_exposure += position.dollar_amount
                     trades_entered += 1
+                    open_market_ids.add(edge_info["market_id"])
                     
                     wt = WeatherTrade(
                         city=event.city,
@@ -527,8 +539,9 @@ class WeatherScanner:
         
         # Summary
         print(f"\n{'─' * 70}")
-        skip_msg = f", {trades_skipped} skipped (exposure caps)" if trades_skipped else ""
-        print(f"  Entered {trades_entered} trade(s){skip_msg}")
+        skip_msg = f", {trades_skipped} capped" if trades_skipped else ""
+        dedup_msg = f", {trades_deduped} already open" if trades_deduped else ""
+        print(f"  Entered {trades_entered} trade(s){skip_msg}{dedup_msg}")
         
         # Portfolio status
         snap = self.trader.snapshot()
