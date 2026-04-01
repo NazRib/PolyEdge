@@ -1,0 +1,450 @@
+From 205f873aaf4a775270c7312897a19d14baf0f320 Mon Sep 17 00:00:00 2001
+From: Claude <claude@polyedge.dev>
+Date: Wed, 1 Apr 2026 16:55:53 +0000
+Subject: [PATCH 1/2] fix: classification fallback for whales with no position
+ data
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Two bugs fixed:
+
+1. Closed positions used wrong endpoint — was querying /positions?redeemed=true
+   (which returns nothing), now correctly uses /closed-positions endpoint.
+   This should fix WR: N/A on most conviction traders.
+
+2. Classification fell to UNKNOWN when position data was unavailable (common
+   for wallets that closed all positions post-election). New fallback uses
+   leaderboard-derived signals:
+   - Vol/PnL ratio >= 80x → MARKET_MAKER (even without position data)
+   - Category PnL concentration >= 60% → SPECIALIST
+   - 3+ categories with >K PnL → DIVERSIFIED
+   - Low vol/pnl + few categories → CONVICTION
+   - Category concentration now falls back to PnL when position counts are 0
+   - total-markets-traded endpoint used as activity proxy
+
+Also added _fetch_total_markets_traded helper.
+
+Expected impact: most of the 13 UNKNOWN whales should now classify into
+SPECIALIST, CONVICTION, or DIVERSIFIED based on their leaderboard data.
+---
+ core/whale_profiler.py | 142 ++++++++++++++++++++++++++++++++---------
+ 1 file changed, 112 insertions(+), 30 deletions(-)
+
+diff --git a/core/whale_profiler.py b/core/whale_profiler.py
+index c2446a9..6cfa146 100644
+--- a/core/whale_profiler.py
++++ b/core/whale_profiler.py
+@@ -556,7 +556,8 @@ class WhaleProfiler:
+         Build a complete profile for a single whale.
+ 
+         Fetches their open + closed positions and computes all metrics.
+-        Merges with any existing profile data.
++        Falls back to leaderboard-derived heuristics when position data
++        is unavailable (common for wallets that closed all positions).
+         """
+         profile = WhaleProfile(
+             wallet=wallet,
+@@ -579,11 +580,6 @@ class WhaleProfiler:
+         open_positions = self._fetch_positions(wallet, closed=False)
+         closed_positions = self._fetch_positions(wallet, closed=True)
+ 
+-        if open_positions is None and closed_positions is None:
+-            profile.data_quality = "PARTIAL"
+-            self._classify_strategy(profile)
+-            return profile
+-
+         # Analyze open positions
+         if open_positions:
+             self._analyze_open_positions(profile, open_positions)
+@@ -592,6 +588,17 @@ class WhaleProfiler:
+         if closed_positions:
+             self._analyze_closed_positions(profile, closed_positions)
+ 
++        # If we got no position data at all, try total-markets-traded
++        # as a rough proxy for activity level
++        if not open_positions and not closed_positions:
++            total_traded = self._fetch_total_markets_traded(wallet)
++            if total_traded is not None and total_traded > 0:
++                # Use this as a stand-in for position count in classification
++                profile.open_position_count = total_traded
++                profile.data_quality = "PARTIAL"
++            else:
++                profile.data_quality = "PARTIAL"
++
+         # Compute category concentration
+         self._compute_category_concentration(profile)
+ 
+@@ -601,26 +608,45 @@ class WhaleProfiler:
+         # Compute overall credibility
+         self._compute_overall_credibility(profile)
+ 
+-        profile.data_quality = "FULL"
++        if open_positions or closed_positions:
++            profile.data_quality = "FULL"
+ 
+         return profile
+ 
+     def _fetch_positions(self, wallet: str, closed: bool = False) -> Optional[list]:
+         """Fetch open or closed positions for a wallet."""
+-        endpoint = "/positions" if not closed else "/positions"
+-        params = {
+-            "user": wallet,
+-            "limit": self.max_positions_per_whale,
+-            "sizeThreshold": 1,
+-        }
+         if closed:
+-            params["redeemed"] = "true"
++            # Closed positions have their own endpoint in the Data API
++            endpoint = "/closed-positions"
++            params = {
++                "user": wallet,
++                "limit": self.max_positions_per_whale,
++                "sortBy": "CASHPNL",
++                "sortDirection": "DESC",
++            }
++        else:
++            endpoint = "/positions"
++            params = {
++                "user": wallet,
++                "limit": self.max_positions_per_whale,
++                "sizeThreshold": 1,
++            }
+ 
+         try:
+             data = self._get(endpoint, params)
+             return data if isinstance(data, list) else []
+         except Exception as e:
+-            logger.debug(f"Position fetch failed for {wallet[:12]}…: {e}")
++            logger.debug(f"Position fetch failed ({endpoint}) for {wallet[:12]}…: {e}")
++            return None
++
++    def _fetch_total_markets_traded(self, wallet: str) -> Optional[int]:
++        """Fetch total number of markets a wallet has ever traded."""
++        try:
++            data = self._get("/total-markets-traded", {"user": wallet})
++            if isinstance(data, dict):
++                return int(data.get("totalMarkets", 0) or data.get("total", 0) or 0)
++            return None
++        except Exception:
+             return None
+ 
+     def _analyze_open_positions(self, profile: WhaleProfile, positions: list):
+@@ -758,13 +784,25 @@ class WhaleProfiler:
+         """
+         Compute how concentrated the whale is across categories.
+ 
+-        Uses a Herfindahl-like index on position counts.
+-        1.0 = all positions in one category, ~0.15 = evenly spread across 7.
++        Uses a Herfindahl-like index on position counts. Falls back to
++        category PnL from leaderboard data when position counts are zero
++        (common for wallets that closed all positions).
++
++        1.0 = all in one category, ~0.15 = evenly spread across 7.
+         """
++        # Try position counts first
+         counts = [
+             s.position_count for s in profile.category_stats.values()
+             if s.position_count > 0
+         ]
++
++        # Fall back to category PnL if no position counts
++        if not counts:
++            counts = [
++                abs(s.pnl) for s in profile.category_stats.values()
++                if abs(s.pnl) > 0
++            ]
++
+         if not counts:
+             profile.category_concentration = 0.0
+             profile.primary_category = ""
+@@ -774,10 +812,10 @@ class WhaleProfiler:
+         shares = [c / total for c in counts]
+         profile.category_concentration = sum(s ** 2 for s in shares)
+ 
+-        # Primary category = largest share
++        # Primary category = largest share (by position count, then PnL)
+         max_cat = max(
+             profile.category_stats.items(),
+-            key=lambda x: x[1].position_count,
++            key=lambda x: (x[1].position_count, abs(x[1].pnl)),
+         )
+         profile.primary_category = max_cat[0]
+ 
+@@ -787,11 +825,18 @@ class WhaleProfiler:
+ 
+         This is the core heuristic that determines how much to trust
+         a whale's signal.
++
++        Two classification paths:
++        1. Position-based (preferred): uses open position count, avg size,
++           YES/NO balance, category concentration
++        2. Leaderboard-based (fallback): uses vol/pnl ratio and category
++           PnL distribution when position data is unavailable
+         """
+         pos_count = profile.open_position_count
+         vol_pnl = profile.vol_pnl_ratio
+         concentration = profile.category_concentration
+         avg_size = profile.avg_position_size
++        has_position_data = avg_size > 0 or pos_count > 0
+ 
+         # YES/NO balance — market makers tend to be more balanced
+         total_sided = profile.yes_position_count + profile.no_position_count
+@@ -802,6 +847,7 @@ class WhaleProfiler:
+             side_balance = 0.5
+ 
+         # ─── Market Maker Detection ──────────────────────
++        # Works with or without position data — vol/pnl ratio is from leaderboard
+         mm_score = 0.0
+         if pos_count >= MARKET_MAKER_POSITION_THRESHOLD:
+             mm_score += 0.4
+@@ -809,28 +855,64 @@ class WhaleProfiler:
+             mm_score += 0.3
+         if side_balance > 0.7:  # Very balanced YES/NO
+             mm_score += 0.3
++        # Leaderboard-only signal: very high vol/pnl is a strong MM indicator
++        # even without position data
++        if vol_pnl != float('inf') and vol_pnl >= 80:
++            mm_score += 0.3
+ 
+         if mm_score >= 0.6:
+             profile.strategy = "MARKET_MAKER"
+             profile.strategy_confidence = min(1.0, mm_score)
+             return
+ 
+-        # ─── Conviction Trader Detection ─────────────────
+-        if pos_count <= CONVICTION_MAX_POSITIONS and avg_size >= CONVICTION_MIN_AVG_SIZE:
+-            profile.strategy = "CONVICTION"
+-            profile.strategy_confidence = min(1.0, 0.5 + (avg_size / 5000) * 0.3 + (1 - pos_count / 30) * 0.2)
+-            return
+-
+-        # ─── Specialist Detection ────────────────────────
++        # ─── Position-based classification (when we have data) ────
++        if has_position_data:
++            # Conviction Trader
++            if pos_count <= CONVICTION_MAX_POSITIONS and avg_size >= CONVICTION_MIN_AVG_SIZE:
++                profile.strategy = "CONVICTION"
++                profile.strategy_confidence = min(1.0, 0.5 + (avg_size / 5000) * 0.3 + (1 - pos_count / 30) * 0.2)
++                return
++
++            # Specialist
++            if concentration >= SPECIALIST_CONCENTRATION:
++                profile.strategy = "SPECIALIST"
++                profile.strategy_confidence = min(1.0, concentration)
++                return
++
++            # Diversified
++            if pos_count > CONVICTION_MAX_POSITIONS and concentration < SPECIALIST_CONCENTRATION:
++                profile.strategy = "DIVERSIFIED"
++                profile.strategy_confidence = 0.6
++                return
++
++        # ─── Leaderboard-based fallback (no position data) ────────
++        # We still have: vol/pnl ratio, category PnL, global PnL
++
++        # Category concentration from PnL data (computed earlier in
++        # _compute_category_concentration using PnL fallback)
+         if concentration >= SPECIALIST_CONCENTRATION:
+             profile.strategy = "SPECIALIST"
+-            profile.strategy_confidence = min(1.0, concentration)
++            # Lower confidence because we're using PnL, not positions
++            profile.strategy_confidence = min(0.7, concentration * 0.8)
+             return
+ 
+-        # ─── Diversified ─────────────────────────────────
+-        if pos_count > CONVICTION_MAX_POSITIONS and concentration < SPECIALIST_CONCENTRATION:
++        # Multiple categories with meaningful PnL = diversified
++        n_categories = len([s for s in profile.category_stats.values() if abs(s.pnl) > 1000])
++        if n_categories >= 3:
+             profile.strategy = "DIVERSIFIED"
+-            profile.strategy_confidence = 0.6
++            profile.strategy_confidence = 0.5
++            return
++
++        # Low vol/pnl ratio + few categories = conviction trader
++        if vol_pnl != float('inf') and vol_pnl < 30 and profile.global_pnl > 0:
++            profile.strategy = "CONVICTION"
++            profile.strategy_confidence = 0.5
++            return
++
++        # If we have category data but only 1-2 categories with meaningful PnL
++        if n_categories >= 1 and profile.global_pnl > 10000:
++            profile.strategy = "CONVICTION"
++            profile.strategy_confidence = 0.4
+             return
+ 
+         profile.strategy = "UNKNOWN"
+-- 
+2.43.0
+
+
+From 5c88cf5a4b31acf2d9c6545c9c78231097718295 Mon Sep 17 00:00:00 2001
+From: Claude <claude@polyedge.dev>
+Date: Wed, 1 Apr 2026 19:44:50 +0000
+Subject: [PATCH 2/2] feat: --whale-inspect diagnostic command for manual
+ validation
+
+New diagnostic_report() method on WhaleProfiler:
+- Full profile details for every whale (or filtered subset)
+- Clickable Polymarket profile links for manual verification
+- Classification reasoning (why was this whale tagged as MM/CONVICTION/etc)
+- Category breakdown with per-category win rates and credibility
+- Position size distributions, YES/NO balance
+- Data quality indicators (FULL vs PARTIAL)
+- UNKNOWN profiles shown first (need attention)
+
+New CLI mode:
+  python run_pipeline.py --whale-inspect           # all whales
+  python run_pipeline.py --whale-inspect kch123    # filter by username
+  python run_pipeline.py --whale-inspect 0xabc     # filter by wallet
+---
+ core/whale_profiler.py | 108 +++++++++++++++++++++++++++++++++++++++++
+ run_pipeline.py        |   9 ++++
+ 2 files changed, 117 insertions(+)
+
+diff --git a/core/whale_profiler.py b/core/whale_profiler.py
+index 6cfa146..ccadbf9 100644
+--- a/core/whale_profiler.py
++++ b/core/whale_profiler.py
+@@ -999,3 +999,111 @@ class WhaleProfiler:
+ 
+         lines.append("=" * 85)
+         return "\n".join(lines)
++
++    def diagnostic_report(self, wallet_filter: str = "") -> str:
++        """
++        Generate a detailed diagnostic report for manual validation.
++
++        Shows full profile details + Polymarket profile links so you can
++        verify classifications against actual trading behavior.
++
++        Args:
++            wallet_filter: Optional filter — show only profiles matching
++                          this username or wallet prefix. Empty = show all.
++        """
++        if not self._profiles:
++            return "No whale profiles available. Run build_profiles() first."
++
++        profiles = list(self._profiles.values())
++        if wallet_filter:
++            filt = wallet_filter.lower()
++            profiles = [
++                p for p in profiles
++                if filt in p.wallet.lower() or filt in (p.username or "").lower()
++            ]
++            if not profiles:
++                return f"No profiles match filter '{wallet_filter}'."
++
++        # Sort: UNKNOWN first (needs attention), then by PnL
++        strategy_order = {"UNKNOWN": 0, "CONVICTION": 1, "SPECIALIST": 2, "DIVERSIFIED": 3, "MARKET_MAKER": 4}
++        profiles.sort(key=lambda p: (strategy_order.get(p.strategy, 9), -p.global_pnl))
++
++        lines = [
++            "=" * 95,
++            "  WHALE PROFILER — DIAGNOSTIC REPORT",
++            "=" * 95,
++            f"  Showing {len(profiles)} profile(s)" + (f" matching '{wallet_filter}'" if wallet_filter else ""),
++            f"  Verify classifications at: https://polymarket.com/profile/{{wallet_address}}",
++            "",
++        ]
++
++        for p in profiles:
++            wr = p.global_win_rate
++            wr_str = f"{wr:.0%}" if wr is not None else "N/A"
++            vol_pnl_str = f"{p.vol_pnl_ratio:.0f}x" if p.vol_pnl_ratio != float('inf') else "N/A"
++
++            lines.append(f"  ┌─ {p.username or 'Anonymous'} {'─' * max(1, 70 - len(p.username or 'Anonymous'))}")
++            lines.append(f"  │ Wallet:     {p.wallet}")
++            lines.append(f"  │ Profile:    https://polymarket.com/profile/{p.wallet}")
++            lines.append(f"  │ Strategy:   {p.strategy} (confidence: {p.strategy_confidence:.0%})")
++            lines.append(f"  │ Data:       {p.data_quality}")
++            lines.append(f"  │")
++            lines.append(f"  │ PnL:        ${p.global_pnl:>12,.0f}    Volume: ${p.global_volume:>14,.0f}    Vol/PnL: {vol_pnl_str:>6}")
++            lines.append(f"  │ Rank:       #{p.global_rank:<8s}              Win rate: {wr_str:>6}  ({p.global_win_count}W / {p.global_loss_count}L / {p.global_total_resolved} resolved)")
++            lines.append(f"  │ Signal:     {p.signal_weight():.2f} (overall credibility: {p.overall_credibility:.2f})")
++            lines.append(f"  │")
++
++            # Position breakdown
++            lines.append(f"  │ Positions:  {p.open_position_count} open, {p.closed_position_count} closed")
++            if p.avg_position_size > 0:
++                lines.append(f"  │ Size:       avg ${p.avg_position_size:,.0f} / median ${p.median_position_size:,.0f} / max ${p.max_position_size:,.0f}")
++            if p.yes_position_count + p.no_position_count > 0:
++                total_sided = p.yes_position_count + p.no_position_count
++                yes_pct = p.yes_position_count / total_sided
++                lines.append(f"  │ YES/NO:     {p.yes_position_count} YES / {p.no_position_count} NO ({yes_pct:.0%} / {1-yes_pct:.0%})")
++
++            # Category breakdown
++            if p.category_stats:
++                lines.append(f"  │")
++                lines.append(f"  │ Categories: (primary: {p.primary_category or 'N/A'}, concentration: {p.category_concentration:.2f})")
++                for cat, stats in sorted(p.category_stats.items(), key=lambda x: -abs(x[1].pnl)):
++                    cat_wr = stats.win_rate
++                    cat_wr_str = f"WR: {cat_wr:.0%}" if cat_wr is not None else "WR: N/A"
++                    cred_str = f"cred: {stats.credibility:.2f}"
++                    pos_str = f"{stats.position_count} pos" if stats.position_count > 0 else "leaderboard only"
++                    lines.append(
++                        f"  │   {cat:15s}  PnL: ${stats.pnl:>10,.0f}  {cat_wr_str:>8}  {cred_str}  ({pos_str})"
++                    )
++
++            # Classification reasoning
++            lines.append(f"  │")
++            if p.strategy == "MARKET_MAKER":
++                reasons = []
++                if p.open_position_count >= 40:
++                    reasons.append(f"{p.open_position_count} open positions (≥40)")
++                if p.vol_pnl_ratio != float('inf') and p.vol_pnl_ratio >= 50:
++                    reasons.append(f"vol/pnl={p.vol_pnl_ratio:.0f}x (≥50)")
++                total_sided = p.yes_position_count + p.no_position_count
++                if total_sided > 0:
++                    balance = 1.0 - abs(p.yes_position_count / total_sided - 0.5) * 2
++                    if balance > 0.7:
++                        reasons.append(f"balanced YES/NO ({balance:.0%})")
++                lines.append(f"  │ Reason:     {', '.join(reasons) or 'leaderboard-derived'}")
++            elif p.strategy == "CONVICTION":
++                reasons = []
++                if p.open_position_count > 0 and p.open_position_count <= 15:
++                    reasons.append(f"few positions ({p.open_position_count})")
++                if p.avg_position_size >= 500:
++                    reasons.append(f"large avg size (${p.avg_position_size:,.0f})")
++                if not reasons:
++                    reasons.append("leaderboard-derived (low vol/pnl, concentrated)")
++                lines.append(f"  │ Reason:     {', '.join(reasons)}")
++            elif p.strategy == "SPECIALIST":
++                lines.append(f"  │ Reason:     {p.category_concentration:.0%} concentration in {p.primary_category}")
++            elif p.strategy == "UNKNOWN":
++                lines.append(f"  │ Reason:     ⚠ insufficient data to classify — check profile manually")
++
++            lines.append(f"  └{'─' * 93}")
++            lines.append("")
++
++        return "\n".join(lines)
+diff --git a/run_pipeline.py b/run_pipeline.py
+index 6ff67de..d05a88e 100644
+--- a/run_pipeline.py
++++ b/run_pipeline.py
+@@ -10,6 +10,8 @@ Usage:
+     python run_pipeline.py --enriched --whale-profiles  # Enriched + profile-aware whale signals
+     python run_pipeline.py --profile-whales   # Build/refresh whale behavioral profiles
+     python run_pipeline.py --whale-report     # Show whale profiler report
++    python run_pipeline.py --whale-inspect    # Detailed diagnostic with profile links
++    python run_pipeline.py --whale-inspect kch123  # Inspect a specific whale
+     python run_pipeline.py --whale-backtest   # A/B backtest: profiled vs naive whale signal
+     python run_pipeline.py --enrich-demo      # Demo the context enrichment sources
+     python run_pipeline.py --report           # Show paper trading report
+@@ -40,6 +42,13 @@ def main():
+         from core.whale_profiler import WhaleProfiler
+         profiler = WhaleProfiler()
+         print(profiler.report())
++    elif "--whale-inspect" in args:
++        from core.whale_profiler import WhaleProfiler
++        profiler = WhaleProfiler()
++        # Optional filter: --whale-inspect username_or_wallet
++        remaining = [a for a in args if a != "--whale-inspect"]
++        filt = remaining[0] if remaining else ""
++        print(profiler.diagnostic_report(wallet_filter=filt))
+     elif "--report" in args:
+         from core.paper_trader import PaperTrader
+         trader = PaperTrader()
+-- 
+2.43.0
+
