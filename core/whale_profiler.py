@@ -147,6 +147,12 @@ class WhaleProfile:
     global_loss_count: int = 0
     global_total_resolved: int = 0
 
+    # Recency and activity breadth
+    total_markets_traded: int = 0          # From /total-markets-traded endpoint
+    on_weekly_leaderboard: bool = False    # Appeared on WEEK leaderboard
+    on_monthly_leaderboard: bool = False   # Appeared on MONTH leaderboard
+    recency_score: float = 0.0            # 0-1, computed from recency signals
+
     # Metadata
     profiled_at: str = ""
     data_quality: str = "PARTIAL"  # PARTIAL, FULL, STALE
@@ -194,7 +200,8 @@ class WhaleProfile:
 
         This is the key output — used by the ensemble estimator.
         Market makers get heavily discounted. Conviction traders in
-        their specialty get boosted.
+        their specialty get boosted. Dormant whales and one-event
+        lottery winners get steep discounts.
         """
         base = self.credibility_for_category(category) if category else self.overall_credibility
 
@@ -207,7 +214,19 @@ class WhaleProfile:
             "UNKNOWN": 0.6,
         }.get(self.strategy, 0.6)
 
-        return min(1.0, base * strategy_mult)
+        # Recency discount — dormant whales are unreliable
+        # recency_score of 0 = dormant (discount to 25% of signal)
+        # recency_score of 1 = fully active (no discount)
+        recency_mult = 0.25 + 0.75 * self.recency_score
+
+        # Breadth discount — one-event lottery winners are unreliable
+        # <5 markets = heavy discount, 20+ = no discount
+        if self.total_markets_traded > 0:
+            breadth_mult = min(1.0, 0.3 + self.total_markets_traded / 30)
+        else:
+            breadth_mult = 0.7  # Unknown breadth — mild discount
+
+        return min(1.0, base * strategy_mult * recency_mult * breadth_mult)
 
     def summary(self) -> str:
         wr = self.global_win_rate
@@ -246,6 +265,10 @@ class WhaleProfile:
             "global_win_count": self.global_win_count,
             "global_loss_count": self.global_loss_count,
             "global_total_resolved": self.global_total_resolved,
+            "total_markets_traded": self.total_markets_traded,
+            "on_weekly_leaderboard": self.on_weekly_leaderboard,
+            "on_monthly_leaderboard": self.on_monthly_leaderboard,
+            "recency_score": self.recency_score,
             "profiled_at": self.profiled_at,
             "data_quality": self.data_quality,
             "category_stats": {
@@ -292,6 +315,10 @@ class WhaleProfile:
             global_win_count=d.get("global_win_count", 0),
             global_loss_count=d.get("global_loss_count", 0),
             global_total_resolved=d.get("global_total_resolved", 0),
+            total_markets_traded=d.get("total_markets_traded", 0),
+            on_weekly_leaderboard=d.get("on_weekly_leaderboard", False),
+            on_monthly_leaderboard=d.get("on_monthly_leaderboard", False),
+            recency_score=d.get("recency_score", 0.0),
             profiled_at=d.get("profiled_at", ""),
             data_quality=d.get("data_quality", "PARTIAL"),
             category_stats=cat_stats,
@@ -549,6 +576,26 @@ class WhaleProfiler:
             sorted(candidates.items(), key=lambda x: x[1].get("global_pnl", 0), reverse=True)
         )
 
+        # ─── Recency check: WEEK and MONTH leaderboards ──────
+        # If a wallet appears on recent leaderboards, they're still active
+        for period in ["WEEK", "MONTH"]:
+            key = "on_weekly" if period == "WEEK" else "on_monthly"
+            try:
+                recent = self._get("/v1/leaderboard", {
+                    "limit": 50,
+                    "timePeriod": period,
+                    "orderBy": "PNL",
+                })
+                if isinstance(recent, list):
+                    for entry in recent:
+                        wallet = entry.get("proxyWallet", "").lower()
+                        if wallet in candidates:
+                            candidates[wallet][key] = True
+                    active = sum(1 for c in candidates.values() if c.get(key))
+                    logger.info(f"   {period} leaderboard: {active}/{len(candidates)} whales active")
+            except Exception as e:
+                logger.debug(f"Recency leaderboard failed ({period}): {e}")
+
         return candidates
 
     def _build_single_profile(self, wallet: str, base_data: dict) -> Optional[WhaleProfile]:
@@ -565,6 +612,8 @@ class WhaleProfiler:
             global_pnl=base_data.get("global_pnl", 0),
             global_volume=base_data.get("global_volume", 0),
             global_rank=base_data.get("global_rank", ""),
+            on_weekly_leaderboard=base_data.get("on_weekly", False),
+            on_monthly_leaderboard=base_data.get("on_monthly", False),
             profiled_at=datetime.now(timezone.utc).isoformat(),
         )
 
@@ -575,6 +624,11 @@ class WhaleProfiler:
                 pnl=cat_data.get("pnl", 0),
                 volume=cat_data.get("vol", 0),
             )
+
+        # Fetch total markets traded (always — used for breadth scoring)
+        total_traded = self._fetch_total_markets_traded(wallet)
+        if total_traded is not None:
+            profile.total_markets_traded = total_traded
 
         # Fetch open positions
         open_positions = self._fetch_positions(wallet, closed=False)
@@ -588,16 +642,12 @@ class WhaleProfiler:
         if closed_positions:
             self._analyze_closed_positions(profile, closed_positions)
 
-        # If we got no position data at all, try total-markets-traded
-        # as a rough proxy for activity level
+        # If we got no position data at all, use total-markets-traded
+        # as a rough proxy for activity level in classification
         if not open_positions and not closed_positions:
-            total_traded = self._fetch_total_markets_traded(wallet)
-            if total_traded is not None and total_traded > 0:
-                # Use this as a stand-in for position count in classification
-                profile.open_position_count = total_traded
-                profile.data_quality = "PARTIAL"
-            else:
-                profile.data_quality = "PARTIAL"
+            if profile.total_markets_traded > 0:
+                profile.open_position_count = profile.total_markets_traded
+            profile.data_quality = "PARTIAL"
 
         # Compute category concentration
         self._compute_category_concentration(profile)
@@ -607,6 +657,9 @@ class WhaleProfiler:
 
         # Compute overall credibility
         self._compute_overall_credibility(profile)
+
+        # Compute recency score (after all other data is gathered)
+        self._compute_recency_score(profile)
 
         if open_positions or closed_positions:
             profile.data_quality = "FULL"
@@ -683,33 +736,43 @@ class WhaleProfiler:
             profile.total_position_value = float(np.sum(sizes))
 
     def _analyze_closed_positions(self, profile: WhaleProfile, positions: list):
-        """Extract win/loss data from resolved positions."""
+        """
+        Extract win/loss data from resolved positions.
+        
+        The /closed-positions endpoint returns positions with 'realizedPnl'
+        (not 'cashPnl'). A position is "won" if realizedPnl > 0.
+        """
         profile.closed_position_count = len(positions)
 
         for pos in positions:
-            cash_pnl = float(pos.get("cashPnl", 0) or 0)
-            redeemable = pos.get("redeemable", False)
+            # /closed-positions uses 'realizedPnl', /positions uses 'cashPnl'
+            realized_pnl = float(
+                pos.get("realizedPnl", 0)
+                or pos.get("cashPnl", 0)
+                or 0
+            )
 
-            # A position is "won" if it has positive cashPnl or is redeemable
-            is_win = cash_pnl > 0 or redeemable
+            if realized_pnl == 0:
+                continue  # No PnL data — skip
 
-            if cash_pnl != 0 or redeemable:
-                profile.global_total_resolved += 1
+            is_win = realized_pnl > 0
+
+            profile.global_total_resolved += 1
+            if is_win:
+                profile.global_win_count += 1
+            else:
+                profile.global_loss_count += 1
+
+            # Category-level tracking
+            cat = self._infer_category(pos)
+            if cat:
+                if cat not in profile.category_stats:
+                    profile.category_stats[cat] = CategoryStats(category=cat)
+                profile.category_stats[cat].total_resolved += 1
                 if is_win:
-                    profile.global_win_count += 1
+                    profile.category_stats[cat].win_count += 1
                 else:
-                    profile.global_loss_count += 1
-
-                # Category-level tracking
-                cat = self._infer_category(pos)
-                if cat:
-                    if cat not in profile.category_stats:
-                        profile.category_stats[cat] = CategoryStats(category=cat)
-                    profile.category_stats[cat].total_resolved += 1
-                    if is_win:
-                        profile.category_stats[cat].win_count += 1
-                    else:
-                        profile.category_stats[cat].loss_count += 1
+                    profile.category_stats[cat].loss_count += 1
 
     def _infer_category(self, position: dict) -> str:
         """
@@ -937,6 +1000,38 @@ class WhaleProfiler:
         if total_weight > 0:
             profile.overall_credibility = weighted_cred / total_weight
 
+    def _compute_recency_score(self, profile: WhaleProfile):
+        """
+        Compute a recency score (0-1) based on multiple activity signals.
+
+        Signals used:
+        - On weekly leaderboard → strongly active (0.5)
+        - On monthly leaderboard → recently active (0.3)
+        - Has open positions → currently engaged (0.3)
+        - High total markets traded → sustained activity (0.2)
+
+        A dormant whale who made $20M on the 2024 election and hasn't
+        traded since gets ~0.1. An active market maker gets ~1.0.
+        """
+        score = 0.0
+
+        if profile.on_weekly_leaderboard:
+            score += 0.5
+        if profile.on_monthly_leaderboard:
+            score += 0.3
+
+        if profile.open_position_count > 0:
+            # Scale: 1 position = 0.1, 5+ = 0.3
+            score += min(0.3, profile.open_position_count * 0.06)
+
+        # Breadth as a weak recency signal — more markets = more sustained
+        if profile.total_markets_traded >= 50:
+            score += 0.2
+        elif profile.total_markets_traded >= 20:
+            score += 0.1
+
+        profile.recency_score = min(1.0, score)
+
     # ─── Reporting ───────────────────────────────────────
 
     def report(self) -> str:
@@ -965,7 +1060,7 @@ class WhaleProfiler:
         # Top conviction traders (most useful signals)
         conviction = [
             p for p in self._profiles.values()
-            if p.strategy in ("CONVICTION", "SPECIALIST") and p.signal_weight() > 0.2
+            if p.strategy in ("CONVICTION", "SPECIALIST") and p.signal_weight() > 0.05
         ]
         conviction.sort(key=lambda p: p.signal_weight(), reverse=True)
 
@@ -974,13 +1069,33 @@ class WhaleProfiler:
             for p in conviction[:15]:
                 wr = p.global_win_rate
                 wr_str = f"{wr:.0%}" if wr is not None else "N/A"
+                recency_flag = "🟢" if p.recency_score >= 0.5 else ("🟡" if p.recency_score >= 0.2 else "💤")
                 lines.append(
-                    f"    {p.username or p.wallet[:12]:15s} | "
+                    f"    {recency_flag} {p.username or p.wallet[:12]:15s} | "
                     f"{p.strategy:12s} | "
                     f"Signal: {p.signal_weight():.2f} | "
                     f"PnL: ${p.global_pnl:>10,.0f} | "
                     f"WR: {wr_str:>4s} | "
-                    f"Primary: {p.primary_category or 'N/A'}"
+                    f"Primary: {p.primary_category or 'N/A':>10s} | "
+                    f"Mkts: {p.total_markets_traded:>4}"
+                )
+            lines.append("    (🟢 active  🟡 recent  💤 dormant)")
+            lines.append("")
+
+        # Dormant whales warning
+        dormant = [
+            p for p in self._profiles.values()
+            if p.recency_score < 0.2 and p.strategy != "MARKET_MAKER"
+        ]
+        if dormant:
+            lines.append(f"  ⚠ Dormant Whales (no recent activity, heavily discounted): {len(dormant)}")
+            for p in dormant[:5]:
+                lines.append(
+                    f"    {p.username or p.wallet[:12]:15s} | "
+                    f"PnL: ${p.global_pnl:>10,.0f} | "
+                    f"Recency: {p.recency_score:.2f} | "
+                    f"Markets: {p.total_markets_traded} | "
+                    f"Signal: {p.signal_weight():.2f}"
                 )
             lines.append("")
 
@@ -1051,6 +1166,23 @@ class WhaleProfiler:
             lines.append(f"  │ PnL:        ${p.global_pnl:>12,.0f}    Volume: ${p.global_volume:>14,.0f}    Vol/PnL: {vol_pnl_str:>6}")
             lines.append(f"  │ Rank:       #{p.global_rank:<8s}              Win rate: {wr_str:>6}  ({p.global_win_count}W / {p.global_loss_count}L / {p.global_total_resolved} resolved)")
             lines.append(f"  │ Signal:     {p.signal_weight():.2f} (overall credibility: {p.overall_credibility:.2f})")
+            lines.append(f"  │")
+
+            # Recency and breadth
+            recency_parts = []
+            if p.on_weekly_leaderboard:
+                recency_parts.append("weekly LB ✓")
+            if p.on_monthly_leaderboard:
+                recency_parts.append("monthly LB ✓")
+            if not p.on_weekly_leaderboard and not p.on_monthly_leaderboard:
+                recency_parts.append("not on recent LBs ⚠")
+            recency_str = ", ".join(recency_parts)
+
+            lines.append(f"  │ Recency:    {p.recency_score:.2f} ({recency_str})")
+            breadth_note = ""
+            if p.total_markets_traded > 0 and p.total_markets_traded < 10:
+                breadth_note = " ⚠ possible one-event whale"
+            lines.append(f"  │ Breadth:    {p.total_markets_traded} markets traded{breadth_note}")
             lines.append(f"  │")
 
             # Position breakdown
