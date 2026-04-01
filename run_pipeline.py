@@ -10,6 +10,8 @@ Usage:
     python run_pipeline.py --enriched --whale-profiles  # Enriched + profile-aware whale signals
     python run_pipeline.py --profile-whales   # Build/refresh whale behavioral profiles
     python run_pipeline.py --whale-report     # Show whale profiler report
+    python run_pipeline.py --whale-inspect    # Detailed diagnostic with profile links
+    python run_pipeline.py --whale-inspect kch123  # Inspect a specific whale
     python run_pipeline.py --whale-backtest   # A/B backtest: profiled vs naive whale signal
     python run_pipeline.py --enrich-demo      # Demo the context enrichment sources
     python run_pipeline.py --report           # Show paper trading report
@@ -40,6 +42,13 @@ def main():
         from core.whale_profiler import WhaleProfiler
         profiler = WhaleProfiler()
         print(profiler.report())
+    elif "--whale-inspect" in args:
+        from core.whale_profiler import WhaleProfiler
+        profiler = WhaleProfiler()
+        # Optional filter: --whale-inspect username_or_wallet
+        remaining = [a for a in args if a != "--whale-inspect"]
+        filt = remaining[0] if remaining else ""
+        print(profiler.diagnostic_report(wallet_filter=filt))
     elif "--report" in args:
         from core.paper_trader import PaperTrader
         trader = PaperTrader()

@@ -999,3 +999,111 @@ class WhaleProfiler:
 
         lines.append("=" * 85)
         return "\n".join(lines)
+
+    def diagnostic_report(self, wallet_filter: str = "") -> str:
+        """
+        Generate a detailed diagnostic report for manual validation.
+
+        Shows full profile details + Polymarket profile links so you can
+        verify classifications against actual trading behavior.
+
+        Args:
+            wallet_filter: Optional filter — show only profiles matching
+                          this username or wallet prefix. Empty = show all.
+        """
+        if not self._profiles:
+            return "No whale profiles available. Run build_profiles() first."
+
+        profiles = list(self._profiles.values())
+        if wallet_filter:
+            filt = wallet_filter.lower()
+            profiles = [
+                p for p in profiles
+                if filt in p.wallet.lower() or filt in (p.username or "").lower()
+            ]
+            if not profiles:
+                return f"No profiles match filter '{wallet_filter}'."
+
+        # Sort: UNKNOWN first (needs attention), then by PnL
+        strategy_order = {"UNKNOWN": 0, "CONVICTION": 1, "SPECIALIST": 2, "DIVERSIFIED": 3, "MARKET_MAKER": 4}
+        profiles.sort(key=lambda p: (strategy_order.get(p.strategy, 9), -p.global_pnl))
+
+        lines = [
+            "=" * 95,
+            "  WHALE PROFILER — DIAGNOSTIC REPORT",
+            "=" * 95,
+            f"  Showing {len(profiles)} profile(s)" + (f" matching '{wallet_filter}'" if wallet_filter else ""),
+            f"  Verify classifications at: https://polymarket.com/profile/{{wallet_address}}",
+            "",
+        ]
+
+        for p in profiles:
+            wr = p.global_win_rate
+            wr_str = f"{wr:.0%}" if wr is not None else "N/A"
+            vol_pnl_str = f"{p.vol_pnl_ratio:.0f}x" if p.vol_pnl_ratio != float('inf') else "N/A"
+
+            lines.append(f"  ┌─ {p.username or 'Anonymous'} {'─' * max(1, 70 - len(p.username or 'Anonymous'))}")
+            lines.append(f"  │ Wallet:     {p.wallet}")
+            lines.append(f"  │ Profile:    https://polymarket.com/profile/{p.wallet}")
+            lines.append(f"  │ Strategy:   {p.strategy} (confidence: {p.strategy_confidence:.0%})")
+            lines.append(f"  │ Data:       {p.data_quality}")
+            lines.append(f"  │")
+            lines.append(f"  │ PnL:        ${p.global_pnl:>12,.0f}    Volume: ${p.global_volume:>14,.0f}    Vol/PnL: {vol_pnl_str:>6}")
+            lines.append(f"  │ Rank:       #{p.global_rank:<8s}              Win rate: {wr_str:>6}  ({p.global_win_count}W / {p.global_loss_count}L / {p.global_total_resolved} resolved)")
+            lines.append(f"  │ Signal:     {p.signal_weight():.2f} (overall credibility: {p.overall_credibility:.2f})")
+            lines.append(f"  │")
+
+            # Position breakdown
+            lines.append(f"  │ Positions:  {p.open_position_count} open, {p.closed_position_count} closed")
+            if p.avg_position_size > 0:
+                lines.append(f"  │ Size:       avg ${p.avg_position_size:,.0f} / median ${p.median_position_size:,.0f} / max ${p.max_position_size:,.0f}")
+            if p.yes_position_count + p.no_position_count > 0:
+                total_sided = p.yes_position_count + p.no_position_count
+                yes_pct = p.yes_position_count / total_sided
+                lines.append(f"  │ YES/NO:     {p.yes_position_count} YES / {p.no_position_count} NO ({yes_pct:.0%} / {1-yes_pct:.0%})")
+
+            # Category breakdown
+            if p.category_stats:
+                lines.append(f"  │")
+                lines.append(f"  │ Categories: (primary: {p.primary_category or 'N/A'}, concentration: {p.category_concentration:.2f})")
+                for cat, stats in sorted(p.category_stats.items(), key=lambda x: -abs(x[1].pnl)):
+                    cat_wr = stats.win_rate
+                    cat_wr_str = f"WR: {cat_wr:.0%}" if cat_wr is not None else "WR: N/A"
+                    cred_str = f"cred: {stats.credibility:.2f}"
+                    pos_str = f"{stats.position_count} pos" if stats.position_count > 0 else "leaderboard only"
+                    lines.append(
+                        f"  │   {cat:15s}  PnL: ${stats.pnl:>10,.0f}  {cat_wr_str:>8}  {cred_str}  ({pos_str})"
+                    )
+
+            # Classification reasoning
+            lines.append(f"  │")
+            if p.strategy == "MARKET_MAKER":
+                reasons = []
+                if p.open_position_count >= 40:
+                    reasons.append(f"{p.open_position_count} open positions (≥40)")
+                if p.vol_pnl_ratio != float('inf') and p.vol_pnl_ratio >= 50:
+                    reasons.append(f"vol/pnl={p.vol_pnl_ratio:.0f}x (≥50)")
+                total_sided = p.yes_position_count + p.no_position_count
+                if total_sided > 0:
+                    balance = 1.0 - abs(p.yes_position_count / total_sided - 0.5) * 2
+                    if balance > 0.7:
+                        reasons.append(f"balanced YES/NO ({balance:.0%})")
+                lines.append(f"  │ Reason:     {', '.join(reasons) or 'leaderboard-derived'}")
+            elif p.strategy == "CONVICTION":
+                reasons = []
+                if p.open_position_count > 0 and p.open_position_count <= 15:
+                    reasons.append(f"few positions ({p.open_position_count})")
+                if p.avg_position_size >= 500:
+                    reasons.append(f"large avg size (${p.avg_position_size:,.0f})")
+                if not reasons:
+                    reasons.append("leaderboard-derived (low vol/pnl, concentrated)")
+                lines.append(f"  │ Reason:     {', '.join(reasons)}")
+            elif p.strategy == "SPECIALIST":
+                lines.append(f"  │ Reason:     {p.category_concentration:.0%} concentration in {p.primary_category}")
+            elif p.strategy == "UNKNOWN":
+                lines.append(f"  │ Reason:     ⚠ insufficient data to classify — check profile manually")
+
+            lines.append(f"  └{'─' * 93}")
+            lines.append("")
+
+        return "\n".join(lines)
