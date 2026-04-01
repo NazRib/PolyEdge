@@ -369,8 +369,10 @@ def whale_tracker_estimator(context: dict) -> tuple[float, float]:
     whale_lean = yes_signal / total  # 0 = all No, 1 = all Yes
     
     market_price = context.get("market_price", 0.5)
-    # Blend market price with whale lean
-    projected = 0.7 * market_price + 0.3 * whale_lean
+    # Whale lean is a noisy directional indicator, NOT a calibrated probability.
+    # Backtesting shows that blending at >15% HURTS accuracy vs market price,
+    # while 5-10% provides genuine improvement. Be conservative.
+    projected = 0.93 * market_price + 0.07 * whale_lean
     confidence = min(0.6, total * 0.2)
     
     return projected, confidence
@@ -445,14 +447,17 @@ def profiled_whale_estimator(context: dict) -> tuple[float, float]:
     
     market_price = context.get("market_price", 0.5)
     
-    # The blend weight depends on how many credible whales we have.
-    # 1 whale → conservative blend (80% market / 20% whale)
-    # 3+ whales → stronger blend (65% market / 35% whale)
-    whale_blend = min(0.35, 0.15 + total_credible_whales * 0.07)
+    # Whale lean is a directional signal, not a probability estimate.
+    # Backtesting shows >15% blend HURTS accuracy. The sweet spot is 5-10%.
+    # With profiling, we can be slightly more aggressive for credible whales
+    # because we've filtered market makers out (major noise source).
+    #
+    # Scale: 1 credible whale → 3%, 2 → 5%, 3+ → 7-10%
+    whale_blend = min(0.10, 0.03 + total_credible_whales * 0.025)
     projected = (1 - whale_blend) * market_price + whale_blend * whale_lean
     projected = max(0.01, min(0.99, projected))
     
-    # Confidence scales with signal strength AND number of credible whales
+    # Confidence reflects both signal strength and number of credible sources
     confidence = min(0.7, total * 0.15 + total_credible_whales * 0.05)
     
     return projected, confidence

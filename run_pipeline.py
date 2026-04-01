@@ -10,6 +10,7 @@ Usage:
     python run_pipeline.py --enriched --whale-profiles  # Enriched + profile-aware whale signals
     python run_pipeline.py --profile-whales   # Build/refresh whale behavioral profiles
     python run_pipeline.py --whale-report     # Show whale profiler report
+    python run_pipeline.py --whale-backtest   # A/B backtest: profiled vs naive whale signal
     python run_pipeline.py --enrich-demo      # Demo the context enrichment sources
     python run_pipeline.py --report           # Show paper trading report
     python run_pipeline.py --demo             # Run with simulated data (no API calls)
@@ -32,6 +33,9 @@ def main():
         run_demo()
     elif "--profile-whales" in args:
         run_whale_profiler()
+    elif "--whale-backtest" in args:
+        from backtest_whale_signal import run_backtest
+        run_backtest()
     elif "--whale-report" in args:
         from core.whale_profiler import WhaleProfiler
         profiler = WhaleProfiler()

@@ -89,6 +89,7 @@ python run_pipeline.py --report
 | `--enriched --live --whale-profiles` | Full pipeline with profiled whales + live Claude |
 | `--profile-whales` | Build/refresh whale behavioral profiles (~5-8 min) |
 | `--whale-report` | Print whale profiler report (strategy breakdown, top signals) |
+| `--whale-backtest` | A/B backtest: profiled vs naive whale signal (synthetic data) |
 | `--enrich-demo` | Demos the enrichment sources on sample markets |
 | `--report` | Prints paper trading P&L and calibration report |
 | *(no flags)* | Basic pipeline without context enrichment |
