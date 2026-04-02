@@ -29,13 +29,19 @@ from typing import Optional
 
 import numpy as np
 
+from core.llm_providers import (
+    call_llm,
+    PROVIDER_CLAUDE, PROVIDER_GPT, validate_provider, model_tag_for_provider,
+    DEFAULT_CLAUDE_MODEL,
+)
+
 logger = logging.getLogger(__name__)
 
 
 # ─── Configuration ───────────────────────────────────────
 
 ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages"
-DEFAULT_MODEL = "claude-sonnet-4-20250514"
+DEFAULT_MODEL = DEFAULT_CLAUDE_MODEL
 
 # Calibration defaults (learned over time)
 DEFAULT_CALIBRATION = {
@@ -762,20 +768,28 @@ class LLMEstimator:
         api_key: Optional[str] = None,
         n_samples: int = 1,
         temperature: float = 0.2,
+        provider: str = PROVIDER_CLAUDE,
     ):
         """
         Args:
-            model: Claude model to use
+            model: Model/deployment name (auto-set per provider if left default)
             calibration: CalibrationModel instance (creates default if None)
-            api_key: Anthropic API key (or set ANTHROPIC_API_KEY env var)
+            api_key: API key (or set env var per provider)
             n_samples: Number of LLM calls to average (more = better calibration, slower)
             temperature: LLM temperature (lower = more deterministic)
+            provider: 'claude' or 'gpt'
         """
+        self.provider = validate_provider(provider)
         self.model = model
         self.calibration = calibration or CalibrationModel()
         self.api_key = api_key
         self.n_samples = n_samples
         self.temperature = temperature
+    
+    @property
+    def model_tag(self) -> str:
+        """Short label for paper-trade tagging (e.g. 'claude-sonnet-4', 'gpt-5.4')."""
+        return model_tag_for_provider(self.provider)
     
     def forecast(self, context: MarketContext) -> Optional[LLMForecast]:
         """
@@ -793,8 +807,10 @@ class LLMEstimator:
             # Vary temperature slightly across samples for diversity
             temp = self.temperature + (i * 0.1) if self.n_samples > 1 else self.temperature
             
-            raw = call_claude(
+            raw = call_llm(
                 user_prompt=prompt,
+                system_prompt=FORECASTER_SYSTEM_PROMPT,
+                provider=self.provider,
                 model=self.model,
                 temperature=min(temp, 1.0),
                 api_key=self.api_key,
@@ -849,7 +865,7 @@ class LLMEstimator:
             confidence_score=float(base_confidence),
             base_rate_anchor=primary.get("base_rate_anchor"),
             information_edge=primary.get("information_edge", "none"),
-            model_used=self.model,
+            model_used=self.model_tag,
             timestamp=datetime.now(timezone.utc).isoformat(),
         )
     

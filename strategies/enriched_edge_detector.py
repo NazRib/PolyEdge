@@ -28,6 +28,10 @@ from core.llm_estimator import (
     build_market_context, call_claude, parse_llm_response,
     FORECASTER_SYSTEM_PROMPT,
 )
+from core.llm_providers import (
+    call_llm, validate_provider, model_tag_for_provider,
+    provider_ready, PROVIDER_CLAUDE, PROVIDER_GPT,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -39,7 +43,7 @@ class EnrichedLLMEstimator:
     This is the "full power" version that:
     1. Gathers context from news, Kalshi, FRED, and related markets
     2. Builds a rich prompt with all available information
-    3. Calls Claude for a probability estimate
+    3. Calls the configured LLM (Claude or GPT) for a probability estimate
     4. Applies calibration correction
     
     For ensemble integration:
@@ -53,13 +57,19 @@ class EnrichedLLMEstimator:
         calibration: CalibrationModel = None,
         api_key: Optional[str] = None,
         model: str = "claude-sonnet-4-20250514",
+        llm_provider: str = PROVIDER_CLAUDE,
     ):
+        self.provider = validate_provider(llm_provider)
         self.enricher = enricher or ContextEnricher()
         self.calibration = calibration or CalibrationModel()
         self.api_key = api_key
         self.model = model
         self._all_markets_cache: list[dict] = []
         self._enrichment_cache: dict[str, EnrichedContext] = {}
+    
+    @property
+    def model_tag(self) -> str:
+        return model_tag_for_provider(self.provider)
     
     def set_market_universe(self, markets: list[dict]):
         """Cache the list of all active markets for related-market enrichment."""
@@ -71,7 +81,7 @@ class EnrichedLLMEstimator:
         
         1. Enrich the context
         2. Build full prompt
-        3. Call Claude
+        3. Call the configured LLM
         4. Calibrate
         5. Return (probability, confidence)
         """
@@ -104,11 +114,12 @@ class EnrichedLLMEstimator:
             enriched,
         )
         
-        # Call Claude
-        raw_response = call_claude(
+        # Call the configured LLM provider
+        raw_response = call_llm(
             user_prompt=prompt,
             system_prompt=FORECASTER_SYSTEM_PROMPT,
-            model=self.model,
+            provider=self.provider,
+            model=self.model if self.provider == PROVIDER_CLAUDE else None,
             temperature=0.2,
             api_key=self.api_key,
         )
@@ -166,6 +177,7 @@ class EnrichedEdgeDetector:
         use_whale_profiles: bool = False,
         llm_skill_level: float = 0.35,
         data_dir: str = "data",
+        llm_provider: str = PROVIDER_CLAUDE,
     ):
         self.kelly_fraction = kelly_fraction
         self.min_edge = min_edge
@@ -173,10 +185,17 @@ class EnrichedEdgeDetector:
         self.max_signals = max_signals
         self.max_cluster_exposure = max_cluster_exposure  # Max % of initial bankroll per theme
         
+        # Validate and store provider
+        self.llm_provider = validate_provider(llm_provider) if use_live_llm else ""
+        
+        # Model tag for paper-trade comparison (e.g. "claude-sonnet-4", "gpt-5.4")
+        self.model_tag = model_tag_for_provider(self.llm_provider) if self.llm_provider else "simulated"
+        
         # Strategy tag for A/B comparison in paper trading
         tag_parts = ["enriched"]
         if use_live_llm:
             tag_parts.append("live")
+            tag_parts.append(self.model_tag)
         if use_whale_profiles:
             tag_parts.append("profiles")
         self.strategy_tag = "+".join(tag_parts)
@@ -210,13 +229,17 @@ class EnrichedEdgeDetector:
             enable_related=True,
             enable_whales=True,
             whale_profiler=self.whale_profiler,
+            llm_provider=self.llm_provider or PROVIDER_CLAUDE,
         )
         
         # Build ensemble
         self.ensemble = EnsembleEstimator()
         
         if use_live_llm:
-            self.llm_estimator = EnrichedLLMEstimator(enricher=self.enricher)
+            self.llm_estimator = EnrichedLLMEstimator(
+                enricher=self.enricher,
+                llm_provider=self.llm_provider,
+            )
             self.ensemble.add_estimator(
                 "enriched_llm", self.llm_estimator.estimate_for_ensemble, weight=0.45
             )
@@ -246,6 +269,7 @@ class EnrichedEdgeDetector:
         
         print("\n" + "=" * 70)
         print("  POLYMARKET EDGE — Enriched Pipeline")
+        print(f"  Strategy: {self.strategy_tag}  |  Model: {self.model_tag}")
         print("=" * 70)
         
         # Step 0: Check open trades for resolution
@@ -348,7 +372,11 @@ class EnrichedEdgeDetector:
                 print(f"    🚫 Blocked: {question[:40]}... — {reason}")
                 continue
             
-            trade = self.trader.enter_trade(s["estimate"], s["position"], strategy_tag=self.strategy_tag)
+            trade = self.trader.enter_trade(
+                s["estimate"], s["position"],
+                strategy_tag=self.strategy_tag,
+                model_tag=self.model_tag,
+            )
             if trade:
                 trades_entered += 1
                 existing_ids.add(market_id)  # Prevent further duplicates this run

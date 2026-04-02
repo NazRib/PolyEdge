@@ -39,3 +39,17 @@ MARKETS_CACHE = "data/markets_cache.json"
 
 # ─── Logging ─────────────────────────────────────────────
 LOG_LEVEL = "INFO"
+
+# ─── LLM Provider Configuration ─────────────────────────
+# Default provider: "claude" or "gpt"
+LLM_PROVIDER = "claude"
+
+# Claude (Anthropic) — set ANTHROPIC_API_KEY env var
+CLAUDE_MODEL = "claude-sonnet-4-20250514"
+
+# GPT-5.4 (Azure AI Foundry Responses API)
+# Set these env vars:
+#   AZURE_OPENAI_API_KEY      — your Azure OpenAI API key
+#   AZURE_OPENAI_ENDPOINT     — e.g. https://your-resource.openai.azure.com
+#   AZURE_OPENAI_DEPLOYMENT   — deployment name (default: gpt-5.4)
+AZURE_OPENAI_DEPLOYMENT = "gpt-5.4"

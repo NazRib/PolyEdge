@@ -39,15 +39,30 @@ ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages"
 
 class NewsEnricher:
     """
-    Uses Claude API with web_search tool to find recent news relevant 
+    Uses an LLM with web search to find recent news relevant 
     to a prediction market question.
+    
+    Supports both Claude (web_search_20250305 tool) and GPT-5.4
+    (Azure Responses API with web_search tool).
     
     This is the single highest-value enrichment source — recent news that
     the market hasn't fully priced in is where alpha lives.
     """
     
-    def __init__(self, api_key: Optional[str] = None, model: str = "claude-sonnet-4-20250514"):
-        self.api_key = api_key or os.environ.get("ANTHROPIC_API_KEY")
+    def __init__(
+        self,
+        api_key: Optional[str] = None,
+        model: str = "claude-sonnet-4-20250514",
+        llm_provider: str = "claude",
+    ):
+        from core.llm_providers import validate_provider, PROVIDER_CLAUDE
+        self.provider = validate_provider(llm_provider)
+        
+        if self.provider == PROVIDER_CLAUDE:
+            self.api_key = api_key or os.environ.get("ANTHROPIC_API_KEY")
+        else:
+            self.api_key = api_key or os.environ.get("AZURE_OPENAI_API_KEY")
+        
         self.model = model
     
     def search(self, question: str, category: str = "", max_results: int = 5) -> dict:
@@ -68,11 +83,17 @@ class NewsEnricher:
         # Build search-optimized queries from the question
         queries = self._extract_search_queries(question, category)
         
-        # Use Claude with web_search to gather and synthesize news
+        # Use LLM with web_search to gather and synthesize news
         prompt = self._build_news_prompt(question, queries)
         
         try:
-            result = self._call_claude_with_search(prompt)
+            from core.llm_providers import call_llm_with_search
+            result = call_llm_with_search(
+                user_prompt=prompt,
+                provider=self.provider,
+                model=self.model if self.provider == "claude" else None,
+                api_key=self.api_key,
+            )
             if result:
                 return self._parse_news_result(result)
         except Exception as e:
@@ -1096,8 +1117,12 @@ class ContextEnricher:
         anthropic_api_key: Optional[str] = None,
         fred_api_key: Optional[str] = None,
         whale_profiler: "WhaleProfiler | None" = None,
+        llm_provider: str = "claude",
     ):
-        self.news_enricher = NewsEnricher(api_key=anthropic_api_key) if enable_news else None
+        self.news_enricher = (
+            NewsEnricher(api_key=anthropic_api_key, llm_provider=llm_provider)
+            if enable_news else None
+        )
         self.kalshi_enricher = KalshiPriceEnricher() if enable_kalshi else None
         self.fred_enricher = EconomicEnricher(api_key=fred_api_key) if enable_fred else None
         self.related_enricher = RelatedMarketsEnricher() if enable_related else None

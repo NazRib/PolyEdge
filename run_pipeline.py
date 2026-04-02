@@ -6,7 +6,9 @@ Usage:
     python run_pipeline.py                    # Full pipeline (scan → estimate → paper trade)
     python run_pipeline.py --scan-only        # Just scan and show opportunities
     python run_pipeline.py --enriched         # Enriched pipeline (with context enrichment)
-    python run_pipeline.py --enriched --live  # Enriched + real Claude API calls
+    python run_pipeline.py --enriched --live  # Enriched + real LLM API calls (Claude default)
+    python run_pipeline.py --enriched --live --model gpt   # Use GPT-5.4 via Azure
+    python run_pipeline.py --enriched --live --model claude # Use Claude (default)
     python run_pipeline.py --enriched --whale-profiles  # Enriched + profile-aware whale signals
     python run_pipeline.py --profile-whales   # Build/refresh whale behavioral profiles
     python run_pipeline.py --whale-report     # Show whale profiler report
@@ -15,6 +17,8 @@ Usage:
     python run_pipeline.py --whale-backtest   # A/B backtest: profiled vs naive whale signal
     python run_pipeline.py --enrich-demo      # Demo the context enrichment sources
     python run_pipeline.py --report           # Show paper trading report
+    python run_pipeline.py --report-compare   # A/B strategy comparison
+    python run_pipeline.py --report-models    # Compare LLM model performance
     python run_pipeline.py --demo             # Run with simulated data (no API calls)
 """
 
@@ -53,6 +57,10 @@ def main():
         from core.paper_trader import PaperTrader
         trader = PaperTrader()
         print(trader.compare_strategies())
+    elif "--report-models" in args:
+        from core.paper_trader import PaperTrader
+        trader = PaperTrader()
+        print(trader.compare_models())
     elif "--report" in args:
         from core.paper_trader import PaperTrader
         trader = PaperTrader()
@@ -64,10 +72,29 @@ def main():
         from strategies.enriched_edge_detector import run_enriched_pipeline
         use_live = "--live" in args
         use_profiles = "--whale-profiles" in args
+        
+        # Determine LLM provider: --model gpt | --model claude (default)
+        llm_provider = "claude"
+        if "--model" in args:
+            idx = args.index("--model")
+            if idx + 1 < len(args):
+                llm_provider = args[idx + 1]
+        
+        # Validate credentials before launching
+        if use_live:
+            from core.llm_providers import provider_ready
+            ready, msg = provider_ready(llm_provider)
+            if not ready:
+                print(f"\n  ❌ {msg}")
+                print(f"     Cannot run --live with --model {llm_provider}")
+                return
+            print(f"\n  🤖 LLM provider: {llm_provider} ({msg})")
+        
         run_enriched_pipeline(
             bankroll=1000,
             use_live_llm=use_live,
             use_whale_profiles=use_profiles,
+            llm_provider=llm_provider,
         )
     elif "--enrich-demo" in args:
         from core.context_enricher import demo as enrich_demo
