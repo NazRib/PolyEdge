@@ -41,6 +41,7 @@ class PaperTrade:
     exit_price: Optional[float] = None
     resolution: Optional[bool] = None  # True=Yes won, False=No won
     pnl: float = 0.0
+    strategy_tag: str = ""           # e.g. "enriched", "enriched+profiles" for A/B comparison
     
     def resolve(self, outcome: bool):
         """Resolve the trade with the actual outcome."""
@@ -121,9 +122,15 @@ class PaperTrader:
         self,
         estimate: ProbabilityEstimate,
         position: PositionSize,
+        strategy_tag: str = "",
     ) -> Optional[PaperTrade]:
         """
         Enter a paper trade based on a probability estimate and position sizing.
+        
+        Args:
+            estimate: Probability estimate with market context
+            position: Kelly-sized position
+            strategy_tag: Label for A/B comparison (e.g. "enriched", "enriched+profiles")
         
         Returns the PaperTrade if entered, None if rejected.
         """
@@ -152,6 +159,7 @@ class PaperTrader:
             edge_at_entry=estimate.edge,
             confidence=estimate.confidence,
             timestamp=datetime.now(timezone.utc).isoformat(),
+            strategy_tag=strategy_tag,
         )
         
         self.bankroll -= position.dollar_amount
@@ -309,7 +317,125 @@ class PaperTrader:
         
         lines.append("")
         return "\n".join(lines)
-    
+
+    def compare_strategies(self) -> str:
+        """
+        Compare performance across strategy tags.
+        
+        Shows side-by-side Brier scores, PnL, and win rates for each
+        strategy tag (e.g. "enriched" vs "enriched+profiles").
+        """
+        # Group trades by strategy_tag
+        tags: dict[str, list[PaperTrade]] = {}
+        for t in self.trades:
+            tag = t.strategy_tag or "untagged"
+            if tag not in tags:
+                tags[tag] = []
+            tags[tag].append(t)
+
+        if len(tags) < 2:
+            return (
+                "Need trades from at least 2 strategies to compare.\n"
+                "Run the pipeline with and without --whale-profiles to generate "
+                "trades with different strategy tags."
+            )
+
+        lines = [
+            "",
+            "=" * 80,
+            "  STRATEGY COMPARISON — A/B Performance",
+            "=" * 80,
+            "",
+        ]
+
+        for tag in sorted(tags.keys()):
+            trades = tags[tag]
+            resolved = [t for t in trades if t.status.startswith("RESOLVED")]
+            wins = [t for t in resolved if t.pnl > 0]
+            total_pnl = sum(t.pnl for t in resolved)
+            open_trades = [t for t in trades if t.status == "OPEN"]
+            total_risked = sum(t.dollar_amount for t in resolved)
+
+            lines.append(f"  ┌─ {tag} {'─' * max(1, 65 - len(tag))}")
+            lines.append(f"  │ Trades:    {len(trades)} total ({len(open_trades)} open, {len(resolved)} resolved)")
+
+            if resolved:
+                win_rate = len(wins) / len(resolved)
+                lines.append(f"  │ Win rate:  {win_rate:.0%} ({len(wins)}W / {len(resolved) - len(wins)}L)")
+                lines.append(f"  │ PnL:      ${total_pnl:+,.2f} (risked ${total_risked:,.2f})")
+
+                if total_risked > 0:
+                    roi = total_pnl / total_risked
+                    lines.append(f"  │ ROI:      {roi:+.1%}")
+
+                # Compute Brier score for this tag's trades
+                brier_sum = 0
+                brier_count = 0
+                for t in resolved:
+                    if t.side == "YES":
+                        pred = t.estimated_probability
+                        actual = 1.0 if t.resolution else 0.0
+                    else:
+                        pred = 1 - t.estimated_probability
+                        actual = 0.0 if t.resolution else 1.0
+                    brier_sum += (pred - actual) ** 2
+                    brier_count += 1
+
+                if brier_count >= 5:
+                    brier = brier_sum / brier_count
+                    improvement = (0.25 - brier) / 0.25 * 100
+                    lines.append(f"  │ Brier:    {brier:.4f} ({improvement:+.1f}% vs baseline)")
+                else:
+                    lines.append(f"  │ Brier:    need {5 - brier_count} more resolutions")
+
+                # Average edge and position size
+                avg_edge = np.mean([abs(t.edge_at_entry) for t in resolved])
+                avg_size = np.mean([t.dollar_amount for t in trades])
+                lines.append(f"  │ Avg edge: {avg_edge:.1%}  |  Avg size: ${avg_size:.2f}")
+            else:
+                lines.append(f"  │ No resolved trades yet")
+
+            lines.append(f"  └{'─' * 78}")
+            lines.append("")
+
+        # Head-to-head on overlapping markets
+        if len(tags) == 2:
+            tag_names = sorted(tags.keys())
+            trades_a = {t.market_id: t for t in tags[tag_names[0]]}
+            trades_b = {t.market_id: t for t in tags[tag_names[1]]}
+            overlap = set(trades_a.keys()) & set(trades_b.keys())
+            only_a = set(trades_a.keys()) - set(trades_b.keys())
+            only_b = set(trades_b.keys()) - set(trades_a.keys())
+
+            lines.append(f"  Market overlap:")
+            lines.append(f"    Both strategies:  {len(overlap)} markets")
+            lines.append(f"    Only {tag_names[0]}: {len(only_a)} markets")
+            lines.append(f"    Only {tag_names[1]}: {len(only_b)} markets")
+
+            # Check for directional disagreements
+            disagreements = []
+            for mid in overlap:
+                a, b = trades_a[mid], trades_b[mid]
+                if a.side != b.side:
+                    disagreements.append((a, b))
+            if disagreements:
+                lines.append(f"\n  ⚠ Directional disagreements ({len(disagreements)}):")
+                for a, b in disagreements[:5]:
+                    a_result = f"PnL ${a.pnl:+.2f}" if a.status.startswith("RESOLVED") else "open"
+                    b_result = f"PnL ${b.pnl:+.2f}" if b.status.startswith("RESOLVED") else "open"
+                    lines.append(
+                        f"    {a.question[:40]:40s}"
+                    )
+                    lines.append(
+                        f"      {tag_names[0]:20s}: {a.side} @ {a.entry_price:.2f} ({a_result})"
+                    )
+                    lines.append(
+                        f"      {tag_names[1]:20s}: {b.side} @ {b.entry_price:.2f} ({b_result})"
+                    )
+
+        lines.extend(["", "=" * 80])
+        return "\n".join(lines)
+
     def _find_trade(self, trade_id: str) -> Optional[PaperTrade]:
         for t in self.trades:
             if t.trade_id == trade_id:

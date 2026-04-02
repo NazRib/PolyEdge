@@ -49,6 +49,10 @@ def main():
         remaining = [a for a in args if a != "--whale-inspect"]
         filt = remaining[0] if remaining else ""
         print(profiler.diagnostic_report(wallet_filter=filt))
+    elif "--report-compare" in args:
+        from core.paper_trader import PaperTrader
+        trader = PaperTrader()
+        print(trader.compare_strategies())
     elif "--report" in args:
         from core.paper_trader import PaperTrader
         trader = PaperTrader()

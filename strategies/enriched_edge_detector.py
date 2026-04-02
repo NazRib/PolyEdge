@@ -173,6 +173,14 @@ class EnrichedEdgeDetector:
         self.max_signals = max_signals
         self.max_cluster_exposure = max_cluster_exposure  # Max % of initial bankroll per theme
         
+        # Strategy tag for A/B comparison in paper trading
+        tag_parts = ["enriched"]
+        if use_live_llm:
+            tag_parts.append("live")
+        if use_whale_profiles:
+            tag_parts.append("profiles")
+        self.strategy_tag = "+".join(tag_parts)
+        
         self.client = PolymarketClient()
         self.scanner = MarketScanner(client=self.client)
         
@@ -340,7 +348,7 @@ class EnrichedEdgeDetector:
                 print(f"    🚫 Blocked: {question[:40]}... — {reason}")
                 continue
             
-            trade = self.trader.enter_trade(s["estimate"], s["position"])
+            trade = self.trader.enter_trade(s["estimate"], s["position"], strategy_tag=self.strategy_tag)
             if trade:
                 trades_entered += 1
                 existing_ids.add(market_id)  # Prevent further duplicates this run
