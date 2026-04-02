@@ -625,11 +625,6 @@ class WhaleProfiler:
                 volume=cat_data.get("vol", 0),
             )
 
-        # Fetch total markets traded (always — used for breadth scoring)
-        total_traded = self._fetch_total_markets_traded(wallet)
-        if total_traded is not None:
-            profile.total_markets_traded = total_traded
-
         # Fetch open positions
         open_positions = self._fetch_positions(wallet, closed=False)
         closed_positions = self._fetch_positions(wallet, closed=True)
@@ -642,11 +637,11 @@ class WhaleProfiler:
         if closed_positions:
             self._analyze_closed_positions(profile, closed_positions)
 
-        # If we got no position data at all, use total-markets-traded
-        # as a rough proxy for activity level in classification
+        # Compute total markets traded from position counts
+        self._compute_total_markets_traded(profile)
+
+        # If we got no position data at all, mark as partial
         if not open_positions and not closed_positions:
-            if profile.total_markets_traded > 0:
-                profile.open_position_count = profile.total_markets_traded
             profile.data_quality = "PARTIAL"
 
         # Compute category concentration
@@ -697,20 +692,18 @@ class WhaleProfiler:
             logger.warning(f"Position fetch failed ({endpoint}) for {wallet[:12]}…: {e}")
             return None
 
-    def _fetch_total_markets_traded(self, wallet: str) -> Optional[int]:
-        """Fetch total number of markets a wallet has ever traded."""
-        try:
-            data = self._get("/total-markets-traded", {"user": wallet})
-            # Response could be: {"totalMarkets": N}, {"total": N}, or just N
-            if isinstance(data, dict):
-                val = data.get("totalMarkets") or data.get("total") or data.get("count", 0)
-                return int(val or 0)
-            elif isinstance(data, (int, float)):
-                return int(data)
-            return None
-        except Exception as e:
-            logger.debug(f"Total markets fetch failed for {wallet[:12]}…: {e}")
-            return None
+    def _compute_total_markets_traded(self, profile: WhaleProfile):
+        """
+        Derive total markets traded from open + closed position counts.
+        
+        This replaces the /total-markets-traded endpoint (which doesn't exist).
+        The closed_position_count from /closed-positions is the best proxy
+        for activity breadth — it tells us how many resolved markets this
+        whale has participated in.
+        """
+        profile.total_markets_traded = (
+            profile.open_position_count + profile.closed_position_count
+        )
 
     def _analyze_open_positions(self, profile: WhaleProfile, positions: list):
         """Extract behavioral metrics from open positions."""
