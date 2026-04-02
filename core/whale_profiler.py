@@ -670,12 +670,11 @@ class WhaleProfiler:
         """Fetch open or closed positions for a wallet."""
         if closed:
             # Closed positions have their own endpoint in the Data API
+            # Keep params minimal — extra sort params can cause 400 errors
             endpoint = "/closed-positions"
             params = {
                 "user": wallet,
                 "limit": self.max_positions_per_whale,
-                "sortBy": "CASHPNL",
-                "sortDirection": "DESC",
             }
         else:
             endpoint = "/positions"
@@ -687,19 +686,30 @@ class WhaleProfiler:
 
         try:
             data = self._get(endpoint, params)
-            return data if isinstance(data, list) else []
+            if isinstance(data, list):
+                if closed and data:
+                    logger.debug(f"  Fetched {len(data)} closed positions for {wallet[:12]}…")
+                return data
+            else:
+                logger.warning(f"Unexpected response type for {endpoint} ({wallet[:12]}…): {type(data)}")
+                return []
         except Exception as e:
-            logger.debug(f"Position fetch failed ({endpoint}) for {wallet[:12]}…: {e}")
+            logger.warning(f"Position fetch failed ({endpoint}) for {wallet[:12]}…: {e}")
             return None
 
     def _fetch_total_markets_traded(self, wallet: str) -> Optional[int]:
         """Fetch total number of markets a wallet has ever traded."""
         try:
             data = self._get("/total-markets-traded", {"user": wallet})
+            # Response could be: {"totalMarkets": N}, {"total": N}, or just N
             if isinstance(data, dict):
-                return int(data.get("totalMarkets", 0) or data.get("total", 0) or 0)
+                val = data.get("totalMarkets") or data.get("total") or data.get("count", 0)
+                return int(val or 0)
+            elif isinstance(data, (int, float)):
+                return int(data)
             return None
-        except Exception:
+        except Exception as e:
+            logger.debug(f"Total markets fetch failed for {wallet[:12]}…: {e}")
             return None
 
     def _analyze_open_positions(self, profile: WhaleProfile, positions: list):
