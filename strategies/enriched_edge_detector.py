@@ -7,6 +7,7 @@ information sources before making probability estimates.
 """
 
 import logging
+import os
 import re
 import time
 from typing import Optional
@@ -203,10 +204,14 @@ class EnrichedEdgeDetector:
         self.client = PolymarketClient()
         self.scanner = MarketScanner(client=self.client)
         
-        # Paper trader — loads persisted state (bankroll, open trades, calibration)
-        self.trader = PaperTrader(bankroll=bankroll, data_dir=data_dir)
+        # Each strategy configuration gets its own paper trader directory
+        # so bankrolls, trades, and resolutions are fully independent.
+        # This is critical for A/B comparison — without isolation, the
+        # first run resolves trades and the second run sees nothing.
+        paper_dir = os.path.join(data_dir, f"paper_{self.strategy_tag}")
+        self.trader = PaperTrader(bankroll=bankroll, data_dir=paper_dir)
         
-        # Whale profiler (optional — loads from disk if profiles exist)
+        # Whale profiler reads from the main data dir (profiles are shared)
         self.whale_profiler = None
         if use_whale_profiles:
             from core.whale_profiler import WhaleProfiler
