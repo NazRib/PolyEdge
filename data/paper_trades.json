@@ -1,7 +1,7 @@
 {
-  "bankroll": 701.2800000000001,
+  "bankroll": 565.4800000000001,
   "initial_bankroll": 1000,
-  "trade_counter": 8,
+  "trade_counter": 13,
   "trades": [
     {
       "trade_id": "PT-0001",
@@ -20,7 +20,8 @@
       "exit_price": null,
       "resolution": null,
       "pnl": 0.0,
-      "strategy_tag": "enriched+live"
+      "strategy_tag": "enriched+live",
+      "model_tag": ""
     },
     {
       "trade_id": "PT-0002",
@@ -39,7 +40,8 @@
       "exit_price": null,
       "resolution": null,
       "pnl": 0.0,
-      "strategy_tag": "enriched+live"
+      "strategy_tag": "enriched+live",
+      "model_tag": ""
     },
     {
       "trade_id": "PT-0003",
@@ -58,7 +60,8 @@
       "exit_price": null,
       "resolution": null,
       "pnl": 0.0,
-      "strategy_tag": "enriched+live"
+      "strategy_tag": "enriched+live",
+      "model_tag": ""
     },
     {
       "trade_id": "PT-0004",
@@ -77,7 +80,8 @@
       "exit_price": null,
       "resolution": null,
       "pnl": 0.0,
-      "strategy_tag": "enriched+live"
+      "strategy_tag": "enriched+live",
+      "model_tag": ""
     },
     {
       "trade_id": "PT-0005",
@@ -96,7 +100,8 @@
       "exit_price": null,
       "resolution": null,
       "pnl": 0.0,
-      "strategy_tag": "enriched+live"
+      "strategy_tag": "enriched+live",
+      "model_tag": ""
     },
     {
       "trade_id": "PT-0006",
@@ -115,7 +120,8 @@
       "exit_price": null,
       "resolution": null,
       "pnl": 0.0,
-      "strategy_tag": "enriched+live"
+      "strategy_tag": "enriched+live",
+      "model_tag": ""
     },
     {
       "trade_id": "PT-0007",
@@ -134,7 +140,8 @@
       "exit_price": null,
       "resolution": null,
       "pnl": 0.0,
-      "strategy_tag": "enriched+live"
+      "strategy_tag": "enriched+live",
+      "model_tag": ""
     },
     {
       "trade_id": "PT-0008",
@@ -153,8 +160,122 @@
       "exit_price": null,
       "resolution": null,
       "pnl": 0.0,
-      "strategy_tag": "enriched+live"
+      "strategy_tag": "enriched+live",
+      "model_tag": ""
+    },
+    {
+      "trade_id": "PT-0009",
+      "market_id": "1811323",
+      "question": "Copa Colsanitas: Varvara Lepchenko vs Jessica Bouzas Maneiro",
+      "side": "NO",
+      "entry_price": 0.615,
+      "shares": 67.0315,
+      "dollar_amount": 41.22,
+      "estimated_probability": 0.2822239392587647,
+      "market_price_at_entry": 0.385,
+      "edge_at_entry": -0.1027760607412353,
+      "confidence": 0.8808287730507429,
+      "timestamp": "2026-04-02T23:14:09.391226+00:00",
+      "status": "RESOLVED_LOSS",
+      "exit_price": null,
+      "resolution": true,
+      "pnl": -41.22,
+      "strategy_tag": "enriched+live+claude-sonnet-4+profiles",
+      "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0010",
+      "market_id": "658941",
+      "question": "Will Arizona win the 2026 NCAA Tournament?",
+      "side": "YES",
+      "entry_price": 0.3285,
+      "shares": 50.0204,
+      "dollar_amount": 16.43,
+      "estimated_probability": 0.3995374819295959,
+      "market_price_at_entry": 0.3285,
+      "edge_at_entry": 0.07103748192959586,
+      "confidence": 0.8859504200259599,
+      "timestamp": "2026-04-02T23:14:09.391226+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4+profiles",
+      "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0011",
+      "market_id": "1811326",
+      "question": "US Men's Clay Court Championships: Learner Tien vs Nishesh Basavareddy",
+      "side": "NO",
+      "entry_price": 0.17500000000000004,
+      "shares": 58.1339,
+      "dollar_amount": 10.17,
+      "estimated_probability": 0.7732715058962273,
+      "market_price_at_entry": 0.825,
+      "edge_at_entry": -0.05172849410377267,
+      "confidence": 0.9254659023850158,
+      "timestamp": "2026-04-02T23:14:09.406581+00:00",
+      "status": "RESOLVED_LOSS",
+      "exit_price": null,
+      "resolution": true,
+      "pnl": -10.17,
+      "strategy_tag": "enriched+live+claude-sonnet-4+profiles",
+      "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0012",
+      "market_id": "1484895",
+      "question": "US x Iran ceasefire by June 30?",
+      "side": "NO",
+      "entry_price": 0.485,
+      "shares": 62.4149,
+      "dollar_amount": 30.27,
+      "estimated_probability": 0.3923233872507586,
+      "market_price_at_entry": 0.515,
+      "edge_at_entry": -0.12267661274924141,
+      "confidence": 0.8024462067852565,
+      "timestamp": "2026-04-03T17:54:23.746040+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4",
+      "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0013",
+      "market_id": "948038",
+      "question": "Will Fidesz\u2013KDNP win the most seats in the next Hungarian parliamentary election?",
+      "side": "NO",
+      "entry_price": 0.6950000000000001,
+      "shares": 54.2616,
+      "dollar_amount": 37.71,
+      "estimated_probability": 0.22576704453769283,
+      "market_price_at_entry": 0.305,
+      "edge_at_entry": -0.07923295546230716,
+      "confidence": 0.9166679187571578,
+      "timestamp": "2026-04-03T17:54:23.748059+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4",
+      "model_tag": "claude-sonnet-4"
     }
   ],
-  "calibration": []
+  "calibration": [
+    {
+      "predicted": 0.7177760607412353,
+      "actual": 0,
+      "market_id": "1811323",
+      "time": "2026-04-03T17:42:36.445261+00:00"
+    },
+    {
+      "predicted": 0.22672849410377272,
+      "actual": 0,
+      "market_id": "1811326",
+      "time": "2026-04-03T17:42:37.233139+00:00"
+    }
+  ]
 }

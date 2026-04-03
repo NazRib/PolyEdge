@@ -1,0 +1,200 @@
+From 4d6463cb6b379c36c6d46208403394bfb31d20f1 Mon Sep 17 00:00:00 2001
+From: Claude <claude@polyedge.dev>
+Date: Fri, 3 Apr 2026 18:22:59 +0000
+Subject: [PATCH] fix: isolate paper traders per strategy for proper A/B
+ comparison
+
+Critical fix: both pipeline configurations were sharing one paper_trades.json
+file and one bankroll. The first run would resolve trades, and the second
+run would see nothing to resolve. Bankroll changes from one run affected
+position sizing in the other.
+
+Fix: each strategy tag gets its own directory under data/:
+  data/paper_enriched+live/paper_trades.json
+  data/paper_enriched+live+profiles/paper_trades.json
+
+Each configuration now has:
+- Independent bankroll (both start at $1,000)
+- Independent trade counter
+- Independent resolution tracking
+- Both can resolve the same market independently
+
+Whale profiles remain shared (data/whale_profiles.json) since they're
+configuration-independent input data.
+
+strategies/enriched_edge_detector.py:
+- Paper trader directory derived from strategy_tag
+- Added os import
+
+run_pipeline.py:
+- --report-compare scans all data/paper_* directories, loads each
+  trader independently, merges for comparison
+- --report shows all strategies or a specific one (--report enriched+live)
+- Falls back to legacy data/paper_trades.json if no strategy dirs exist
+---
+ run_pipeline.py                      | 110 +++++++++++++++++++++++++--
+ strategies/enriched_edge_detector.py |  11 ++-
+ 2 files changed, 112 insertions(+), 9 deletions(-)
+
+diff --git a/run_pipeline.py b/run_pipeline.py
+index 99537af..e041f2d 100644
+--- a/run_pipeline.py
++++ b/run_pipeline.py
+@@ -50,13 +50,9 @@ def main():
+         filt = remaining[0] if remaining else ""
+         print(profiler.diagnostic_report(wallet_filter=filt))
+     elif "--report-compare" in args:
+-        from core.paper_trader import PaperTrader
+-        trader = PaperTrader()
+-        print(trader.compare_strategies())
++        run_strategy_comparison()
+     elif "--report" in args:
+-        from core.paper_trader import PaperTrader
+-        trader = PaperTrader()
+-        print(trader.report())
++        run_report(args)
+     elif "--scan-only" in args:
+         from core.market_scanner import demo_scan
+         demo_scan()
+@@ -112,6 +108,108 @@ def run_whale_profiler():
+     print(profiler.report())
+ 
+ 
++def run_strategy_comparison():
++    """
++    Load paper traders from all data/paper_* directories and produce
++    a side-by-side comparison report.
++    """
++    import os
++    from core.paper_trader import PaperTrader
++    
++    data_root = "data"
++    paper_dirs = sorted([
++        d for d in os.listdir(data_root)
++        if d.startswith("paper_") and os.path.isdir(os.path.join(data_root, d))
++    ])
++    
++    if not paper_dirs:
++        # Fall back to legacy single-file mode
++        trader = PaperTrader(data_dir=data_root)
++        if trader.trades:
++            print(trader.compare_strategies())
++        else:
++            print("No paper trades found. Run the pipeline first.")
++        return
++    
++    # Load each strategy's trader independently
++    all_traders: dict[str, PaperTrader] = {}
++    for d in paper_dirs:
++        tag = d.replace("paper_", "")
++        trader = PaperTrader(bankroll=1000, data_dir=os.path.join(data_root, d))
++        if trader.trades:
++            all_traders[tag] = trader
++    
++    if not all_traders:
++        print("No paper trades found in any strategy directory.")
++        return
++    
++    if len(all_traders) < 2:
++        tag, trader = next(iter(all_traders.items()))
++        print(f"Only one strategy found ({tag}). Need at least 2 for comparison.")
++        print(f"Run the pipeline with different configurations first.")
++        print(trader.report())
++        return
++    
++    # Merge all trades into one trader for the compare_strategies method
++    merged = PaperTrader(bankroll=1000, data_dir="/tmp/merged_comparison")
++    for tag, trader in all_traders.items():
++        for trade in trader.trades:
++            # Ensure strategy_tag is set from the directory name
++            if not trade.strategy_tag:
++                trade.strategy_tag = tag
++            merged.trades.append(trade)
++    
++    print(merged.compare_strategies())
++
++
++def run_report(args):
++    """
++    Show paper trading report, optionally for a specific strategy.
++    
++    Usage:
++        --report                 # Shows all strategies or prompts to choose
++        --report enriched+live   # Shows specific strategy
++    """
++    import os
++    from core.paper_trader import PaperTrader
++    
++    data_root = "data"
++    paper_dirs = sorted([
++        d for d in os.listdir(data_root)
++        if d.startswith("paper_") and os.path.isdir(os.path.join(data_root, d))
++    ])
++    
++    # Check for a specific strategy argument
++    remaining = [a for a in args if a not in ("--report",)]
++    requested_tag = remaining[0] if remaining else ""
++    
++    if not paper_dirs:
++        # Fall back to legacy single-file mode
++        trader = PaperTrader(data_dir=data_root)
++        print(trader.report())
++        return
++    
++    if requested_tag:
++        # Find matching directory
++        match = [d for d in paper_dirs if requested_tag in d]
++        if match:
++            trader = PaperTrader(bankroll=1000, data_dir=os.path.join(data_root, match[0]))
++            print(f"\n  Strategy: {match[0].replace('paper_', '')}")
++            print(trader.report())
++        else:
++            print(f"No strategy matching '{requested_tag}' found.")
++            print(f"Available: {', '.join(d.replace('paper_', '') for d in paper_dirs)}")
++        return
++    
++    # Show all strategies
++    for d in paper_dirs:
++        tag = d.replace("paper_", "")
++        trader = PaperTrader(bankroll=1000, data_dir=os.path.join(data_root, d))
++        if trader.trades:
++            print(f"\n  Strategy: {tag}")
++            print(trader.report())
++
++
+ def run_demo():
+     """
+     Run a full demo with simulated data to show how the system works.
+diff --git a/strategies/enriched_edge_detector.py b/strategies/enriched_edge_detector.py
+index f5e9264..8e9c80c 100644
+--- a/strategies/enriched_edge_detector.py
++++ b/strategies/enriched_edge_detector.py
+@@ -7,6 +7,7 @@ information sources before making probability estimates.
+ """
+ 
+ import logging
++import os
+ import re
+ import time
+ from typing import Optional
+@@ -184,10 +185,14 @@ class EnrichedEdgeDetector:
+         self.client = PolymarketClient()
+         self.scanner = MarketScanner(client=self.client)
+         
+-        # Paper trader — loads persisted state (bankroll, open trades, calibration)
+-        self.trader = PaperTrader(bankroll=bankroll, data_dir=data_dir)
++        # Each strategy configuration gets its own paper trader directory
++        # so bankrolls, trades, and resolutions are fully independent.
++        # This is critical for A/B comparison — without isolation, the
++        # first run resolves trades and the second run sees nothing.
++        paper_dir = os.path.join(data_dir, f"paper_{self.strategy_tag}")
++        self.trader = PaperTrader(bankroll=bankroll, data_dir=paper_dir)
+         
+-        # Whale profiler (optional — loads from disk if profiles exist)
++        # Whale profiler reads from the main data dir (profiles are shared)
+         self.whale_profiler = None
+         if use_whale_profiles:
+             from core.whale_profiler import WhaleProfiler
+-- 
+2.43.0
+
