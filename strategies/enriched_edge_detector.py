@@ -33,6 +33,7 @@ from core.llm_providers import (
     call_llm, validate_provider, model_tag_for_provider,
     provider_ready, PROVIDER_CLAUDE, PROVIDER_GPT,
 )
+from core.pipeline_logger import PipelineLogger
 
 logger = logging.getLogger(__name__)
 
@@ -67,6 +68,8 @@ class EnrichedLLMEstimator:
         self.model = model
         self._all_markets_cache: list[dict] = []
         self._enrichment_cache: dict[str, EnrichedContext] = {}
+        # Stores detail from the most recent estimation for pipeline logging
+        self._last_detail: Optional[dict] = None
     
     @property
     def model_tag(self) -> str:
@@ -129,6 +132,15 @@ class EnrichedLLMEstimator:
         
         if parsed is None:
             # Fallback: use market price with low confidence
+            self._last_detail = {
+                "provider": self.provider,
+                "model_tag": self.model_tag,
+                "prompt_length": len(prompt),
+                "raw_response": raw_response,
+                "parsed": None,
+                "calibration": None,
+                "confidence_breakdown": None,
+            }
             return context_dict.get("market_price", 0.5), 0.1
         
         raw_prob = float(parsed.get("probability", 0.5))
@@ -139,16 +151,40 @@ class EnrichedLLMEstimator:
         
         # Confidence scoring
         confidence_map = {"low": 0.3, "medium": 0.6, "high": 0.85}
-        confidence = confidence_map.get(parsed.get("confidence", "medium"), 0.5)
+        base_label = parsed.get("confidence", "medium")
+        base_conf = confidence_map.get(base_label, 0.5)
         
         # Boost confidence if we have enrichment data
-        if enriched.sources_used:
-            confidence = min(0.95, confidence + 0.05 * len(enriched.sources_used))
+        n_sources = len(enriched.sources_used) if enriched.sources_used else 0
+        enrichment_bonus = 0.05 * n_sources
+        confidence = min(0.95, base_conf + enrichment_bonus)
         
         # Reduce confidence for large deviations from market
         deviation = abs(calibrated - context_dict.get("market_price", 0.5))
-        if deviation > 0.15:
-            confidence *= 0.8
+        dev_penalty = 0.8 if deviation > 0.15 else 1.0
+        confidence *= dev_penalty
+        
+        # Store full detail for pipeline logger
+        self._last_detail = {
+            "provider": self.provider,
+            "model_tag": self.model_tag,
+            "prompt_length": len(prompt),
+            "raw_response": raw_response,
+            "parsed": parsed,
+            "calibration": {
+                "raw": raw_prob,
+                "calibrated": calibrated,
+            },
+            "confidence_breakdown": {
+                "base": base_conf,
+                "base_label": base_label,
+                "enrichment_bonus": enrichment_bonus,
+                "n_sources": n_sources,
+                "deviation": deviation,
+                "deviation_penalty": dev_penalty,
+                "final": confidence,
+            },
+        }
         
         return float(calibrated), float(confidence)
 
@@ -294,6 +330,19 @@ class EnrichedEdgeDetector:
         if hasattr(self.llm_estimator, 'set_market_universe'):
             self.llm_estimator.set_market_universe(all_market_dicts)
         
+        # Pipeline logger — writes detailed per-market log to data/logs/
+        plog = PipelineLogger(data_dir=self.trader.data_dir.as_posix()
+                              if hasattr(self.trader.data_dir, "as_posix")
+                              else str(self.trader.data_dir))
+        plog.log_run_header(
+            strategy_tag=self.strategy_tag,
+            model_tag=self.model_tag,
+            n_candidates=len(candidates),
+            bankroll=self.trader.bankroll,
+            min_edge=self.min_edge,
+            kelly_fraction=self.kelly_fraction,
+        )
+        
         # Step 2 & 3: Enrich + Estimate for each candidate
         print(f"\n🔬 Step 2-3: Enriching & estimating {len(candidates)} markets...")
         signals = []
@@ -305,8 +354,7 @@ class EnrichedEdgeDetector:
             # Log progress
             print(f"\n  [{i+1}/{len(candidates)}] {market.question[:55]}...")
             
-            # Throttle between markets to avoid Claude API rate limits
-            # Each market triggers ~2 Claude calls (news search + estimation)
+            # Throttle between markets to avoid API rate limits
             if i > 0:
                 time.sleep(1.5)
             
@@ -323,12 +371,23 @@ class EnrichedEdgeDetector:
                 confidence=estimate.confidence,
             )
             
+            # Capture enrichment and LLM detail for logging
+            market_id = context.get("market_id", "")
+            enriched = (self.llm_estimator._enrichment_cache.get(market_id)
+                        if hasattr(self.llm_estimator, '_enrichment_cache')
+                        else None)
+            llm_detail = (getattr(self.llm_estimator, '_last_detail', None))
+            
             signal = {
                 "market": market,
                 "scored": scored,
+                "context": context,
                 "estimate": estimate,
                 "position": position,
                 "should_trade": position.should_trade,
+                "enriched": enriched,
+                "llm_detail": llm_detail,
+                "trade_result": None,  # filled in trade-entry loop
             }
             signals.append(signal)
             
@@ -368,6 +427,7 @@ class EnrichedEdgeDetector:
                     f"  Skipping duplicate: already have open trade in "
                     f"{question[:40]}..."
                 )
+                s["trade_result"] = "duplicate"
                 continue
             
             # Correlation guard — check cluster exposure
@@ -375,6 +435,7 @@ class EnrichedEdgeDetector:
             if not allowed:
                 trades_blocked_cluster += 1
                 print(f"    🚫 Blocked: {question[:40]}... — {reason}")
+                s["trade_result"] = "blocked"
                 continue
             
             trade = self.trader.enter_trade(
@@ -385,8 +446,39 @@ class EnrichedEdgeDetector:
             if trade:
                 trades_entered += 1
                 existing_ids.add(market_id)  # Prevent further duplicates this run
+                s["trade_result"] = "entered"
         
         total_time = time.time() - t0
+        
+        # Step 5: Write detailed per-market logs
+        for i, s in enumerate(signals, 1):
+            trade_result = s.get("trade_result")
+            if trade_result is None and not s["should_trade"]:
+                trade_result = "skipped"
+            try:
+                plog.log_market(
+                    index=i,
+                    total=len(signals),
+                    market=s["market"],
+                    scored=s["scored"],
+                    context=s.get("context", {}),
+                    enriched=s.get("enriched"),
+                    llm_detail=s.get("llm_detail"),
+                    estimate=s["estimate"],
+                    position=s["position"],
+                    trade_result=trade_result,
+                )
+            except Exception as e:
+                logger.warning(f"Failed to log market {i}: {e}")
+        
+        plog.log_run_summary(
+            signals=signals,
+            trades_entered=trades_entered,
+            trades_blocked=trades_blocked_cluster,
+            elapsed_seconds=total_time,
+        )
+        plog.close()
+        print(f"\n  📋 Detailed log: {plog.filepath}")
         
         # Summary
         print(f"\n{'=' * 70}")
