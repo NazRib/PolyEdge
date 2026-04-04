@@ -36,7 +36,22 @@ DEFAULT_CLAUDE_MODEL = "claude-sonnet-4-20250514"
 # ─── Azure OpenAI config ─────────────────────────────────
 
 # Set these via environment or config.py
-DEFAULT_GPT_DEPLOYMENT = "gpt-5.4"   # Azure deployment name
+DEFAULT_GPT_DEPLOYMENT = "gpt-5.4-pro"   # Azure deployment name
+
+
+def _is_reasoning_model(model_name: str) -> bool:
+    """
+    Reasoning / 'pro' models don't support temperature, top_p, or
+    similar sampling params.  Detect them by name pattern.
+    """
+    m = model_name.lower()
+    if m.startswith(("o1", "o3")):
+        return True
+    if "-pro" in m:
+        return True
+    if "reasoning" in m:
+        return True
+    return False
 
 
 def _get_azure_config() -> dict:
@@ -50,7 +65,7 @@ def _get_azure_config() -> dict:
 def validate_provider(provider: str) -> str:
     """Normalise and validate provider string."""
     p = provider.lower().strip()
-    if p in ("gpt", "openai", "azure", "gpt-5.4"):
+    if p in ("gpt", "openai", "azure", "gpt-5.4", "gpt-5.4-pro"):
         return PROVIDER_GPT
     if p in ("claude", "anthropic"):
         return PROVIDER_CLAUDE
@@ -352,8 +367,11 @@ def _call_gpt(
         "model": deployment,
         "input": user_prompt,
         "max_output_tokens": max_tokens,
-        "temperature": temperature,
     }
+    # Reasoning / pro models reject temperature — only set it for
+    # conventional (non-reasoning) models.
+    if not _is_reasoning_model(deployment):
+        kwargs["temperature"] = temperature
     if system_prompt:
         kwargs["instructions"] = system_prompt
     if tools:
