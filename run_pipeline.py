@@ -59,6 +59,20 @@ def main():
         run_strategy_comparison()  # Same logic — models are captured in strategy tags
     elif "--report" in args:
         run_report(args)
+    elif "--cross-event" in args:
+        from strategies.cross_event_arb import run_cross_event_scan
+        top = 300
+        min_edge = 3.0
+        verbose = "--verbose" in args
+        if "--top" in args:
+            idx = args.index("--top")
+            if idx + 1 < len(args):
+                top = int(args[idx + 1])
+        if "--min-edge" in args:
+            idx = args.index("--min-edge")
+            if idx + 1 < len(args):
+                min_edge = float(args[idx + 1])
+        run_cross_event_scan(max_markets=top, min_edge=min_edge, verbose=verbose)
     elif "--scan-only" in args:
         from core.market_scanner import demo_scan
         demo_scan()

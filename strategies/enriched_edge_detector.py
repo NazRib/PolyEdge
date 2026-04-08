@@ -346,19 +346,43 @@ class EnrichedEdgeDetector:
         # Step 2 & 3: Enrich + Estimate for each candidate
         print(f"\n🔬 Step 2-3: Enriching & estimating {len(candidates)} markets...")
         signals = []
-        
+
+        # Build open-trade IDs before the loop so duplicates are caught before
+        # any LLM calls are made (news enrichment + probability estimate = 2 calls
+        # per market that would otherwise be wasted on already-held positions).
+        existing_ids = {
+            t.market_id for t in self.trader.trades if t.status == "OPEN"
+        }
+
         for i, scored in enumerate(candidates):
             market = scored.market
             context = self._build_context(market, scored)
-            
+            market_id = context.get("market_id", market.id)
+
             # Log progress
             print(f"\n  [{i+1}/{len(candidates)}] {market.question[:55]}...")
-            
-            # Throttle between markets to avoid API rate limits
+
+            # Skip before any LLM calls if we already hold an open trade here.
+            if market_id in existing_ids:
+                print("    ⬜ Skip (open trade exists — no LLM calls made)")
+                signals.append({
+                    "market": market,
+                    "scored": scored,
+                    "context": context,
+                    "estimate": None,
+                    "position": None,
+                    "should_trade": False,
+                    "enriched": None,
+                    "llm_detail": None,
+                    "trade_result": "duplicate",
+                })
+                continue
+
+            # Throttle between markets that reach LLM calls.
             if i > 0:
                 time.sleep(1.5)
-            
-            # Estimate
+
+            # Estimate (LLM is called here for live runs)
             estimate = self.ensemble.estimate(context)
             
             # Size — use paper trader's current bankroll
@@ -410,12 +434,10 @@ class EnrichedEdgeDetector:
         tradeable = [s for s in signals if s["should_trade"]]
         trades_entered = 0
         trades_blocked_cluster = 0
-        
-        # Precompute existing open trade IDs
-        existing_ids = {
-            t.market_id for t in self.trader.trades if t.status == "OPEN"
-        }
-        
+
+        # existing_ids was built before Step 2-3 to gate LLM calls early.
+        # It is reused here and extended as trades are entered to block
+        # same-run duplicates (e.g. if a market appears twice in scan results).
         for s in tradeable[:self.max_signals]:
             question = s["market"].question
             market_id = s["estimate"].market_id
@@ -455,6 +477,9 @@ class EnrichedEdgeDetector:
             trade_result = s.get("trade_result")
             if trade_result is None and not s["should_trade"]:
                 trade_result = "skipped"
+            # Duplicate-skipped markets have no estimate — nothing to log in detail.
+            if s["estimate"] is None:
+                continue
             try:
                 plog.log_market(
                     index=i,
