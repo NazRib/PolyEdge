@@ -63,7 +63,7 @@ class EnrichedLLMEstimator:
     ):
         self.provider = validate_provider(llm_provider)
         self.enricher = enricher or ContextEnricher()
-        self.calibration = calibration or CalibrationModel()
+        self.calibration = calibration or CalibrationModel(provider=self.provider)
         self.api_key = api_key
         self.model = model
         self._all_markets_cache: list[dict] = []

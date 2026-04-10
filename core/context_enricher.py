@@ -192,6 +192,16 @@ Respond with ONLY this JSON:
     
     def _parse_news_result(self, raw: str) -> dict:
         """Parse the JSON response from the news search."""
+        # Detect LLM refusal messages before parsing
+        refusal_patterns = [
+            "i'm sorry", "i cannot assist", "i can't assist",
+            "i'm unable to", "i can't help", "i cannot help",
+            "i'm not able to", "against my guidelines",
+        ]
+        if any(p in raw.lower() for p in refusal_patterns):
+            logger.info("News search: LLM refused this query — returning empty result")
+            return self._empty_result()
+        
         # Strip markdown fences
         text = raw.strip()
         if "```" in text:

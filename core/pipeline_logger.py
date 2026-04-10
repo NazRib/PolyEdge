@@ -254,47 +254,71 @@ class PipelineLogger:
         if prompt_len:
             self._w(f"  Prompt length: {prompt_len:,} chars")
 
-        # Raw response
+        # Failure diagnostics
         raw = detail.get("raw_response")
-        if raw:
+        parsed = detail.get("parsed")
+
+        if raw is None:
             self._w()
-            self._w("  Raw LLM response:")
-            # Pretty-print if it looks like JSON
-            try:
-                obj = json.loads(raw.strip().strip("`").lstrip("json").strip())
-                for line in json.dumps(obj, indent=2).splitlines():
-                    self._w(f"    {line}")
-            except (json.JSONDecodeError, ValueError):
-                # Plain text — indent and truncate
-                for line in raw.splitlines()[:30]:
-                    self._w(f"    {line}")
-                if raw.count("\n") > 30:
-                    self._w(f"    … ({raw.count(chr(10)) - 30} more lines)")
+            self._w("  ⚠ LLM CALL RETURNED NO RESPONSE")
+            self._w("    The API call returned None. Possible causes:")
+            self._w("    - max_output_tokens too low for reasoning model")
+            self._w("    - API timeout or network error")
+            self._w("    - Model refused the request")
+            self._w("    → Estimate fell back to market price with 0.10 confidence")
+            self._w()
+            return
+
+        if parsed is None:
+            self._w()
+            self._w("  ⚠ FAILED TO PARSE LLM RESPONSE AS JSON")
+            self._w(f"    Response length: {len(raw)} chars")
+            self._w("    Raw response (first 500 chars):")
+            for line in raw[:500].splitlines():
+                self._w(f"      {line}")
+            if len(raw) > 500:
+                self._w(f"      … ({len(raw) - 500} more chars)")
+            self._w("    → Estimate fell back to market price with 0.10 confidence")
+            self._w()
+            return
+
+        # ── Successful parse below ──
+
+        # Raw response
+        self._w()
+        self._w("  Raw LLM response:")
+        try:
+            obj = json.loads(raw.strip().strip("`").lstrip("json").strip())
+            for line in json.dumps(obj, indent=2).splitlines():
+                self._w(f"    {line}")
+        except (json.JSONDecodeError, ValueError):
+            for line in raw.splitlines()[:30]:
+                self._w(f"    {line}")
+            if raw.count("\n") > 30:
+                self._w(f"    … ({raw.count(chr(10)) - 30} more lines)")
 
         # Parsed response
-        parsed = detail.get("parsed")
-        if parsed:
-            self._w()
-            self._w("  Parsed response:")
-            self._w(f"    Base rate anchor:   {parsed.get('base_rate_anchor', '—')}")
-            self._w(f"    Base rate reason:   {parsed.get('base_rate_reasoning', '—')}")
+        self._w()
+        self._w("  Parsed response:")
+        self._w(f"    Base rate anchor:   {parsed.get('base_rate_anchor', '—')}")
+        self._w(f"    Base rate reason:   {parsed.get('base_rate_reasoning', '—')}")
 
-            factors_for = parsed.get("factors_for", [])
-            if factors_for:
-                self._w(f"    Factors FOR YES:")
-                for f in factors_for:
-                    self._w(f"      + {f}")
+        factors_for = parsed.get("factors_for", [])
+        if factors_for:
+            self._w(f"    Factors FOR YES:")
+            for f in factors_for:
+                self._w(f"      + {f}")
 
-            factors_against = parsed.get("factors_against", [])
-            if factors_against:
-                self._w(f"    Factors AGAINST:")
-                for f in factors_against:
-                    self._w(f"      - {f}")
+        factors_against = parsed.get("factors_against", [])
+        if factors_against:
+            self._w(f"    Factors AGAINST:")
+            for f in factors_against:
+                self._w(f"      - {f}")
 
-            self._w(f"    Probability:       {parsed.get('probability', '—')}")
-            self._w(f"    Confidence:        {parsed.get('confidence', '—')}")
-            self._w(f"    Reasoning:         {parsed.get('reasoning', '—')}")
-            self._w(f"    Information edge:  {parsed.get('information_edge', '—')}")
+        self._w(f"    Probability:       {parsed.get('probability', '—')}")
+        self._w(f"    Confidence:        {parsed.get('confidence', '—')}")
+        self._w(f"    Reasoning:         {parsed.get('reasoning', '—')}")
+        self._w(f"    Information edge:  {parsed.get('information_edge', '—')}")
 
         # Calibration
         cal = detail.get("calibration")

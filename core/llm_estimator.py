@@ -22,6 +22,7 @@ import json
 import math
 import logging
 import os
+import re
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
@@ -48,6 +49,18 @@ DEFAULT_CALIBRATION = {
     "slope": 0.85,       # LLMs are ~15% overconfident on average
     "intercept": 0.075,  # Slight bias toward 50%
     "extreme_pull": 0.05, # Pull extreme estimates toward center
+}
+
+# GPT models appear better-calibrated out of the box; start with identity
+# calibration (no adjustment) and let the system learn GPT's actual bias
+# from resolved trades.  Override per-provider via CalibrationModel(provider=).
+PROVIDER_CALIBRATION_DEFAULTS = {
+    "claude": DEFAULT_CALIBRATION,
+    "gpt": {
+        "slope": 1.0,         # No compression — pass through raw estimate
+        "intercept": 0.0,     # No intercept shift
+        "extreme_pull": 0.0,  # No extreme pulling
+    },
 }
 
 
@@ -302,33 +315,66 @@ def call_claude(
 
 
 def parse_llm_response(raw_text: str) -> Optional[dict]:
-    """Parse the JSON response from the LLM, handling common formatting issues."""
+    """Parse the JSON response from the LLM, handling common formatting issues.
+    
+    GPT reasoning models may wrap JSON in markdown fences, include preamble
+    text, or embed it inside longer prose. This parser tries multiple
+    extraction strategies before giving up.
+    """
     if not raw_text:
         return None
     
-    # Strip markdown code fences if present
     text = raw_text.strip()
-    if text.startswith("```"):
-        text = text.split("\n", 1)[-1]  # Remove first line
-    if text.endswith("```"):
-        text = text.rsplit("```", 1)[0]
-    text = text.strip()
-    if text.startswith("json"):
-        text = text[4:].strip()
     
+    # Strategy 1: Strip markdown code fences
+    if "```" in text:
+        # Find JSON between code fences (most reliable)
+        match = re.search(r'```(?:json)?\s*(\{.*?\})\s*```', text, re.DOTALL)
+        if match:
+            text = match.group(1).strip()
+        else:
+            # Remove fences and try the remainder
+            text = re.sub(r'```(?:json)?', '', text).strip()
+    
+    # Strategy 2: Direct parse
     try:
         data = json.loads(text)
-        
-        # Validate required fields
-        prob = float(data.get("probability", 0.5))
-        prob = max(0.01, min(0.99, prob))
-        data["probability"] = prob
-        
-        return data
+        return _validate_forecast(data)
+    except (json.JSONDecodeError, TypeError, ValueError):
+        pass
     
-    except (json.JSONDecodeError, TypeError, ValueError) as e:
-        logger.warning(f"Failed to parse LLM response: {e}\nRaw: {raw_text[:200]}")
+    # Strategy 3: Find the first complete JSON object in the text
+    # (handles preamble text, trailing explanation, thinking output)
+    brace_start = text.find('{')
+    if brace_start >= 0:
+        depth = 0
+        for i in range(brace_start, len(text)):
+            if text[i] == '{':
+                depth += 1
+            elif text[i] == '}':
+                depth -= 1
+                if depth == 0:
+                    candidate = text[brace_start:i + 1]
+                    try:
+                        data = json.loads(candidate)
+                        return _validate_forecast(data)
+                    except (json.JSONDecodeError, TypeError, ValueError):
+                        break
+    
+    logger.warning(f"Failed to parse LLM response as JSON.\n  Raw ({len(raw_text)} chars): {raw_text[:300]}")
+    return None
+
+
+def _validate_forecast(data: dict) -> Optional[dict]:
+    """Validate and normalise a parsed forecast dict."""
+    if not isinstance(data, dict):
         return None
+    # Must have a probability field to be a valid forecast
+    if "probability" not in data:
+        return None
+    prob = float(data["probability"])
+    data["probability"] = max(0.01, min(0.99, prob))
+    return data
 
 
 # ─── Calibration Layer ───────────────────────────────────
@@ -353,14 +399,20 @@ class CalibrationModel:
     in ML for calibrating classifier outputs.
     """
     
-    def __init__(self, data_dir: str = "data"):
+    def __init__(self, data_dir: str = "data", provider: str = ""):
         self.data_dir = Path(data_dir)
         self.data_dir.mkdir(parents=True, exist_ok=True)
+        self.provider = provider
+        
+        # Select defaults based on provider
+        defaults = PROVIDER_CALIBRATION_DEFAULTS.get(
+            provider, DEFAULT_CALIBRATION
+        )
         
         # Platt scaling parameters
-        self.slope = DEFAULT_CALIBRATION["slope"]
-        self.intercept = DEFAULT_CALIBRATION["intercept"]
-        self.extreme_pull = DEFAULT_CALIBRATION["extreme_pull"]
+        self.slope = defaults["slope"]
+        self.intercept = defaults["intercept"]
+        self.extreme_pull = defaults["extreme_pull"]
         
         # Category-specific adjustments
         self.category_bias: dict[str, float] = {}
@@ -493,8 +545,10 @@ class CalibrationModel:
         return "\n".join(lines)
     
     def _save(self):
-        filepath = self.data_dir / "calibration_model.json"
+        suffix = f"_{self.provider}" if self.provider else ""
+        filepath = self.data_dir / f"calibration_model{suffix}.json"
         state = {
+            "provider": self.provider,
             "slope": self.slope,
             "intercept": self.intercept,
             "extreme_pull": self.extreme_pull,
@@ -505,7 +559,8 @@ class CalibrationModel:
             json.dump(state, f, indent=2)
     
     def _load(self):
-        filepath = self.data_dir / "calibration_model.json"
+        suffix = f"_{self.provider}" if self.provider else ""
+        filepath = self.data_dir / f"calibration_model{suffix}.json"
         if not filepath.exists():
             return
         try:
@@ -781,7 +836,7 @@ class LLMEstimator:
         """
         self.provider = validate_provider(provider)
         self.model = model
-        self.calibration = calibration or CalibrationModel()
+        self.calibration = calibration or CalibrationModel(provider=self.provider)
         self.api_key = api_key
         self.n_samples = n_samples
         self.temperature = temperature

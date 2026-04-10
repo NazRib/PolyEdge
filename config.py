@@ -52,4 +52,4 @@ CLAUDE_MODEL = "claude-sonnet-4-20250514"
 #   AZURE_OPENAI_API_KEY      — your Azure OpenAI API key
 #   AZURE_OPENAI_ENDPOINT     — e.g. https://your-resource.openai.azure.com
 #   AZURE_OPENAI_DEPLOYMENT   — deployment name (default: gpt-5.4-pro)
-AZURE_OPENAI_DEPLOYMENT = "gpt-5.4-pro"
+AZURE_OPENAI_DEPLOYMENT = "gpt-5.4"

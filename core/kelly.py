@@ -90,7 +90,10 @@ def kelly_criterion(
     edge_yes = estimated_prob - market_price
     edge_no = (1 - estimated_prob) - (1 - market_price)  # = market_price - estimated_prob
     
-    if abs(edge_yes) >= abs(edge_no) and edge_yes > 0:
+    # Note: edge_yes == -edge_no algebraically, but floating point arithmetic
+    # can produce slightly different abs() values from the two subtractions.
+    # We only need to check the sign, not compare magnitudes.
+    if edge_yes > 0:
         # BUY YES
         side = "YES"
         prob_win = estimated_prob

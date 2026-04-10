@@ -361,16 +361,22 @@ def _call_gpt(
     if use_web_search:
         tools.append({"type": "web_search"})
 
+    # Reasoning models consume output tokens for internal chain-of-thought.
+    # 1000 is far too low — the reasoning alone can use 2-4k tokens,
+    # leaving nothing for the actual JSON response.
+    is_reasoning = _is_reasoning_model(deployment)
+    effective_max_tokens = max(max_tokens, 16_000) if is_reasoning else max_tokens
+
     # Build input: Responses API takes `input` (string or message list)
     # and `instructions` for system-level context.
     kwargs: dict = {
         "model": deployment,
         "input": user_prompt,
-        "max_output_tokens": max_tokens,
+        "max_output_tokens": effective_max_tokens,
     }
     # Reasoning / pro models reject temperature — only set it for
     # conventional (non-reasoning) models.
-    if not _is_reasoning_model(deployment):
+    if not is_reasoning:
         kwargs["temperature"] = temperature
     if system_prompt:
         kwargs["instructions"] = system_prompt
@@ -389,12 +395,30 @@ def _call_gpt(
 
             # Fallback: manually extract from output items
             parts = []
-            for item in getattr(response, "output", []):
-                if getattr(item, "type", "") == "message":
+            output_items = getattr(response, "output", [])
+            for item in output_items:
+                item_type = getattr(item, "type", "")
+                if item_type == "message":
                     for block in getattr(item, "content", []):
-                        if getattr(block, "type", "") == "output_text":
+                        block_type = getattr(block, "type", "")
+                        if block_type == "output_text":
                             parts.append(block.text)
-            return "\n".join(parts).strip() if parts else None
+                        elif block_type == "refusal":
+                            refusal = getattr(block, "refusal", "")
+                            logger.warning(f"GPT refused request: {refusal[:200]}")
+
+            if parts:
+                return "\n".join(parts).strip()
+
+            # Still nothing — log diagnostic info
+            item_types = [getattr(it, "type", "?") for it in output_items]
+            status = getattr(response, "status", "unknown")
+            incomplete = getattr(response, "incomplete_details", None)
+            logger.warning(
+                f"GPT returned no text. status={status}, "
+                f"output_types={item_types}, incomplete={incomplete}"
+            )
+            return None
 
         except Exception as e:
             err_str = str(e)

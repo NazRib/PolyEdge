@@ -1,7 +1,7 @@
 {
-  "bankroll": 339.3322000000002,
+  "bankroll": 186.87220000000025,
   "initial_bankroll": 1000,
-  "trade_counter": 26,
+  "trade_counter": 34,
   "trades": [
     {
       "trade_id": "PT-0001",
@@ -522,6 +522,166 @@
       "pnl": 0.0,
       "strategy_tag": "enriched+live+claude-sonnet-4",
       "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0027",
+      "market_id": "1709412",
+      "question": "JD Vance diplomatic meeting with Iran by April 10?",
+      "side": "YES",
+      "entry_price": 0.4305,
+      "shares": 52.1025,
+      "dollar_amount": 22.43,
+      "estimated_probability": 0.6279645908227581,
+      "market_price_at_entry": 0.4305,
+      "edge_at_entry": 0.19746459082275813,
+      "confidence": 0.76255443232079,
+      "timestamp": "2026-04-09T15:01:40.125585+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4",
+      "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0028",
+      "market_id": "566140",
+      "question": "Will Arsenal win the 2025\u201326 Champions League?",
+      "side": "NO",
+      "entry_price": 0.7050000000000001,
+      "shares": 48.1322,
+      "dollar_amount": 33.93,
+      "estimated_probability": 0.14163018449292505,
+      "market_price_at_entry": 0.295,
+      "edge_at_entry": -0.15336981550707493,
+      "confidence": 0.7995375643195821,
+      "timestamp": "2026-04-09T15:01:40.161728+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4",
+      "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0029",
+      "market_id": "1567747",
+      "question": "Iran x Israel/US conflict ends by April 30?",
+      "side": "NO",
+      "entry_price": 0.30500000000000005,
+      "shares": 42.5005,
+      "dollar_amount": 12.96,
+      "estimated_probability": 0.5608349254534343,
+      "market_price_at_entry": 0.695,
+      "edge_at_entry": -0.13416507454656568,
+      "confidence": 0.7915421593490126,
+      "timestamp": "2026-04-09T15:01:40.175551+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4",
+      "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0030",
+      "market_id": "1831591",
+      "question": "Indian Premier League: Kolkata Knight Riders vs Lucknow Super Giants",
+      "side": "NO",
+      "entry_price": 0.41500000000000004,
+      "shares": 40.5712,
+      "dollar_amount": 16.84,
+      "estimated_probability": 0.4469588625733624,
+      "market_price_at_entry": 0.585,
+      "edge_at_entry": -0.13804113742663754,
+      "confidence": 0.841100615373125,
+      "timestamp": "2026-04-09T15:01:40.197922+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4",
+      "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0031",
+      "market_id": "1567746",
+      "question": "Iran x Israel/US conflict ends by April 15?",
+      "side": "NO",
+      "entry_price": 0.36550000000000005,
+      "shares": 38.5691,
+      "dollar_amount": 14.1,
+      "estimated_probability": 0.5044141749729123,
+      "market_price_at_entry": 0.6345,
+      "edge_at_entry": -0.13008582502708765,
+      "confidence": 0.8105198348836986,
+      "timestamp": "2026-04-09T15:01:40.255780+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4",
+      "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0032",
+      "market_id": "1712297",
+      "question": "Will WTI Crude Oil (WTI) hit (HIGH) $120 in April?",
+      "side": "YES",
+      "entry_price": 0.375,
+      "shares": 36.8198,
+      "dollar_amount": 13.81,
+      "estimated_probability": 0.49612023238870384,
+      "market_price_at_entry": 0.375,
+      "edge_at_entry": 0.12112023238870384,
+      "confidence": 0.8398674271423396,
+      "timestamp": "2026-04-09T15:01:40.271344+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4",
+      "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0033",
+      "market_id": "1800079",
+      "question": "Will Elon Musk post 260-279 tweets from April 3 to April 10, 2026?",
+      "side": "NO",
+      "entry_price": 0.655,
+      "shares": 36.5052,
+      "dollar_amount": 23.91,
+      "estimated_probability": 0.22561170141589226,
+      "market_price_at_entry": 0.345,
+      "edge_at_entry": -0.11938829858410771,
+      "confidence": 0.8144948918124301,
+      "timestamp": "2026-04-09T15:01:40.294202+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4",
+      "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0034",
+      "market_id": "1707841",
+      "question": "Israel x Hezbollah ceasefire by April 30, 2026?",
+      "side": "NO",
+      "entry_price": 0.5385,
+      "shares": 26.8836,
+      "dollar_amount": 14.48,
+      "estimated_probability": 0.3717774647967848,
+      "market_price_at_entry": 0.4615,
+      "edge_at_entry": -0.08972253520321521,
+      "confidence": 0.8777641893601282,
+      "timestamp": "2026-04-09T15:01:40.311258+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4",
+      "model_tag": "claude-sonnet-4"
     }
   ],
   "calibration": [
@@ -529,37 +689,37 @@
       "predicted": 0.799733705114383,
       "actual": 1,
       "market_id": "1835958",
-      "time": "2026-04-06T21:47:23.316182+00:00"
+      "time": "2026-04-09T14:47:18.566682+00:00"
     },
     {
       "predicted": 0.799600364756902,
       "actual": 0,
       "market_id": "1762466",
-      "time": "2026-04-06T21:47:23.316182+00:00"
+      "time": "2026-04-09T14:47:18.566682+00:00"
     },
     {
       "predicted": 0.612633319664795,
       "actual": 0,
       "market_id": "1762490",
-      "time": "2026-04-06T21:47:23.316182+00:00"
+      "time": "2026-04-09T14:47:18.566682+00:00"
     },
     {
       "predicted": 0.5607336767735869,
       "actual": 0,
       "market_id": "1760063",
-      "time": "2026-04-06T21:47:23.316182+00:00"
+      "time": "2026-04-09T14:47:18.566682+00:00"
     },
     {
       "predicted": 0.27101582811487734,
       "actual": 0,
       "market_id": "1790915",
-      "time": "2026-04-06T21:48:00.861882+00:00"
+      "time": "2026-04-09T14:47:18.566682+00:00"
     },
     {
       "predicted": 0.5595716609062497,
       "actual": 1,
       "market_id": "1790940",
-      "time": "2026-04-06T21:48:02.580381+00:00"
+      "time": "2026-04-09T14:47:18.566682+00:00"
     }
   ]
 }
