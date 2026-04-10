@@ -1,0 +1,189 @@
+==============================================================================
+  POLYMARKET EDGE -- Mention Strategy Run Log
+  2026-04-10 21:19:52 UTC
+==============================================================================
+  Mode:             live
+  Strategy:         mentions
+  Model:            claude-sonnet-4
+  Events found:     2
+  Bankroll:         $1,000.00
+  Min edge:         5%
+  Kelly fraction:   20%
+  Event exposure:   25% of bankroll
+==============================================================================
+
+
+==============================================================================
+  EVENT: What will Trump say this week? (April 12)
+==============================================================================
+  Slug:            what-will-trump-say-this-week-april-12
+  Scope:           weekly
+  Subject:         Trump
+  Words/outcomes:  16
+  Days to resolve: 1.1
+  Total volume:    $43,346
+
+--- CONTEXT (web-search grounded) --------------------------------------------
+  I'll help you gather context for this Trump prediction market question. Let me search for current information about Trump's activities and upcoming events.
+  Let me search for more specific information about current Trump news topics and recent statements.
+  Now let me search for Trump's recent statements and speeches in the last 48 hours.
+  Let me search for more specific information about Trump's upcoming schedule and any press conferences or events planned for April 12, 2026.
+  Based on my research, I can provide you with a comprehensive context summary for the Trump prediction market question. However, I should note that the search results do not reveal any specific scheduled events for April 12, 2026, which suggests there may not be a major public event planned for that exact date.
+  
+  ## Research Summary for Trump Prediction Market (April 12, 2026)
+  
+  ### 1. **Current Agenda/Event Context**
+  
+  The White House maintains a daily public schedule with updates on events, meetings, travel, and press briefings
+  , but **no specific major event is publicly scheduled for April 12, 2026** based on available information. 
+  The White House publishes daily guidance listing confirmed public events, meetings with foreign leaders, bill signings, and travel, though this schedule is intentionally incomplete and excludes classified briefings, private phone calls, informal meetings, or personal time
+  .
+  
+  ### 2. **Top Current News Topics Involving Trump**
+  
+  **Primary Focus: Iran Ceasefire and Middle East Crisis**
+  - 
+  President Trump announced a ceasefire with Iran just hours after warning the regime would face devastating consequences
+  
+  - 
+  Trump agreed "to suspend the bombing and attack of Iran for a period of two weeks" on the condition that Iran reopens the Strait of Hormuz, after warning that "a whole civilization will die tonight" unless Iran agreed to a deal
+  
+  - 
+  The fragile ceasefire depends on the Strait of Hormuz being opened for ships "without limitation, including tolls," with Trump wanting the strait opened "immediately, without limitation"
+  
+  
+  **Secondary Topics:**
+  - 
+  Stock market surge following ceasefire announcement: Dow Jones jumped 1,325.46 points (2.8%), S&P 500 leaped 2.5%, and Nasdaq rallied 2.8%
+  
+  - 
+  Polling shows Americans oppose the Iran war, with Trump's approval among strong Republican supporters dropping to 43% from 52% in January
+  
+  - 
+  Former Rep. Marjorie Taylor Greene called for Trump's removal using the 25th Amendment, calling Trump's Iran threats "evil and madness"
+  
+  
+  ### 3. **Publicly Available Schedule Information**
+  ... (23 more lines)
+
+--- BROADCAST FORMAT ASSESSMENT ----------------------------------------------
+  Classification:  weekly
+  Reasoning:       This is a weekly market covering all public verbal statements from April 6-12, 2026, which will almost certainly include multiple public appearances, press interactions, or social media videos during the week.
+
+  >> IMPACT: Multiple appearances during window. Normal estimation.
+
+--- WORD-BY-WORD ESTIMATES ---------------------------------------------------
+
+  Word                          Our P  Mkt P    Edge  Conf  Reasoning
+  ----------------------------------------------------------------------------------------------------
+    Pam / Bondi                    25%   20%    +5%   0.7  Pam Bondi is likely a current administration official Trump would reference in weekly appearances, but not guaranteed.
+    Lee / Zeldin                   45%   40%    +5%   0.6  Lee Zeldin appears to be a current administration figure Trump frequently mentions, making this moderately likely in a week of appearances.
+[+] Boots on the ground            20%   15%    +5%   0.8  Given the Iran ceasefire context, this military phrase could come up when discussing troop deployments, but Trump often uses other military terminology.
+    Delcy / Rodriguez               8%    8%    +0%   0.7  This appears to be a foreign official's name with no clear connection to current Iran crisis or domestic agenda.
+    Kharg Island                   18%   14%    +4%   0.6  This Iranian oil facility could be mentioned given the Iran ceasefire and Strait of Hormuz discussions, but it's quite specific.
+    Predict / Prediction / Predicted   35%   39%    -4%   0.8  Trump often talks about his predictions being right, especially regarding foreign policy outcomes like the Iran situation.
+    King Charles                   25%   22%    +2%   0.7  Could come up in international relations context, but no clear current hook connecting to Iran crisis or domestic priorities.
+    Two weeks                      45%   40%    +5%   0.8  Highly relevant given Trump announced a 'two weeks' ceasefire with Iran - very likely to reference this timeframe in weekly appearances.
+    Tube                           15%   18%    -2%   0.6  Could refer to media/TV context or oil pipelines given Middle East focus, but not a common Trump word.
+    Potato                          5%    4%    +1%   0.8  No clear connection to current Iran crisis or typical Trump talking points.
+    Coffee                          8%    9%    -1%   0.7  Might come up in casual remarks or trade discussions, but not connected to current major topics.
+    Witch                          12%    8%    +3%   0.7  Trump sometimes uses 'witch hunt' rhetoric, but less common in foreign policy contexts.
+    Common Sense / Commonsense     18%   15%    +3%   0.8  Trump occasionally uses this phrase when defending his policies, but it's not one of his most frequent verbal tics.
+    Keir / Starmer                 55%   60%    -4%   0.6  UK Prime Minister likely to be mentioned given international crisis context and Trump's tendency to discuss foreign leaders.
+    Crypto / Bitcoin                6%    4%    +2%   0.8  No clear connection to Iran crisis or current priorities, and Trump has been inconsistent on crypto topics.
+    Six Seven                       8%    6%    +2%   0.7  No obvious context for these specific numbers in current Iran crisis or typical Trump talking points.
+
+--- EVENT SUMMARY ------------------------------------------------------------
+  Event:             What will Trump say this week? (April 12)
+  Words estimated:   0
+  Tradeable edges:   0
+  Trades entered:    0
+  Event exposure:    $0.00 / $250.00
+
+
+==============================================================================
+  EVENT: What will Trump say this week? (April 19)
+==============================================================================
+  Slug:            what-will-trump-say-this-week-april-19
+  Scope:           weekly
+  Subject:         Trump
+  Words/outcomes:  28
+  Days to resolve: 8.1
+  Total volume:    $0
+
+--- CONTEXT (web-search grounded) --------------------------------------------
+  (No additional context available)
+
+--- BROADCAST FORMAT ASSESSMENT ----------------------------------------------
+  Classification:  weekly
+  Reasoning:       This is a weekly market covering all public verbal statements during a 7-day window, which will almost certainly include multiple public appearances, rallies, interviews, or social media videos.
+
+  >> IMPACT: Multiple appearances during window. Normal estimation.
+
+--- WORD-BY-WORD ESTIMATES ---------------------------------------------------
+
+  Word                          Our P  Mkt P    Edge  Conf  Reasoning
+  ----------------------------------------------------------------------------------------------------
+[+] Make America Great Again       85%   50%   +35%   0.9  Trump's signature slogan that he uses in nearly every public appearance.
+    Transgender                    70%   66%    +4%   0.7  A frequent topic in Trump's current political messaging and culture war rhetoric.
+[-] Epic Fury                       5%   50%   -45%   0.8  Not part of Trump's typical vocabulary or current talking points.
+[+] Sleepy Joe                     75%   50%   +25%   0.8  Trump's established nickname for Biden that he uses regularly in political contexts.
+[-] Ass                            40%   50%   -10%   0.6  Trump occasionally uses crude language, though 'ass' is less common than other profanity.
+[+] Sucker / Loser                 60%   50%   +10%   0.7  Common insults in Trump's vocabulary, especially when attacking opponents.
+    Barack Hussein Obama           65%   66%    -1%   0.7  Trump often uses Obama's full name when criticizing him, which he does frequently.
+[-] Hezbollah                      25%   50%   -25%   0.6  Could come up in foreign policy discussions but not a regular talking point.
+[-] Christmas                      15%   50%   -35%   0.7  Not seasonally relevant in April and not a current political topic.
+[-] Boy oh boy                     30%   50%   -20%   0.6  An expression Trump uses occasionally but not a signature phrase.
+[-] TACO / Trump Always Chickens Out    5%   50%   -45%   0.8  Not Trump's language and he wouldn't use an acronym criticizing himself.
+    AOC                            45%   50%    -5%   0.7  Trump frequently attacks Alexandria Ocasio-Cortez and uses her initials.
+[-] Losing MAGA                    10%   50%   -40%   0.7  Trump wouldn't typically use 'losing' in connection with his own movement.
+[+] All over the place             55%   50%    +5%   0.6  A common phrase Trump uses to criticize opponents or describe chaotic situations.
+    Jesus                          35%   38%    -3%   0.6  Trump references religion occasionally but not as frequently as other topics.
+[-] Two week / two-week            40%   50%   -10%   0.6  Common timeframe reference that could come up in various contexts.
+[-] Gulf of America                30%   50%   -20%   0.6  If this relates to a recent Trump proposal, he might mention it, but not a standard phrase.
+[+] See what happens               70%   50%   +20%   0.8  A signature Trump phrase he uses frequently when discussing uncertain outcomes.
+[-] Six Seven                      20%   50%   -30%   0.7  Could come up in various numerical contexts but not particularly likely.
+[-] Peanut                         15%   56%   -40%   0.7  Not part of Trump's typical vocabulary unless referencing a specific news story.
+    Central Casting                50%   50%    +0%   0.7  Trump frequently uses this phrase to describe people who 'look the part.'
+[-] Regarded                       25%   50%   -25%   0.6  Not a common word in Trump's vocabulary, though he might use it occasionally.
+[-] Crypto / Bitcoin               40%   50%   -10%   0.6  Trump has shown interest in cryptocurrency and might discuss it in political contexts.
+    No No No                       60%   57%    +3%   0.7  Trump often uses repetitive phrases for emphasis, including 'no no no.'
+[-] Gay for Palestine               5%   50%   -45%   0.8  Not Trump's typical language and an unusual phrase combination.
+[-] Nuke                           35%   50%   -15%   0.6  Could come up in foreign policy discussions but not a regular talking point.
+[-] Melania                        40%   50%   -10%   0.7  Trump mentions his wife occasionally but not in every appearance.
+[-] Four to Six                    25%   50%   -25%   0.6  Could come up in various numerical contexts but not particularly common.
+
+--- TRADE: Transgender -------------------------------------------------------
+  Our estimate:        70.0%
+  Market price:        66.0%
+  Edge:                +4.0%
+  Confidence:          0.70
+  LLM reasoning:       A frequent topic in Trump's current political messaging and culture war rhetoric.
+
+  Direction:           BUY YES (market underpriced)
+
+  DECISION: NO TRADE
+  Reason:    Edge 4.0% below minimum 5.0%
+
+--- EVENT SUMMARY ------------------------------------------------------------
+  Event:             What will Trump say this week? (April 19)
+  Words estimated:   1
+  Tradeable edges:   0
+  Trades entered:    0
+  Event exposure:    $0.00 / $250.00
+  Edge range:        +4% to +4%
+  Avg |edge|:        4%
+
+
+==============================================================================
+  RUN SUMMARY
+==============================================================================
+  Events processed:    2
+  Words evaluated:     1
+  Trades entered:      0
+  Edge range:          +4% to +4%
+  Actionable (>=5%):   0 / 1
+  Remaining bankroll:  $1000.00
+  Elapsed:             146.3s
+==============================================================================
+

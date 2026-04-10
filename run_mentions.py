@@ -3,11 +3,14 @@
 Run the Mention Market Strategy.
 
 Usage:
-    # Dry run — scan + estimate, no trades
+    # Dry run -- scan + estimate, no trades
     python run_mentions.py
 
     # Live paper trading
     python run_mentions.py --live
+
+    # Use GPT-5.4 instead of Claude
+    python run_mentions.py --model gpt
 
     # Custom parameters
     python run_mentions.py --min-edge 0.08 --kelly 0.15 --max-days 7
@@ -18,16 +21,20 @@ import logging
 import os
 import sys
 
-if os.name == "nt":
+if os.name == "nt" and hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 from strategies.mention_strategy import MentionStrategy
+from core.llm_providers import provider_ready
 
 
 def main():
     parser = argparse.ArgumentParser(description="Polymarket Mention Strategy")
     parser.add_argument("--live", action="store_true",
                         help="Enter paper trades (default: dry run only)")
+    parser.add_argument("--model", type=str, default="claude",
+                        choices=["claude", "gpt"],
+                        help="LLM provider: claude or gpt (default: claude)")
     parser.add_argument("--min-edge", type=float, default=0.05,
                         help="Minimum edge to trade (default: 0.05)")
     parser.add_argument("--kelly", type=float, default=0.20,
@@ -46,7 +53,15 @@ def main():
         format="%(asctime)s %(levelname)s %(name)s: %(message)s",
     )
 
+    # Validate LLM provider credentials
+    ready, msg = provider_ready(args.model)
+    print(f"\n  LLM provider: {args.model} ({msg})")
+    if not ready:
+        print(f"  Cannot run with --model {args.model} -- credentials missing")
+        sys.exit(1)
+
     strategy = MentionStrategy(
+        llm_provider=args.model,
         kelly_fraction=args.kelly,
         min_edge=args.min_edge,
         max_event_exposure_pct=args.event_cap,

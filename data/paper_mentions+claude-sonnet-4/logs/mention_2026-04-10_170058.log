@@ -1,0 +1,39 @@
+==============================================================================
+  POLYMARKET EDGE -- Mention Strategy Run Log
+  2026-04-10 17:00:58 UTC
+==============================================================================
+  Mode:             live
+  Strategy:         mentions
+  Model:            claude-sonnet-4
+  Events found:     1
+  Bankroll:         $1,000.00
+  Min edge:         5%
+  Kelly fraction:   20%
+  Event exposure:   25% of bankroll
+==============================================================================
+
+
+==============================================================================
+  EVENT: What will Trump say this week? (April 12)
+==============================================================================
+  Slug:            what-will-trump-say-this-week-april-12
+  Scope:           weekly
+  Subject:         Trump
+  Words/outcomes:  16
+  Days to resolve: 1.3
+  Total volume:    $41,897
+
+--- CONTEXT (web-search grounded) --------------------------------------------
+  (No additional context available)
+
+
+==============================================================================
+  RUN SUMMARY
+==============================================================================
+  Events processed:    1
+  Words evaluated:     0
+  Trades entered:      0
+  Remaining bankroll:  $1000.00
+  Elapsed:             43.0s
+==============================================================================
+

@@ -1,21 +1,23 @@
 """
-Cross-Event Logical Dependency Detector (Phase A)
+Cross-Event Logical Dependency Detector (Phase A + B)
 Finds pricing inconsistencies across markets in *different* events that
 are logically related.
 
 Three dependency types detected:
-    1. Implication   — A=YES implies B=YES  →  P(A) <= P(B)
-    2. Mutual Exclusion — A and B can't both be YES  →  P(A) + P(B) <= 1.0
-    3. Subsumption   — A is a stricter version of B (date/scope)  →  P(A) <= P(B)
+    1. Implication   -- A=YES implies B=YES  ->  P(A) <= P(B)
+    2. Mutual Exclusion -- A and B can't both be YES  ->  P(A) + P(B) <= 1.0
+    3. Subsumption   -- A is a stricter version of B (date/scope)  ->  P(A) <= P(B)
 
-Phase A uses keyword overlap + heuristic rules (no LLM calls).
-Phase B will add LLM-based relationship classification for ambiguous pairs.
+Phase A: keyword overlap + heuristic rules (no LLM calls).
+Phase B: LLM-based classification for ambiguous "correlated" pairs, with caching.
 
 Usage:
-    python -m strategies.cross_event_arb              # scan live markets
-    python -m strategies.cross_event_arb --min-edge 3 # 3% threshold
-    python -m strategies.cross_event_arb --top 500    # scan more markets
-    python -m strategies.cross_event_arb --verbose     # show all pairs, not just violations
+    python -m strategies.cross_event_arb                    # heuristic-only scan
+    python -m strategies.cross_event_arb --llm              # heuristic + LLM classification
+    python -m strategies.cross_event_arb --llm --top 500    # scan more markets
+    python -m strategies.cross_event_arb --min-edge 3       # 3% threshold
+    python -m strategies.cross_event_arb --verbose          # show all pairs
+    python -m strategies.cross_event_arb --cache-stats      # show cache statistics
 """
 
 import json
@@ -642,6 +644,7 @@ class CrossEventScanner:
         markets: list[Market] = None,
         max_markets: int = 300,
         include_correlated: bool = False,
+        use_llm: bool = False,
     ) -> tuple[list[PriceViolation], list[DependencyPair]]:
         """
         Run the full cross-event scan.
@@ -650,7 +653,7 @@ class CrossEventScanner:
             markets: pre-fetched markets (if None, fetches from API)
             max_markets: how many markets to fetch if not provided
             include_correlated: if True, also return correlated pairs
-                                (not just strict dependency violations)
+            use_llm: if True, classify correlated pairs with Claude (Phase B)
 
         Returns:
             (violations, all_dependency_pairs)
@@ -686,13 +689,29 @@ class CrossEventScanner:
         )
         logger.info(f"Found {len(candidates)} candidate pairs from keyword/entity overlap")
 
-        # 5. Classify dependencies
+        # 5. Classify dependencies (heuristic)
         dependency_pairs = []
         for a, b, kw_ov, ent_ov in candidates:
             dep = classify_dependency(a, b, kw_ov, ent_ov)
             dependency_pairs.append(dep)
 
-        # Filter out independent/correlated unless requested
+        # 6. Phase B: LLM classification of correlated pairs
+        if use_llm:
+            correlated_pairs = [
+                p for p in dependency_pairs
+                if p.dep_type == DependencyType.CORRELATED
+            ]
+            if correlated_pairs:
+                classifier = LLMDependencyClassifier()
+                classified = classifier.classify_pairs(correlated_pairs)
+                # Replace correlated pairs with classified versions
+                correlated_set = {id(p) for p in correlated_pairs}
+                dependency_pairs = [
+                    p for p in dependency_pairs
+                    if id(p) not in correlated_set
+                ] + classified
+
+        # 7. Filter to logical pairs
         logical_pairs = [
             p for p in dependency_pairs
             if p.dep_type in (
@@ -755,17 +774,321 @@ class CrossEventScanner:
         ]
 
 
+# ─── Phase B: Dependency Cache ───────────────────────────
+
+CACHE_FILE = os.path.join("data", "dependency_cache.json")
+
+
+class DependencyCache:
+    """
+    Persists LLM-classified dependency relationships so we don't
+    re-classify known pairs. Keyed by normalized question pair
+    (question text is stable even if market IDs change).
+
+    Cache entries:
+        { "key": "q_a|||q_b",
+          "dep_type": "implication",
+          "direction": "a_implies_b",
+          "confidence": 0.85,
+          "reason": "...",
+          "classified_at": "2026-04-08T..." }
+    """
+
+    def __init__(self, path: str = CACHE_FILE):
+        self.path = path
+        self._cache: dict[str, dict] = {}
+        self._load()
+
+    def _make_key(self, q_a: str, q_b: str) -> str:
+        """Canonical key: sorted to make (A,B) == (B,A)."""
+        pair = sorted([q_a.strip().lower(), q_b.strip().lower()])
+        return "|||".join(pair)
+
+    def _load(self):
+        if os.path.exists(self.path):
+            try:
+                with open(self.path) as f:
+                    entries = json.load(f)
+                self._cache = {e["key"]: e for e in entries}
+                logger.info(f"Loaded dependency cache: {len(self._cache)} entries")
+            except Exception as e:
+                logger.warning(f"Cache load failed: {e}")
+                self._cache = {}
+
+    def save(self):
+        os.makedirs(os.path.dirname(self.path) or ".", exist_ok=True)
+        with open(self.path, "w") as f:
+            json.dump(list(self._cache.values()), f, indent=2)
+        logger.info(f"Saved dependency cache: {len(self._cache)} entries")
+
+    def get(self, q_a: str, q_b: str) -> Optional[dict]:
+        key = self._make_key(q_a, q_b)
+        return self._cache.get(key)
+
+    def put(self, q_a: str, q_b: str, dep_type: str, direction: str,
+            confidence: float, reason: str):
+        key = self._make_key(q_a, q_b)
+        self._cache[key] = {
+            "key": key,
+            "q_a": q_a,
+            "q_b": q_b,
+            "dep_type": dep_type,
+            "direction": direction,
+            "confidence": confidence,
+            "reason": reason,
+            "classified_at": datetime.now(timezone.utc).isoformat(),
+        }
+
+    @property
+    def size(self) -> int:
+        return len(self._cache)
+
+    def stats(self) -> dict:
+        counts = {}
+        for entry in self._cache.values():
+            dt = entry.get("dep_type", "unknown")
+            counts[dt] = counts.get(dt, 0) + 1
+        return {"total": len(self._cache), "by_type": counts}
+
+
+# ─── Phase B: LLM Dependency Classifier ──────────────────
+
+CLASSIFIER_SYSTEM_PROMPT = """You are a prediction market analyst specializing in logical relationships between markets.
+
+Given pairs of prediction market questions, classify the logical dependency between them.
+
+For each pair, respond with EXACTLY one of these types:
+- implication: If A is YES, then B must be YES (or vice versa). State the direction.
+- mutual_exclusion: A and B cannot both be YES. They are incompatible outcomes.
+- subsumption: A is a stricter version of B (e.g. narrower time window, higher threshold). State which is stricter.
+- correlated: Related topics but no strict logical dependency. One being YES makes the other more/less likely but doesn't guarantee it.
+- independent: Not meaningfully related despite surface similarities.
+
+IMPORTANT: Be precise about directionality.
+- "Trump wins presidency" IMPLIES "Republican wins presidency" (not vice versa).
+- "US attacks Iran" does NOT imply "Iran attacks US" -- directionality matters.
+- "Ceasefire with X" and "Military action against X" are closer to mutual_exclusion.
+- "Fed cuts rates" and "Fed raises rates" are mutual_exclusion.
+- Different countries/teams competing for the same title are mutual_exclusion.
+
+Respond with valid JSON only. No markdown, no preamble."""
+
+CLASSIFIER_USER_TEMPLATE = """Classify the logical dependency for each pair of prediction markets below.
+
+{pairs_text}
+
+Respond with a JSON array. For each pair, include:
+- "pair_index": the pair number (1-based)
+- "dep_type": one of "implication", "mutual_exclusion", "subsumption", "correlated", "independent"
+- "direction": "a_implies_b", "b_implies_a", or "symmetric"
+- "confidence": 0.0-1.0 how certain you are
+- "reason": brief explanation (1 sentence)
+
+Example response:
+[
+  {{"pair_index": 1, "dep_type": "implication", "direction": "a_implies_b", "confidence": 0.9, "reason": "A is a specific case of B."}},
+  {{"pair_index": 2, "dep_type": "independent", "direction": "symmetric", "confidence": 0.8, "reason": "Different subjects despite shared keywords."}}
+]"""
+
+
+class LLMDependencyClassifier:
+    """
+    Uses Claude to classify logical dependencies between market pairs
+    that the heuristic couldn't resolve (tagged as "correlated").
+
+    Batches pairs (default 5 per call) to minimize API usage.
+    Results are cached so subsequent runs skip known pairs.
+    """
+
+    def __init__(
+        self,
+        cache: DependencyCache = None,
+        api_key: Optional[str] = None,
+        model: str = "claude-sonnet-4-20250514",
+        batch_size: int = 5,
+        max_batches: int = 50,
+        rate_limit_delay: float = 1.0,
+    ):
+        self.cache = cache or DependencyCache()
+        self.api_key = api_key or os.environ.get("ANTHROPIC_API_KEY")
+        self.model = model
+        self.batch_size = batch_size
+        self.max_batches = max_batches
+        self.rate_limit_delay = rate_limit_delay
+
+    def classify_pairs(
+        self, pairs: list[DependencyPair],
+    ) -> list[DependencyPair]:
+        """
+        Classify a list of correlated pairs using the LLM.
+        Returns updated DependencyPair objects with LLM classifications.
+        Skips pairs already in cache.
+        """
+        if not self.api_key:
+            logger.warning("No ANTHROPIC_API_KEY -- skipping LLM classification")
+            return pairs
+
+        # Separate cached vs uncached
+        uncached = []
+        results = []
+
+        for pair in pairs:
+            cached = self.cache.get(
+                pair.market_a.question, pair.market_b.question
+            )
+            if cached:
+                # Apply cached classification
+                pair.dep_type = cached["dep_type"]
+                pair.direction = cached["direction"]
+                pair.confidence = cached["confidence"]
+                pair.reason = f"[cached] {cached['reason']}"
+                results.append(pair)
+            else:
+                uncached.append(pair)
+
+        logger.info(
+            f"LLM classifier: {len(results)} cached, "
+            f"{len(uncached)} to classify"
+        )
+
+        if not uncached:
+            return results
+
+        # Batch and classify uncached pairs
+        batches = [
+            uncached[i:i + self.batch_size]
+            for i in range(0, len(uncached), self.batch_size)
+        ]
+
+        if len(batches) > self.max_batches:
+            logger.warning(
+                f"Capping LLM batches at {self.max_batches} "
+                f"({self.max_batches * self.batch_size} pairs). "
+                f"{len(batches) - self.max_batches} batches skipped."
+            )
+            # Classify highest-overlap pairs first (already sorted)
+            batches = batches[:self.max_batches]
+            # Return un-classified pairs as-is
+            skipped_start = self.max_batches * self.batch_size
+            results.extend(uncached[skipped_start:])
+
+        classified_count = 0
+        for batch_idx, batch in enumerate(batches):
+            logger.info(
+                f"  Classifying batch {batch_idx + 1}/{len(batches)} "
+                f"({len(batch)} pairs)..."
+            )
+            classified = self._classify_batch(batch)
+            results.extend(classified)
+            classified_count += len([
+                p for p in classified
+                if p.dep_type != DependencyType.CORRELATED
+            ])
+
+            if batch_idx < len(batches) - 1:
+                time.sleep(self.rate_limit_delay)
+
+        # Save cache
+        self.cache.save()
+
+        logger.info(
+            f"LLM classified {classified_count} new dependencies "
+            f"from {len(uncached)} pairs"
+        )
+        return results
+
+    def _classify_batch(
+        self, batch: list[DependencyPair],
+    ) -> list[DependencyPair]:
+        """Send a batch of pairs to Claude for classification."""
+        # Build the pairs text
+        pairs_lines = []
+        for i, pair in enumerate(batch, 1):
+            pairs_lines.append(
+                f"Pair {i}:\n"
+                f"  Market A: {pair.market_a.question}\n"
+                f"  Market B: {pair.market_b.question}"
+            )
+        pairs_text = "\n\n".join(pairs_lines)
+
+        user_prompt = CLASSIFIER_USER_TEMPLATE.format(pairs_text=pairs_text)
+
+        # Call Claude
+        from core.llm_estimator import call_claude
+        raw = call_claude(
+            user_prompt=user_prompt,
+            system_prompt=CLASSIFIER_SYSTEM_PROMPT,
+            model=self.model,
+            max_tokens=1500,
+            temperature=0.1,
+            api_key=self.api_key,
+        )
+
+        if not raw:
+            logger.warning("LLM classification returned empty -- keeping as correlated")
+            return batch
+
+        # Parse response
+        try:
+            # Strip markdown fences if present
+            text = raw.strip()
+            if text.startswith("```"):
+                text = re.sub(r'^```\w*\n?', '', text)
+                text = re.sub(r'\n?```$', '', text)
+            classifications = json.loads(text)
+        except json.JSONDecodeError as e:
+            logger.warning(f"Failed to parse LLM response: {e}")
+            logger.debug(f"Raw response: {raw[:500]}")
+            return batch
+
+        # Apply classifications
+        for cls in classifications:
+            idx = cls.get("pair_index", 0) - 1  # 1-based to 0-based
+            if 0 <= idx < len(batch):
+                pair = batch[idx]
+                dep_type = cls.get("dep_type", "correlated")
+                direction = cls.get("direction", "symmetric")
+                confidence = float(cls.get("confidence", 0.5))
+                reason = cls.get("reason", "")
+
+                # Validate dep_type
+                valid_types = {
+                    DependencyType.IMPLICATION,
+                    DependencyType.MUTUAL_EXCLUSION,
+                    DependencyType.SUBSUMPTION,
+                    DependencyType.CORRELATED,
+                    DependencyType.INDEPENDENT,
+                }
+                if dep_type not in valid_types:
+                    dep_type = DependencyType.CORRELATED
+
+                pair.dep_type = dep_type
+                pair.direction = direction
+                pair.confidence = confidence
+                pair.reason = f"[LLM] {reason}"
+
+                # Cache the result
+                self.cache.put(
+                    pair.market_a.question, pair.market_b.question,
+                    dep_type, direction, confidence, reason,
+                )
+
+        return batch
+
+
 # ─── CLI & Report ────────────────────────────────────────
 
 def format_violation_report(
     violations: list[PriceViolation],
     all_pairs: list[DependencyPair],
+    used_llm: bool = False,
 ) -> str:
     """Format a human-readable report of findings."""
     lines = []
     lines.append("")
     lines.append("=" * 78)
-    lines.append("  CROSS-EVENT DEPENDENCY SCANNER -- Phase A")
+    phase = "Phase A + B (LLM)" if used_llm else "Phase A (heuristic)"
+    lines.append(f"  CROSS-EVENT DEPENDENCY SCANNER -- {phase}")
     lines.append("=" * 78)
 
     # Summary
@@ -835,6 +1158,7 @@ def run_cross_event_scan(
     max_markets: int = 300,
     min_edge: float = 3.0,
     verbose: bool = False,
+    use_llm: bool = False,
 ):
     """CLI entry point for the cross-event scanner."""
     scanner = CrossEventScanner(
@@ -843,8 +1167,9 @@ def run_cross_event_scan(
     violations, all_pairs = scanner.scan(
         max_markets=max_markets,
         include_correlated=verbose,
+        use_llm=use_llm,
     )
-    report = format_violation_report(violations, all_pairs)
+    report = format_violation_report(violations, all_pairs, used_llm=use_llm)
     print(report)
     return violations, all_pairs
 
@@ -862,6 +1187,15 @@ if __name__ == "__main__":
     max_markets = 300
     min_edge = 3.0
     verbose = False
+    use_llm = False
+
+    if "--cache-stats" in args:
+        cache = DependencyCache()
+        stats = cache.stats()
+        print(f"\nDependency cache: {stats['total']} entries")
+        for dep_type, count in sorted(stats['by_type'].items()):
+            print(f"  {dep_type}: {count}")
+        sys.exit(0)
 
     if "--top" in args:
         idx = args.index("--top")
@@ -876,8 +1210,12 @@ if __name__ == "__main__":
     if "--verbose" in args:
         verbose = True
 
+    if "--llm" in args:
+        use_llm = True
+
     run_cross_event_scan(
         max_markets=max_markets,
         min_edge=min_edge,
         verbose=verbose,
+        use_llm=use_llm,
     )

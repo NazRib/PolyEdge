@@ -1,0 +1,28 @@
+{
+  "bankroll": 918.77,
+  "initial_bankroll": 1000.0,
+  "trade_counter": 1,
+  "trades": [
+    {
+      "trade_id": "PT-0001",
+      "market_id": "1891655",
+      "question": "[Mention] Bomb 100+ times -- What will be said during the PGL Buchare",
+      "side": "YES",
+      "entry_price": 0.87,
+      "shares": 93.3687,
+      "dollar_amount": 81.23,
+      "estimated_probability": 0.93,
+      "market_price_at_entry": 0.87,
+      "edge_at_entry": 0.06000000000000005,
+      "confidence": 0.88,
+      "timestamp": "2026-04-10T10:47:46.230578+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "mentions",
+      "model_tag": "gpt-5.4"
+    }
+  ],
+  "calibration": []
+}

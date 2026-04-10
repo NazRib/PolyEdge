@@ -27,7 +27,7 @@ from core.api_client import PolymarketClient, Market
 from core.kelly import kelly_criterion, PositionSize
 from core.llm_providers import (
     call_llm, call_llm_with_search, validate_provider,
-    model_tag_for_provider, PROVIDER_CLAUDE,
+    model_tag_for_provider, PROVIDER_CLAUDE, PROVIDER_GPT,
 )
 from core.paper_trader import PaperTrader
 from core.pipeline_logger import PipelineLogger
@@ -677,11 +677,17 @@ class MentionEstimator:
         self,
         llm_provider: str = PROVIDER_CLAUDE,
         api_key: Optional[str] = None,
-        model: str = "claude-sonnet-4-20250514",
+        model: Optional[str] = None,
     ):
         self.provider = validate_provider(llm_provider)
         self.api_key = api_key
-        self.model = model
+        # Only pass model for Claude; GPT uses its own deployment config
+        if model:
+            self.model = model
+        elif self.provider == PROVIDER_CLAUDE:
+            self.model = "claude-sonnet-4-20250514"
+        else:
+            self.model = None
 
     def estimate_batch(
         self,
@@ -737,7 +743,7 @@ class MentionEstimator:
             user_prompt=user_prompt,
             system_prompt=_MENTION_SYSTEM_PROMPT,
             provider=self.provider,
-            model=self.model,
+            model=self.model if self.provider == PROVIDER_CLAUDE else None,
             max_tokens=2500,
             temperature=0.2,
             api_key=self.api_key,
@@ -820,7 +826,282 @@ class MentionEstimator:
 
 
 # ===========================================================
-# 5. MENTION STRATEGY (Full Pipeline)
+# 5. MENTION LOGGER
+# ===========================================================
+
+class MentionLogger:
+    """
+    Writes a detailed, human-readable log file for each mention pipeline run.
+
+    Logs are written to {data_dir}/logs/mention_{timestamp}.log and capture
+    the full context -> broadcast assessment -> estimation -> sizing -> trade
+    flow for every word in every event.
+    """
+
+    def __init__(self, data_dir: str = "data"):
+        from pathlib import Path
+        self.log_dir = Path(data_dir) / "logs"
+        self.log_dir.mkdir(parents=True, exist_ok=True)
+        ts = datetime.now(timezone.utc).strftime("%Y-%m-%d_%H%M%S")
+        self.filepath = self.log_dir / f"mention_{ts}.log"
+        self._fh = open(self.filepath, "w", encoding="utf-8")
+        logger.info(f"Mention log -> {self.filepath}")
+
+    def close(self):
+        if self._fh and not self._fh.closed:
+            self._fh.close()
+
+    def __del__(self):
+        self.close()
+
+    def _w(self, text: str = ""):
+        self._fh.write(text + "\n")
+
+    def _sep(self, char: str = "-", width: int = 78, label: str = ""):
+        if label:
+            pad = max(1, width - len(label) - 5)
+            self._w(f"--- {label} {char * pad}")
+        else:
+            self._w(char * width)
+
+    # -- run level ----------------------------------------
+
+    def log_run_header(
+        self,
+        strategy_tag: str,
+        model_tag: str,
+        n_events: int,
+        bankroll: float,
+        min_edge: float,
+        kelly_fraction: float,
+        max_event_exposure_pct: float,
+        mode: str = "dry_run",
+    ):
+        ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
+        self._w("=" * 78)
+        self._w("  POLYMARKET EDGE -- Mention Strategy Run Log")
+        self._w(f"  {ts}")
+        self._w("=" * 78)
+        self._w(f"  Mode:             {mode}")
+        self._w(f"  Strategy:         {strategy_tag}")
+        self._w(f"  Model:            {model_tag}")
+        self._w(f"  Events found:     {n_events}")
+        self._w(f"  Bankroll:         ${bankroll:,.2f}")
+        self._w(f"  Min edge:         {min_edge:.0%}")
+        self._w(f"  Kelly fraction:   {kelly_fraction:.0%}")
+        self._w(f"  Event exposure:   {max_event_exposure_pct:.0%} of bankroll")
+        self._w("=" * 78)
+        self._w()
+
+    # -- event level --------------------------------------
+
+    def log_event_header(self, event: MentionEvent):
+        self._w()
+        self._w("=" * 78)
+        self._w(f"  EVENT: {event.event_title}")
+        self._w("=" * 78)
+        self._w(f"  Slug:            {event.event_slug}")
+        self._w(f"  Scope:           {event.scope}")
+        self._w(f"  Subject:         {event.subject}")
+        self._w(f"  Words/outcomes:  {event.n_outcomes}")
+        days = event.days_to_resolution
+        self._w(f"  Days to resolve: {days:.1f}" if days is not None else "  Days to resolve: unknown")
+        self._w(f"  Total volume:    ${event.total_volume:,.0f}")
+        self._w()
+
+    def log_context(self, context: str):
+        self._sep(label="CONTEXT (web-search grounded)")
+        # Truncate but keep readable
+        lines = context.strip().splitlines()
+        for line in lines[:40]:
+            self._w(f"  {line}")
+        if len(lines) > 40:
+            self._w(f"  ... ({len(lines) - 40} more lines)")
+        self._w()
+
+    def log_broadcast_assessment(self, broadcast_info: Optional[dict]):
+        self._sep(label="BROADCAST FORMAT ASSESSMENT")
+        if not broadcast_info:
+            self._w("  (no broadcast assessment returned by LLM)")
+        else:
+            fmt = broadcast_info.get("format", "unknown")
+            reasoning = broadcast_info.get("reasoning", "")
+            self._w(f"  Classification:  {fmt}")
+            self._w(f"  Reasoning:       {reasoning}")
+            self._w()
+            if fmt == "closed_door":
+                self._w("  >> IMPACT: All probabilities should be 1-5%.")
+                self._w("     No live broadcast expected. Strong NO signal across all words.")
+            elif fmt == "limited_remarks":
+                self._w("  >> IMPACT: Most probabilities capped at 15-30%.")
+                self._w("     Only brief pool spray / photo op remarks expected.")
+            elif fmt == "open_broadcast":
+                self._w("  >> IMPACT: Normal estimation. Full live coverage expected.")
+            elif fmt == "weekly":
+                self._w("  >> IMPACT: Multiple appearances during window. Normal estimation.")
+        self._w()
+
+    def log_word_estimates(
+        self,
+        event: MentionEvent,
+        estimates: dict[str, dict],
+    ):
+        """Log the full word-by-word estimation table."""
+        self._sep(label="WORD-BY-WORD ESTIMATES")
+        self._w()
+        self._w(f"  {'Word':<28} {'Our P':>6} {'Mkt P':>6} {'Edge':>7} "
+                f"{'Conf':>5}  {'Reasoning'}")
+        self._w(f"  {'-'*100}")
+
+        for outcome in event.outcomes:
+            est = estimates.get(outcome.word)
+            if not est:
+                self._w(f"  {outcome.word:<28} {'?':>6} {outcome.market_prob:>5.0%} "
+                        f"{'?':>7} {'?':>5}  (not estimated by LLM)")
+                continue
+
+            prob = est["probability"]
+            edge = prob - outcome.market_prob
+            conf = est["confidence"]
+            reasoning = est["reasoning"]
+
+            # Mark actionable edges
+            if abs(edge) >= 0.05:
+                marker = "[+]" if edge > 0 else "[-]"
+            else:
+                marker = "   "
+
+            self._w(f"{marker} {outcome.word:<28} {prob:>5.0%} {outcome.market_prob:>5.0%} "
+                    f"{edge:>+6.0%} {conf:>5.1f}  {reasoning}")
+        self._w()
+
+    def log_trade_decision(
+        self,
+        word: str,
+        prob: float,
+        market_price: float,
+        edge: float,
+        confidence: float,
+        reasoning: str,
+        position,          # PositionSize
+        trade_result: Optional[str],
+        event_dollars_used: float,
+        max_event_dollars: float,
+    ):
+        """Log a single word's trade decision with full detail."""
+        self._sep(label=f"TRADE: {word}")
+
+        self._w(f"  Our estimate:        {prob:.1%}")
+        self._w(f"  Market price:        {market_price:.1%}")
+        self._w(f"  Edge:                {edge:+.1%}")
+        self._w(f"  Confidence:          {confidence:.2f}")
+        self._w(f"  LLM reasoning:       {reasoning}")
+        self._w()
+
+        if edge > 0:
+            self._w(f"  Direction:           BUY YES (market underpriced)")
+        elif edge < 0:
+            self._w(f"  Direction:           BUY NO (market overpriced)")
+        else:
+            self._w(f"  Direction:           NEUTRAL")
+        self._w()
+
+        if not position.should_trade:
+            self._w(f"  DECISION: NO TRADE")
+            self._w(f"  Reason:    {position.rejection_reason}")
+        else:
+            self._w(f"  Kelly sizing:")
+            self._w(f"    Side:              {position.side}")
+            self._w(f"    Entry price:       ${position.entry_price:.4f}")
+            self._w(f"    Dollar amount:     ${position.dollar_amount:.2f}")
+            self._w(f"    Shares:            {position.shares:.1f}")
+            self._w(f"    Expected profit:   ${position.expected_profit:+.2f}")
+            self._w()
+            self._w(f"  Event exposure:      ${event_dollars_used:.2f} / "
+                    f"${max_event_dollars:.2f} "
+                    f"({event_dollars_used/max_event_dollars:.0%})")
+
+            if trade_result == "entered":
+                self._w(f"  DECISION: TRADE ENTERED")
+            elif trade_result == "event_cap":
+                self._w(f"  DECISION: BLOCKED (event exposure cap reached)")
+            elif trade_result == "rejected":
+                self._w(f"  DECISION: REJECTED (insufficient bankroll)")
+            elif trade_result == "duplicate":
+                self._w(f"  DECISION: SKIPPED (open trade exists)")
+            else:
+                self._w(f"  DECISION: {trade_result or 'PENDING'}")
+        self._w()
+
+    def log_event_summary(
+        self,
+        event: MentionEvent,
+        signals: list[dict],
+        event_dollars_used: float,
+        max_event_dollars: float,
+    ):
+        """Log summary for one event."""
+        entered = [s for s in signals if s.get("trade_result") == "entered"]
+        tradeable = [s for s in signals if s.get("should_trade")]
+        capped = [s for s in signals if s.get("trade_result") == "event_cap"]
+        edges = [s["edge"] for s in signals if "edge" in s]
+
+        self._sep(label="EVENT SUMMARY")
+        self._w(f"  Event:             {event.event_title[:60]}")
+        self._w(f"  Words estimated:   {len(signals)}")
+        self._w(f"  Tradeable edges:   {len(tradeable)}")
+        self._w(f"  Trades entered:    {len(entered)}")
+        if capped:
+            self._w(f"  Blocked by cap:    {len(capped)}")
+        self._w(f"  Event exposure:    ${event_dollars_used:.2f} / ${max_event_dollars:.2f}")
+        if edges:
+            self._w(f"  Edge range:        {min(edges):+.0%} to {max(edges):+.0%}")
+            avg_abs = sum(abs(e) for e in edges) / len(edges)
+            self._w(f"  Avg |edge|:        {avg_abs:.0%}")
+        self._w()
+        self._fh.flush()
+
+    def log_run_summary(
+        self,
+        all_signals: list[dict],
+        n_events: int,
+        elapsed_seconds: float,
+        bankroll: float,
+    ):
+        """Log final run summary."""
+        entered = [s for s in all_signals if s.get("trade_result") == "entered"]
+        capped = [s for s in all_signals if s.get("trade_result") == "event_cap"]
+        edges = [s["edge"] for s in all_signals if "edge" in s]
+
+        self._w()
+        self._w("=" * 78)
+        self._w("  RUN SUMMARY")
+        self._w("=" * 78)
+        self._w(f"  Events processed:    {n_events}")
+        self._w(f"  Words evaluated:     {len(all_signals)}")
+        self._w(f"  Trades entered:      {len(entered)}")
+        if capped:
+            self._w(f"  Blocked by cap:      {len(capped)}")
+        if edges:
+            self._w(f"  Edge range:          {min(edges):+.0%} to {max(edges):+.0%}")
+            actionable = [e for e in edges if abs(e) >= 0.05]
+            self._w(f"  Actionable (>=5%):   {len(actionable)} / {len(edges)}")
+        if entered:
+            total_risked = sum(s["position"].dollar_amount for s in entered)
+            total_ev = sum(s["position"].expected_profit for s in entered)
+            self._w(f"  Total risked:        ${total_risked:.2f}")
+            self._w(f"  Total expected P&L:  ${total_ev:+.2f}")
+        self._w(f"  Remaining bankroll:  ${bankroll:.2f}")
+        self._w(f"  Elapsed:             {elapsed_seconds:.1f}s")
+        self._w("=" * 78)
+        self._w()
+        self._fh.flush()
+        self.close()
+        logger.info(f"Mention log written to {self.filepath}")
+
+
+# ===========================================================
+# 6. MENTION STRATEGY (Full Pipeline)
 # ===========================================================
 
 class MentionStrategy:
@@ -838,7 +1119,7 @@ class MentionStrategy:
         trader: PaperTrader = None,
         llm_provider: str = PROVIDER_CLAUDE,
         api_key: Optional[str] = None,
-        model: str = "claude-sonnet-4-20250514",
+        model: Optional[str] = None,
         # Sizing params
         kelly_fraction: float = 0.20,
         min_edge: float = 0.05,
@@ -847,6 +1128,7 @@ class MentionStrategy:
         # Filtering
         max_days_to_resolution: float = 14,
     ):
+        validated_provider = validate_provider(llm_provider)
         self.client = client or PolymarketClient()
         self.scanner = MentionScanner(self.client)
         self.context_builder = MentionContextBuilder(
@@ -855,13 +1137,14 @@ class MentionStrategy:
         self.estimator = MentionEstimator(
             llm_provider=llm_provider, api_key=api_key, model=model,
         )
+        self.llm_provider = llm_provider
+        self.model_tag = model_tag_for_provider(validated_provider)
+        self.strategy_tag = "mentions"
+        # Tag data dir with model so Claude and GPT paper trades stay separate
         self.trader = trader or PaperTrader(
             bankroll=1000.0,
-            data_dir="data/paper_mentions",
+            data_dir=f"data/paper_mentions+{self.model_tag}",
         )
-        self.llm_provider = llm_provider
-        self.model_tag = model_tag_for_provider(validate_provider(llm_provider))
-        self.strategy_tag = "mentions"
         self.kelly_fraction = kelly_fraction
         self.min_edge = min_edge
         self.max_event_exposure_pct = max_event_exposure_pct
@@ -870,6 +1153,7 @@ class MentionStrategy:
 
     def run(self) -> list[dict]:
         """Run the full mention market pipeline."""
+        t0 = time.time()
 
         print("\n" + "=" * 70)
         print("  POLYMARKET EDGE -- Mention Market Strategy")
@@ -878,7 +1162,6 @@ class MentionStrategy:
 
         # Step 1: Discover
         print("\n>>> Step 1: Scanning for mention markets...")
-        t0 = time.time()
         events = self.scanner.scan()
         print(f"   Found {len(events)} mention events ({time.time()-t0:.1f}s)")
 
@@ -895,11 +1178,27 @@ class MentionStrategy:
             print("   No actionable mention events found.")
             return []
 
+        # Create logger
+        data_dir = (self.trader.data_dir.as_posix()
+                    if hasattr(self.trader.data_dir, "as_posix")
+                    else str(self.trader.data_dir))
+        mlog = MentionLogger(data_dir=data_dir)
+        mlog.log_run_header(
+            strategy_tag=self.strategy_tag,
+            model_tag=self.model_tag,
+            n_events=len(events),
+            bankroll=self.trader.bankroll,
+            min_edge=self.min_edge,
+            kelly_fraction=self.kelly_fraction,
+            max_event_exposure_pct=self.max_event_exposure_pct,
+            mode="live",
+        )
+
         all_signals = []
         existing_ids = {t.market_id for t in self.trader.trades if t.status == "OPEN"}
 
         for event in events:
-            signals = self._process_event(event, existing_ids)
+            signals = self._process_event(event, existing_ids, mlog=mlog)
             all_signals.extend(signals)
 
         # Summary
@@ -912,10 +1211,13 @@ class MentionStrategy:
         print(f"  Bankroll: ${self.trader.bankroll:.2f}")
         print("=" * 70)
 
+        mlog.log_run_summary(all_signals, len(events), time.time() - t0, self.trader.bankroll)
+
         return all_signals
 
     def _process_event(
-        self, event: MentionEvent, existing_ids: set[str]
+        self, event: MentionEvent, existing_ids: set[str],
+        mlog: Optional[MentionLogger] = None,
     ) -> list[dict]:
         """Process a single mention event: context -> estimate -> size -> trade."""
 
@@ -925,8 +1227,13 @@ class MentionStrategy:
               f"Days left: {event.days_to_resolution:.1f}")
         print(f"{'-'*60}")
 
+        if mlog:
+            mlog.log_event_header(event)
+
         # Step 2: Context
         context = self.context_builder.build_context(event)
+        if mlog:
+            mlog.log_context(context)
 
         # Step 3: Batch estimate
         time.sleep(1.5)  # throttle between LLM calls
@@ -939,6 +1246,9 @@ class MentionStrategy:
             fmt = broadcast_info["format"]
             reason = broadcast_info["reasoning"][:60]
             print(f"   [broadcast] {fmt} -- {reason}")
+        if mlog:
+            mlog.log_broadcast_assessment(broadcast_info)
+            mlog.log_word_estimates(event, estimates)
 
         # Step 4: Edge detection + sizing with correlation cap
         max_event_dollars = self.trader.bankroll * self.max_event_exposure_pct
@@ -999,9 +1309,13 @@ class MentionStrategy:
             }
 
             if not position.should_trade:
-                emoji = "[.]"
-                print(f"   {emoji} {word}: P={prob:.0%} vs Mkt={market_price:.0%} "
+                print(f"   [.] {word}: P={prob:.0%} vs Mkt={market_price:.0%} "
                       f"edge={edge:+.0%} -- no trade ({position.rejection_reason})")
+                if mlog:
+                    mlog.log_trade_decision(
+                        word, prob, market_price, edge, conf, est["reasoning"],
+                        position, None, event_dollars_used, max_event_dollars,
+                    )
                 signals.append(signal)
                 continue
 
@@ -1012,6 +1326,11 @@ class MentionStrategy:
                     signal["trade_result"] = "event_cap"
                     print(f"   [!] {word}: P={prob:.0%} edge={edge:+.0%} "
                           f"-- event exposure cap reached")
+                    if mlog:
+                        mlog.log_trade_decision(
+                            word, prob, market_price, edge, conf, est["reasoning"],
+                            position, "event_cap", event_dollars_used, max_event_dollars,
+                        )
                     signals.append(signal)
                     continue
 
@@ -1041,7 +1360,17 @@ class MentionStrategy:
             else:
                 signal["trade_result"] = "rejected"
 
+            if mlog:
+                mlog.log_trade_decision(
+                    word, prob, market_price, edge, conf, est["reasoning"],
+                    position, signal["trade_result"],
+                    event_dollars_used, max_event_dollars,
+                )
+
             signals.append(signal)
+
+        if mlog:
+            mlog.log_event_summary(event, signals, event_dollars_used, max_event_dollars)
 
         return signals
 
@@ -1052,6 +1381,8 @@ class MentionStrategy:
 
         Returns list of all signals with estimates and sizing.
         """
+        t0 = time.time()
+
         print("\n" + "=" * 70)
         print("  MENTION STRATEGY -- DRY RUN (no trades)")
         print("=" * 70)
@@ -1068,6 +1399,22 @@ class MentionStrategy:
             print("No actionable mention events found.")
             return []
 
+        # Create logger
+        data_dir = (self.trader.data_dir.as_posix()
+                    if hasattr(self.trader.data_dir, "as_posix")
+                    else str(self.trader.data_dir))
+        mlog = MentionLogger(data_dir=data_dir)
+        mlog.log_run_header(
+            strategy_tag=self.strategy_tag,
+            model_tag=self.model_tag,
+            n_events=len(events),
+            bankroll=self.trader.bankroll,
+            min_edge=self.min_edge,
+            kelly_fraction=self.kelly_fraction,
+            max_event_exposure_pct=self.max_event_exposure_pct,
+            mode="dry_run",
+        )
+
         all_signals = []
 
         for event in events:
@@ -1076,7 +1423,11 @@ class MentionStrategy:
             print(f"     Scope: {event.scope} | Words: {event.n_outcomes}")
             print(f"{'-'*60}")
 
+            mlog.log_event_header(event)
+
             context = self.context_builder.build_context(event)
+            mlog.log_context(context)
+
             time.sleep(1.5)
             estimates, broadcast_info = self.estimator.estimate_batch(event, context)
 
@@ -1089,11 +1440,14 @@ class MentionStrategy:
                 reason = broadcast_info["reasoning"][:80]
                 print(f"\n   [BROADCAST] {fmt}")
                 print(f"   {reason}")
+            mlog.log_broadcast_assessment(broadcast_info)
+            mlog.log_word_estimates(event, estimates)
 
             # Print all estimates vs market
             print(f"\n   {'Word':<25} {'Our P':>6} {'Mkt P':>6} {'Edge':>7} {'Conf':>5}  Reasoning")
             print(f"   {'-'*85}")
 
+            event_signals = []
             for outcome in event.outcomes:
                 est = estimates.get(outcome.word)
                 if not est:
@@ -1114,7 +1468,17 @@ class MentionStrategy:
                 print(f" {marker} {outcome.word:<25} {prob:>5.0%} {outcome.market_prob:>5.0%} "
                       f"{edge:>+6.0%} {conf:>5.1f}  {reason}")
 
-                all_signals.append({
+                # Also compute Kelly sizing for the log (even though no trades)
+                position = kelly_criterion(
+                    estimated_prob=prob,
+                    market_price=outcome.market_prob,
+                    bankroll=self.trader.bankroll,
+                    kelly_fraction=self.kelly_fraction,
+                    min_edge=self.min_edge,
+                    confidence=conf,
+                )
+
+                sig = {
                     "event_title": event.event_title,
                     "word": outcome.word,
                     "scope": event.scope,
@@ -1123,7 +1487,20 @@ class MentionStrategy:
                     "edge": edge,
                     "confidence": conf,
                     "reasoning": est["reasoning"],
-                })
+                    "position": position,
+                    "should_trade": position.should_trade,
+                }
+                event_signals.append(sig)
+
+                mlog.log_trade_decision(
+                    outcome.word, prob, outcome.market_prob, edge, conf,
+                    est["reasoning"], position, "dry_run", 0, 0,
+                )
+
+            mlog.log_event_summary(event, event_signals, 0, 0)
+            all_signals.extend(event_signals)
+
+        mlog.log_run_summary(all_signals, len(events), time.time() - t0, self.trader.bankroll)
 
         return all_signals
 
