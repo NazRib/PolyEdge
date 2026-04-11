@@ -25,6 +25,12 @@ Usage:
 import sys
 import logging
 
+# Force UTF-8 output on Windows to avoid cp1252 encoding errors
+# from emojis and special characters in market names
+if sys.stdout.encoding and sys.stdout.encoding.lower() != 'utf-8':
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+    sys.stderr.reconfigure(encoding='utf-8', errors='replace')
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s | %(levelname)-5s | %(message)s",
@@ -59,7 +65,7 @@ def main():
         run_strategy_comparison()  # Same logic — models are captured in strategy tags
     elif "--report" in args:
         run_report(args)
-    elif "--cross-event" in args:
+    elif "--cross-event" in args and "--enriched" not in args:
         from strategies.cross_event_arb import run_cross_event_scan
         top = 300
         min_edge = 3.0
@@ -80,6 +86,7 @@ def main():
         from strategies.enriched_edge_detector import run_enriched_pipeline
         use_live = "--live" in args
         use_profiles = "--whale-profiles" in args
+        enable_cross_event = "--cross-event" in args
         
         # Determine LLM provider: --model gpt | --model claude (default)
         llm_provider = "claude"
@@ -102,6 +109,7 @@ def main():
             bankroll=1000,
             use_live_llm=use_live,
             use_whale_profiles=use_profiles,
+            enable_cross_event=enable_cross_event,
             llm_provider=llm_provider,
         )
     elif "--enrich-demo" in args:

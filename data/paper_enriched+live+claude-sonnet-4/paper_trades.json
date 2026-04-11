@@ -1,7 +1,7 @@
 {
-  "bankroll": 186.87220000000025,
+  "bankroll": 138.86220000000023,
   "initial_bankroll": 1000,
-  "trade_counter": 34,
+  "trade_counter": 40,
   "trades": [
     {
       "trade_id": "PT-0001",
@@ -682,6 +682,126 @@
       "pnl": 0.0,
       "strategy_tag": "enriched+live+claude-sonnet-4",
       "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0035",
+      "market_id": "1709080",
+      "question": "Will Vance visit the Middle East by April 10?",
+      "side": "YES",
+      "entry_price": 0.1075,
+      "shares": 72.646,
+      "dollar_amount": 7.81,
+      "estimated_probability": 0.570480128529794,
+      "market_price_at_entry": 0.1075,
+      "edge_at_entry": 0.46298012852979403,
+      "confidence": 0.3222415180939928,
+      "timestamp": "2026-04-10T23:58:27.426226+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4",
+      "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0036",
+      "market_id": "1860407",
+      "question": "Arizona Diamondbacks vs. Philadelphia Phillies",
+      "side": "YES",
+      "entry_price": 0.055,
+      "shares": 113.5233,
+      "dollar_amount": 6.24,
+      "estimated_probability": 0.2298927043585279,
+      "market_price_at_entry": 0.055,
+      "edge_at_entry": 0.1748927043585279,
+      "confidence": 0.7221431458810956,
+      "timestamp": "2026-04-10T23:58:27.432341+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4",
+      "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0037",
+      "market_id": "1662802",
+      "question": "Trump announces end of military operations against Iran by April 15th?",
+      "side": "YES",
+      "entry_price": 0.11,
+      "shares": 55.9285,
+      "dollar_amount": 6.15,
+      "estimated_probability": 0.2507406788877554,
+      "market_price_at_entry": 0.11,
+      "edge_at_entry": 0.14074067888775543,
+      "confidence": 0.8327447277178492,
+      "timestamp": "2026-04-10T23:58:27.438362+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4",
+      "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0038",
+      "market_id": "1860409",
+      "question": "Los Angeles Angels vs. Cincinnati Reds",
+      "side": "NO",
+      "entry_price": 0.33499999999999996,
+      "shares": 23.2534,
+      "dollar_amount": 7.79,
+      "estimated_probability": 0.5247847797365824,
+      "market_price_at_entry": 0.665,
+      "edge_at_entry": -0.1402152202634176,
+      "confidence": 0.7908108381684252,
+      "timestamp": "2026-04-10T23:58:27.443546+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4",
+      "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0039",
+      "market_id": "1860405",
+      "question": "Miami Marlins vs. Detroit Tigers",
+      "side": "YES",
+      "entry_price": 0.305,
+      "shares": 17.3227,
+      "dollar_amount": 5.28,
+      "estimated_probability": 0.3913245946208015,
+      "market_price_at_entry": 0.305,
+      "edge_at_entry": 0.0863245946208015,
+      "confidence": 0.9105016878014259,
+      "timestamp": "2026-04-10T23:58:27.448446+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4",
+      "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0040",
+      "market_id": "1540766",
+      "question": "Strait of Hormuz traffic returns to normal by end of April?",
+      "side": "NO",
+      "entry_price": 0.785,
+      "shares": 18.7716,
+      "dollar_amount": 14.74,
+      "estimated_probability": 0.14194700934478177,
+      "market_price_at_entry": 0.215,
+      "edge_at_entry": -0.07305299065521823,
+      "confidence": 0.9282943119825495,
+      "timestamp": "2026-04-10T23:58:27.453813+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4",
+      "model_tag": "claude-sonnet-4"
     }
   ],
   "calibration": [
@@ -689,37 +809,37 @@
       "predicted": 0.799733705114383,
       "actual": 1,
       "market_id": "1835958",
-      "time": "2026-04-09T14:47:18.566682+00:00"
+      "time": "2026-04-10T23:45:21.265147+00:00"
     },
     {
       "predicted": 0.799600364756902,
       "actual": 0,
       "market_id": "1762466",
-      "time": "2026-04-09T14:47:18.566682+00:00"
+      "time": "2026-04-10T23:45:21.265147+00:00"
     },
     {
       "predicted": 0.612633319664795,
       "actual": 0,
       "market_id": "1762490",
-      "time": "2026-04-09T14:47:18.566682+00:00"
+      "time": "2026-04-10T23:45:21.265147+00:00"
     },
     {
       "predicted": 0.5607336767735869,
       "actual": 0,
       "market_id": "1760063",
-      "time": "2026-04-09T14:47:18.566682+00:00"
+      "time": "2026-04-10T23:45:21.265147+00:00"
     },
     {
       "predicted": 0.27101582811487734,
       "actual": 0,
       "market_id": "1790915",
-      "time": "2026-04-09T14:47:18.566682+00:00"
+      "time": "2026-04-10T23:45:21.265147+00:00"
     },
     {
       "predicted": 0.5595716609062497,
       "actual": 1,
       "market_id": "1790940",
-      "time": "2026-04-09T14:47:18.566682+00:00"
+      "time": "2026-04-10T23:45:21.265147+00:00"
     }
   ]
 }

@@ -1,0 +1,2642 @@
+[
+  {
+    "key": "will saudi arabia win group h in the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.95,
+    "reason": "Different countries competing in different groups have no logical dependency on each other.",
+    "classified_at": "2026-04-10T21:40:27.296588+00:00"
+  },
+  {
+    "key": "lol: esprit sh\u014dnen vs karmine corp blue (bo1) - lfl regular season|||lol: vitality.bee vs galions (bo1) - lfl regular season",
+    "q_a": "LoL: Vitality.Bee vs Galions (BO1) - LFL Regular Season",
+    "q_b": "LoL: Esprit Sh\u014dnen vs Karmine Corp Blue (BO1) - LFL Regular Season",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Different matches in the same league with different teams are independent events.",
+    "classified_at": "2026-04-10T21:40:27.296588+00:00"
+  },
+  {
+    "key": "will keiko fujimori finish in first place in the first round of the 2026 peruvian presidential election?|||will keiko fujimori win the 2026 peruvian presidential election?",
+    "q_a": "Will Keiko Fujimori win the 2026 Peruvian presidential election?",
+    "q_b": "Will Keiko Fujimori finish in first place in the first round of the 2026 Peruvian presidential election?",
+    "dep_type": "implication",
+    "direction": "a_implies_b",
+    "confidence": 0.85,
+    "reason": "Winning the overall election requires finishing first in the first round (or advancing through runoff), so winning implies first place finish.",
+    "classified_at": "2026-04-10T21:40:27.296588+00:00"
+  },
+  {
+    "key": "will hong ihk-pyo win the 2026 seoul mayoral election|||will park hong-keun win the 2026 seoul mayoral election",
+    "q_a": "Will Park Hong-keun win the 2026 Seoul Mayoral Election",
+    "q_b": "Will Hong Ihk-pyo win the 2026 Seoul Mayoral Election",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 0.95,
+    "reason": "Only one person can win the same mayoral election.",
+    "classified_at": "2026-04-10T21:40:27.296588+00:00"
+  },
+  {
+    "key": "will south africa win group a in the 2026 fifa world cup?|||will switzerland win the 2026 fifa world cup?",
+    "q_a": "Will Switzerland win the 2026 FIFA World Cup?",
+    "q_b": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Switzerland winning the World Cup has no logical relationship to South Africa's group stage performance.",
+    "classified_at": "2026-04-10T21:40:27.296588+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will switzerland win the 2026 fifa world cup?",
+    "q_a": "Will Switzerland win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Switzerland and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:40:32.796133+00:00"
+  },
+  {
+    "key": "will switzerland win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Switzerland win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Switzerland and USA cannot both win.",
+    "classified_at": "2026-04-10T21:40:32.796133+00:00"
+  },
+  {
+    "key": "will saudi arabia win group h in the 2026 fifa world cup?|||will switzerland win the 2026 fifa world cup?",
+    "q_a": "Will Switzerland win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Switzerland winning the World Cup and Saudi Arabia winning Group H are separate events with no logical dependency.",
+    "classified_at": "2026-04-10T21:40:32.796133+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will switzerland win the 2026 fifa world cup?",
+    "q_a": "Will Switzerland win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Switzerland and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:40:32.796133+00:00"
+  },
+  {
+    "key": "will mexico win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will Mexico win the 2026 FIFA World Cup?",
+    "q_b": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Mexico winning the World Cup and South Africa winning Group A are separate events with no logical dependency.",
+    "classified_at": "2026-04-10T21:40:32.796133+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will mexico win the 2026 fifa world cup?",
+    "q_a": "Will Mexico win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Mexico and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:40:38.701903+00:00"
+  },
+  {
+    "key": "will mexico win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Mexico win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Mexico and USA cannot both win.",
+    "classified_at": "2026-04-10T21:40:38.701903+00:00"
+  },
+  {
+    "key": "will mexico win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Mexico win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Mexico winning the tournament and Saudi Arabia winning their group are separate outcomes that can both occur.",
+    "classified_at": "2026-04-10T21:40:38.701903+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will mexico win the 2026 fifa world cup?",
+    "q_a": "Will Mexico win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Mexico and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:40:38.701903+00:00"
+  },
+  {
+    "key": "will netherlands win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will Netherlands win the 2026 FIFA World Cup?",
+    "q_b": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Netherlands winning the tournament and South Africa winning their group are separate outcomes that can both occur.",
+    "classified_at": "2026-04-10T21:40:38.701903+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will netherlands win the 2026 fifa world cup?",
+    "q_a": "Will Netherlands win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Netherlands and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:40:44.438341+00:00"
+  },
+  {
+    "key": "will netherlands win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Netherlands win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Netherlands and USA cannot both win.",
+    "classified_at": "2026-04-10T21:40:44.438341+00:00"
+  },
+  {
+    "key": "will netherlands win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Netherlands win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Netherlands winning the World Cup and Saudi Arabia winning Group H are separate events with no logical dependency.",
+    "classified_at": "2026-04-10T21:40:44.438341+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will netherlands win the 2026 fifa world cup?",
+    "q_a": "Will Netherlands win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Netherlands and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:40:44.438341+00:00"
+  },
+  {
+    "key": "will japan win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will Japan win the 2026 FIFA World Cup?",
+    "q_b": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Japan winning the World Cup and South Africa winning Group A are separate events with no logical dependency.",
+    "classified_at": "2026-04-10T21:40:44.438341+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will japan win the 2026 fifa world cup?",
+    "q_a": "Will Japan win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Japan and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:40:50.791524+00:00"
+  },
+  {
+    "key": "will japan win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Japan win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Japan and USA cannot both win.",
+    "classified_at": "2026-04-10T21:40:50.791524+00:00"
+  },
+  {
+    "key": "will japan win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Japan win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Japan winning the World Cup and Saudi Arabia winning their group are separate outcomes that don't logically constrain each other.",
+    "classified_at": "2026-04-10T21:40:50.791524+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will japan win the 2026 fifa world cup?",
+    "q_a": "Will Japan win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Japan and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:40:50.791524+00:00"
+  },
+  {
+    "key": "will france win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will France win the 2026 FIFA World Cup?",
+    "q_b": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "France winning the World Cup and South Africa winning their group are separate outcomes that don't logically constrain each other.",
+    "classified_at": "2026-04-10T21:40:50.791524+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will france win the 2026 fifa world cup?",
+    "q_a": "Will France win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so France and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:40:57.213678+00:00"
+  },
+  {
+    "key": "will france win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will France win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so France and USA cannot both win.",
+    "classified_at": "2026-04-10T21:40:57.213678+00:00"
+  },
+  {
+    "key": "will france win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will France win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "France winning the tournament and Saudi Arabia winning their group stage are separate events with no logical dependency.",
+    "classified_at": "2026-04-10T21:40:57.213678+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will france win the 2026 fifa world cup?",
+    "q_a": "Will France win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so France and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:40:57.213678+00:00"
+  },
+  {
+    "key": "valorant: fut esports vs natus vincere (bo3) - vct emea group alpha|||valorant: sentinels vs kr\u00fc esports (bo3) - vct americas stage 1 group omega",
+    "q_a": "Valorant: FUT Esports vs Natus Vincere (BO3) - VCT EMEA Group Alpha",
+    "q_b": "Valorant: Sentinels vs KR\u00dc Esports (BO3) - VCT Americas Stage 1 Group Omega",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "These are completely separate Valorant matches in different regions with different teams.",
+    "classified_at": "2026-04-10T21:40:57.213678+00:00"
+  },
+  {
+    "key": "will argentina win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will Argentina win the 2026 FIFA World Cup?",
+    "q_b": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Argentina winning the tournament and South Africa winning their group are unrelated outcomes that can occur independently.",
+    "classified_at": "2026-04-10T21:41:03.370928+00:00"
+  },
+  {
+    "key": "will argentina win the 2026 fifa world cup?|||will bosnia-herzegovina win the 2026 fifa world cup?",
+    "q_a": "Will Argentina win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the World Cup, so Argentina and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:41:03.370928+00:00"
+  },
+  {
+    "key": "will argentina win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Argentina win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the World Cup, so Argentina and USA cannot both win.",
+    "classified_at": "2026-04-10T21:41:03.370928+00:00"
+  },
+  {
+    "key": "will argentina win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Argentina win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Argentina winning the tournament and Saudi Arabia winning their group are unrelated outcomes that can occur independently.",
+    "classified_at": "2026-04-10T21:41:03.370928+00:00"
+  },
+  {
+    "key": "will argentina win the 2026 fifa world cup?|||will cura\u00e7ao win the 2026 fifa world cup?",
+    "q_a": "Will Argentina win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the World Cup, so Argentina and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:41:03.370928+00:00"
+  },
+  {
+    "key": "will morocco win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will Morocco win the 2026 FIFA World Cup?",
+    "q_b": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Morocco winning the World Cup and South Africa winning their group stage are unrelated outcomes in different parts of the tournament.",
+    "classified_at": "2026-04-10T21:41:09.519602+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will morocco win the 2026 fifa world cup?",
+    "q_a": "Will Morocco win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Morocco and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:41:09.519602+00:00"
+  },
+  {
+    "key": "will morocco win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Morocco win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Morocco and USA cannot both win.",
+    "classified_at": "2026-04-10T21:41:09.519602+00:00"
+  },
+  {
+    "key": "will morocco win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Morocco win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Morocco winning the World Cup and Saudi Arabia winning their group stage are unrelated outcomes in different parts of the tournament.",
+    "classified_at": "2026-04-10T21:41:09.519602+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will morocco win the 2026 fifa world cup?",
+    "q_a": "Will Morocco win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Morocco and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:41:09.519602+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will south korea win the 2026 fifa world cup?",
+    "q_a": "Will South Korea win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so South Korea and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:41:16.224027+00:00"
+  },
+  {
+    "key": "will south korea win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will South Korea win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so South Korea and USA cannot both win.",
+    "classified_at": "2026-04-10T21:41:16.224027+00:00"
+  },
+  {
+    "key": "will saudi arabia win group h in the 2026 fifa world cup?|||will south korea win the 2026 fifa world cup?",
+    "q_a": "Will South Korea win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Korea winning the World Cup and Saudi Arabia winning their group stage are separate outcomes with no logical dependency.",
+    "classified_at": "2026-04-10T21:41:16.224027+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will south korea win the 2026 fifa world cup?",
+    "q_a": "Will South Korea win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so South Korea and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:41:16.224027+00:00"
+  },
+  {
+    "key": "will colombia win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will Colombia win the 2026 FIFA World Cup?",
+    "q_b": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Colombia winning the World Cup and South Africa winning their group stage are separate outcomes with no logical dependency.",
+    "classified_at": "2026-04-10T21:41:16.224027+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will colombia win the 2026 fifa world cup?",
+    "q_a": "Will Colombia win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Colombia and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:41:22.551795+00:00"
+  },
+  {
+    "key": "will colombia win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Colombia win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Colombia and USA cannot both win.",
+    "classified_at": "2026-04-10T21:41:22.551795+00:00"
+  },
+  {
+    "key": "will colombia win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Colombia win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Colombia winning the tournament and Saudi Arabia winning their group stage are separate events with no logical dependency.",
+    "classified_at": "2026-04-10T21:41:22.551795+00:00"
+  },
+  {
+    "key": "will colombia win the 2026 fifa world cup?|||will cura\u00e7ao win the 2026 fifa world cup?",
+    "q_a": "Will Colombia win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Colombia and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:41:22.551795+00:00"
+  },
+  {
+    "key": "will brazil win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will Brazil win the 2026 FIFA World Cup?",
+    "q_b": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Brazil winning the tournament and South Africa winning their group stage are separate events with no logical dependency.",
+    "classified_at": "2026-04-10T21:41:22.551795+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will brazil win the 2026 fifa world cup?",
+    "q_a": "Will Brazil win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Brazil and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:41:28.664576+00:00"
+  },
+  {
+    "key": "will brazil win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Brazil win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Brazil and USA cannot both win.",
+    "classified_at": "2026-04-10T21:41:28.664576+00:00"
+  },
+  {
+    "key": "will brazil win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Brazil win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Brazil winning the World Cup and Saudi Arabia winning Group H are separate events that can both occur.",
+    "classified_at": "2026-04-10T21:41:28.664576+00:00"
+  },
+  {
+    "key": "will brazil win the 2026 fifa world cup?|||will cura\u00e7ao win the 2026 fifa world cup?",
+    "q_a": "Will Brazil win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Brazil and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:41:28.664576+00:00"
+  },
+  {
+    "key": "will ecuador win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will Ecuador win the 2026 FIFA World Cup?",
+    "q_b": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Ecuador winning the World Cup and South Africa winning Group A are separate events that can both occur.",
+    "classified_at": "2026-04-10T21:41:28.664576+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will ecuador win the 2026 fifa world cup?",
+    "q_a": "Will Ecuador win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Ecuador and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:41:34.330823+00:00"
+  },
+  {
+    "key": "will ecuador win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Ecuador win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Ecuador and USA cannot both win.",
+    "classified_at": "2026-04-10T21:41:34.330823+00:00"
+  },
+  {
+    "key": "will ecuador win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Ecuador win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Ecuador winning the World Cup and Saudi Arabia winning their group are separate outcomes with no logical dependency.",
+    "classified_at": "2026-04-10T21:41:34.330823+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will ecuador win the 2026 fifa world cup?",
+    "q_a": "Will Ecuador win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Ecuador and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:41:34.330823+00:00"
+  },
+  {
+    "key": "will germany win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will Germany win the 2026 FIFA World Cup?",
+    "q_b": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Germany winning the World Cup and South Africa winning their group are separate outcomes with no logical dependency.",
+    "classified_at": "2026-04-10T21:41:34.330823+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will germany win the 2026 fifa world cup?",
+    "q_a": "Will Germany win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Germany and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:41:40.324400+00:00"
+  },
+  {
+    "key": "will germany win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Germany win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Germany and USA cannot both win.",
+    "classified_at": "2026-04-10T21:41:40.324400+00:00"
+  },
+  {
+    "key": "will germany win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Germany win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Germany winning the World Cup and Saudi Arabia winning Group H are separate outcomes that can both occur.",
+    "classified_at": "2026-04-10T21:41:40.324400+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will germany win the 2026 fifa world cup?",
+    "q_a": "Will Germany win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Germany and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:41:40.324400+00:00"
+  },
+  {
+    "key": "will south africa win group a in the 2026 fifa world cup?|||will spain win the 2026 fifa world cup?",
+    "q_a": "Will Spain win the 2026 FIFA World Cup?",
+    "q_b": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Spain winning the World Cup and South Africa winning Group A are separate outcomes that can both occur.",
+    "classified_at": "2026-04-10T21:41:40.324400+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will spain win the 2026 fifa world cup?",
+    "q_a": "Will Spain win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Spain and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:41:46.299150+00:00"
+  },
+  {
+    "key": "will spain win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Spain win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Spain and USA cannot both win.",
+    "classified_at": "2026-04-10T21:41:46.315037+00:00"
+  },
+  {
+    "key": "will saudi arabia win group h in the 2026 fifa world cup?|||will spain win the 2026 fifa world cup?",
+    "q_a": "Will Spain win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Spain winning the World Cup and Saudi Arabia winning Group H are separate events that can both occur.",
+    "classified_at": "2026-04-10T21:41:46.315037+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will spain win the 2026 fifa world cup?",
+    "q_a": "Will Spain win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Spain and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:41:46.315037+00:00"
+  },
+  {
+    "key": "will south africa win group a in the 2026 fifa world cup?|||will uzbekistan win the 2026 fifa world cup?",
+    "q_a": "Will Uzbekistan win the 2026 FIFA World Cup?",
+    "q_b": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Uzbekistan winning the World Cup and South Africa winning Group A are separate events that can both occur.",
+    "classified_at": "2026-04-10T21:41:46.315037+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will uzbekistan win the 2026 fifa world cup?",
+    "q_a": "Will Uzbekistan win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Uzbekistan and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:41:52.816128+00:00"
+  },
+  {
+    "key": "will usa win the 2026 fifa world cup?|||will uzbekistan win the 2026 fifa world cup?",
+    "q_a": "Will Uzbekistan win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Uzbekistan and USA cannot both win.",
+    "classified_at": "2026-04-10T21:41:52.816128+00:00"
+  },
+  {
+    "key": "will saudi arabia win group h in the 2026 fifa world cup?|||will uzbekistan win the 2026 fifa world cup?",
+    "q_a": "Will Uzbekistan win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Uzbekistan winning the World Cup and Saudi Arabia winning their group are separate outcomes with no logical dependency.",
+    "classified_at": "2026-04-10T21:41:52.816128+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will uzbekistan win the 2026 fifa world cup?",
+    "q_a": "Will Uzbekistan win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Uzbekistan and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:41:52.816128+00:00"
+  },
+  {
+    "key": "will jeon hyun-heui win the 2026 seoul mayoral election|||will kang hoon-sik win the 2026 seoul mayoral election",
+    "q_a": "Will Kang Hoon-sik win the 2026 Seoul Mayoral Election",
+    "q_b": "Will Jeon Hyun-heui win the 2026 Seoul Mayoral Election",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one person can win the Seoul Mayoral Election, so Kang Hoon-sik and Jeon Hyun-heui cannot both win.",
+    "classified_at": "2026-04-10T21:41:52.816128+00:00"
+  },
+  {
+    "key": "will kang hoon-sik win the 2026 seoul mayoral election|||will na kyung-won win the 2026 seoul mayoral election",
+    "q_a": "Will Kang Hoon-sik win the 2026 Seoul Mayoral Election",
+    "q_b": "Will Na Kyung-won win the 2026 Seoul Mayoral Election",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one person can win the 2026 Seoul Mayoral Election.",
+    "classified_at": "2026-04-10T21:41:59.152716+00:00"
+  },
+  {
+    "key": "will kang hoon-sik win the 2026 seoul mayoral election|||will park hong-keun win the 2026 seoul mayoral election",
+    "q_a": "Will Kang Hoon-sik win the 2026 Seoul Mayoral Election",
+    "q_b": "Will Park Hong-keun win the 2026 Seoul Mayoral Election",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one person can win the 2026 Seoul Mayoral Election.",
+    "classified_at": "2026-04-10T21:41:59.152716+00:00"
+  },
+  {
+    "key": "will kang hoon-sik win the 2026 seoul mayoral election|||will park yong-jin win the 2026 seoul mayoral election",
+    "q_a": "Will Kang Hoon-sik win the 2026 Seoul Mayoral Election",
+    "q_b": "Will Park Yong-jin win the 2026 Seoul Mayoral Election",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one person can win the 2026 Seoul Mayoral Election.",
+    "classified_at": "2026-04-10T21:41:59.152716+00:00"
+  },
+  {
+    "key": "will hong ihk-pyo win the 2026 seoul mayoral election|||will kang hoon-sik win the 2026 seoul mayoral election",
+    "q_a": "Will Kang Hoon-sik win the 2026 Seoul Mayoral Election",
+    "q_b": "Will Hong Ihk-pyo win the 2026 Seoul Mayoral Election",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one person can win the 2026 Seoul Mayoral Election.",
+    "classified_at": "2026-04-10T21:41:59.152716+00:00"
+  },
+  {
+    "key": "will belgium win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Belgium win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Winning a group stage and winning the entire tournament are separate achievements with no logical dependency.",
+    "classified_at": "2026-04-10T21:41:59.152716+00:00"
+  },
+  {
+    "key": "will australia win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Australia win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Australia winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:04.877737+00:00"
+  },
+  {
+    "key": "will norway win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Norway win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Norway winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:04.877737+00:00"
+  },
+  {
+    "key": "will portugal win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Portugal win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Portugal winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:04.877737+00:00"
+  },
+  {
+    "key": "will new zealand win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will New Zealand win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and New Zealand winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:04.877737+00:00"
+  },
+  {
+    "key": "will ivory coast win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Ivory Coast win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Ivory Coast winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:04.877737+00:00"
+  },
+  {
+    "key": "will scotland win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Scotland win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Scotland winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:10.450861+00:00"
+  },
+  {
+    "key": "will paraguay win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Paraguay win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Paraguay winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:10.450861+00:00"
+  },
+  {
+    "key": "will south africa win group a in the 2026 fifa world cup?|||will turkiye win the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Turkiye win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Turkiye winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:10.450861+00:00"
+  },
+  {
+    "key": "will canada win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Canada win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Canada winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:10.450861+00:00"
+  },
+  {
+    "key": "will austria win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Austria win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Austria winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:10.450861+00:00"
+  },
+  {
+    "key": "will cape verde win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Cape Verde win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Cape Verde winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:16.058761+00:00"
+  },
+  {
+    "key": "will egypt win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Egypt win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Egypt winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:16.058761+00:00"
+  },
+  {
+    "key": "will congo dr win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Congo DR win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Congo DR winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:16.058761+00:00"
+  },
+  {
+    "key": "will haiti win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Haiti win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Haiti winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:16.058761+00:00"
+  },
+  {
+    "key": "will iran win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Iran win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Iran winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:16.058761+00:00"
+  },
+  {
+    "key": "will qatar win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Qatar win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Qatar winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:21.826555+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Bosnia-Herzegovina winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:21.826555+00:00"
+  },
+  {
+    "key": "will england win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will England win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and England winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:21.826555+00:00"
+  },
+  {
+    "key": "will south africa win group a in the 2026 fifa world cup?|||will uruguay win the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Uruguay win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Uruguay winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:21.826555+00:00"
+  },
+  {
+    "key": "will south africa win group a in the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and USA winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:21.826555+00:00"
+  },
+  {
+    "key": "will croatia win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Croatia win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Croatia winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:27.555736+00:00"
+  },
+  {
+    "key": "will senegal win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Senegal win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Senegal winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:27.555736+00:00"
+  },
+  {
+    "key": "will saudi arabia win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Saudi Arabia winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:27.555736+00:00"
+  },
+  {
+    "key": "will south africa win group a in the 2026 fifa world cup?|||will tunisia win the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Tunisia win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Tunisia winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:27.555736+00:00"
+  },
+  {
+    "key": "will cezchia win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Cezchia win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Czechia winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:27.555736+00:00"
+  },
+  {
+    "key": "will algeria win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Algeria win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Algeria winning the tournament are unrelated events involving different teams.",
+    "classified_at": "2026-04-10T21:42:33.265496+00:00"
+  },
+  {
+    "key": "will panama win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Panama win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Panama winning the tournament are unrelated events involving different teams.",
+    "classified_at": "2026-04-10T21:42:33.265496+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Cura\u00e7ao winning the tournament are unrelated events involving different teams.",
+    "classified_at": "2026-04-10T21:42:33.265496+00:00"
+  },
+  {
+    "key": "will south africa win group a in the 2026 fifa world cup?|||will sweden win the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Sweden win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Sweden winning the tournament are unrelated events involving different teams.",
+    "classified_at": "2026-04-10T21:42:33.265496+00:00"
+  },
+  {
+    "key": "will jordan win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Jordan win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Jordan winning the tournament are unrelated events involving different teams.",
+    "classified_at": "2026-04-10T21:42:33.265496+00:00"
+  },
+  {
+    "key": "will ghana win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Ghana win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Ghana winning the tournament are separate events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:39.513198+00:00"
+  },
+  {
+    "key": "will iraq win the 2026 fifa world cup?|||will south africa win group a in the 2026 fifa world cup?",
+    "q_a": "Will South Africa win Group A in the 2026 FIFA World Cup?",
+    "q_b": "Will Iraq win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning their group and Iraq winning the tournament are separate events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:39.513198+00:00"
+  },
+  {
+    "key": "will belgium win the 2026 fifa world cup?|||will bosnia-herzegovina win the 2026 fifa world cup?",
+    "q_a": "Will Belgium win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the 2026 FIFA World Cup, so Belgium and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:42:39.513198+00:00"
+  },
+  {
+    "key": "will belgium win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Belgium win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the 2026 FIFA World Cup, so Belgium and USA cannot both win.",
+    "classified_at": "2026-04-10T21:42:39.513198+00:00"
+  },
+  {
+    "key": "will belgium win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Belgium win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Belgium winning the tournament and Saudi Arabia winning their group are separate events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:39.513198+00:00"
+  },
+  {
+    "key": "will belgium win the 2026 fifa world cup?|||will cura\u00e7ao win the 2026 fifa world cup?",
+    "q_a": "Will Belgium win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Belgium and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:42:45.647779+00:00"
+  },
+  {
+    "key": "will australia win the 2026 fifa world cup?|||will bosnia-herzegovina win the 2026 fifa world cup?",
+    "q_a": "Will Australia win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Australia and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:42:45.647779+00:00"
+  },
+  {
+    "key": "will australia win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Australia win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Australia and USA cannot both win.",
+    "classified_at": "2026-04-10T21:42:45.647779+00:00"
+  },
+  {
+    "key": "will australia win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Australia win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Australia winning the World Cup and Saudi Arabia winning their group stage are separate events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:45.647779+00:00"
+  },
+  {
+    "key": "will australia win the 2026 fifa world cup?|||will cura\u00e7ao win the 2026 fifa world cup?",
+    "q_a": "Will Australia win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Australia and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:42:45.647779+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will norway win the 2026 fifa world cup?",
+    "q_a": "Will Norway win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Norway and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:42:51.670764+00:00"
+  },
+  {
+    "key": "will norway win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Norway win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Norway and USA cannot both win.",
+    "classified_at": "2026-04-10T21:42:51.670764+00:00"
+  },
+  {
+    "key": "will norway win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Norway win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Norway winning the World Cup and Saudi Arabia winning Group H are separate events that can both occur.",
+    "classified_at": "2026-04-10T21:42:51.670764+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will norway win the 2026 fifa world cup?",
+    "q_a": "Will Norway win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Norway and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:42:51.670764+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will portugal win the 2026 fifa world cup?",
+    "q_a": "Will Portugal win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Portugal and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:42:51.670764+00:00"
+  },
+  {
+    "key": "will portugal win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Portugal win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Portugal and USA cannot both win.",
+    "classified_at": "2026-04-10T21:42:58.062656+00:00"
+  },
+  {
+    "key": "will portugal win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Portugal win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Portugal winning the tournament and Saudi Arabia winning their group stage are separate events with no logical dependency.",
+    "classified_at": "2026-04-10T21:42:58.062656+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will portugal win the 2026 fifa world cup?",
+    "q_a": "Will Portugal win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Portugal and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:42:58.062656+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will new zealand win the 2026 fifa world cup?",
+    "q_a": "Will New Zealand win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so New Zealand and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:42:58.062656+00:00"
+  },
+  {
+    "key": "will new zealand win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will New Zealand win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so New Zealand and USA cannot both win.",
+    "classified_at": "2026-04-10T21:42:58.062656+00:00"
+  },
+  {
+    "key": "will new zealand win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will New Zealand win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "New Zealand winning the World Cup and Saudi Arabia winning their group stage are unrelated outcomes that can occur independently.",
+    "classified_at": "2026-04-10T21:43:04.273327+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will new zealand win the 2026 fifa world cup?",
+    "q_a": "Will New Zealand win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so New Zealand and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:43:04.273327+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will ivory coast win the 2026 fifa world cup?",
+    "q_a": "Will Ivory Coast win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Ivory Coast and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:43:04.273327+00:00"
+  },
+  {
+    "key": "will ivory coast win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Ivory Coast win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Ivory Coast and USA cannot both win.",
+    "classified_at": "2026-04-10T21:43:04.273327+00:00"
+  },
+  {
+    "key": "will ivory coast win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Ivory Coast win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Ivory Coast winning the World Cup and Saudi Arabia winning their group stage are unrelated outcomes that can occur independently.",
+    "classified_at": "2026-04-10T21:43:04.273327+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will ivory coast win the 2026 fifa world cup?",
+    "q_a": "Will Ivory Coast win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Ivory Coast and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:43:11.227049+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will scotland win the 2026 fifa world cup?",
+    "q_a": "Will Scotland win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Scotland and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:43:11.227049+00:00"
+  },
+  {
+    "key": "will scotland win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Scotland win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Scotland and USA cannot both win.",
+    "classified_at": "2026-04-10T21:43:11.227049+00:00"
+  },
+  {
+    "key": "will saudi arabia win group h in the 2026 fifa world cup?|||will scotland win the 2026 fifa world cup?",
+    "q_a": "Will Scotland win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Scotland winning the World Cup and Saudi Arabia winning their group stage are separate events with no logical dependency.",
+    "classified_at": "2026-04-10T21:43:11.227049+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will scotland win the 2026 fifa world cup?",
+    "q_a": "Will Scotland win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Scotland and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:43:11.227049+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will paraguay win the 2026 fifa world cup?",
+    "q_a": "Will Paraguay win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Paraguay and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:43:16.993322+00:00"
+  },
+  {
+    "key": "will paraguay win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Paraguay win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Paraguay and USA cannot both win.",
+    "classified_at": "2026-04-10T21:43:16.993322+00:00"
+  },
+  {
+    "key": "will paraguay win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Paraguay win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Paraguay winning the World Cup and Saudi Arabia winning Group H are separate events with no logical dependency.",
+    "classified_at": "2026-04-10T21:43:16.993322+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will paraguay win the 2026 fifa world cup?",
+    "q_a": "Will Paraguay win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Paraguay and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:43:16.993322+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will turkiye win the 2026 fifa world cup?",
+    "q_a": "Will Turkiye win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Turkiye and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:43:16.993322+00:00"
+  },
+  {
+    "key": "will turkiye win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Turkiye win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Turkiye and USA cannot both win.",
+    "classified_at": "2026-04-10T21:43:23.565540+00:00"
+  },
+  {
+    "key": "will saudi arabia win group h in the 2026 fifa world cup?|||will turkiye win the 2026 fifa world cup?",
+    "q_a": "Will Turkiye win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Turkiye winning the tournament and Saudi Arabia winning their group are separate achievements with no logical dependency.",
+    "classified_at": "2026-04-10T21:43:23.565540+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will turkiye win the 2026 fifa world cup?",
+    "q_a": "Will Turkiye win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Turkiye and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:43:23.565540+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will canada win the 2026 fifa world cup?",
+    "q_a": "Will Canada win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Canada and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:43:23.565540+00:00"
+  },
+  {
+    "key": "will canada win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Canada win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Canada and USA cannot both win.",
+    "classified_at": "2026-04-10T21:43:23.565540+00:00"
+  },
+  {
+    "key": "will canada win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Canada win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Canada winning the World Cup and Saudi Arabia winning their group stage are unrelated outcomes that can occur independently.",
+    "classified_at": "2026-04-10T21:43:30.006620+00:00"
+  },
+  {
+    "key": "will canada win the 2026 fifa world cup?|||will cura\u00e7ao win the 2026 fifa world cup?",
+    "q_a": "Will Canada win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Canada and Cura\u00e7ao cannot both be winners.",
+    "classified_at": "2026-04-10T21:43:30.006620+00:00"
+  },
+  {
+    "key": "will austria win the 2026 fifa world cup?|||will bosnia-herzegovina win the 2026 fifa world cup?",
+    "q_a": "Will Austria win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Austria and Bosnia-Herzegovina cannot both be winners.",
+    "classified_at": "2026-04-10T21:43:30.006620+00:00"
+  },
+  {
+    "key": "will austria win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Austria win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Austria and USA cannot both be winners.",
+    "classified_at": "2026-04-10T21:43:30.006620+00:00"
+  },
+  {
+    "key": "will austria win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Austria win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Austria winning the World Cup and Saudi Arabia winning their group stage are unrelated outcomes that can occur independently.",
+    "classified_at": "2026-04-10T21:43:30.006620+00:00"
+  },
+  {
+    "key": "will austria win the 2026 fifa world cup?|||will cura\u00e7ao win the 2026 fifa world cup?",
+    "q_a": "Will Austria win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Austria and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:43:36.509591+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will cape verde win the 2026 fifa world cup?",
+    "q_a": "Will Cape Verde win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Cape Verde and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:43:36.509591+00:00"
+  },
+  {
+    "key": "will cape verde win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Cape Verde win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Cape Verde and USA cannot both win.",
+    "classified_at": "2026-04-10T21:43:36.509591+00:00"
+  },
+  {
+    "key": "will cape verde win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Cape Verde win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Cape Verde winning the World Cup and Saudi Arabia winning their group stage are separate events with no logical dependency.",
+    "classified_at": "2026-04-10T21:43:36.509591+00:00"
+  },
+  {
+    "key": "will cape verde win the 2026 fifa world cup?|||will cura\u00e7ao win the 2026 fifa world cup?",
+    "q_a": "Will Cape Verde win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Cape Verde and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:43:36.509591+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will egypt win the 2026 fifa world cup?",
+    "q_a": "Will Egypt win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Egypt and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:43:42.983101+00:00"
+  },
+  {
+    "key": "will egypt win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Egypt win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Egypt and USA cannot both win.",
+    "classified_at": "2026-04-10T21:43:42.983101+00:00"
+  },
+  {
+    "key": "will egypt win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Egypt win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Egypt winning the World Cup and Saudi Arabia winning Group H are separate outcomes that can both occur.",
+    "classified_at": "2026-04-10T21:43:42.983101+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will egypt win the 2026 fifa world cup?",
+    "q_a": "Will Egypt win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Egypt and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:43:42.983101+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will congo dr win the 2026 fifa world cup?",
+    "q_a": "Will Congo DR win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Congo DR and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:43:42.983101+00:00"
+  },
+  {
+    "key": "will congo dr win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Congo DR win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup.",
+    "classified_at": "2026-04-10T21:43:48.685884+00:00"
+  },
+  {
+    "key": "will congo dr win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Congo DR win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Congo DR winning the tournament and Saudi Arabia winning their group are separate achievements with no logical dependency.",
+    "classified_at": "2026-04-10T21:43:48.685884+00:00"
+  },
+  {
+    "key": "will congo dr win the 2026 fifa world cup?|||will cura\u00e7ao win the 2026 fifa world cup?",
+    "q_a": "Will Congo DR win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup.",
+    "classified_at": "2026-04-10T21:43:48.685884+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will haiti win the 2026 fifa world cup?",
+    "q_a": "Will Haiti win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup.",
+    "classified_at": "2026-04-10T21:43:48.685884+00:00"
+  },
+  {
+    "key": "will haiti win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Haiti win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup.",
+    "classified_at": "2026-04-10T21:43:48.685884+00:00"
+  },
+  {
+    "key": "will haiti win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Haiti win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Haiti winning the World Cup and Saudi Arabia winning their group are unrelated outcomes that can occur independently.",
+    "classified_at": "2026-04-10T21:43:55.097999+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will haiti win the 2026 fifa world cup?",
+    "q_a": "Will Haiti win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one team can win the 2026 FIFA World Cup, so Haiti and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:43:55.097999+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will south africa win the 2026 fifa world cup?",
+    "q_a": "Will South Africa win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one team can win the 2026 FIFA World Cup, so South Africa and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:43:55.097999+00:00"
+  },
+  {
+    "key": "will south africa win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will South Africa win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one team can win the 2026 FIFA World Cup, so South Africa and USA cannot both win.",
+    "classified_at": "2026-04-10T21:43:55.097999+00:00"
+  },
+  {
+    "key": "will saudi arabia win group h in the 2026 fifa world cup?|||will south africa win the 2026 fifa world cup?",
+    "q_a": "Will South Africa win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "South Africa winning the World Cup and Saudi Arabia winning their group are unrelated outcomes that can occur independently.",
+    "classified_at": "2026-04-10T21:43:55.097999+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will south africa win the 2026 fifa world cup?",
+    "q_a": "Will South Africa win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so South Africa and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:44:01.574783+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will iran win the 2026 fifa world cup?",
+    "q_a": "Will Iran win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Iran and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:44:01.574783+00:00"
+  },
+  {
+    "key": "will iran win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Iran win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Iran and USA cannot both win.",
+    "classified_at": "2026-04-10T21:44:01.574783+00:00"
+  },
+  {
+    "key": "will iran win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Iran win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Iran winning the World Cup and Saudi Arabia winning their group stage are separate events with no logical dependency.",
+    "classified_at": "2026-04-10T21:44:01.574783+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will iran win the 2026 fifa world cup?",
+    "q_a": "Will Iran win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Iran and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:44:01.574783+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will qatar win the 2026 fifa world cup?",
+    "q_a": "Will Qatar win the 2026 FIFA World Cup?",
+    "q_b": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Qatar and Bosnia-Herzegovina cannot both win.",
+    "classified_at": "2026-04-10T21:44:09.038295+00:00"
+  },
+  {
+    "key": "will qatar win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Qatar win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Qatar and USA cannot both win.",
+    "classified_at": "2026-04-10T21:44:09.038295+00:00"
+  },
+  {
+    "key": "will qatar win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Qatar win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Qatar winning the tournament and Saudi Arabia winning their group stage are separate events with no logical dependency.",
+    "classified_at": "2026-04-10T21:44:09.038295+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will qatar win the 2026 fifa world cup?",
+    "q_a": "Will Qatar win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Qatar and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:44:09.038295+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will england win the 2026 fifa world cup?",
+    "q_a": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "q_b": "Will England win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Bosnia-Herzegovina and England cannot both win.",
+    "classified_at": "2026-04-10T21:44:09.038295+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will uruguay win the 2026 fifa world cup?",
+    "q_a": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "q_b": "Will Uruguay win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Bosnia-Herzegovina and Uruguay cannot both win.",
+    "classified_at": "2026-04-10T21:44:14.981870+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Bosnia-Herzegovina and USA cannot both win.",
+    "classified_at": "2026-04-10T21:44:14.981870+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will croatia win the 2026 fifa world cup?",
+    "q_a": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "q_b": "Will Croatia win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Bosnia-Herzegovina and Croatia cannot both win.",
+    "classified_at": "2026-04-10T21:44:14.981870+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will senegal win the 2026 fifa world cup?",
+    "q_a": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "q_b": "Will Senegal win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Bosnia-Herzegovina and Senegal cannot both win.",
+    "classified_at": "2026-04-10T21:44:14.981870+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will saudi arabia win the 2026 fifa world cup?",
+    "q_a": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Bosnia-Herzegovina and Saudi Arabia cannot both win.",
+    "classified_at": "2026-04-10T21:44:14.981870+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will tunisia win the 2026 fifa world cup?",
+    "q_a": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "q_b": "Will Tunisia win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Bosnia-Herzegovina and Tunisia cannot both win.",
+    "classified_at": "2026-04-10T21:44:21.052309+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will cezchia win the 2026 fifa world cup?",
+    "q_a": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "q_b": "Will Cezchia win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Bosnia-Herzegovina and Czechia cannot both win.",
+    "classified_at": "2026-04-10T21:44:21.052309+00:00"
+  },
+  {
+    "key": "will algeria win the 2026 fifa world cup?|||will bosnia-herzegovina win the 2026 fifa world cup?",
+    "q_a": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "q_b": "Will Algeria win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Bosnia-Herzegovina and Algeria cannot both win.",
+    "classified_at": "2026-04-10T21:44:21.052309+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Bosnia-Herzegovina winning the World Cup and Saudi Arabia winning Group H are separate events that can both occur.",
+    "classified_at": "2026-04-10T21:44:21.052309+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will panama win the 2026 fifa world cup?",
+    "q_a": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "q_b": "Will Panama win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Bosnia-Herzegovina and Panama cannot both win.",
+    "classified_at": "2026-04-10T21:44:21.052309+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will cura\u00e7ao win the 2026 fifa world cup?",
+    "q_a": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Bosnia-Herzegovina and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:44:26.926908+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will sweden win the 2026 fifa world cup?",
+    "q_a": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "q_b": "Will Sweden win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Bosnia-Herzegovina and Sweden cannot both win.",
+    "classified_at": "2026-04-10T21:44:26.926908+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will jordan win the 2026 fifa world cup?",
+    "q_a": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "q_b": "Will Jordan win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Bosnia-Herzegovina and Jordan cannot both win.",
+    "classified_at": "2026-04-10T21:44:26.926908+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will ghana win the 2026 fifa world cup?",
+    "q_a": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "q_b": "Will Ghana win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Bosnia-Herzegovina and Ghana cannot both win.",
+    "classified_at": "2026-04-10T21:44:26.926908+00:00"
+  },
+  {
+    "key": "will bosnia-herzegovina win the 2026 fifa world cup?|||will iraq win the 2026 fifa world cup?",
+    "q_a": "Will Bosnia-Herzegovina win the 2026 FIFA World Cup?",
+    "q_b": "Will Iraq win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Bosnia-Herzegovina and Iraq cannot both win.",
+    "classified_at": "2026-04-10T21:44:26.926908+00:00"
+  },
+  {
+    "key": "will england win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will England win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup.",
+    "classified_at": "2026-04-10T21:44:32.469362+00:00"
+  },
+  {
+    "key": "will england win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will England win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "England winning the tournament and Saudi Arabia winning their group are separate events with no logical dependency.",
+    "classified_at": "2026-04-10T21:44:32.469362+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will england win the 2026 fifa world cup?",
+    "q_a": "Will England win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup.",
+    "classified_at": "2026-04-10T21:44:32.469362+00:00"
+  },
+  {
+    "key": "will uruguay win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will Uruguay win the 2026 FIFA World Cup?",
+    "q_b": "Will USA win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup.",
+    "classified_at": "2026-04-10T21:44:32.469362+00:00"
+  },
+  {
+    "key": "will saudi arabia win group h in the 2026 fifa world cup?|||will uruguay win the 2026 fifa world cup?",
+    "q_a": "Will Uruguay win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Uruguay winning the tournament and Saudi Arabia winning their group are separate events with no logical dependency.",
+    "classified_at": "2026-04-10T21:44:32.469362+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will uruguay win the 2026 fifa world cup?",
+    "q_a": "Will Uruguay win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Uruguay and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:44:37.784721+00:00"
+  },
+  {
+    "key": "will croatia win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will USA win the 2026 FIFA World Cup?",
+    "q_b": "Will Croatia win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so USA and Croatia cannot both win.",
+    "classified_at": "2026-04-10T21:44:37.784721+00:00"
+  },
+  {
+    "key": "will senegal win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will USA win the 2026 FIFA World Cup?",
+    "q_b": "Will Senegal win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so USA and Senegal cannot both win.",
+    "classified_at": "2026-04-10T21:44:37.784721+00:00"
+  },
+  {
+    "key": "will saudi arabia win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will USA win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so USA and Saudi Arabia cannot both win.",
+    "classified_at": "2026-04-10T21:44:37.784721+00:00"
+  },
+  {
+    "key": "will tunisia win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will USA win the 2026 FIFA World Cup?",
+    "q_b": "Will Tunisia win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so USA and Tunisia cannot both win.",
+    "classified_at": "2026-04-10T21:44:37.784721+00:00"
+  },
+  {
+    "key": "will cezchia win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will USA win the 2026 FIFA World Cup?",
+    "q_b": "Will Cezchia win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so USA and Czech Republic cannot both win.",
+    "classified_at": "2026-04-10T21:44:43.884558+00:00"
+  },
+  {
+    "key": "will algeria win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will USA win the 2026 FIFA World Cup?",
+    "q_b": "Will Algeria win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so USA and Algeria cannot both win.",
+    "classified_at": "2026-04-10T21:44:43.884558+00:00"
+  },
+  {
+    "key": "will saudi arabia win group h in the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will USA win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "USA winning the World Cup and Saudi Arabia winning their group stage are separate events with no logical dependency.",
+    "classified_at": "2026-04-10T21:44:43.884558+00:00"
+  },
+  {
+    "key": "will panama win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will USA win the 2026 FIFA World Cup?",
+    "q_b": "Will Panama win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so USA and Panama cannot both win.",
+    "classified_at": "2026-04-10T21:44:43.884558+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will USA win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so USA and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:44:43.884558+00:00"
+  },
+  {
+    "key": "will sweden win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will USA win the 2026 FIFA World Cup?",
+    "q_b": "Will Sweden win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so USA and Sweden cannot both win.",
+    "classified_at": "2026-04-10T21:44:49.896672+00:00"
+  },
+  {
+    "key": "will jordan win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will USA win the 2026 FIFA World Cup?",
+    "q_b": "Will Jordan win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so USA and Jordan cannot both win.",
+    "classified_at": "2026-04-10T21:44:49.896672+00:00"
+  },
+  {
+    "key": "will ghana win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will USA win the 2026 FIFA World Cup?",
+    "q_b": "Will Ghana win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so USA and Ghana cannot both win.",
+    "classified_at": "2026-04-10T21:44:49.896672+00:00"
+  },
+  {
+    "key": "will iraq win the 2026 fifa world cup?|||will usa win the 2026 fifa world cup?",
+    "q_a": "Will USA win the 2026 FIFA World Cup?",
+    "q_b": "Will Iraq win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so USA and Iraq cannot both win.",
+    "classified_at": "2026-04-10T21:44:49.896672+00:00"
+  },
+  {
+    "key": "will croatia win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Croatia win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Croatia winning the tournament and Saudi Arabia winning their group stage are separate events with no logical dependency.",
+    "classified_at": "2026-04-10T21:44:49.896672+00:00"
+  },
+  {
+    "key": "will croatia win the 2026 fifa world cup?|||will cura\u00e7ao win the 2026 fifa world cup?",
+    "q_a": "Will Croatia win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup.",
+    "classified_at": "2026-04-10T21:44:55.703913+00:00"
+  },
+  {
+    "key": "will saudi arabia win group h in the 2026 fifa world cup?|||will senegal win the 2026 fifa world cup?",
+    "q_a": "Will Senegal win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Senegal winning the World Cup and Saudi Arabia winning their group are separate achievements with no logical dependency.",
+    "classified_at": "2026-04-10T21:44:55.703913+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will senegal win the 2026 fifa world cup?",
+    "q_a": "Will Senegal win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup.",
+    "classified_at": "2026-04-10T21:44:55.703913+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will saudi arabia win the 2026 fifa world cup?",
+    "q_a": "Will Saudi Arabia win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup.",
+    "classified_at": "2026-04-10T21:44:55.703913+00:00"
+  },
+  {
+    "key": "will saudi arabia win group h in the 2026 fifa world cup?|||will tunisia win the 2026 fifa world cup?",
+    "q_a": "Will Tunisia win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Tunisia winning the World Cup and Saudi Arabia winning their group are separate achievements with no logical dependency.",
+    "classified_at": "2026-04-10T21:44:55.703913+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will tunisia win the 2026 fifa world cup?",
+    "q_a": "Will Tunisia win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Tunisia and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:45:01.890052+00:00"
+  },
+  {
+    "key": "will cezchia win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Cezchia win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Czechia winning the World Cup and Saudi Arabia winning their group stage are separate achievements with no logical dependency.",
+    "classified_at": "2026-04-10T21:45:01.890052+00:00"
+  },
+  {
+    "key": "will cezchia win the 2026 fifa world cup?|||will cura\u00e7ao win the 2026 fifa world cup?",
+    "q_a": "Will Cezchia win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Czechia and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:45:01.890052+00:00"
+  },
+  {
+    "key": "will algeria win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Algeria win the 2026 FIFA World Cup?",
+    "q_b": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Algeria winning the World Cup and Saudi Arabia winning their group stage are separate achievements with no logical dependency.",
+    "classified_at": "2026-04-10T21:45:01.890052+00:00"
+  },
+  {
+    "key": "will algeria win the 2026 fifa world cup?|||will cura\u00e7ao win the 2026 fifa world cup?",
+    "q_a": "Will Algeria win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Algeria and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:45:01.890052+00:00"
+  },
+  {
+    "key": "will panama win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "q_b": "Will Panama win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Saudi Arabia winning their group and Panama winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:45:07.362250+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Saudi Arabia winning their group and Cura\u00e7ao winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:45:07.362250+00:00"
+  },
+  {
+    "key": "will saudi arabia win group h in the 2026 fifa world cup?|||will sweden win the 2026 fifa world cup?",
+    "q_a": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "q_b": "Will Sweden win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Saudi Arabia winning their group and Sweden winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:45:07.362250+00:00"
+  },
+  {
+    "key": "will jordan win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "q_b": "Will Jordan win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Saudi Arabia winning their group and Jordan winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:45:07.362250+00:00"
+  },
+  {
+    "key": "will ghana win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "q_b": "Will Ghana win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Saudi Arabia winning their group and Ghana winning the tournament are unrelated events with no logical dependency.",
+    "classified_at": "2026-04-10T21:45:07.362250+00:00"
+  },
+  {
+    "key": "will iraq win the 2026 fifa world cup?|||will saudi arabia win group h in the 2026 fifa world cup?",
+    "q_a": "Will Saudi Arabia win Group H in the 2026 FIFA World Cup?",
+    "q_b": "Will Iraq win the 2026 FIFA World Cup?",
+    "dep_type": "independent",
+    "direction": "symmetric",
+    "confidence": 0.9,
+    "reason": "Saudi Arabia winning their group and Iraq winning the entire tournament are unrelated outcomes with no logical dependency.",
+    "classified_at": "2026-04-10T21:45:13.022570+00:00"
+  },
+  {
+    "key": "will jeon hyun-heui win the 2026 seoul mayoral election|||will na kyung-won win the 2026 seoul mayoral election",
+    "q_a": "Will Jeon Hyun-heui win the 2026 Seoul Mayoral Election",
+    "q_b": "Will Na Kyung-won win the 2026 Seoul Mayoral Election",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one candidate can win the 2026 Seoul Mayoral Election.",
+    "classified_at": "2026-04-10T21:45:13.022570+00:00"
+  },
+  {
+    "key": "will jeon hyun-heui win the 2026 seoul mayoral election|||will park hong-keun win the 2026 seoul mayoral election",
+    "q_a": "Will Jeon Hyun-heui win the 2026 Seoul Mayoral Election",
+    "q_b": "Will Park Hong-keun win the 2026 Seoul Mayoral Election",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one candidate can win the 2026 Seoul Mayoral Election.",
+    "classified_at": "2026-04-10T21:45:13.022570+00:00"
+  },
+  {
+    "key": "will jeon hyun-heui win the 2026 seoul mayoral election|||will park yong-jin win the 2026 seoul mayoral election",
+    "q_a": "Will Jeon Hyun-heui win the 2026 Seoul Mayoral Election",
+    "q_b": "Will Park Yong-jin win the 2026 Seoul Mayoral Election",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one candidate can win the 2026 Seoul Mayoral Election.",
+    "classified_at": "2026-04-10T21:45:13.022570+00:00"
+  },
+  {
+    "key": "will hong ihk-pyo win the 2026 seoul mayoral election|||will jeon hyun-heui win the 2026 seoul mayoral election",
+    "q_a": "Will Jeon Hyun-heui win the 2026 Seoul Mayoral Election",
+    "q_b": "Will Hong Ihk-pyo win the 2026 Seoul Mayoral Election",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one candidate can win the 2026 Seoul Mayoral Election.",
+    "classified_at": "2026-04-10T21:45:13.022570+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will panama win the 2026 fifa world cup?",
+    "q_a": "Will Panama win the 2026 FIFA World Cup?",
+    "q_b": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Panama and Cura\u00e7ao cannot both win.",
+    "classified_at": "2026-04-10T21:45:19.071911+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will sweden win the 2026 fifa world cup?",
+    "q_a": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "q_b": "Will Sweden win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Cura\u00e7ao and Sweden cannot both win.",
+    "classified_at": "2026-04-10T21:45:19.071911+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will jordan win the 2026 fifa world cup?",
+    "q_a": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "q_b": "Will Jordan win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Cura\u00e7ao and Jordan cannot both win.",
+    "classified_at": "2026-04-10T21:45:19.071911+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will ghana win the 2026 fifa world cup?",
+    "q_a": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "q_b": "Will Ghana win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Cura\u00e7ao and Ghana cannot both win.",
+    "classified_at": "2026-04-10T21:45:19.071911+00:00"
+  },
+  {
+    "key": "will cura\u00e7ao win the 2026 fifa world cup?|||will iraq win the 2026 fifa world cup?",
+    "q_a": "Will Cura\u00e7ao win the 2026 FIFA World Cup?",
+    "q_b": "Will Iraq win the 2026 FIFA World Cup?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one country can win the FIFA World Cup, so Cura\u00e7ao and Iraq cannot both win.",
+    "classified_at": "2026-04-10T21:45:19.071911+00:00"
+  },
+  {
+    "key": "will na kyung-won win the 2026 seoul mayoral election|||will park hong-keun win the 2026 seoul mayoral election",
+    "q_a": "Will Na Kyung-won win the 2026 Seoul Mayoral Election",
+    "q_b": "Will Park Hong-keun win the 2026 Seoul Mayoral Election",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one person can win the Seoul mayoral election.",
+    "classified_at": "2026-04-10T21:45:24.883078+00:00"
+  },
+  {
+    "key": "will na kyung-won win the 2026 seoul mayoral election|||will park yong-jin win the 2026 seoul mayoral election",
+    "q_a": "Will Na Kyung-won win the 2026 Seoul Mayoral Election",
+    "q_b": "Will Park Yong-jin win the 2026 Seoul Mayoral Election",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one person can win the Seoul mayoral election.",
+    "classified_at": "2026-04-10T21:45:24.883078+00:00"
+  },
+  {
+    "key": "will hong ihk-pyo win the 2026 seoul mayoral election|||will na kyung-won win the 2026 seoul mayoral election",
+    "q_a": "Will Na Kyung-won win the 2026 Seoul Mayoral Election",
+    "q_b": "Will Hong Ihk-pyo win the 2026 Seoul Mayoral Election",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one person can win the Seoul mayoral election.",
+    "classified_at": "2026-04-10T21:45:24.883078+00:00"
+  },
+  {
+    "key": "will hong ihk-pyo win the 2026 seoul mayoral election|||will park yong-jin win the 2026 seoul mayoral election",
+    "q_a": "Will Park Yong-jin win the 2026 Seoul Mayoral Election",
+    "q_b": "Will Hong Ihk-pyo win the 2026 Seoul Mayoral Election",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one person can win the Seoul mayoral election.",
+    "classified_at": "2026-04-10T21:45:24.883078+00:00"
+  },
+  {
+    "key": "will ron desantis win the 2028 republican presidential nomination?|||will ron desantis win the 2028 us presidential election?",
+    "q_a": "Will Ron DeSantis win the 2028 US Presidential Election?",
+    "q_b": "Will Ron DeSantis win the 2028 Republican presidential nomination?",
+    "dep_type": "implication",
+    "direction": "a_implies_b",
+    "confidence": 0.95,
+    "reason": "Winning the presidency requires first winning the party nomination.",
+    "classified_at": "2026-04-10T21:45:24.883078+00:00"
+  },
+  {
+    "key": "will gavin newsom win the 2028 democratic presidential nomination?|||will gavin newsom win the 2028 us presidential election?",
+    "q_a": "Will Gavin Newsom win the 2028 US Presidential Election?",
+    "q_b": "Will Gavin Newsom win the 2028 Democratic presidential nomination?",
+    "dep_type": "implication",
+    "direction": "a_implies_b",
+    "confidence": 0.95,
+    "reason": "To win the presidential election as a Democrat, Newsom must first win the Democratic nomination.",
+    "classified_at": "2026-04-10T21:51:30.329408+00:00"
+  },
+  {
+    "key": "will elon musk win the 2028 republican presidential nomination?|||will elon musk win the 2028 us presidential election?",
+    "q_a": "Will Elon Musk win the 2028 Republican presidential nomination?",
+    "q_b": "Will Elon Musk win the 2028 US Presidential Election?",
+    "dep_type": "implication",
+    "direction": "b_implies_a",
+    "confidence": 0.95,
+    "reason": "To win the presidential election as a Republican, Musk must first win the Republican nomination.",
+    "classified_at": "2026-04-10T21:51:30.329408+00:00"
+  },
+  {
+    "key": "will tucker carlson win the 2028 republican presidential nomination?|||will tucker carlson win the 2028 us presidential election?",
+    "q_a": "Will Tucker Carlson win the 2028 Republican presidential nomination?",
+    "q_b": "Will Tucker Carlson win the 2028 US Presidential Election?",
+    "dep_type": "implication",
+    "direction": "b_implies_a",
+    "confidence": 0.95,
+    "reason": "To win the presidential election as a Republican, Carlson must first win the Republican nomination.",
+    "classified_at": "2026-04-10T21:51:30.329408+00:00"
+  },
+  {
+    "key": "will kim kardashian win the 2028 republican presidential nomination?|||will kim kardashian win the 2028 us presidential election?",
+    "q_a": "Will Kim Kardashian win the 2028 US Presidential Election?",
+    "q_b": "Will Kim Kardashian win the 2028 Republican presidential nomination?",
+    "dep_type": "implication",
+    "direction": "a_implies_b",
+    "confidence": 0.95,
+    "reason": "To win the presidential election as a Republican, Kardashian must first win the Republican nomination.",
+    "classified_at": "2026-04-10T21:51:30.329408+00:00"
+  },
+  {
+    "key": "will gretchen whitmer win the 2028 democratic presidential nomination?|||will gretchen whitmer win the 2028 us presidential election?",
+    "q_a": "Will Gretchen Whitmer win the 2028 Democratic presidential nomination?",
+    "q_b": "Will Gretchen Whitmer win the 2028 US Presidential Election?",
+    "dep_type": "implication",
+    "direction": "b_implies_a",
+    "confidence": 0.95,
+    "reason": "To win the presidential election as a Democrat, Whitmer must first win the Democratic nomination.",
+    "classified_at": "2026-04-10T21:51:30.329408+00:00"
+  },
+  {
+    "key": "will pete hegseth win the 2028 republican presidential nomination?|||will pete hegseth win the 2028 us presidential election?",
+    "q_a": "Will Pete Hegseth win the 2028 US Presidential Election?",
+    "q_b": "Will Pete Hegseth win the 2028 Republican presidential nomination?",
+    "dep_type": "implication",
+    "direction": "a_implies_b",
+    "confidence": 0.95,
+    "reason": "To win the US Presidential Election, Hegseth must first win the Republican nomination (assuming he runs as a Republican).",
+    "classified_at": "2026-04-10T21:51:36.896238+00:00"
+  },
+  {
+    "key": "will kamala harris win the 2028 democratic presidential nomination?|||will kamala harris win the 2028 us presidential election?",
+    "q_a": "Will Kamala Harris win the 2028 Democratic presidential nomination?",
+    "q_b": "Will Kamala Harris win the 2028 US Presidential Election?",
+    "dep_type": "implication",
+    "direction": "b_implies_a",
+    "confidence": 0.95,
+    "reason": "To win the US Presidential Election as a Democrat, Harris must first win the Democratic nomination.",
+    "classified_at": "2026-04-10T21:51:36.896238+00:00"
+  },
+  {
+    "key": "will iran conduct a military action against israel on april 10, 2026?|||will israel conduct military action against iran by april 14, 2026?",
+    "q_a": "Will Iran conduct a military action against Israel on April 10, 2026?",
+    "q_b": "Will Israel conduct military action against Iran by April 14, 2026?",
+    "dep_type": "correlated",
+    "direction": "symmetric",
+    "confidence": 0.7,
+    "reason": "Military actions between these countries are related but one specific date doesn't logically require the other specific date.",
+    "classified_at": "2026-04-10T21:51:36.896238+00:00"
+  },
+  {
+    "key": "will iran conduct a military action against israel on april 9, 2026?|||will israel conduct military action against iran by april 14, 2026?",
+    "q_a": "Will Israel conduct military action against Iran by April 14, 2026?",
+    "q_b": "Will Iran conduct a military action against Israel on April 9, 2026?",
+    "dep_type": "correlated",
+    "direction": "symmetric",
+    "confidence": 0.7,
+    "reason": "Military actions between these countries are related but the timing and directionality don't create logical dependency.",
+    "classified_at": "2026-04-10T21:51:36.896238+00:00"
+  },
+  {
+    "key": "will tim walz win the 2028 democratic presidential nomination?|||will tim walz win the 2028 us presidential election?",
+    "q_a": "Will Tim Walz win the 2028 US Presidential Election?",
+    "q_b": "Will Tim Walz win the 2028 Democratic presidential nomination?",
+    "dep_type": "implication",
+    "direction": "a_implies_b",
+    "confidence": 0.95,
+    "reason": "To win the US Presidential Election as a Democrat, Walz must first win the Democratic nomination.",
+    "classified_at": "2026-04-10T21:51:36.896238+00:00"
+  },
+  {
+    "key": "will greg abbott win the 2028 republican presidential nomination?|||will greg abbott win the 2028 us presidential election?",
+    "q_a": "Will Greg Abbott win the 2028 Republican presidential nomination?",
+    "q_b": "Will Greg Abbott win the 2028 US Presidential Election?",
+    "dep_type": "implication",
+    "direction": "b_implies_a",
+    "confidence": 0.95,
+    "reason": "To win the US Presidential Election, Abbott would almost certainly need to first win the Republican nomination.",
+    "classified_at": "2026-04-10T21:51:42.691536+00:00"
+  },
+  {
+    "key": "will tisza win the national list vote in the 2026 hungarian parliamentary election by 9%+?|||will tisza \u2013 respect and freedom party (tisza) win the most seats in the next hungarian parliamentary election?",
+    "q_a": "Will TISZA \u2013 Respect and Freedom Party (TISZA) win the most seats in the next Hungarian parliamentary election?",
+    "q_b": "Will Tisza win the national list vote in the 2026 Hungarian Parliamentary election by 9%+?",
+    "dep_type": "correlated",
+    "direction": "symmetric",
+    "confidence": 0.85,
+    "reason": "Both measure TISZA's electoral success but winning most seats doesn't guarantee a 9%+ margin and vice versa due to Hungary's mixed electoral system.",
+    "classified_at": "2026-04-10T21:51:42.691536+00:00"
+  },
+  {
+    "key": "will lebron james win the 2028 democratic presidential nomination?|||will lebron james win the 2028 us presidential election?",
+    "q_a": "Will LeBron James win the 2028 US Presidential Election?",
+    "q_b": "Will LeBron James win the 2028 Democratic presidential nomination?",
+    "dep_type": "implication",
+    "direction": "b_implies_a",
+    "confidence": 0.95,
+    "reason": "To win the US Presidential Election, LeBron would almost certainly need to first win the Democratic nomination.",
+    "classified_at": "2026-04-10T21:51:42.691536+00:00"
+  },
+  {
+    "key": "will donald trump jr. win the 2028 republican presidential nomination?|||will robert f. kennedy jr. win the 2028 republican presidential nomination?",
+    "q_a": "Will Donald Trump Jr. win the 2028 Republican presidential nomination?",
+    "q_b": "Will Robert F. Kennedy Jr. win the 2028 Republican presidential nomination?",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 0.99,
+    "reason": "Only one person can win the Republican presidential nomination in 2028.",
+    "classified_at": "2026-04-10T21:51:42.691536+00:00"
+  }
+]

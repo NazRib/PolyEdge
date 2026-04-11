@@ -1,0 +1,2537 @@
+==============================================================================
+  POLYMARKET EDGE — Pipeline Run Log
+  2026-04-10 22:18:47 UTC
+==============================================================================
+  Strategy:      enriched+live+claude-sonnet-4+profiles
+  Model:         claude-sonnet-4
+  Candidates:    30
+  Bankroll:      $298.50
+  Min edge:      5%
+  Kelly frac:    25%
+==============================================================================
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 1 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will Sam Burns win the 2026 Masters tournament?
+  Market ID:     568665
+  Market price:  5.2%
+  Category:      Sam Burns
+  Volume 24h:    $269,847
+  Liquidity:     $71,358
+  Scanner score: 0.407
+  Days to res:   2.1
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 17.3s
+
+  News:
+    • Sam Burns shares first-round lead at 2026 Masters with 5-under 67
+    • Burns posts lowest career Masters round in fifth appearance at Augusta
+    • Burns excels on par-5s, birdieing 12th, 13th, and 15th holes
+    • World No. 33 Burns coming off best major championship season in 2025
+    • Burns ranked 13th on PGA Tour in putting this season with strong recent form
+    Sentiment: bullish_yes (strength: 75%)
+    Key facts:
+      - Burns tied for lead at 5-under after Round 1, matching defending champion Rory McIlroy
+      - Posted career-best Masters round of 67 in his fifth tournament appearance
+      - Finished T46 (+5) at 2025 Masters, best previous finish was T29 in 2023
+      - Currently 33rd in world rankings and 35th in 2026 FedEx Cup standings
+      - Strong putting stats: 0.625 Strokes Gained: Putting (13th on Tour), 0.943 in last 5 tournaments
+
+  Related markets:
+    [keyword_overlap] Will Rory McIlroy win the 2026 Masters tournament?: 53%
+    [keyword_overlap] Will Justin Rose win the 2026 Masters tournament?: 5%
+    [keyword_overlap] Will Patrick Reed win the 2026 Masters tournament?: 11%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,230 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.067,
+      "base_rate_reasoning": "With approximately 15 realistic contenders for any Masters, the base rate for any specific player winning is roughly 6.7%. This aligns with Burns being ranked 33rd in the world - a solid player but not among the very top tier.",
+      "news_impact": "The news is extremely positive - Burns sharing the first-round lead with a career-best 67 significantly increases his chances. Leading after Round 1 historically correlates with about 15-20% win probability, a substantial jump from the base rate.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "The related markets show Rory McIlroy at 53% (also tied for the lead), which is consistent with him being the higher-ranked favorite despite the tie.",
+      "factors_for": [
+        "Tied for first-round lead with career-best Masters round",
+        "Excellent performance on par-5s (critical at Augusta)",
+        "Coming off best major championship season in 2025",
+        "Fifth Masters appearance shows growing comfort with the course"
+      ],
+      "factors_against": [
+        "World ranking of 33 indicates he's not among elite tier",
+        "Previous best Masters finish only T29, showing limited Augusta success",
+        "Still three rounds remaining with many elite players in contention",
+        "Market price has actually declined despite good news, suggesting informed money is skeptical"
+      ],
+      "probability": 0.14,
+      "reasoning": "Burns' first-round lead dramatically improves his chances from the base rate, but the market's decline despite positive news suggests informed traders remain skeptical. His world ranking and limited Masters history indicate he's not among the tournament favorites, but sharing the lead puts him in genuine contention. The 14% estimate reflects the boost from his strong position while acknowledging he faces elite competition over three remaining rounds.",
+      "confidence": "medium",
+      "information_edge": "The market may be undervaluing the significance of Burns' first-round performance and his improved major championship form in 2025, particularly given his strong par-5 play which is crucial at Augusta."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.067
+    Base rate reason:   With approximately 15 realistic contenders for any Masters, the base rate for any specific player winning is roughly 6.7%. This aligns with Burns being ranked 33rd in the world - a solid player but not among the very top tier.
+    Factors FOR YES:
+      + Tied for first-round lead with career-best Masters round
+      + Excellent performance on par-5s (critical at Augusta)
+      + Coming off best major championship season in 2025
+      + Fifth Masters appearance shows growing comfort with the course
+    Factors AGAINST:
+      - World ranking of 33 indicates he's not among elite tier
+      - Previous best Masters finish only T29, showing limited Augusta success
+      - Still three rounds remaining with many elite players in contention
+      - Market price has actually declined despite good news, suggesting informed money is skeptical
+    Probability:       0.14
+    Confidence:        medium
+    Reasoning:         Burns' first-round lead dramatically improves his chances from the base rate, but the market's decline despite positive news suggests informed traders remain skeptical. His world ranking and limited Masters history indicate he's not among the tournament favorites, but sharing the lead puts him in genuine contention. The 14% estimate reflects the boost from his strong position while acknowledging he faces elite competition over three remaining rounds.
+    Information edge:  The market may be undervaluing the significance of Burns' first-round performance and his improved major championship form in 2025, particularly given his strong par-5 play which is crucial at Augusta.
+
+  Calibration:
+    Raw LLM probability:    14.0%
+    Calibrated probability: 18.7%
+    Adjustment:             +4.7%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.70
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  18.7%   0.70    0.315         5.9%
+  base_rate                0.150   5.2%   0.50    0.075         0.4%
+  momentum                 0.200   4.4%   0.13    0.027         0.1%
+  book_imbalance           0.150   4.8%   0.07    0.010         0.0%
+  whale_profiled           0.000   5.2%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.427         6.5%
+
+  Final probability: 6.5% / 0.427 = 15.1%
+  Ensemble confidence (agreement): 0.89
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    15.1%
+  Market price:    5.2%
+  Edge:            +9.9%
+  Direction:       YES (market underpriced)
+
+  Kelly sizing:
+    Full Kelly:      10.4% of bankroll
+    Fractional:      2.3% ($6.92)
+    Shares:          131.9 @ $0.0525
+    Max loss:        $6.92
+    Expected profit: $13.04
+    Risk/reward:     18.05
+
+  ✅ TRADE ENTERED
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 2 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will Justin Rose win the 2026 Masters tournament?
+  Market ID:     568652
+  Market price:  5.1%
+  Category:      Justin Rose
+  Volume 24h:    $298,143
+  Liquidity:     $37,692
+  Scanner score: 0.532
+  Days to res:   2.1
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 16.9s
+
+  News:
+    • Justin Rose shoots 70 in Round 1, sits T6 at 2-under after strong start
+    • Rose finishes 5-under through 36 holes, tied for 3rd place after Round 2
+    • Three-time Masters runner-up continues quest for first Green Jacket at age 45
+    • Rose's pre-tournament odds at +3000 may have tightened after solid opening rounds
+    • Playing some of best golf of recent career with Farmers Insurance Open win this season
+    Sentiment: bullish_yes (strength: 75%)
+    Key facts:
+      - Rose is currently 5-under par through 36 holes, tied for 3rd place
+      - He has three Masters runner-up finishes including playoff losses in 2017 and 2025
+      - Rose shot tournament-best 66 in Round 2 after opening 70
+      - Pre-tournament odds were +3000, considered fair value for his Augusta pedigree
+      - Won Farmers Insurance Open earlier this season, showing current good form
+
+  Related markets:
+    [keyword_overlap] Will Rory McIlroy win the 2026 Masters tournament?: 53%
+    [keyword_overlap] Will Sam Burns win the 2026 Masters tournament?: 5%
+    [keyword_overlap] Will Sam Burns win the 2026 Masters tournament?: 6%
+    [keyword_overlap] Will Patrick Reed win the 2026 Masters tournament?: 11%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,330 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.067,
+      "base_rate_reasoning": "In a typical Masters field of ~90 players, each player has roughly 1.1% chance if skill were equal. However, elite players like Rose have much higher chances - historically around 6-7% for top-tier players.",
+      "news_impact": "The news is highly bullish - Rose is tied for 3rd at 5-under through 36 holes, showing excellent current form. His tournament-best 66 in Round 2 demonstrates he's playing at peak level when it matters most.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "The related markets show McIlroy at 53% (likely leader) and other contenders at 5-11%, suggesting a competitive field where multiple players have realistic chances.",
+      "factors_for": [
+        "Currently tied for 3rd place at 5-under par through 36 holes",
+        "Shot tournament-best 66 in Round 2, showing peak form",
+        "Three-time Masters runner-up with proven Augusta National pedigree",
+        "Strong recent form and experience in high-pressure Masters situations",
+        "Market price has dropped from 9.4% to 5.1% despite strong performance, suggesting value"
+      ],
+      "factors_against": [
+        "Age 45 makes him older than typical Masters winners",
+        "Still 36 holes remaining with many elite players in contention",
+        "Historical pattern of struggling to convert runner-up finishes to wins",
+        "McIlroy appears to be leading at 53% market price, indicating strong competition",
+        "Weekend pressure at Augusta is notoriously difficult"
+      ],
+      "probability": 0.12,
+      "reasoning": "Rose's current position (T3 at 5-under) and excellent form (tournament-best 66) significantly exceed the base rate expectation. His Augusta pedigree and three runner-up finishes show he can contend. However, the market price drop from 9.4% to 5.1% despite his strong play suggests overreaction to competition. With 36 holes remaining and his demonstrated ability to play Augusta at elite level, 12% reflects both his current strong position and the inherent difficulty of closing out a major.",
+      "confidence": "medium",
+      "information_edge": "Market appears to be undervaluing Rose's current strong position and Augusta pedigree, possibly overreacting to competition from other players like McIlroy."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.067
+    Base rate reason:   In a typical Masters field of ~90 players, each player has roughly 1.1% chance if skill were equal. However, elite players like Rose have much higher chances - historically around 6-7% for top-tier players.
+    Factors FOR YES:
+      + Currently tied for 3rd place at 5-under par through 36 holes
+      + Shot tournament-best 66 in Round 2, showing peak form
+      + Three-time Masters runner-up with proven Augusta National pedigree
+      + Strong recent form and experience in high-pressure Masters situations
+      + Market price has dropped from 9.4% to 5.1% despite strong performance, suggesting value
+    Factors AGAINST:
+      - Age 45 makes him older than typical Masters winners
+      - Still 36 holes remaining with many elite players in contention
+      - Historical pattern of struggling to convert runner-up finishes to wins
+      - McIlroy appears to be leading at 53% market price, indicating strong competition
+      - Weekend pressure at Augusta is notoriously difficult
+    Probability:       0.12
+    Confidence:        medium
+    Reasoning:         Rose's current position (T3 at 5-under) and excellent form (tournament-best 66) significantly exceed the base rate expectation. His Augusta pedigree and three runner-up finishes show he can contend. However, the market price drop from 9.4% to 5.1% despite his strong play suggests overreaction to competition. With 36 holes remaining and his demonstrated ability to play Augusta at elite level, 12% reflects both his current strong position and the inherent difficulty of closing out a major.
+    Information edge:  Market appears to be undervaluing Rose's current strong position and Augusta pedigree, possibly overreacting to competition from other players like McIlroy.
+
+  Calibration:
+    Raw LLM probability:    12.0%
+    Calibrated probability: 16.5%
+    Adjustment:             +4.5%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.70
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  16.5%   0.70    0.315         5.2%
+  base_rate                0.150   5.1%   0.50    0.075         0.4%
+  momentum                 0.200   5.9%   0.13    0.026         0.2%
+  book_imbalance           0.150   3.1%   0.28    0.043         0.1%
+  whale_profiled           0.000   5.1%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.459         5.9%
+
+  Final probability: 5.9% / 0.459 = 12.8%
+  Ensemble confidence (agreement): 0.90
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    12.8%
+  Market price:    5.1%
+  Edge:            +7.7%
+  Direction:       YES (market underpriced)
+
+  Kelly sizing:
+    Full Kelly:      8.1% of bankroll
+    Fractional:      1.8% ($5.47)
+    Shares:          106.1 @ $0.0515
+    Max loss:        $5.47
+    Expected profit: $8.15
+    Risk/reward:     18.42
+
+  ✅ TRADE ENTERED
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 3 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Russia x Ukraine ceasefire by June 30, 2026?
+  Market ID:     1171663
+  Market price:  11.5%
+  Volume 24h:    $380,811
+  Liquidity:     $282,621
+  Scanner score: 0.414
+  Days to res:   80.1
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 20.9s
+
+  News:
+    • Russia and Ukraine agree to 32-hour Orthodox Easter ceasefire starting April 11, 2026
+    • Russian envoy Kirill Dmitriev in US for peace talks with Trump administration
+    • Peace negotiations stalled as US attention shifts to Middle East conflicts
+    • Russia controls approximately 20% of Ukrainian territory as of April 2026
+    • Combined Russian-Ukrainian casualties may reach 2 million by spring 2026
+    Sentiment: bearish_yes (strength: 70%)
+    Key facts:
+      - 32-hour Easter ceasefire agreed by both sides from April 11-12, 2026
+      - Previous Easter ceasefire in 2025 was violated by both sides according to mutual accusations
+      - Russia rejected US-proposed 30-day unconditional truce in favor of comprehensive settlement
+      - Russian forces gained only 17 square miles in past 4 weeks despite spring offensive
+      - Ukraine struck Russian oil infrastructure, halting 40% of Russia's oil export capacity
+
+  Related markets:
+    [keyword_overlap] Israel x Hezbollah ceasefire by April 30, 2026?: 46%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,799 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.3,
+      "base_rate_reasoning": "Historical ceasefires in major territorial conflicts typically occur in 20-40% of cases within 2+ year timeframes, especially when one side controls significant territory and military momentum slows.",
+      "news_impact": "The recent 32-hour Easter ceasefire demonstrates both sides can agree to temporary halts, but Russia's rejection of a 30-day unconditional truce in favor of comprehensive settlement suggests they prefer all-or-nothing approaches rather than interim ceasefires.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "N/A",
+      "factors_for": [
+        "Both sides successfully agreed to 32-hour Easter ceasefire, showing negotiation channels remain open",
+        "Russian territorial gains have slowed dramatically (only 17 sq miles in 4 weeks), reducing military pressure for continued offensive",
+        "Russian envoy conducting peace talks with Trump administration indicates diplomatic engagement",
+        "Long timeframe (80+ days) provides multiple opportunities for ceasefire as conditions change"
+      ],
+      "factors_against": [
+        "Russia explicitly rejected US-proposed 30-day unconditional truce, preferring comprehensive settlement over interim measures",
+        "Previous Easter ceasefire in 2025 was violated by both sides according to mutual accusations",
+        "Russia controls 20% of Ukrainian territory, giving them negotiating leverage to avoid partial measures",
+        "Peace negotiations described as 'stalled' with US attention diverted to Middle East conflicts",
+        "Market has remained stable at 11.5% despite recent ceasefire, suggesting informed traders see limited prospects"
+      ],
+      "probability": 0.18,
+      "reasoning": "While the Easter ceasefire shows technical capability for agreements, Russia's explicit rejection of interim truces in favor of comprehensive settlements is a strong negative signal. The market's stability at 11.5% despite recent diplomatic activity suggests informed traders recognize the structural barriers. Russia's territorial control and preference for all-or-nothing negotiations make a general ceasefire unlikely without broader political resolution.",
+      "confidence": "medium",
+      "information_edge": "Market may be slightly underpricing the possibility that military stalemate and external pressure could force interim measures despite stated preferences"
+    }
+
+  Parsed response:
+    Base rate anchor:   0.3
+    Base rate reason:   Historical ceasefires in major territorial conflicts typically occur in 20-40% of cases within 2+ year timeframes, especially when one side controls significant territory and military momentum slows.
+    Factors FOR YES:
+      + Both sides successfully agreed to 32-hour Easter ceasefire, showing negotiation channels remain open
+      + Russian territorial gains have slowed dramatically (only 17 sq miles in 4 weeks), reducing military pressure for continued offensive
+      + Russian envoy conducting peace talks with Trump administration indicates diplomatic engagement
+      + Long timeframe (80+ days) provides multiple opportunities for ceasefire as conditions change
+    Factors AGAINST:
+      - Russia explicitly rejected US-proposed 30-day unconditional truce, preferring comprehensive settlement over interim measures
+      - Previous Easter ceasefire in 2025 was violated by both sides according to mutual accusations
+      - Russia controls 20% of Ukrainian territory, giving them negotiating leverage to avoid partial measures
+      - Peace negotiations described as 'stalled' with US attention diverted to Middle East conflicts
+      - Market has remained stable at 11.5% despite recent ceasefire, suggesting informed traders see limited prospects
+    Probability:       0.18
+    Confidence:        medium
+    Reasoning:         While the Easter ceasefire shows technical capability for agreements, Russia's explicit rejection of interim truces in favor of comprehensive settlements is a strong negative signal. The market's stability at 11.5% despite recent diplomatic activity suggests informed traders recognize the structural barriers. Russia's territorial control and preference for all-or-nothing negotiations make a general ceasefire unlikely without broader political resolution.
+    Information edge:  Market may be slightly underpricing the possibility that military stalemate and external pressure could force interim measures despite stated preferences
+
+  Calibration:
+    Raw LLM probability:    18.0%
+    Calibrated probability: 22.9%
+    Adjustment:             +4.9%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.70
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  22.9%   0.70    0.315         7.2%
+  base_rate                0.150  11.5%   0.50    0.075         0.9%
+  momentum                 0.200  11.6%   0.02    0.004         0.1%
+  book_imbalance           0.150  11.6%   0.02    0.002         0.0%
+  whale_profiled           0.000  11.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.397         8.2%
+
+  Final probability: 8.2% / 0.397 = 20.6%
+  Ensemble confidence (agreement): 0.91
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    20.6%
+  Market price:    11.5%
+  Edge:            +9.1%
+  Direction:       YES (market underpriced)
+
+  Kelly sizing:
+    Full Kelly:      10.2% of bankroll
+    Fractional:      2.3% ($6.94)
+    Shares:          60.4 @ $0.1150
+    Max loss:        $6.94
+    Expected profit: $5.47
+    Risk/reward:     7.70
+
+  ✅ TRADE ENTERED
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 4 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will Patrick Reed win the 2026 Masters tournament?
+  Market ID:     568648
+  Market price:  10.8%
+  Category:      Patrick Reed
+  Volume 24h:    $175,549
+  Liquidity:     $20,178
+  Scanner score: 0.547
+  Days to res:   2.1
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 20.4s
+
+  News:
+    • Patrick Reed sits in solo second place at 6-under after Round 2, just one shot behind leader Rory McIlroy
+    • Reed shot 3-under 69 in Round 1 with two eagles on par-5s, tying for third place
+    • Reed left LIV Golf to return to PGA Tour, citing desire for traditional tournament format and family time
+    • Reed has won twice on DP World Tour in 2026 and finished T-3 at 2025 Masters
+    • Reed ranked 23rd in world and considered playing as well as anyone through first quarter of 2026
+    Sentiment: bullish_yes (strength: 80%)
+    Key facts:
+      - Reed currently at 6-under par through 2 rounds, in solo second place
+      - Only one shot behind defending champion Rory McIlroy heading into weekend
+      - Made two eagles in Round 1 (holes 2 and 8), becoming second player in Masters history to eagle two of first nine holes
+      - Finished T-3 at 2025 Masters, two shots out of McIlroy-Rose playoff
+      - Has five top-12 finishes in last six Masters appearances
+
+  Related markets:
+    [keyword_overlap] Will Rory McIlroy win the 2026 Masters tournament?: 53%
+    [keyword_overlap] Will Justin Rose win the 2026 Masters tournament?: 5%
+    [keyword_overlap] Will Sam Burns win the 2026 Masters tournament?: 5%
+    [keyword_overlap] Will Sam Burns win the 2026 Masters tournament?: 6%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,438 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.06,
+      "base_rate_reasoning": "The Masters field typically has 90-100 players, so a random player would have roughly 1% chance. However, Reed is an established major winner and top-50 player, so a reasonable base rate for a player of his caliber is around 6%.",
+      "news_impact": "The news is extremely bullish - Reed is in solo second place after two rounds, only one shot behind the leader with two rounds remaining. This dramatically increases his chances from the pre-tournament base rate.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "The related markets show McIlroy at 53% (current leader), which is consistent with Reed having elevated but lower odds as the second-place player.",
+      "factors_for": [
+        "Currently in solo second place at 6-under, only one shot behind leader",
+        "Showed excellent form with two eagles in Round 1, demonstrating he's playing at peak level",
+        "Strong recent Masters history with T-3 finish in 2025, proving he can contend",
+        "Major championship winner with experience closing out big tournaments",
+        "Two wins on DP World Tour in 2026 shows current good form"
+      ],
+      "factors_against": [
+        "Still trails the leader McIlroy, who is playing excellent golf and has 53% market odds",
+        "Two rounds remaining means significant volatility - many players still in contention",
+        "Augusta National is notoriously difficult on weekends, especially Sunday",
+        "Market has moved from 4.2% to 10.8% in past week, suggesting some of the positional value may be priced in",
+        "Historical data shows that being in second place after two rounds doesn't guarantee victory"
+      ],
+      "probability": 0.18,
+      "reasoning": "Reed's current position in solo second, just one shot back, represents a dramatic improvement from his pre-tournament odds. His excellent play (two eagles in Round 1) and strong Masters history (T-3 in 2025) support his chances. However, the market at 10.8% seems to undervalue his position - being one shot back with two rounds to play gives him roughly 15-20% chance based on historical data for players in similar positions. The related market pricing McIlroy at 53% leaves reasonable probability mass for Reed as the primary challenger.",
+      "confidence": "medium",
+      "information_edge": "Market may be undervaluing Reed's current strong position - being just one shot back after two rounds historically translates to higher win probability than 10.8%"
+    }
+
+  Parsed response:
+    Base rate anchor:   0.06
+    Base rate reason:   The Masters field typically has 90-100 players, so a random player would have roughly 1% chance. However, Reed is an established major winner and top-50 player, so a reasonable base rate for a player of his caliber is around 6%.
+    Factors FOR YES:
+      + Currently in solo second place at 6-under, only one shot behind leader
+      + Showed excellent form with two eagles in Round 1, demonstrating he's playing at peak level
+      + Strong recent Masters history with T-3 finish in 2025, proving he can contend
+      + Major championship winner with experience closing out big tournaments
+      + Two wins on DP World Tour in 2026 shows current good form
+    Factors AGAINST:
+      - Still trails the leader McIlroy, who is playing excellent golf and has 53% market odds
+      - Two rounds remaining means significant volatility - many players still in contention
+      - Augusta National is notoriously difficult on weekends, especially Sunday
+      - Market has moved from 4.2% to 10.8% in past week, suggesting some of the positional value may be priced in
+      - Historical data shows that being in second place after two rounds doesn't guarantee victory
+    Probability:       0.18
+    Confidence:        medium
+    Reasoning:         Reed's current position in solo second, just one shot back, represents a dramatic improvement from his pre-tournament odds. His excellent play (two eagles in Round 1) and strong Masters history (T-3 in 2025) support his chances. However, the market at 10.8% seems to undervalue his position - being one shot back with two rounds to play gives him roughly 15-20% chance based on historical data for players in similar positions. The related market pricing McIlroy at 53% leaves reasonable probability mass for Reed as the primary challenger.
+    Information edge:  Market may be undervaluing Reed's current strong position - being just one shot back after two rounds historically translates to higher win probability than 10.8%
+
+  Calibration:
+    Raw LLM probability:    18.0%
+    Calibrated probability: 22.9%
+    Adjustment:             +4.9%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.70
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  22.9%   0.70    0.315         7.2%
+  base_rate                0.150  10.8%   0.50    0.075         0.8%
+  momentum                 0.200  11.8%   0.17    0.033         0.4%
+  book_imbalance           0.150   8.7%   0.28    0.043         0.4%
+  whale_profiled           0.000  10.8%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.466         8.8%
+
+  Final probability: 8.8% / 0.466 = 18.8%
+  Ensemble confidence (agreement): 0.90
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    18.8%
+  Market price:    10.8%
+  Edge:            +8.1%
+  Direction:       YES (market underpriced)
+
+  Kelly sizing:
+    Full Kelly:      9.1% of bankroll
+    Fractional:      2.0% ($6.09)
+    Shares:          56.6 @ $0.1075
+    Max loss:        $6.09
+    Expected profit: $4.59
+    Risk/reward:     8.30
+
+  ✅ TRADE ENTERED
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 5 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will Bitcoin dip to $65,000 in April?
+  Market ID:     1823779
+  Market price:  28.5%
+  Category:      ↓ 65,000
+  Volume 24h:    $197,821
+  Liquidity:     $93,526
+  Scanner score: 0.758
+  Days to res:   20.2
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news (1 of 5)
+  Time: 21.0s
+
+  News:
+    • Bitcoin trades at $72,204 on April 10, up from $71,906 on April 8 after U.S.-Iran ceasefire announcement
+    • Core CPI surprised to downside at 0.2% vs 0.3% expected, Bitcoin rose modestly following inflation data
+    • Polymarket shows 91% probability Bitcoin stays above $65,000 in April 2026 with $1.4M trading volume
+    • Forbes warns of $6.2 trillion institutional 'price earthquake' heading toward Bitcoin from Wall Street banks
+    • Bitcoin broke local trendline resistance and pushed above EMA 100, testing EMA 200 around $70,300
+    Sentiment: bearish_yes (strength: 75%)
+    Key facts:
+      - Current Bitcoin price: $72,204 (April 10, 2026)
+      - Bitcoin entered April 2026 above $65,000 threshold
+      - Polymarket contract shows 90.5% probability Bitcoin stays above $65,000 in April
+      - Technical resistance levels: $71,000-$74,000 range
+      - Key support levels: $63,000-$65,000 zone
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,213 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "Without specific historical data on Bitcoin's probability of hitting specific price levels within a month, I start with an uninformative prior of 50%.",
+      "news_impact": "Current Bitcoin price at $72,204 is $7,204 above the $65,000 threshold, requiring a ~10% decline. The positive macro environment (lower CPI, geopolitical stability) and institutional interest suggest downward pressure is limited in the near term.",
+      "cross_platform_note": "Polymarket shows 91% probability Bitcoin stays above $65,000 in April 2026, which directly contradicts a YES outcome here - this provides strong cross-platform validation.",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "The Polymarket contract showing 91% probability of staying above $65,000 creates a logical constraint - if that market is correct, this market should resolve NO.",
+      "factors_for": [
+        "Bitcoin is volatile and could experience a sharp correction",
+        "Technical resistance around $71,000-$74,000 could lead to pullback",
+        "20+ days remaining provides time for market volatility"
+      ],
+      "factors_against": [
+        "Current price $72,204 requires significant 10% decline",
+        "Positive macro environment with lower CPI supporting risk assets",
+        "Institutional 'price earthquake' narrative suggests upward pressure",
+        "Polymarket shows 91% confidence Bitcoin stays above $65,000",
+        "Recent geopolitical stability supporting crypto markets"
+      ],
+      "probability": 0.12,
+      "reasoning": "Bitcoin currently trades at $72,204, requiring a ~10% decline to hit $65,000. The cross-platform Polymarket data showing 91% probability of staying above $65,000 provides strong validation that a dip is unlikely. Positive macro factors (lower CPI, geopolitical stability) and institutional interest support the current price level. While crypto volatility always creates some downside risk, the current market price of 28.5% appears too high given the strong fundamental backdrop.",
+      "confidence": "high",
+      "information_edge": "Market may be overestimating downside risk given the strong cross-platform signal and positive macro environment - Polymarket's 91% confidence provides valuable information that this market may not be fully incorporating."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   Without specific historical data on Bitcoin's probability of hitting specific price levels within a month, I start with an uninformative prior of 50%.
+    Factors FOR YES:
+      + Bitcoin is volatile and could experience a sharp correction
+      + Technical resistance around $71,000-$74,000 could lead to pullback
+      + 20+ days remaining provides time for market volatility
+    Factors AGAINST:
+      - Current price $72,204 requires significant 10% decline
+      - Positive macro environment with lower CPI supporting risk assets
+      - Institutional 'price earthquake' narrative suggests upward pressure
+      - Polymarket shows 91% confidence Bitcoin stays above $65,000
+      - Recent geopolitical stability supporting crypto markets
+    Probability:       0.12
+    Confidence:        high
+    Reasoning:         Bitcoin currently trades at $72,204, requiring a ~10% decline to hit $65,000. The cross-platform Polymarket data showing 91% probability of staying above $65,000 provides strong validation that a dip is unlikely. Positive macro factors (lower CPI, geopolitical stability) and institutional interest support the current price level. While crypto volatility always creates some downside risk, the current market price of 28.5% appears too high given the strong fundamental backdrop.
+    Information edge:  Market may be overestimating downside risk given the strong cross-platform signal and positive macro environment - Polymarket's 91% confidence provides valuable information that this market may not be fully incorporating.
+
+  Calibration:
+    Raw LLM probability:    12.0%
+    Calibrated probability: 16.5%
+    Adjustment:             +4.5%
+
+  Confidence build-up:
+    Base (from LLM):        0.85 (high)
+    + enrichment bonus:     +0.05 (1 sources × 0.05)
+    Final confidence:       0.90
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  16.5%   0.90    0.405         6.7%
+  base_rate                0.150  28.5%   0.50    0.075         2.1%
+  momentum                 0.200  26.7%   0.30    0.059         1.6%
+  book_imbalance           0.150  31.9%   0.47    0.071         2.3%
+  whale_profiled           0.000  28.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.610        12.7%
+
+  Final probability: 12.7% / 0.610 = 20.8%
+  Ensemble confidence (agreement): 0.90
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    20.8%
+  Market price:    28.5%
+  Edge:            -7.7%
+  Direction:       NO (market overpriced)
+
+  Kelly sizing:
+    Full Kelly:      27.1% of bankroll
+    Fractional:      6.1% ($18.11)
+    Shares:          25.3 @ $0.7150
+    Max loss:        $18.11
+    Expected profit: $1.96
+    Risk/reward:     0.40
+
+  ✅ TRADE ENTERED
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 6 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      New York Yankees vs. Tampa Bay Rays
+  Market ID:     1860417
+  Market price:  50.5%
+  Volume 24h:    $164,822
+  Liquidity:     $429,887
+  Scanner score: 0.879
+  Days to res:   7.0
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, kalshi (2 of 5)
+  Time: 22.3s
+
+  News:
+    • Yankees favored at -140 vs Rays +115 for Friday night series opener at Tropicana Field
+    • Luis Gil makes season debut for Yankees after being optioned to Triple-A to start year
+    • Yankees finished recent Athletics series with tough back-to-back losses, mustering just 5 hits and 2 runs
+    • Rays lost series to Cubs at home, offense struggled against back-end starters in final two games
+    • Max Fried vs Nick Martinez Saturday, Shane McClanahan returns from 2-year injury absence Sunday
+    Sentiment: bearish_yes (strength: 70%)
+    Key facts:
+      - Yankees are 8-4 (.667) this season, tied for 2nd best in MLB
+      - Rays are 5-6 on the season after losing series to Cubs
+      - Yankees have 49-38 (.563) road record since 2025 season, best in MLB
+      - Luis Gil had bottom 1% chase rate last season, command issues in 2025
+      - Steven Matz has been efficient in first two starts with 11 innings, 1 run vs Twins
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,208 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "MLB games between competitive teams typically have close to 50-50 odds absent specific matchup advantages. No historical head-to-head data provided, so using uninformative prior.",
+      "news_impact": "The news is mixed but slightly favors the Rays. Yankees are struggling offensively (5 hits, 2 runs in recent losses) and starting Luis Gil who has command issues. However, Yankees have better overall record and strong road performance.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "N/A",
+      "factors_for": [
+        "Yankees have superior 8-4 record vs Rays' 5-6",
+        "Yankees have MLB's best road record since 2025 (49-38, .563)",
+        "Yankees tied for 2nd best record in MLB this season"
+      ],
+      "factors_against": [
+        "Yankees offense struggling badly (5 hits, 2 runs in recent back-to-back losses)",
+        "Luis Gil has documented command issues and bottom 1% chase rate",
+        "Rays playing at home (Tropicana Field)",
+        "Market has moved from 57.5% to 50.5% over past week, suggesting Yankees concerns",
+        "Sportsbook odds favor Yankees only slightly (-140 vs +115), indicating close matchup"
+      ],
+      "probability": 0.47,
+      "reasoning": "Starting from 50% base rate, the Yankees' better overall record and strong road performance provide modest support. However, their recent offensive struggles are concerning, and Luis Gil's command issues create starting pitching uncertainty. The 7-point market decline over the past week suggests growing skepticism about Yankees' chances. The sportsbook line shows only modest Yankees favoritism, consistent with a close game. The offensive struggles and pitching concerns outweigh the record advantage slightly.",
+      "confidence": "medium",
+      "information_edge": "Market may be underweighting the significance of Yankees' recent offensive collapse and Gil's command issues"
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   MLB games between competitive teams typically have close to 50-50 odds absent specific matchup advantages. No historical head-to-head data provided, so using uninformative prior.
+    Factors FOR YES:
+      + Yankees have superior 8-4 record vs Rays' 5-6
+      + Yankees have MLB's best road record since 2025 (49-38, .563)
+      + Yankees tied for 2nd best record in MLB this season
+    Factors AGAINST:
+      - Yankees offense struggling badly (5 hits, 2 runs in recent back-to-back losses)
+      - Luis Gil has documented command issues and bottom 1% chase rate
+      - Rays playing at home (Tropicana Field)
+      - Market has moved from 57.5% to 50.5% over past week, suggesting Yankees concerns
+      - Sportsbook odds favor Yankees only slightly (-140 vs +115), indicating close matchup
+    Probability:       0.47
+    Confidence:        medium
+    Reasoning:         Starting from 50% base rate, the Yankees' better overall record and strong road performance provide modest support. However, their recent offensive struggles are concerning, and Luis Gil's command issues create starting pitching uncertainty. The 7-point market decline over the past week suggests growing skepticism about Yankees' chances. The sportsbook line shows only modest Yankees favoritism, consistent with a close game. The offensive struggles and pitching concerns outweigh the record advantage slightly.
+    Information edge:  Market may be underweighting the significance of Yankees' recent offensive collapse and Gil's command issues
+
+  Calibration:
+    Raw LLM probability:    47.0%
+    Calibrated probability: 49.3%
+    Adjustment:             +2.3%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.70
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  49.3%   0.70    0.315        15.5%
+  base_rate                0.150  50.5%   0.50    0.075         3.8%
+  momentum                 0.200  48.9%   0.26    0.052         2.5%
+  book_imbalance           0.150  49.0%   0.21    0.031         1.5%
+  whale_profiled           0.000  50.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.473        23.4%
+
+  Final probability: 23.4% / 0.473 = 49.4%
+  Ensemble confidence (agreement): 0.99
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    49.4%
+  Market price:    50.5%
+  Edge:            -1.1%
+  Direction:       NO (market overpriced)
+
+  ❌ NO TRADE: Edge 1.1% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 7 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Los Angeles Angels vs. Cincinnati Reds
+  Market ID:     1860409
+  Market price:  38.5%
+  Volume 24h:    $604,145
+  Liquidity:     $781,460
+  Scanner score: 0.854
+  Days to res:   7.0
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, kalshi (2 of 5)
+  Time: 16.2s
+
+  News:
+    • Angels and Reds both on 2-game losing streaks entering series opener
+    • Chase Burns (0.82 ERA) starts for Reds vs Jack Kochanowicz (4.66 ERA) for Angels
+    • Reds favored at -177 moneyline, 65% implied probability on prediction markets
+    • Angels struggling offensively with just 2 runs in each of last 2 games
+    • Reds offense ranks last in MLB with .617 OPS despite 8-5 record
+    Sentiment: bullish_yes (strength: 70%)
+    Key facts:
+      - Cincinnati Reds record: 8-5 (.615 winning percentage), Angels: 6-7 (.462)
+      - Both teams currently on 2-game losing streaks
+      - Chase Burns has 0.82 ERA, 16 strikeouts in 11 innings, 37.2% K-rate
+      - Angels have highest strikeout rate in MLB at 29.2%
+      - Reds rank last in MLB offense with .617 OPS and 74 wRC+
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,127 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "Starting with 50% as the uninformative prior for a two-team baseball game, though this will be heavily adjusted based on team strength and matchup specifics.",
+      "news_impact": "The news strongly favors Cincinnati with Chase Burns (0.82 ERA, 37.2% K-rate) facing an Angels team with MLB's highest strikeout rate at 29.2%. The Reds' superior record (8-5 vs 6-7) and the Angels' recent offensive struggles (2 runs per game in last 2) further support Cincinnati.",
+      "cross_platform_note": "The -177 moneyline favoring Cincinnati (65% implied probability) aligns with the fundamental analysis and provides additional confirmation.",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "N/A",
+      "factors_for": [
+        "Angels playing at home provides slight advantage",
+        "Both teams on 2-game losing streaks levels the recent form",
+        "Baseball's inherent variance means any team can win on any given day"
+      ],
+      "factors_against": [
+        "Chase Burns dominant with 0.82 ERA and 37.2% strikeout rate vs Angels' league-worst 29.2% K-rate",
+        "Cincinnati has better record (8-5, .615) compared to Angels (6-7, .462)",
+        "Angels struggling offensively with only 2 runs scored in each of last 2 games",
+        "Jack Kochanowicz has concerning 4.66 ERA for Angels",
+        "Sportsbooks heavily favor Cincinnati at -177 moneyline"
+      ],
+      "probability": 0.35,
+      "reasoning": "Starting from 50%, the matchup heavily favors Cincinnati due to the pitching advantage (Burns' 0.82 ERA vs Kochanowicz's 4.66 ERA) and the Angels' vulnerability to strikeouts against Burns' dominant K-rate. The Reds' superior record and the Angels' recent offensive struggles further support this. The current market price of 38.5% appears slightly high for the Angels given these fundamentals.",
+      "confidence": "high",
+      "information_edge": "The market may be overvaluing home field advantage and underweighting the severe pitching mismatch and Angels' strikeout vulnerability against Burns."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   Starting with 50% as the uninformative prior for a two-team baseball game, though this will be heavily adjusted based on team strength and matchup specifics.
+    Factors FOR YES:
+      + Angels playing at home provides slight advantage
+      + Both teams on 2-game losing streaks levels the recent form
+      + Baseball's inherent variance means any team can win on any given day
+    Factors AGAINST:
+      - Chase Burns dominant with 0.82 ERA and 37.2% strikeout rate vs Angels' league-worst 29.2% K-rate
+      - Cincinnati has better record (8-5, .615) compared to Angels (6-7, .462)
+      - Angels struggling offensively with only 2 runs scored in each of last 2 games
+      - Jack Kochanowicz has concerning 4.66 ERA for Angels
+      - Sportsbooks heavily favor Cincinnati at -177 moneyline
+    Probability:       0.35
+    Confidence:        high
+    Reasoning:         Starting from 50%, the matchup heavily favors Cincinnati due to the pitching advantage (Burns' 0.82 ERA vs Kochanowicz's 4.66 ERA) and the Angels' vulnerability to strikeouts against Burns' dominant K-rate. The Reds' superior record and the Angels' recent offensive struggles further support this. The current market price of 38.5% appears slightly high for the Angels given these fundamentals.
+    Information edge:  The market may be overvaluing home field advantage and underweighting the severe pitching mismatch and Angels' strikeout vulnerability against Burns.
+
+  Calibration:
+    Raw LLM probability:    35.0%
+    Calibrated probability: 38.9%
+    Adjustment:             +3.9%
+
+  Confidence build-up:
+    Base (from LLM):        0.85 (high)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.95
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  38.9%   0.95    0.427        16.6%
+  base_rate                0.150  38.5%   0.50    0.075         2.9%
+  momentum                 0.200  38.8%   0.05    0.010         0.4%
+  book_imbalance           0.150  36.0%   0.36    0.053         1.9%
+  whale_profiled           0.000  38.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.566        21.8%
+
+  Final probability: 21.8% / 0.566 = 38.6%
+  Ensemble confidence (agreement): 0.98
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    38.6%
+  Market price:    38.5%
+  Edge:            +0.1%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: Edge 0.1% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 9 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      UFC 327: Jirí Procházka vs. Carlos Ulberg (Light Heavyweight, Main Card)
+  Market ID:     1721296
+  Market price:  50.5%
+  Category:      Jirí Procházka vs. Carlos Ulberg
+  Volume 24h:    $222,993
+  Liquidity:     $297,933
+  Scanner score: 0.800
+  Days to res:   1.2
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news (1 of 5)
+  Time: 21.4s
+
+  News:
+    • UFC 327 weigh-ins completed successfully with both Prochazka (203) and Ulberg (204) making weight for vacant light heavyweight title fight
+    • Betting odds extremely close with Prochazka slight favorite at -110 to -118, Ulberg at -102 to -110 - essentially a pick'em fight
+    • Ulberg riding 9-fight win streak including recent knockout of Dominick Reyes, while Prochazka looking to reclaim title after Pereira vacated
+    • Expert analysis favors Prochazka's experience and power despite Ulberg's technical advantages and superior striking differential
+    • Fight scheduled for Saturday April 11, 2026 at Kaseya Center in Miami with no reported injuries or cancellations
+    Sentiment: neutral (strength: 60%)
+    Key facts:
+      - Both fighters successfully made weight at official weigh-ins - Prochazka 203 lbs, Ulberg 204 lbs
+      - Ulberg has 78% expected round win rate vs Prochazka's 53% according to analytical models
+      - Ulberg lands 6.58 significant strikes per minute with +2.53 differential vs Prochazka's 5.69 with +0.09 differential
+      - Prochazka is 6-2 in UFC with only losses to Alex Pereira, has 28 professional knockouts
+      - Ulberg absorbed only 5 strikes in his knockout win over Reyes in September 2025
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,248 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "With no specific historical data available, I anchor to an uninformative prior of 50% for this essentially even matchup between two elite light heavyweight contenders.",
+      "news_impact": "The weigh-in success eliminates any last-minute concerns, while the extremely close betting odds (-110 to -118 vs -102 to -110) confirm this is genuinely a pick'em fight with minimal edge to either fighter.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "N/A",
+      "factors_for": [
+        "Prochazka has superior UFC experience (6-2 record) and proven championship-level competition",
+        "Devastating knockout power with 28 professional KOs gives him multiple paths to victory",
+        "Only losses came to Alex Pereira, showing he can compete at the highest level",
+        "Former champion looking to reclaim vacant title provides strong motivation"
+      ],
+      "factors_against": [
+        "Ulberg's superior striking metrics (6.58 vs 5.69 significant strikes per minute) and +2.53 differential vs +0.09",
+        "Analytical models favor Ulberg with 78% expected round win rate vs Prochazka's 53%",
+        "Ulberg riding hot 9-fight win streak including recent knockout of elite opponent Dominick Reyes",
+        "Technical striking advantages may neutralize Prochazka's power over 5 rounds"
+      ],
+      "probability": 0.48,
+      "reasoning": "This is genuinely one of the closest fights in recent UFC history, with betting markets essentially dead even. While Prochazka has the experience and knockout power edge, Ulberg's superior technical metrics and current momentum create a slight analytical advantage. The 78% vs 53% expected round win rate from models suggests Ulberg may have a small but meaningful edge in a longer fight. I estimate Prochazka slightly below 50% given the technical disadvantages, but this remains essentially a coin flip.",
+      "confidence": "low",
+      "information_edge": "The market appears efficiently priced at 50.5% - this is likely one of the most accurately priced UFC fights given the extensive analysis and even betting action."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   With no specific historical data available, I anchor to an uninformative prior of 50% for this essentially even matchup between two elite light heavyweight contenders.
+    Factors FOR YES:
+      + Prochazka has superior UFC experience (6-2 record) and proven championship-level competition
+      + Devastating knockout power with 28 professional KOs gives him multiple paths to victory
+      + Only losses came to Alex Pereira, showing he can compete at the highest level
+      + Former champion looking to reclaim vacant title provides strong motivation
+    Factors AGAINST:
+      - Ulberg's superior striking metrics (6.58 vs 5.69 significant strikes per minute) and +2.53 differential vs +0.09
+      - Analytical models favor Ulberg with 78% expected round win rate vs Prochazka's 53%
+      - Ulberg riding hot 9-fight win streak including recent knockout of elite opponent Dominick Reyes
+      - Technical striking advantages may neutralize Prochazka's power over 5 rounds
+    Probability:       0.48
+    Confidence:        low
+    Reasoning:         This is genuinely one of the closest fights in recent UFC history, with betting markets essentially dead even. While Prochazka has the experience and knockout power edge, Ulberg's superior technical metrics and current momentum create a slight analytical advantage. The 78% vs 53% expected round win rate from models suggests Ulberg may have a small but meaningful edge in a longer fight. I estimate Prochazka slightly below 50% given the technical disadvantages, but this remains essentially a coin flip.
+    Information edge:  The market appears efficiently priced at 50.5% - this is likely one of the most accurately priced UFC fights given the extensive analysis and even betting action.
+
+  Calibration:
+    Raw LLM probability:    48.0%
+    Calibrated probability: 50.2%
+    Adjustment:             +2.2%
+
+  Confidence build-up:
+    Base (from LLM):        0.30 (low)
+    + enrichment bonus:     +0.05 (1 sources × 0.05)
+    Final confidence:       0.35
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  50.2%   0.35    0.158         7.9%
+  base_rate                0.150  50.5%   0.50    0.075         3.8%
+  momentum                 0.200  50.3%   0.04    0.008         0.4%
+  book_imbalance           0.150  48.8%   0.24    0.036         1.7%
+  whale_profiled           0.000  50.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.276        13.8%
+
+  Final probability: 13.8% / 0.276 = 50.1%
+  Ensemble confidence (agreement): 0.99
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    50.1%
+  Market price:    50.5%
+  Edge:            -0.4%
+  Direction:       NO (market overpriced)
+
+  ❌ NO TRADE: Edge 0.4% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 14 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will Bitcoin reach $75,000 in April?
+  Market ID:     1823777
+  Market price:  75.5%
+  Category:      ↑ 75,000
+  Volume 24h:    $168,017
+  Liquidity:     $70,877
+  Scanner score: 0.730
+  Days to res:   20.2
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news (1 of 5)
+  Time: 17.6s
+
+  News:
+    • Bitcoin currently trading at $72,204 as of April 10, 2026, up from $68,269 on April 7
+    • Bitcoin rose to $72,400 after March inflation data showed core CPI at 0.2% vs 0.3% expected
+    • Crypto prices jumped 4.5% after Trump announced two-week ceasefire deal with Iran
+    • Forbes warns of $6.2 trillion institutional capital 'price earthquake' heading toward Bitcoin
+    • Multiple analysts predict 65% probability of Bitcoin reaching $75,000 by end of April 2026
+    Sentiment: bullish_yes (strength: 72%)
+    Key facts:
+      - Current Bitcoin price: $72,204 (April 10, 2026)
+      - Weekly price movement: Up from $68,269 (April 7) to $72,204 (April 10)
+      - Key resistance level identified at $73,595-$75,000
+      - Technical indicators show neutral RSI at 54.52, not overbought
+      - Multiple forecasts suggest 65% probability of reaching $75K in April
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,152 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "No specific historical base rate provided for Bitcoin reaching specific price targets in monthly timeframes, so starting with uninformative prior of 50%.",
+      "news_impact": "Recent news is strongly bullish - Bitcoin has already moved from $68,269 to $72,204 in just 3 days (April 7-10), showing strong momentum. Positive macro factors like lower inflation and geopolitical developments are driving institutional interest.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "N/A",
+      "factors_for": [
+        "Bitcoin already at $72,204, only needs 3.9% gain to reach $75,000",
+        "Strong recent momentum: +5.8% gain in 3 days (April 7-10)",
+        "Positive macro environment with lower inflation supporting risk assets",
+        "Geopolitical developments (Trump-Iran ceasefire) boosting crypto prices",
+        "Technical indicators show RSI at 54.52, not overbought with room to run",
+        "20+ days remaining in April provides ample time for volatility"
+      ],
+      "factors_against": [
+        "Key resistance level identified at $73,595-$75,000 range",
+        "Bitcoin's high volatility means recent gains could reverse quickly",
+        "Market may be pricing in too much optimism from recent news",
+        "Institutional 'price earthquake' warnings suggest potential for sharp corrections"
+      ],
+      "probability": 0.68,
+      "reasoning": "Bitcoin needs only a 3.9% gain from current $72,204 to reach $75,000, with 20+ days remaining. Recent momentum is strong (+5.8% in 3 days) supported by positive macro factors. However, the $73,595-$75,000 range represents key resistance. The market price of 75.5% appears slightly optimistic given the technical resistance, but the fundamental backdrop and time remaining support a high probability.",
+      "confidence": "medium",
+      "information_edge": "Market may be slightly overestimating probability by not fully accounting for technical resistance at the $75,000 level, though strong fundamentals support most of the current pricing."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   No specific historical base rate provided for Bitcoin reaching specific price targets in monthly timeframes, so starting with uninformative prior of 50%.
+    Factors FOR YES:
+      + Bitcoin already at $72,204, only needs 3.9% gain to reach $75,000
+      + Strong recent momentum: +5.8% gain in 3 days (April 7-10)
+      + Positive macro environment with lower inflation supporting risk assets
+      + Geopolitical developments (Trump-Iran ceasefire) boosting crypto prices
+      + Technical indicators show RSI at 54.52, not overbought with room to run
+      + 20+ days remaining in April provides ample time for volatility
+    Factors AGAINST:
+      - Key resistance level identified at $73,595-$75,000 range
+      - Bitcoin's high volatility means recent gains could reverse quickly
+      - Market may be pricing in too much optimism from recent news
+      - Institutional 'price earthquake' warnings suggest potential for sharp corrections
+    Probability:       0.68
+    Confidence:        medium
+    Reasoning:         Bitcoin needs only a 3.9% gain from current $72,204 to reach $75,000, with 20+ days remaining. Recent momentum is strong (+5.8% in 3 days) supported by positive macro factors. However, the $73,595-$75,000 range represents key resistance. The market price of 75.5% appears slightly optimistic given the technical resistance, but the fundamental backdrop and time remaining support a high probability.
+    Information edge:  Market may be slightly overestimating probability by not fully accounting for technical resistance at the $75,000 level, though strong fundamentals support most of the current pricing.
+
+  Calibration:
+    Raw LLM probability:    68.0%
+    Calibrated probability: 67.2%
+    Adjustment:             -0.8%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.05 (1 sources × 0.05)
+    Final confidence:       0.65
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  67.2%   0.65    0.293        19.6%
+  base_rate                0.150  75.5%   0.50    0.075         5.7%
+  momentum                 0.200  78.4%   0.49    0.098         7.7%
+  book_imbalance           0.150  79.0%   0.49    0.073         5.8%
+  whale_profiled           0.000  75.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.539        38.8%
+
+  Final probability: 38.8% / 0.539 = 72.0%
+  Ensemble confidence (agreement): 0.92
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    72.0%
+  Market price:    75.5%
+  Edge:            -3.5%
+  Direction:       NO (market overpriced)
+
+  ❌ NO TRADE: Edge 3.5% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 16 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will the next Prime Minister of Hungary be Péter Magyar?
+  Market ID:     567561
+  Market price:  70.5%
+  Category:      Péter Magyar
+  Volume 24h:    $947,729
+  Liquidity:     $548,324
+  Scanner score: 0.716
+  Days to res:   1.1
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 21.7s
+
+  News:
+    • Hungary votes Sunday in pivotal election as Tisza Party leads most polls over Orbán's Fidesz
+    • Latest polls show Tisza Party with 41-58% support vs Fidesz at 30-34% among decided voters
+    • Medián poll projects Tisza could win 138-143 seats for two-thirds majority in 199-seat parliament
+    • US VP JD Vance visits Budapest to support Orbán ahead of April 12 election
+    • Leaked recordings damage Hungarian Foreign Minister, showing coordination with Russia and Iran
+    Sentiment: bullish_yes (strength: 75%)
+    Key facts:
+      - Election is scheduled for April 12, 2026 (this Sunday)
+      - Multiple independent polls show Tisza Party leading by 7-25 percentage points
+      - Péter Magyar is widely regarded as Viktor Orbán's main rival and challenger
+      - Magyar broke from Fidesz in 2024 after presidential pardon scandal involving child abuse case
+      - Tisza Party won 30% in 2024 European Parliament elections, becoming main opposition force
+
+  Related markets:
+    [keyword_overlap] Will the next Prime Minister of Hungary be Viktor Orbán?: 30%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,290 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "No specific historical base rate is available for Hungarian PM transitions, so starting with an uninformative prior of 50%.",
+      "news_impact": "The recent polling data is extremely bullish for Magyar, with multiple independent polls showing Tisza Party leading by 7-25 points and potentially winning a two-thirds majority. This represents a dramatic shift in Hungarian politics.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "The related market shows Orb\u00e1n at only 30% probability, which is logically consistent with Magyar being favored at ~70%.",
+      "factors_for": [
+        "Multiple independent polls show Tisza Party leading Fidesz by 7-25 percentage points",
+        "Medi\u00e1n poll projects Tisza could win 138-143 seats for a two-thirds majority",
+        "Magyar has emerged as Orb\u00e1n's main challenger after breaking from Fidesz in 2024",
+        "Election is imminent (this Sunday), reducing uncertainty from campaign dynamics",
+        "High trading volume ($9.4M total) suggests informed market participation"
+      ],
+      "factors_against": [
+        "Orb\u00e1n has been in power since 2010 and has strong institutional advantages",
+        "Polling can be unreliable, especially in countries with media control concerns",
+        "Electoral systems can favor incumbents through gerrymandering or other mechanisms",
+        "Last-minute campaign events or voter mobilization could shift results",
+        "Magyar is relatively new as opposition leader, having only broken from Fidesz in 2024"
+      ],
+      "probability": 0.72,
+      "reasoning": "The polling data is remarkably consistent across multiple sources showing Tisza Party with a substantial lead. With the election just days away, there's limited time for dramatic reversals. The market price of 70.5% appears well-calibrated given the polling evidence, though I adjust slightly higher to 72% given the strength and consistency of the polling data. The related market showing Orb\u00e1n at only 30% provides additional confirmation of this assessment.",
+      "confidence": "medium",
+      "information_edge": "The market appears fairly efficient given the high volume and recent polling data, though there may be slight underweighting of the polling consistency across multiple sources."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   No specific historical base rate is available for Hungarian PM transitions, so starting with an uninformative prior of 50%.
+    Factors FOR YES:
+      + Multiple independent polls show Tisza Party leading Fidesz by 7-25 percentage points
+      + Medián poll projects Tisza could win 138-143 seats for a two-thirds majority
+      + Magyar has emerged as Orbán's main challenger after breaking from Fidesz in 2024
+      + Election is imminent (this Sunday), reducing uncertainty from campaign dynamics
+      + High trading volume ($9.4M total) suggests informed market participation
+    Factors AGAINST:
+      - Orbán has been in power since 2010 and has strong institutional advantages
+      - Polling can be unreliable, especially in countries with media control concerns
+      - Electoral systems can favor incumbents through gerrymandering or other mechanisms
+      - Last-minute campaign events or voter mobilization could shift results
+      - Magyar is relatively new as opposition leader, having only broken from Fidesz in 2024
+    Probability:       0.72
+    Confidence:        medium
+    Reasoning:         The polling data is remarkably consistent across multiple sources showing Tisza Party with a substantial lead. With the election just days away, there's limited time for dramatic reversals. The market price of 70.5% appears well-calibrated given the polling evidence, though I adjust slightly higher to 72% given the strength and consistency of the polling data. The related market showing Orbán at only 30% provides additional confirmation of this assessment.
+    Information edge:  The market appears fairly efficient given the high volume and recent polling data, though there may be slight underweighting of the polling consistency across multiple sources.
+
+  Calibration:
+    Raw LLM probability:    72.0%
+    Calibrated probability: 70.6%
+    Adjustment:             -1.4%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.70
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  70.6%   0.70    0.315        22.3%
+  base_rate                0.150  70.5%   0.50    0.075         5.3%
+  momentum                 0.200  70.7%   0.03    0.006         0.4%
+  book_imbalance           0.150  68.6%   0.27    0.040         2.7%
+  whale_profiled           0.000  70.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.436        30.7%
+
+  Final probability: 30.7% / 0.436 = 70.4%
+  Ensemble confidence (agreement): 0.98
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    70.4%
+  Market price:    70.5%
+  Edge:            -0.1%
+  Direction:       NO (market overpriced)
+
+  ❌ NO TRADE: Edge 0.1% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 17 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will Rory McIlroy win the 2026 Masters tournament?
+  Market ID:     568630
+  Market price:  53.0%
+  Category:      Rory McIlroy
+  Volume 24h:    $346,236
+  Liquidity:     $14,158
+  Scanner score: 0.676
+  Days to res:   2.1
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, kalshi, related_markets (3 of 5)
+  Time: 20.9s
+
+  News:
+    • McIlroy leads Masters after Round 1 with 5-under 67, tied with Sam Burns
+    • Defending champion now betting favorite at +245 after opening round performance
+    • ESPN reports McIlroy is 'full go' with no back injury limitations ahead of tournament
+    • McIlroy attempting to become 4th player ever to win back-to-back Masters titles
+    • Jack Nicklaus endorses McIlroy's chances, saying he has 'very, very good chance' to repeat
+    Sentiment: bullish_yes (strength: 80%)
+    Key facts:
+      - McIlroy shot 5-under 67 in Round 1 despite hitting only 5 of 14 fairways
+      - He's currently co-leading the tournament through early Round 2 at 6-under par
+      - Only 3 players in Masters history have won back-to-back: Nicklaus, Faldo, Woods
+      - McIlroy's pre-tournament odds moved from +1300 to +245 favorite after Round 1
+      - He withdrew from Arnold Palmer Invitational in March due to back spasms
+
+  Related markets:
+    [keyword_overlap] Will Justin Rose win the 2026 Masters tournament?: 5%
+    [keyword_overlap] Will Sam Burns win the 2026 Masters tournament?: 5%
+    [keyword_overlap] Will Sam Burns win the 2026 Masters tournament?: 6%
+    [keyword_overlap] Will Patrick Reed win the 2026 Masters tournament?: 11%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,371 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.05,
+      "base_rate_reasoning": "Historically, any single golfer winning the Masters has roughly 1-in-90 odds (1.1%), but elite players like McIlroy have higher base rates around 3-5% given their skill level and past performance.",
+      "news_impact": "The news is extremely bullish - McIlroy is currently co-leading after Round 1 with a 5-under 67 and is through early Round 2 at 6-under par, making him the betting favorite. This dramatically increases his win probability from pre-tournament levels.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "Related markets show other contenders (Rose, Burns, Reed) at 5-11%, which is consistent with McIlroy having elevated odds as the current leader.",
+      "factors_for": [
+        "Currently co-leading the tournament at 6-under par through early Round 2",
+        "Shot excellent 5-under 67 in Round 1 despite hitting only 5/14 fairways, showing strong recovery skills",
+        "Became betting favorite with odds moving from +1300 to +245 after Round 1",
+        "Reported as 'full go' with no back injury limitations",
+        "High skill level as defending champion attempting back-to-back wins"
+      ],
+      "factors_against": [
+        "Only 3 players in Masters history have won back-to-back (Nicklaus, Faldo, Woods)",
+        "Tournament is only through early Round 2 - 2.5+ rounds remaining with many variables",
+        "Hit only 5 of 14 fairways in Round 1, indicating potential consistency issues",
+        "Strong field with other elite players still in contention",
+        "Golf tournaments have high variance even for leaders"
+      ],
+      "probability": 0.47,
+      "reasoning": "While the 53% market price seems reasonable given McIlroy's current co-lead position, I estimate slightly lower at 47%. He's clearly in an excellent position as the betting favorite through 1.5 rounds, but golf tournaments remain highly variable with 2.5 rounds left. The historical difficulty of back-to-back Masters wins and his inconsistent driving (5/14 fairways) provide some downside risk despite his strong current position.",
+      "confidence": "medium",
+      "information_edge": "The market may be slightly overreacting to his Round 1 performance - while leading is clearly positive, the tournament outcome remains quite uncertain with most of the event still to play."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.05
+    Base rate reason:   Historically, any single golfer winning the Masters has roughly 1-in-90 odds (1.1%), but elite players like McIlroy have higher base rates around 3-5% given their skill level and past performance.
+    Factors FOR YES:
+      + Currently co-leading the tournament at 6-under par through early Round 2
+      + Shot excellent 5-under 67 in Round 1 despite hitting only 5/14 fairways, showing strong recovery skills
+      + Became betting favorite with odds moving from +1300 to +245 after Round 1
+      + Reported as 'full go' with no back injury limitations
+      + High skill level as defending champion attempting back-to-back wins
+    Factors AGAINST:
+      - Only 3 players in Masters history have won back-to-back (Nicklaus, Faldo, Woods)
+      - Tournament is only through early Round 2 - 2.5+ rounds remaining with many variables
+      - Hit only 5 of 14 fairways in Round 1, indicating potential consistency issues
+      - Strong field with other elite players still in contention
+      - Golf tournaments have high variance even for leaders
+    Probability:       0.47
+    Confidence:        medium
+    Reasoning:         While the 53% market price seems reasonable given McIlroy's current co-lead position, I estimate slightly lower at 47%. He's clearly in an excellent position as the betting favorite through 1.5 rounds, but golf tournaments remain highly variable with 2.5 rounds left. The historical difficulty of back-to-back Masters wins and his inconsistent driving (5/14 fairways) provide some downside risk despite his strong current position.
+    Information edge:  The market may be slightly overreacting to his Round 1 performance - while leading is clearly positive, the tournament outcome remains quite uncertain with most of the event still to play.
+
+  Calibration:
+    Raw LLM probability:    47.0%
+    Calibrated probability: 49.3%
+    Adjustment:             +2.3%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.15 (3 sources × 0.05)
+    Final confidence:       0.75
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  49.3%   0.75    0.338        16.6%
+  base_rate                0.150  53.0%   0.50    0.075         4.0%
+  momentum                 0.200  56.1%   0.52    0.104         5.8%
+  book_imbalance           0.150  51.5%   0.21    0.031         1.6%
+  whale_profiled           0.000  53.0%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.548        28.1%
+
+  Final probability: 28.1% / 0.548 = 51.2%
+  Ensemble confidence (agreement): 0.96
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    51.2%
+  Market price:    53.0%
+  Edge:            -1.8%
+  Direction:       NO (market overpriced)
+
+  ❌ NO TRADE: Edge 1.8% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 18 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will Atletico Madrid win the 2025–26 Champions League?
+  Market ID:     566146
+  Market price:  7.5%
+  Category:      Atletico Madrid
+  Volume 24h:    $476,745
+  Liquidity:     $221,288
+  Scanner score: 0.664
+  Days to res:   50.1
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news (1 of 5)
+  Time: 19.9s
+
+  News:
+    • Atletico Madrid stuns Barcelona 2-0 in Champions League quarterfinal first leg at Camp Nou
+    • Julian Alvarez scores stunning free-kick goal after Pau Cubarsi red card
+    • Alexander Sorloth adds second goal to give Atletico commanding advantage
+    • Barcelona files complaint with UEFA over refereeing decisions
+    • Atletico's Champions League odds improve from +2000 to +1000 after victory
+    Sentiment: bullish_yes (strength: 85%)
+    Key facts:
+      - Atletico Madrid won 2-0 away at Barcelona in the first leg on April 8, 2026
+      - Barcelona was reduced to 10 men after Pau Cubarsi's red card for fouling Giuliano Simeone
+      - Julian Alvarez scored from a free kick and Alexander Sorloth added a second goal
+      - This was Barcelona's first home defeat to Atletico since 2006
+      - Atletico's Champions League winner odds improved from +2000 to +1000 after the victory
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,131 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.06,
+      "base_rate_reasoning": "Historically, about 32 teams compete in the Champions League, giving each roughly a 3% chance if equal. However, Atletico Madrid is a top-tier club that has reached finals twice in recent years, so a reasonable base rate is around 6%.",
+      "news_impact": "The 2-0 away victory against Barcelona in the quarterfinal first leg is extremely positive, giving Atletico a commanding position to advance. This significantly increases their tournament odds as they've overcome one of the strongest competitors.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "N/A",
+      "factors_for": [
+        "Commanding 2-0 lead over Barcelona in quarterfinal first leg",
+        "Away goals advantage and strong defensive record",
+        "Diego Simeone's proven Champions League experience and tactical acumen",
+        "Julian Alvarez and Alexander Sorloth showing clinical finishing",
+        "Historical strength in knockout competitions"
+      ],
+      "factors_against": [
+        "Still need to complete quarterfinal, then win semifinal and final",
+        "Other strong teams like Real Madrid, Manchester City, Bayern Munich remain",
+        "Second leg against Barcelona still to be played",
+        "Tournament format means single bad performance can eliminate them",
+        "Market price suggests informed traders see limited chances"
+      ],
+      "probability": 0.12,
+      "reasoning": "Starting from a 6% base rate for a top club like Atletico, the stunning 2-0 victory over Barcelona significantly improves their chances. This result eliminates a major competitor and demonstrates current strong form. However, they still face multiple knockout rounds against elite opposition. The market's 7.5% price seems too conservative given this major development, but the tournament's knockout nature limits how much any single result should move the probability.",
+      "confidence": "medium",
+      "information_edge": "Market may be underreacting to the significance of beating Barcelona away 2-0, which dramatically improves their path to the final"
+    }
+
+  Parsed response:
+    Base rate anchor:   0.06
+    Base rate reason:   Historically, about 32 teams compete in the Champions League, giving each roughly a 3% chance if equal. However, Atletico Madrid is a top-tier club that has reached finals twice in recent years, so a reasonable base rate is around 6%.
+    Factors FOR YES:
+      + Commanding 2-0 lead over Barcelona in quarterfinal first leg
+      + Away goals advantage and strong defensive record
+      + Diego Simeone's proven Champions League experience and tactical acumen
+      + Julian Alvarez and Alexander Sorloth showing clinical finishing
+      + Historical strength in knockout competitions
+    Factors AGAINST:
+      - Still need to complete quarterfinal, then win semifinal and final
+      - Other strong teams like Real Madrid, Manchester City, Bayern Munich remain
+      - Second leg against Barcelona still to be played
+      - Tournament format means single bad performance can eliminate them
+      - Market price suggests informed traders see limited chances
+    Probability:       0.12
+    Confidence:        medium
+    Reasoning:         Starting from a 6% base rate for a top club like Atletico, the stunning 2-0 victory over Barcelona significantly improves their chances. This result eliminates a major competitor and demonstrates current strong form. However, they still face multiple knockout rounds against elite opposition. The market's 7.5% price seems too conservative given this major development, but the tournament's knockout nature limits how much any single result should move the probability.
+    Information edge:  Market may be underreacting to the significance of beating Barcelona away 2-0, which dramatically improves their path to the final
+
+  Calibration:
+    Raw LLM probability:    12.0%
+    Calibrated probability: 16.5%
+    Adjustment:             +4.5%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.05 (1 sources × 0.05)
+    Final confidence:       0.65
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  16.5%   0.65    0.293         4.8%
+  base_rate                0.150   7.5%   0.50    0.075         0.6%
+  momentum                 0.200   7.6%   0.01    0.001         0.0%
+  book_imbalance           0.150   3.1%   0.50    0.075         0.2%
+  whale_profiled           0.000   7.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.444         5.6%
+
+  Final probability: 5.6% / 0.444 = 12.7%
+  Ensemble confidence (agreement): 0.91
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    12.7%
+  Market price:    7.5%
+  Edge:            +5.2%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: Position $3.81 below minimum $5.00
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 19 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will Ricardo Belmont win the 2026 Peruvian presidential election?
+  Market ID:     947281
+  Market price:  31.6%
+  Category:      Ricardo Belmont
+  Volume 24h:    $221,694
+  Liquidity:     $58,107
+  Scanner score: 0.654
+  Days to res:   1.1
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 20.4s
+
+  News:
+    • Ricardo Belmont surges to 8-10% in latest Datum and Ipsos polls, gaining 25% odds for second place in first round
+    • Polymarket traders favor Belmont at 32% for overall election winner vs Fujimori at 28%
+    • Post-debate performance boosts Belmont's anti-establishment appeal among younger voters
+    • Former Lima mayor emerges as surprise contender after being written off with <2% support weeks ago
+    • Belmont's nationalist messaging on resource contracts resonates amid voter fatigue with political instability
+    Sentiment: bullish_yes (strength: 75%)
+    Key facts:
+      - Belmont polling at 8-10% in recent Datum/Ipsos surveys, up from 1-2% in earlier polls
+      - Prediction markets show 32% probability for overall win, 25% for first-round second place
+      - Post-debate surge attributed to anti-establishment messaging and appeal to youth voters
+      - At 80 years old, positions himself as experienced outsider against corruption
+      - Strong support in Lima and central highlands according to polling analysis
+
+  Related markets:
+    [keyword_overlap] Will Carlos Álvarez win the 2026 Peruvian presidential election?: 16%
+    [keyword_overlap] Will Rafael López Aliaga win the 2026 Peruvian presidential election?: 14%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,581 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.2,
+      "base_rate_reasoning": "In multi-candidate Peruvian presidential elections, any single candidate typically has a low probability of winning, especially outsiders without major party backing.",
+      "news_impact": "The recent polling surge from 1-2% to 8-10% and post-debate momentum significantly increases Belmont's chances, showing he's gained real traction as an anti-establishment candidate.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "The related markets for other candidates (\u00c1lvarez 16%, L\u00f3pez Aliaga 14%) suggest a fragmented field where multiple candidates have meaningful chances.",
+      "factors_for": [
+        "Dramatic polling surge from 1-2% to 8-10% shows real momentum",
+        "Strong post-debate performance boosting anti-establishment appeal",
+        "Appeal to younger voters in a change-oriented electorate",
+        "Experience as former Lima mayor provides credibility",
+        "Market giving him 25% odds for second place in first round"
+      ],
+      "factors_against": [
+        "At 80 years old, age could be a significant liability",
+        "Still polling at only 8-10%, far from frontrunner status",
+        "Anti-establishment candidates often peak early then fade",
+        "Peru's fragmented political landscape makes any single winner unlikely",
+        "No major party infrastructure or established political machine"
+      ],
+      "probability": 0.28,
+      "reasoning": "Belmont's dramatic polling surge and post-debate momentum represent genuine political traction, moving him from irrelevant to viable contender. However, 8-10% polling still leaves him far from frontrunner status in Peru's fragmented field. His age and outsider status are double-edged - appealing to anti-establishment sentiment but lacking institutional support. The market price of 31.6% appears slightly optimistic given the structural challenges, but the recent momentum justifies a meaningful probability.",
+      "confidence": "medium",
+      "information_edge": "Market may be overreacting to recent momentum without fully accounting for the difficulty of sustaining outsider campaigns in Peru's complex political environment"
+    }
+
+  Parsed response:
+    Base rate anchor:   0.2
+    Base rate reason:   In multi-candidate Peruvian presidential elections, any single candidate typically has a low probability of winning, especially outsiders without major party backing.
+    Factors FOR YES:
+      + Dramatic polling surge from 1-2% to 8-10% shows real momentum
+      + Strong post-debate performance boosting anti-establishment appeal
+      + Appeal to younger voters in a change-oriented electorate
+      + Experience as former Lima mayor provides credibility
+      + Market giving him 25% odds for second place in first round
+    Factors AGAINST:
+      - At 80 years old, age could be a significant liability
+      - Still polling at only 8-10%, far from frontrunner status
+      - Anti-establishment candidates often peak early then fade
+      - Peru's fragmented political landscape makes any single winner unlikely
+      - No major party infrastructure or established political machine
+    Probability:       0.28
+    Confidence:        medium
+    Reasoning:         Belmont's dramatic polling surge and post-debate momentum represent genuine political traction, moving him from irrelevant to viable contender. However, 8-10% polling still leaves him far from frontrunner status in Peru's fragmented field. His age and outsider status are double-edged - appealing to anti-establishment sentiment but lacking institutional support. The market price of 31.6% appears slightly optimistic given the structural challenges, but the recent momentum justifies a meaningful probability.
+    Information edge:  Market may be overreacting to recent momentum without fully accounting for the difficulty of sustaining outsider campaigns in Peru's complex political environment
+
+  Calibration:
+    Raw LLM probability:    28.0%
+    Calibrated probability: 32.6%
+    Adjustment:             +4.6%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.70
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  32.6%   0.70    0.315        10.3%
+  base_rate                0.150  31.6%   0.50    0.075         2.4%
+  momentum                 0.200  34.6%   0.50    0.100         3.5%
+  book_imbalance           0.150  26.8%   0.50    0.075         2.0%
+  whale_profiled           0.000  31.6%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.565        18.1%
+
+  Final probability: 18.1% / 0.565 = 32.0%
+  Ensemble confidence (agreement): 0.95
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    32.0%
+  Market price:    31.6%
+  Edge:            +0.4%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: Edge 0.4% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 20 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will the next Prime Minister of Hungary be Viktor Orbán?
+  Market ID:     567560
+  Market price:  29.5%
+  Category:      Viktor Orbán
+  Volume 24h:    $1,118,927
+  Liquidity:     $547,464
+  Scanner score: 0.637
+  Days to res:   1.1
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 17.1s
+
+  News:
+    • Tisza Party leads Fidesz by double digits in most recent polls, with some showing 20+ point margins
+    • US VP JD Vance campaigned for Orbán in Budapest, but polls show opposition lead extended after visit
+    • Hungarian election scheduled for April 12, 2026 - just 2 days away
+    • Leaked phone calls show Hungarian officials coordinating with Russia and Iran
+    • Documentary alleges mass voter intimidation by Fidesz in rural communities
+    Sentiment: bearish_yes (strength: 80%)
+    Key facts:
+      - Election is April 12, 2026 (2 days from today)
+      - Medián poll shows Tisza at 58%, Fidesz at 33% - a 25-point gap
+      - Multiple independent polls show Tisza leading by 10-25 percentage points
+      - Only pro-government pollsters predict Fidesz victory
+      - Orbán has been PM for 16 years, longest-serving EU leader
+
+  Related markets:
+    [keyword_overlap] Will the next Prime Minister of Hungary be Péter Magyar?: 70%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,215 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "No specific historical base rate provided for Hungarian PM succession, so starting with uninformative prior of 50%.",
+      "news_impact": "Recent polling data shows a dramatic shift against Orb\u00e1n, with multiple independent polls showing Tisza Party leading by 10-25 percentage points just 2 days before the election. This represents a significant negative development for Orb\u00e1n's chances.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "The related market pricing P\u00e9ter Magyar (Tisza Party leader) at 70% for next PM creates a logical constraint - if Magyar is at 70%, Orb\u00e1n should be significantly lower, which aligns with current evidence.",
+      "factors_for": [
+        "Orb\u00e1n is the incumbent with established political machinery",
+        "Pro-government pollsters still predict Fidesz victory",
+        "Historical advantage of incumbency in Hungarian politics"
+      ],
+      "factors_against": [
+        "Multiple independent polls show Tisza leading by double digits",
+        "Medi\u00e1n poll shows 25-point gap (58% vs 33%)",
+        "Election is only 2 days away with little time for dramatic reversals",
+        "Leaked phone calls scandal may have damaged Fidesz support",
+        "Related market prices P\u00e9ter Magyar at 70% probability"
+      ],
+      "probability": 0.25,
+      "reasoning": "With the election just 2 days away, polling data becomes highly predictive. Multiple independent polls consistently show Tisza Party leading by substantial margins (10-25 points), with the most recent Medi\u00e1n poll showing a 25-point gap. The consistency across multiple polling sources and the proximity to election day make a dramatic reversal unlikely. The related market pricing Magyar at 70% provides additional confirmation that the market expects Orb\u00e1n to lose.",
+      "confidence": "high",
+      "information_edge": "The market at 29.5% may be slightly overpricing Orb\u00e1n's chances given the consistency and magnitude of recent polling data showing double-digit deficits with only 2 days remaining."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   No specific historical base rate provided for Hungarian PM succession, so starting with uninformative prior of 50%.
+    Factors FOR YES:
+      + Orbán is the incumbent with established political machinery
+      + Pro-government pollsters still predict Fidesz victory
+      + Historical advantage of incumbency in Hungarian politics
+    Factors AGAINST:
+      - Multiple independent polls show Tisza leading by double digits
+      - Medián poll shows 25-point gap (58% vs 33%)
+      - Election is only 2 days away with little time for dramatic reversals
+      - Leaked phone calls scandal may have damaged Fidesz support
+      - Related market prices Péter Magyar at 70% probability
+    Probability:       0.25
+    Confidence:        high
+    Reasoning:         With the election just 2 days away, polling data becomes highly predictive. Multiple independent polls consistently show Tisza Party leading by substantial margins (10-25 points), with the most recent Medián poll showing a 25-point gap. The consistency across multiple polling sources and the proximity to election day make a dramatic reversal unlikely. The related market pricing Magyar at 70% provides additional confirmation that the market expects Orbán to lose.
+    Information edge:  The market at 29.5% may be slightly overpricing Orbán's chances given the consistency and magnitude of recent polling data showing double-digit deficits with only 2 days remaining.
+
+  Calibration:
+    Raw LLM probability:    25.0%
+    Calibrated probability: 29.8%
+    Adjustment:             +4.8%
+
+  Confidence build-up:
+    Base (from LLM):        0.85 (high)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.95
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  29.8%   0.95    0.427        12.7%
+  base_rate                0.150  29.5%   0.50    0.075         2.2%
+  momentum                 0.200  29.3%   0.03    0.006         0.2%
+  book_imbalance           0.150  28.5%   0.14    0.021         0.6%
+  whale_profiled           0.000  29.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.529        15.7%
+
+  Final probability: 15.7% / 0.529 = 29.7%
+  Ensemble confidence (agreement): 0.99
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    29.7%
+  Market price:    29.5%
+  Edge:            +0.2%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: Edge 0.2% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 21 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will Rafael López Aliaga win the 2026 Peruvian presidential election?
+  Market ID:     947268
+  Market price:  14.5%
+  Category:      Rafael López Aliaga
+  Volume 24h:    $180,993
+  Liquidity:     $160,138
+  Scanner score: 0.633
+  Days to res:   1.1
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 16.7s
+
+  News:
+    • López Aliaga slips from frontrunner to third place in final polls before election
+    • Former frontrunner drops from 10% in March to 7% in final poll, behind comedian Carlos Álvarez
+    • Prediction markets show López Aliaga at 38% odds to win overall but only 13.5% for runoff qualification
+    • Pro-Trump candidate's popularity declining despite early campaign momentum
+    • Electoral blackout began April 7 - no new polling until after April 12 vote
+    Sentiment: bearish_yes (strength: 70%)
+    Key facts:
+      - López Aliaga polling at 7-13% in most recent surveys, down from 10-16% peak in March
+      - Keiko Fujimori leads most polls at 13-18.5% in valid votes
+      - Record 35 candidates competing in April 12 first round election
+      - 25-35% of voters remain undecided or plan to vote blank
+      - Polymarket traders assign 38% probability to López Aliaga winning overall presidency
+
+  Related markets:
+    [keyword_overlap] Will Ricardo Belmont win the 2026 Peruvian presidential election?: 32%
+    [keyword_overlap] Will Carlos Álvarez win the 2026 Peruvian presidential election?: 16%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,473 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.029,
+      "base_rate_reasoning": "With 35 candidates competing, the base rate for any single candidate winning is roughly 1/35 = 2.9%, though frontrunners typically have higher odds due to name recognition and resources.",
+      "news_impact": "Recent polling shows L\u00f3pez Aliaga declining from 10% to 7% and falling from frontrunner to third place, which significantly reduces his chances. The high undecided voter percentage (25-35%) adds uncertainty but his downward trend is concerning.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "Related markets show Belmont at 32% and \u00c1lvarez at 16%, suggesting the market sees these as stronger candidates than L\u00f3pez Aliaga, which is consistent with recent polling trends.",
+      "factors_for": [
+        "Still polling at 7-13% which keeps him in contention",
+        "High undecided voter percentage (25-35%) means significant movement is possible",
+        "Has name recognition and campaign infrastructure as former frontrunner",
+        "Peru's fragmented political landscape allows for surprise outcomes"
+      ],
+      "factors_against": [
+        "Declining from 10-16% peak to current 7-13% shows negative momentum",
+        "Dropped from frontrunner to third place in final pre-election polls",
+        "Keiko Fujimori leads most polls at 13-18.5% in valid votes",
+        "Comedian Carlos \u00c1lvarez has overtaken him in recent polling",
+        "35 candidates create extreme fragmentation reducing individual win probabilities"
+      ],
+      "probability": 0.08,
+      "reasoning": "L\u00f3pez Aliaga's declining poll numbers from frontrunner status to third place represent a significant negative signal. While the 25-35% undecided voters create uncertainty, his downward trajectory from 10-16% to 7-13% suggests weakening support. The market price of 14.5% appears too high given his recent polling decline and the strong competition from Fujimori, \u00c1lvarez, and others in a highly fragmented field of 35 candidates.",
+      "confidence": "medium",
+      "information_edge": "Market may be anchoring too heavily on L\u00f3pez Aliaga's former frontrunner status and not fully incorporating his recent polling decline and loss of momentum to other candidates."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.029
+    Base rate reason:   With 35 candidates competing, the base rate for any single candidate winning is roughly 1/35 = 2.9%, though frontrunners typically have higher odds due to name recognition and resources.
+    Factors FOR YES:
+      + Still polling at 7-13% which keeps him in contention
+      + High undecided voter percentage (25-35%) means significant movement is possible
+      + Has name recognition and campaign infrastructure as former frontrunner
+      + Peru's fragmented political landscape allows for surprise outcomes
+    Factors AGAINST:
+      - Declining from 10-16% peak to current 7-13% shows negative momentum
+      - Dropped from frontrunner to third place in final pre-election polls
+      - Keiko Fujimori leads most polls at 13-18.5% in valid votes
+      - Comedian Carlos Álvarez has overtaken him in recent polling
+      - 35 candidates create extreme fragmentation reducing individual win probabilities
+    Probability:       0.08
+    Confidence:        medium
+    Reasoning:         López Aliaga's declining poll numbers from frontrunner status to third place represent a significant negative signal. While the 25-35% undecided voters create uncertainty, his downward trajectory from 10-16% to 7-13% suggests weakening support. The market price of 14.5% appears too high given his recent polling decline and the strong competition from Fujimori, Álvarez, and others in a highly fragmented field of 35 candidates.
+    Information edge:  Market may be anchoring too heavily on López Aliaga's former frontrunner status and not fully incorporating his recent polling decline and loss of momentum to other candidates.
+
+  Calibration:
+    Raw LLM probability:    8.0%
+    Calibrated probability: 12.1%
+    Adjustment:             +4.1%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.70
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  12.1%   0.70    0.315         3.8%
+  base_rate                0.150  14.5%   0.50    0.075         1.1%
+  momentum                 0.200  14.1%   0.07    0.014         0.2%
+  book_imbalance           0.150   9.9%   0.50    0.075         0.7%
+  whale_profiled           0.000  14.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.479         5.8%
+
+  Final probability: 5.8% / 0.479 = 12.2%
+  Ensemble confidence (agreement): 0.96
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    12.2%
+  Market price:    14.5%
+  Edge:            -2.3%
+  Direction:       NO (market overpriced)
+
+  ❌ NO TRADE: Edge 2.3% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 23 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will Carlos Álvarez win the 2026 Peruvian presidential election?
+  Market ID:     947271
+  Market price:  15.7%
+  Category:      Carlos Álvarez
+  Volume 24h:    $215,672
+  Liquidity:     $49,564
+  Scanner score: 0.583
+  Days to res:   1.1
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 17.8s
+
+  News:
+    • Carlos Álvarez gains late momentum in Peru's presidential race, polling at 8-10% in recent surveys
+    • Comedian-turned-politician positions himself as anti-establishment outsider with tough-on-crime platform
+    • Álvarez holds campaign rally in Lima's San Juan de Lurigancho district on April 4, 2026
+    • Bloomberg reports late polling shift showing momentum for Álvarez's candidacy
+    • Polymarket traders assign 15.3% probability to Álvarez winning overall election
+    Sentiment: bullish_yes (strength: 70%)
+    Key facts:
+      - Álvarez polling at 8-10% in most recent surveys before electoral blackout
+      - Running with right-wing Country for All party (PPT) as political outsider
+      - Campaign focuses on anti-crime messaging, admires El Salvador's Nayib Bukele
+      - Appeals to diverse cross-section of voters across urban/rural and socioeconomic lines
+      - 35 total candidates in race, making runoff on June 7 virtually certain
+
+  Related markets:
+    [keyword_overlap] Will Ricardo Belmont win the 2026 Peruvian presidential election?: 32%
+    [keyword_overlap] Will Rafael López Aliaga win the 2026 Peruvian presidential election?: 14%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,531 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.1,
+      "base_rate_reasoning": "In multi-candidate Peruvian presidential elections, any single candidate typically has a low probability of winning, especially outsiders without major party backing.",
+      "news_impact": "Recent polling showing \u00c1lvarez at 8-10% provides concrete evidence he's a viable candidate with momentum, significantly above what would be expected for a complete outsider. His anti-establishment positioning in Peru's current political climate is favorable.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "The related markets show Belmont at 32% and L\u00f3pez Aliaga at 14%, suggesting a fragmented field where multiple candidates have realistic chances, consistent with \u00c1lvarez having meaningful probability.",
+      "factors_for": [
+        "Polling at 8-10% shows real voter support",
+        "Anti-establishment outsider appeal in current political climate",
+        "Late momentum according to Bloomberg reporting",
+        "Tough-on-crime platform resonates with voters",
+        "Appeals across diverse demographic groups"
+      ],
+      "factors_against": [
+        "Still polling well below frontrunners",
+        "Lacks major party infrastructure",
+        "Comedian background may limit credibility with some voters",
+        "Market price has been falling from 20.4% to 15.7%",
+        "Heavy ask-side imbalance suggests selling pressure"
+      ],
+      "probability": 0.12,
+      "reasoning": "Starting from a low base rate for outsider candidates, the polling data showing 8-10% support provides strong evidence \u00c1lvarez is a legitimate contender. His anti-establishment positioning aligns well with Peru's political mood, and the late momentum reported by Bloomberg is encouraging. However, he's still polling significantly behind frontrunners, and the recent price decline from 20.4% to 15.7% suggests market skepticism. The current 15.7% market price appears roughly fair but slightly undervalues his chances given the polling evidence.",
+      "confidence": "medium",
+      "information_edge": "The market may be underweighting the significance of his 8-10% polling performance and late momentum, focusing too much on his outsider status rather than his demonstrated voter appeal."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.1
+    Base rate reason:   In multi-candidate Peruvian presidential elections, any single candidate typically has a low probability of winning, especially outsiders without major party backing.
+    Factors FOR YES:
+      + Polling at 8-10% shows real voter support
+      + Anti-establishment outsider appeal in current political climate
+      + Late momentum according to Bloomberg reporting
+      + Tough-on-crime platform resonates with voters
+      + Appeals across diverse demographic groups
+    Factors AGAINST:
+      - Still polling well below frontrunners
+      - Lacks major party infrastructure
+      - Comedian background may limit credibility with some voters
+      - Market price has been falling from 20.4% to 15.7%
+      - Heavy ask-side imbalance suggests selling pressure
+    Probability:       0.12
+    Confidence:        medium
+    Reasoning:         Starting from a low base rate for outsider candidates, the polling data showing 8-10% support provides strong evidence Álvarez is a legitimate contender. His anti-establishment positioning aligns well with Peru's political mood, and the late momentum reported by Bloomberg is encouraging. However, he's still polling significantly behind frontrunners, and the recent price decline from 20.4% to 15.7% suggests market skepticism. The current 15.7% market price appears roughly fair but slightly undervalues his chances given the polling evidence.
+    Information edge:  The market may be underweighting the significance of his 8-10% polling performance and late momentum, focusing too much on his outsider status rather than his demonstrated voter appeal.
+
+  Calibration:
+    Raw LLM probability:    12.0%
+    Calibrated probability: 16.5%
+    Adjustment:             +4.5%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.70
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  16.5%   0.70    0.315         5.2%
+  base_rate                0.150  15.7%   0.50    0.075         1.2%
+  momentum                 0.200  13.8%   0.31    0.061         0.8%
+  book_imbalance           0.150  10.8%   0.50    0.075         0.8%
+  whale_profiled           0.000  15.7%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.526         8.0%
+
+  Final probability: 8.0% / 0.526 = 15.3%
+  Ensemble confidence (agreement): 0.96
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    15.3%
+  Market price:    15.7%
+  Edge:            -0.4%
+  Direction:       NO (market overpriced)
+
+  ❌ NO TRADE: Edge 0.4% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 24 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Mexico City: James Duckworth vs Beibit Zhukayev
+  Market ID:     1924250
+  Market price:  75.5%
+  Volume 24h:    $229,320
+  Liquidity:     $85,259
+  Scanner score: 0.564
+  Days to res:   6.7
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news (1 of 5)
+  Time: 16.1s
+
+  News:
+    • James Duckworth defeats Beibit Zhukayev 6-2, 6-3 in San Luis Potosi Challenger quarterfinal on April 4, 2026
+    • Duckworth extends head-to-head dominance to 5-1 over Zhukayev with straight-sets victory
+    • Upcoming Mexico City Challenger match scheduled for April 10, 2026 - their 7th career meeting
+    • Duckworth heavily favored with odds of 1.17 vs Zhukayev's 4.3 for Mexico City match
+    • Both players showing strong clay court form in 2026 season
+    Sentiment: bullish_yes (strength: 85%)
+    Key facts:
+      - Duckworth won their most recent match 6-2, 6-3 on April 4, 2026 in San Luis Potosi
+      - Head-to-head record stands at 5-1 in favor of Duckworth, 2-0 on clay courts
+      - Duckworth ranked #86 ATP, Zhukayev ranked #340 ATP
+      - Duckworth has 6-2 clay court record in 2026, Zhukayev has 4-1 clay record
+      - Duckworth reached San Luis Potosi Challenger final, his best 2026 result
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,400 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "Without specific historical data for these players, I start with the uninformative prior of 50% for a tennis match between two players.",
+      "news_impact": "The recent news is extremely bullish for Duckworth - he just defeated Zhukayev 6-2, 6-3 four days ago and holds a dominant 5-1 head-to-head record. This recent form and historical dominance strongly supports Duckworth's chances.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "N/A",
+      "factors_for": [
+        "Duckworth just defeated Zhukayev 6-2, 6-3 on April 4th - only 6 days ago",
+        "Dominant 5-1 head-to-head record, including 2-0 on clay courts",
+        "Significant ranking advantage: #86 ATP vs #340 ATP",
+        "Strong 6-2 clay court record in 2026",
+        "Bookmaker odds heavily favor Duckworth at 1.17 vs 4.3"
+      ],
+      "factors_against": [
+        "Zhukayev has a decent 4-1 clay record in 2026",
+        "Back-to-back matches against same opponent can sometimes produce different results",
+        "Lower-ranked players occasionally upset higher-ranked opponents",
+        "Market price has fallen from 89% to 75.5% in 24 hours, suggesting some doubt"
+      ],
+      "probability": 0.82,
+      "reasoning": "Starting from the 50% base rate, the evidence strongly favors Duckworth. The most compelling factor is their recent head-to-head meeting just 6 days ago where Duckworth won convincingly 6-2, 6-3. Combined with his 5-1 historical dominance, 2-0 clay court record against Zhukayev, and significant ranking advantage (#86 vs #340), this points to a high probability for Duckworth. The market's recent decline from 89% to 75.5% suggests some uncertainty, but the fundamental factors remain strongly in Duckworth's favor.",
+      "confidence": "high",
+      "information_edge": "The market may be overreacting to short-term price movement and underweighting the significance of their recent head-to-head result and Duckworth's consistent dominance in this matchup."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   Without specific historical data for these players, I start with the uninformative prior of 50% for a tennis match between two players.
+    Factors FOR YES:
+      + Duckworth just defeated Zhukayev 6-2, 6-3 on April 4th - only 6 days ago
+      + Dominant 5-1 head-to-head record, including 2-0 on clay courts
+      + Significant ranking advantage: #86 ATP vs #340 ATP
+      + Strong 6-2 clay court record in 2026
+      + Bookmaker odds heavily favor Duckworth at 1.17 vs 4.3
+    Factors AGAINST:
+      - Zhukayev has a decent 4-1 clay record in 2026
+      - Back-to-back matches against same opponent can sometimes produce different results
+      - Lower-ranked players occasionally upset higher-ranked opponents
+      - Market price has fallen from 89% to 75.5% in 24 hours, suggesting some doubt
+    Probability:       0.82
+    Confidence:        high
+    Reasoning:         Starting from the 50% base rate, the evidence strongly favors Duckworth. The most compelling factor is their recent head-to-head meeting just 6 days ago where Duckworth won convincingly 6-2, 6-3. Combined with his 5-1 historical dominance, 2-0 clay court record against Zhukayev, and significant ranking advantage (#86 vs #340), this points to a high probability for Duckworth. The market's recent decline from 89% to 75.5% suggests some uncertainty, but the fundamental factors remain strongly in Duckworth's favor.
+    Information edge:  The market may be overreacting to short-term price movement and underweighting the significance of their recent head-to-head result and Duckworth's consistent dominance in this matchup.
+
+  Calibration:
+    Raw LLM probability:    82.0%
+    Calibrated probability: 79.6%
+    Adjustment:             -2.4%
+
+  Confidence build-up:
+    Base (from LLM):        0.85 (high)
+    + enrichment bonus:     +0.05 (1 sources × 0.05)
+    Final confidence:       0.90
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  79.6%   0.90    0.405        32.3%
+  base_rate                0.150  75.5%   0.50    0.075         5.7%
+  momentum                 0.200  73.6%   0.31    0.063         4.6%
+  book_imbalance           0.150  75.7%   0.03    0.005         0.3%
+  whale_profiled           0.000  75.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.547        42.9%
+
+  Final probability: 42.9% / 0.547 = 78.4%
+  Ensemble confidence (agreement): 0.96
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    78.4%
+  Market price:    75.5%
+  Edge:            +2.9%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: Edge 2.9% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 26 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will TISZA – Respect and Freedom Party (TISZA) win the most seats in the next Hungarian parliamentary election?
+  Market ID:     948043
+  Market price:  76.5%
+  Category:      TISZA
+  Volume 24h:    $307,494
+  Liquidity:     $223,952
+  Scanner score: 0.513
+  Days to res:   1.1
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 15.9s
+
+  News:
+    • TISZA leads with 49.1% in latest PolitPro poll trend vs Fidesz 40.2%
+    • Medián poll projects TISZA winning 138-142 seats for two-thirds majority
+    • Independent polls show TISZA leading by 13-23 points among decided voters
+    • Record turnout expected at 74% which favors TISZA
+    • JD Vance campaigns with Orbán in Budapest showing US support
+    Sentiment: bullish_yes (strength: 85%)
+    Key facts:
+      - Election is April 12, 2026 - just 2 days away
+      - TISZA leads in all major independent polls (Medián, IDEA, 21 Research, Iránytű)
+      - Medián projects TISZA winning 138-142 seats out of 199 (two-thirds majority)
+      - 21% of voters remain undecided according to latest IDEA poll
+      - Government-affiliated pollsters show different results favoring Fidesz
+
+  Related markets:
+    [keyword_overlap] Will Fidesz–KDNP win the most seats in the next Hungarian parliamentary election?: 24%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,852 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "No specific historical base rate available for TISZA winning most seats, so starting with uninformative prior of 50%.",
+      "news_impact": "Recent polling data strongly favors TISZA with leads of 13-23 points and projections of 138-142 seats for a two-thirds majority. High expected turnout of 74% historically favors opposition parties.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "Related market shows Fidesz at 24% probability, which is logically consistent since these are mutually exclusive outcomes in a two-party race.",
+      "factors_for": [
+        "TISZA leads in all major independent polls (Medi\u00e1n, IDEA, 21 Research, Ir\u00e1nyt\u0171) by 13-23 points",
+        "Medi\u00e1n poll projects TISZA winning 138-142 seats out of 199 for two-thirds majority",
+        "Record turnout expected at 74% which historically favors opposition parties",
+        "Consistent polling trend showing TISZA at 49.1% vs Fidesz 40.2%",
+        "Election is only 2 days away, reducing time for major shifts"
+      ],
+      "factors_against": [
+        "21% of voters remain undecided according to latest IDEA poll, creating uncertainty",
+        "Fidesz has strong organizational advantages and resources as incumbent",
+        "Polling errors can occur, especially in countries with media concentration",
+        "Last-minute campaign effects or voter mobilization could shift results",
+        "Hungarian electoral system may not perfectly translate vote share to seat share"
+      ],
+      "probability": 0.78,
+      "reasoning": "Starting from a 50% base rate, the overwhelming polling evidence strongly supports TISZA winning the most seats. Multiple independent polls show consistent 13-23 point leads, with seat projections giving TISZA a two-thirds majority. The election is just 2 days away, limiting time for major reversals. However, 21% undecided voters and potential polling errors prevent complete certainty. The market price of 76.5% appears well-calibrated given this evidence.",
+      "confidence": "high",
+      "information_edge": "none"
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   No specific historical base rate available for TISZA winning most seats, so starting with uninformative prior of 50%.
+    Factors FOR YES:
+      + TISZA leads in all major independent polls (Medián, IDEA, 21 Research, Iránytű) by 13-23 points
+      + Medián poll projects TISZA winning 138-142 seats out of 199 for two-thirds majority
+      + Record turnout expected at 74% which historically favors opposition parties
+      + Consistent polling trend showing TISZA at 49.1% vs Fidesz 40.2%
+      + Election is only 2 days away, reducing time for major shifts
+    Factors AGAINST:
+      - 21% of voters remain undecided according to latest IDEA poll, creating uncertainty
+      - Fidesz has strong organizational advantages and resources as incumbent
+      - Polling errors can occur, especially in countries with media concentration
+      - Last-minute campaign effects or voter mobilization could shift results
+      - Hungarian electoral system may not perfectly translate vote share to seat share
+    Probability:       0.78
+    Confidence:        high
+    Reasoning:         Starting from a 50% base rate, the overwhelming polling evidence strongly supports TISZA winning the most seats. Multiple independent polls show consistent 13-23 point leads, with seat projections giving TISZA a two-thirds majority. The election is just 2 days away, limiting time for major reversals. However, 21% undecided voters and potential polling errors prevent complete certainty. The market price of 76.5% appears well-calibrated given this evidence.
+    Information edge:  none
+
+  Calibration:
+    Raw LLM probability:    78.0%
+    Calibrated probability: 76.0%
+    Adjustment:             -2.0%
+
+  Confidence build-up:
+    Base (from LLM):        0.85 (high)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.95
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  76.0%   0.95    0.427        32.5%
+  base_rate                0.150  76.5%   0.50    0.075         5.7%
+  momentum                 0.200  76.7%   0.03    0.007         0.5%
+  book_imbalance           0.150  76.7%   0.03    0.004         0.3%
+  whale_profiled           0.000  76.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.513        39.0%
+
+  Final probability: 39.0% / 0.513 = 76.1%
+  Ensemble confidence (agreement): 0.99
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    76.1%
+  Market price:    76.5%
+  Edge:            -0.4%
+  Direction:       NO (market overpriced)
+
+  ❌ NO TRADE: Edge 0.4% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 28 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will Fidesz–KDNP win the most seats in the next Hungarian parliamentary election?
+  Market ID:     948038
+  Market price:  23.5%
+  Category:      Fidesz-KDNP
+  Volume 24h:    $316,884
+  Liquidity:     $153,997
+  Scanner score: 0.486
+  Days to res:   1.1
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 17.0s
+
+  News:
+    • Tisza Party leads Fidesz by 9 percentage points in latest Reuters poll (39% vs 30%)
+    • Medián poll shows Tisza with commanding 58% support vs Fidesz 33% - widest gap yet
+    • Multiple polls show Tisza ahead by double digits with election just 2 days away
+    • PolitPro aggregated polling shows Tisza 49.1% vs Fidesz/KDNP 40.2%
+    • Fidesz minister accuses polling institutes of falsification amid trailing numbers
+    Sentiment: bearish_yes (strength: 80%)
+    Key facts:
+      - Election scheduled for April 12, 2026 (2 days away)
+      - Most recent polls show Tisza Party leading Fidesz by 7-25 percentage points
+      - 21% of voters remain undecided according to Reuters poll
+      - Medián projects Tisza could win 138-143 seats vs Fidesz 49-55 seats (out of 199 total)
+      - Hungary's electoral system designed to benefit largest party through compensatory votes
+
+  Related markets:
+    [keyword_overlap] Will TISZA – Respect and Freedom Party (TISZA) win the most seats in the next Hungarian parliamentary election?: 76%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,914 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "Without historical data on Hungarian elections, I start with an uninformative prior of 50% for the incumbent party.",
+      "news_impact": "Recent polling data is devastating for Fidesz, showing them trailing by 7-25 percentage points across multiple polls just 2 days before the election. This represents a massive shift from their historical dominance.",
+      "cross_platform_note": "The related TISZA market at 76% is perfectly consistent with Fidesz at ~24%, as these are essentially mutually exclusive outcomes.",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "The TISZA market at 76% provides strong validation - if TISZA wins most seats, Fidesz cannot, making these outcomes mutually exclusive with probabilities summing to ~100%.",
+      "factors_for": [
+        "Fidesz remains the incumbent party with institutional advantages",
+        "21% of voters remain undecided according to Reuters, leaving room for late movement",
+        "Historical polling errors could favor the incumbent"
+      ],
+      "factors_against": [
+        "Multiple recent polls show Fidesz trailing by double digits (7-25 percentage points)",
+        "Medi\u00e1n poll projects Fidesz winning only 49-55 seats vs Tisza's 138-143 out of 199 total",
+        "PolitPro aggregated polling shows systematic deficit (40.2% vs 49.1%)",
+        "Election is only 2 days away, limiting time for dramatic reversals"
+      ],
+      "probability": 0.24,
+      "reasoning": "Starting from a 50% base rate, the overwhelming polling evidence showing Fidesz trailing by large margins just 2 days before the election dramatically reduces their chances. Multiple independent polls consistently show double-digit deficits, with seat projections suggesting a potential landslide loss. The market price of 23.5% appears well-calibrated given this evidence, and the related TISZA market at 76% provides strong cross-validation.",
+      "confidence": "high",
+      "information_edge": "none"
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   Without historical data on Hungarian elections, I start with an uninformative prior of 50% for the incumbent party.
+    Factors FOR YES:
+      + Fidesz remains the incumbent party with institutional advantages
+      + 21% of voters remain undecided according to Reuters, leaving room for late movement
+      + Historical polling errors could favor the incumbent
+    Factors AGAINST:
+      - Multiple recent polls show Fidesz trailing by double digits (7-25 percentage points)
+      - Medián poll projects Fidesz winning only 49-55 seats vs Tisza's 138-143 out of 199 total
+      - PolitPro aggregated polling shows systematic deficit (40.2% vs 49.1%)
+      - Election is only 2 days away, limiting time for dramatic reversals
+    Probability:       0.24
+    Confidence:        high
+    Reasoning:         Starting from a 50% base rate, the overwhelming polling evidence showing Fidesz trailing by large margins just 2 days before the election dramatically reduces their chances. Multiple independent polls consistently show double-digit deficits, with seat projections suggesting a potential landslide loss. The market price of 23.5% appears well-calibrated given this evidence, and the related TISZA market at 76% provides strong cross-validation.
+    Information edge:  none
+
+  Calibration:
+    Raw LLM probability:    24.0%
+    Calibrated probability: 28.8%
+    Adjustment:             +4.8%
+
+  Confidence build-up:
+    Base (from LLM):        0.85 (high)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.95
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  28.8%   0.95    0.427        12.3%
+  base_rate                0.150  23.5%   0.50    0.075         1.8%
+  momentum                 0.200  23.2%   0.05    0.011         0.2%
+  book_imbalance           0.150  23.3%   0.02    0.003         0.1%
+  whale_profiled           0.000  23.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.516        14.4%
+
+  Final probability: 14.4% / 0.516 = 27.9%
+  Ensemble confidence (agreement): 0.96
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    27.9%
+  Market price:    23.5%
+  Edge:            +4.4%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: Edge 4.4% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 29 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      US x Iran permanent peace deal by April 22, 2026?
+  Market ID:     1919417
+  Market price:  14.5%
+  Category:      April 22
+  Volume 24h:    $257,483
+  Liquidity:     $35,113
+  Scanner score: 0.471
+  Days to res:   11.1
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 18.2s
+
+  News:
+    • US-Iran ceasefire agreed with peace talks beginning today in Islamabad, Pakistan
+    • VP Vance leads US delegation to Pakistan for highest-level US-Iran talks since 1979
+    • Iran demands Lebanon ceasefire and asset release before negotiations begin
+    • Both sides claim victory but face same disagreements that led to February war
+    • Iran's conditions now more maximalist - wants Strait of Hormuz control and war reparations
+    Sentiment: bearish_yes (strength: 75%)
+    Key facts:
+      - Two-week ceasefire between US and Iran began April 8, 2026, brokered by Pakistan
+      - Peace talks starting April 10, 2026 in Islamabad with VP Vance leading US team
+      - Iran's 10-point proposal includes permanent Strait of Hormuz control and sanctions lifting
+      - US has 15-point counter-proposal including nuclear disarmament and proxy group cessation
+      - Iran suffered thousands of casualties but maintains maximalist negotiating position
+
+  Related markets:
+    [keyword_overlap] Iran x Israel/US conflict ends by April 15?: 67%
+    [keyword_overlap] Iran x Israel/US conflict ends by April 30?: 70%
+    [keyword_overlap] Israel x Hezbollah ceasefire by April 30, 2026?: 46%
+    [keyword_overlap] Trump announces end of military operations against Iran by April 15th?: 12%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 6,281 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.05,
+      "base_rate_reasoning": "Permanent peace deals between major adversaries are extremely rare historically, especially between countries with 45+ years of hostility like the US and Iran.",
+      "news_impact": "The current ceasefire and high-level talks in Islamabad are positive developments, but both sides maintain fundamentally incompatible positions - Iran's 10-point proposal (Strait control, sanctions lifting) vs US 15-point counter (nuclear disarmament, proxy cessation).",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "The related Iran-Israel/US conflict markets at 67-70% suggest broader regional de-escalation is expected, but those have lower resolution bars than a permanent peace deal.",
+      "factors_for": [
+        "Active high-level negotiations with VP Vance leading US delegation",
+        "Two-week ceasefire successfully implemented",
+        "Pakistani mediation providing neutral ground",
+        "Both sides claiming victory may create face-saving opportunity"
+      ],
+      "factors_against": [
+        "Fundamental disagreements remain unchanged from pre-war positions",
+        "Iran's demands (Strait control, sanctions) likely unacceptable to US",
+        "US demands (nuclear disarmament, proxy cessation) likely unacceptable to Iran",
+        "Only 12 days remaining for complex negotiations",
+        "45+ year history of failed diplomatic efforts"
+      ],
+      "probability": 0.08,
+      "reasoning": "While the current talks represent the highest-level US-Iran diplomacy since 1979, the fundamental positions remain irreconcilable. Iran's 10-point proposal and the US 15-point counter reflect the same core disagreements that led to war in February. A permanent peace deal requires both sides to abandon core strategic positions, which is unlikely in just 12 days of negotiations.",
+      "confidence": "medium",
+      "information_edge": "Market may be underweighting how entrenched both sides' positions are - the gap between ceasefire talks and permanent peace is enormous."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.05
+    Base rate reason:   Permanent peace deals between major adversaries are extremely rare historically, especially between countries with 45+ years of hostility like the US and Iran.
+    Factors FOR YES:
+      + Active high-level negotiations with VP Vance leading US delegation
+      + Two-week ceasefire successfully implemented
+      + Pakistani mediation providing neutral ground
+      + Both sides claiming victory may create face-saving opportunity
+    Factors AGAINST:
+      - Fundamental disagreements remain unchanged from pre-war positions
+      - Iran's demands (Strait control, sanctions) likely unacceptable to US
+      - US demands (nuclear disarmament, proxy cessation) likely unacceptable to Iran
+      - Only 12 days remaining for complex negotiations
+      - 45+ year history of failed diplomatic efforts
+    Probability:       0.08
+    Confidence:        medium
+    Reasoning:         While the current talks represent the highest-level US-Iran diplomacy since 1979, the fundamental positions remain irreconcilable. Iran's 10-point proposal and the US 15-point counter reflect the same core disagreements that led to war in February. A permanent peace deal requires both sides to abandon core strategic positions, which is unlikely in just 12 days of negotiations.
+    Information edge:  Market may be underweighting how entrenched both sides' positions are - the gap between ceasefire talks and permanent peace is enormous.
+
+  Calibration:
+    Raw LLM probability:    8.0%
+    Calibrated probability: 12.1%
+    Adjustment:             +4.1%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.70
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  12.1%   0.70    0.315         3.8%
+  base_rate                0.150  14.5%   0.50    0.075         1.1%
+  momentum                 0.200  15.0%   0.08    0.015         0.2%
+  book_imbalance           0.150  14.5%   0.00    0.000         0.0%
+  whale_profiled           0.000  14.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.405         5.1%
+
+  Final probability: 5.1% / 0.405 = 12.6%
+  Ensemble confidence (agreement): 0.98
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    12.6%
+  Market price:    14.5%
+  Edge:            -1.9%
+  Direction:       NO (market overpriced)
+
+  ❌ NO TRADE: Edge 1.9% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 30 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will Sam Burns win the 2026 Masters tournament?
+  Market ID:     568665
+  Market price:  6.2%
+  Category:      Sam Burns
+  Volume 24h:    $256,285
+  Liquidity:     $49,494
+  Scanner score: 0.400
+  Days to res:   2.1
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 17.3s
+
+  News:
+    • Sam Burns shares first-round lead at 2026 Masters with 5-under 67
+    • Burns posts lowest career Masters round in fifth appearance at Augusta
+    • Burns excels on par-5s, birdieing 12th, 13th, and 15th holes
+    • World No. 33 Burns coming off best major championship season in 2025
+    • Burns ranked 13th on PGA Tour in putting this season with strong recent form
+    Sentiment: bullish_yes (strength: 75%)
+    Key facts:
+      - Burns tied for lead at 5-under after Round 1, matching defending champion Rory McIlroy
+      - Posted career-best Masters round of 67 in his fifth tournament appearance
+      - Finished T46 (+5) at 2025 Masters, best previous finish was T29 in 2023
+      - Currently 33rd in world rankings and 35th in 2026 FedEx Cup standings
+      - Strong putting stats: 0.625 Strokes Gained: Putting (13th on Tour), 0.943 in last 5 tournaments
+
+  Related markets:
+    [keyword_overlap] Will Rory McIlroy win the 2026 Masters tournament?: 53%
+    [keyword_overlap] Will Justin Rose win the 2026 Masters tournament?: 5%
+    [keyword_overlap] Will Patrick Reed win the 2026 Masters tournament?: 11%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,230 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.013,
+      "base_rate_reasoning": "The Masters field typically has ~90 players, giving each roughly 1.1% chance if skill were equal. However, skill varies dramatically - top players have much higher odds while lower-ranked players have minimal chances.",
+      "news_impact": "Burns sharing the first-round lead at 5-under with a career-best Masters round significantly boosts his chances. Leading after Round 1 historically correlates with strong tournament performance, and his excellent play on par-5s shows he's adapting well to Augusta's unique challenges.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "Burns' 6.2% price should be consistent with other contenders - McIlroy at 53% seems reasonable given his status as defending champion and co-leader, while other players like Rose (5%) and Reed (11%) provide reference points.",
+      "factors_for": [
+        "Tied for lead after Round 1 with career-best 67",
+        "Excellent performance on par-5s (birdieing 12th, 13th, 15th)",
+        "Coming off best major championship season in 2025",
+        "Fifth Masters appearance showing improved comfort at Augusta",
+        "Currently in strong form as World No. 33"
+      ],
+      "factors_against": [
+        "Still 3 rounds remaining with historically volatile Augusta conditions",
+        "No previous major championship wins",
+        "Best previous Masters finish only T29",
+        "Many elite players still in contention including defending champion",
+        "Augusta National heavily favors experience and past major winners"
+      ],
+      "probability": 0.085,
+      "reasoning": "Burns' first-round co-lead represents a significant positive development that justifies moving well above the typical base rate for a player of his ranking. His career-best 67 and strong par-5 play demonstrate he's found something at Augusta. However, the Masters heavily favors experience and proven major winners, and three difficult rounds remain. The market at 6.2% seems slightly undervalued given his current position, but not dramatically so given the strength of the remaining field.",
+      "confidence": "medium",
+      "information_edge": "Market may be slightly underweighting the significance of his first-round performance and improved Augusta form, but the edge is modest given tournament volatility"
+    }
+
+  Parsed response:
+    Base rate anchor:   0.013
+    Base rate reason:   The Masters field typically has ~90 players, giving each roughly 1.1% chance if skill were equal. However, skill varies dramatically - top players have much higher odds while lower-ranked players have minimal chances.
+    Factors FOR YES:
+      + Tied for lead after Round 1 with career-best 67
+      + Excellent performance on par-5s (birdieing 12th, 13th, 15th)
+      + Coming off best major championship season in 2025
+      + Fifth Masters appearance showing improved comfort at Augusta
+      + Currently in strong form as World No. 33
+    Factors AGAINST:
+      - Still 3 rounds remaining with historically volatile Augusta conditions
+      - No previous major championship wins
+      - Best previous Masters finish only T29
+      - Many elite players still in contention including defending champion
+      - Augusta National heavily favors experience and past major winners
+    Probability:       0.085
+    Confidence:        medium
+    Reasoning:         Burns' first-round co-lead represents a significant positive development that justifies moving well above the typical base rate for a player of his ranking. His career-best 67 and strong par-5 play demonstrate he's found something at Augusta. However, the Masters heavily favors experience and proven major winners, and three difficult rounds remain. The market at 6.2% seems slightly undervalued given his current position, but not dramatically so given the strength of the remaining field.
+    Information edge:  Market may be slightly underweighting the significance of his first-round performance and improved Augusta form, but the edge is modest given tournament volatility
+
+  Calibration:
+    Raw LLM probability:    8.5%
+    Calibrated probability: 12.6%
+    Adjustment:             +4.1%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.70
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  12.6%   0.70    0.315         4.0%
+  base_rate                0.150   6.2%   0.50    0.075         0.5%
+  momentum                 0.200   5.3%   0.13    0.027         0.1%
+  book_imbalance           0.150   5.7%   0.07    0.010         0.1%
+  whale_profiled           0.000   6.2%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.427         4.6%
+
+  Final probability: 4.6% / 0.427 = 10.9%
+  Ensemble confidence (agreement): 0.95
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    10.9%
+  Market price:    6.2%
+  Edge:            +4.7%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: Edge 4.7% below minimum 5.0%
+
+
+==============================================================================
+  RUN SUMMARY
+==============================================================================
+  Markets evaluated: 30
+  Tradeable:         5
+  Trades entered:    5
+  Elapsed:           722.0s
+==============================================================================

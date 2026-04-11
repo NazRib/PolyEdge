@@ -22,10 +22,13 @@ tracking, and Kelly Criterion position sizing to identify and exploit mispricing
 │          │ • FRED econ   │              │          │           │
 │          │ • Related mkts│              │          │           │
 │          │ • Whale tracker│             │          │           │
-├──────────┴───────────────┴──────────────┴──────────┴───────────┤
-│                 Polymarket API Client Layer                      │
-│          (Gamma API + CLOB API + Data API)                      │
-└─────────────────────────────────────────────────────────────────┘
+│          │ • Cross-event │              │          │           │
+│          │   dependencies│              │          │           │
+├──────────┴──┬────────────┴──────────────┴──────────┴───────────┤
+│ Cross-Event │         Polymarket API Client Layer               │
+│ Dependency  │      (Gamma API + CLOB API + Data API)           │
+│ Scanner     │                                                   │
+└─────────────┴───────────────────────────────────────────────────┘
 ```
 
 ## Project Structure
@@ -37,21 +40,24 @@ polymarket_edge/
 ├── core/
 │   ├── api_client.py            # Unified Polymarket API client (Gamma + CLOB + Data)
 │   ├── market_scanner.py        # Scans and scores tradeable opportunities
-│   ├── context_enricher.py      # Multi-source enrichment pipeline
+│   ├── context_enricher.py      # Multi-source enrichment pipeline (6 sources)
 │   ├── llm_estimator.py         # Claude-powered probability estimation + calibration
 │   ├── probability.py           # Ensemble framework, Bayesian updating, calibration tracking
 │   ├── kelly.py                 # Kelly Criterion position sizing (fractional Kelly)
 │   ├── paper_trader.py          # Paper trading engine with P&L and Brier score tracking
+│   ├── pipeline_logger.py       # Detailed per-market run logging
 │   └── whale_profiler.py        # Behavioral profiling of top traders
 ├── strategies/
 │   ├── edge_detector.py         # Basic pipeline (no enrichment)
-│   └── enriched_edge_detector.py # Full pipeline with enrichment + live LLM
+│   ├── enriched_edge_detector.py # Full pipeline with enrichment + live LLM
+│   └── cross_event_arb.py       # Cross-event logical dependency detection (Phase A+B)
 ├── backtest_llm.py              # Backtesting framework for strategy comparison
 └── data/                        # Generated at runtime
     ├── paper_trades.json
     ├── calibration_log.json
     ├── markets_cache.json
-    └── whale_profiles.json      # Persistent whale behavioral profiles
+    ├── whale_profiles.json      # Persistent whale behavioral profiles
+    └── dependency_cache.json    # Cached LLM dependency classifications
 ```
 
 ## Quick Start
@@ -85,8 +91,12 @@ python run_pipeline.py --report
 | `--scan-only` | Scans Polymarket for top candidates, prints scores |
 | `--enriched` | Enriched pipeline with simulated LLM (no Claude API needed) |
 | `--enriched --live` | Full pipeline: news search, whale tracking, live Claude estimation |
+| `--enriched --live --cross-event` | Full pipeline + cross-event dependency context (heuristic) |
+| `--enriched --live --cross-event --llm` | Full pipeline + LLM-classified cross-event dependencies |
 | `--enriched --whale-profiles` | Enriched pipeline with profile-aware whale signals |
 | `--enriched --live --whale-profiles` | Full pipeline with profiled whales + live Claude |
+| `--cross-event --verbose --top 500` | Standalone cross-event scan (heuristic only) |
+| `--cross-event --llm --verbose --top 500` | Standalone cross-event scan with LLM classification |
 | `--profile-whales` | Build/refresh whale behavioral profiles (~5-8 min) |
 | `--whale-report` | Print whale profiler report (strategy breakdown, top signals) |
 | `--whale-backtest` | A/B backtest: profiled vs naive whale signal (synthetic data) |
@@ -104,13 +114,35 @@ can't exit), and order book imbalance (are informed traders accumulating?).
 Markets below the minimum score threshold are filtered out.
 
 ### 2. Context Enrichment (`context_enricher.py`)
-For each candidate market, five enrichment sources run in sequence:
+For each candidate market, six enrichment sources run in sequence:
 
 - **News search** — Uses Claude with the web_search tool to find recent news relevant to the market question. Returns headlines, key facts, and a sentiment signal. Includes exponential backoff retry on rate limits.
 - **Kalshi cross-platform pricing** — Searches for the same or similar market on Kalshi. A significant price difference signals potential mispricing.
 - **FRED economic indicators** — Pulls relevant macroeconomic data (Fed Funds rate, CPI, unemployment, GDP, etc.) for economics-related markets.
 - **Related markets** — Finds other Polymarket markets in the same event or with keyword overlap, checking for pricing consistency.
 - **Whale tracker** — Fetches the Polymarket leaderboard (top profitable traders) once per pipeline run, then for each market checks if any of these whales hold positions. Cross-references holder wallets against the whale registry to produce signals with direction, size, and trader credibility (lifetime PnL). When whale profiles are enabled (see below), signals are enriched with strategy type, category-specific win rates, and credibility scores.
+- **Cross-event dependencies** — When enabled (`--cross-event`), looks up logically related markets from different events and injects pricing constraints into the LLM prompt. See below for details.
+
+### 2a. Cross-Event Dependency Detection (`cross_event_arb.py`)
+Detects logical relationships between markets in *different* events that should constrain each other's prices. Runs once at the start of each pipeline cycle (Step 1b), then feeds per-market context into the enrichment pipeline.
+
+**Three dependency types:**
+
+- **Implication** — A=YES implies B=YES (e.g. "Trump wins presidency" implies "Republican wins"). Constraint: P(A) <= P(B).
+- **Mutual exclusion** — A and B can't both be YES (e.g. competing candidates, competing countries). Constraint: P(A) + P(B) <= 1.0.
+- **Subsumption** — A is a stricter version of B by date or scope (e.g. "Fed cuts by June" vs "Fed cuts by December"). Constraint: P(stricter) <= P(broader).
+
+**Two-phase detection:**
+
+- **Phase A (heuristic, zero API cost)** — Pairs markets by keyword/entity overlap, then classifies using date parsing, opposing-pattern matching, and question-skeleton dedup. Filters out same-event variants (FIFA countries, sports matchups) using prefix and skeleton deduplication.
+- **Phase B (LLM classification, cached)** — Sends ambiguous "correlated" pairs to Claude in batches for semantic classification. Results persist to `data/dependency_cache.json` — subsequent runs only classify new market pairs. First run ~$0.30, subsequent runs near-zero.
+
+**Standalone usage:**
+```bash
+python run_pipeline.py --cross-event --verbose --top 500          # heuristic only
+python run_pipeline.py --cross-event --llm --verbose --top 500    # heuristic + LLM
+python -m strategies.cross_event_arb --cache-stats                # show cache stats
+```
 
 ### 2b. Whale Profiler (`whale_profiler.py`) — optional
 Builds rich behavioral profiles for top traders by analyzing their positions across categories. Run periodically with `--profile-whales` to build/refresh profiles. Profiles persist to `data/whale_profiles.json` and accumulate over time.

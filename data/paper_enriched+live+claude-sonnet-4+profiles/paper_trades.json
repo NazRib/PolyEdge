@@ -1,7 +1,7 @@
 {
-  "bankroll": 298.5008999999998,
+  "bankroll": 233.02089999999973,
   "initial_bankroll": 1000,
-  "trade_counter": 33,
+  "trade_counter": 41,
   "trades": [
     {
       "trade_id": "PT-0001",
@@ -662,6 +662,166 @@
       "pnl": 0.0,
       "strategy_tag": "enriched+live+claude-sonnet-4+profiles",
       "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0034",
+      "market_id": "568665",
+      "question": "Will Sam Burns win the 2026 Masters tournament?",
+      "side": "YES",
+      "entry_price": 0.0525,
+      "shares": 131.8877,
+      "dollar_amount": 6.92,
+      "estimated_probability": 0.15133776088214193,
+      "market_price_at_entry": 0.0525,
+      "edge_at_entry": 0.09883776088214194,
+      "confidence": 0.8894758081730113,
+      "timestamp": "2026-04-10T22:30:31.685898+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4+profiles",
+      "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0035",
+      "market_id": "568652",
+      "question": "Will Justin Rose win the 2026 Masters tournament?",
+      "side": "YES",
+      "entry_price": 0.0515,
+      "shares": 106.1189,
+      "dollar_amount": 5.47,
+      "estimated_probability": 0.12829450549447563,
+      "market_price_at_entry": 0.0515,
+      "edge_at_entry": 0.07679450549447564,
+      "confidence": 0.9045268672507755,
+      "timestamp": "2026-04-10T22:30:31.685898+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4+profiles",
+      "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0036",
+      "market_id": "1171663",
+      "question": "Russia x Ukraine ceasefire by June 30, 2026?",
+      "side": "YES",
+      "entry_price": 0.115,
+      "shares": 60.3724,
+      "dollar_amount": 6.94,
+      "estimated_probability": 0.20555274579224114,
+      "market_price_at_entry": 0.115,
+      "edge_at_entry": 0.09055274579224114,
+      "confidence": 0.9092690008652189,
+      "timestamp": "2026-04-10T22:30:31.701675+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4+profiles",
+      "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0037",
+      "market_id": "568648",
+      "question": "Will Patrick Reed win the 2026 Masters tournament?",
+      "side": "YES",
+      "entry_price": 0.1075,
+      "shares": 56.6238,
+      "dollar_amount": 6.09,
+      "estimated_probability": 0.1884969273455699,
+      "market_price_at_entry": 0.1075,
+      "edge_at_entry": 0.08099692734556989,
+      "confidence": 0.898796693958859,
+      "timestamp": "2026-04-10T22:30:31.701675+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4+profiles",
+      "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0038",
+      "market_id": "1823779",
+      "question": "Will Bitcoin dip to $65,000 in April?",
+      "side": "NO",
+      "entry_price": 0.7150000000000001,
+      "shares": 25.3339,
+      "dollar_amount": 18.11,
+      "estimated_probability": 0.20776488379922975,
+      "market_price_at_entry": 0.285,
+      "edge_at_entry": -0.07723511620077023,
+      "confidence": 0.8956802304353244,
+      "timestamp": "2026-04-10T22:30:31.714357+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4+profiles",
+      "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0039",
+      "market_id": "1709080",
+      "question": "Will Vance visit the Middle East by April 10?",
+      "side": "YES",
+      "entry_price": 0.0705,
+      "shares": 125.6447,
+      "dollar_amount": 8.86,
+      "estimated_probability": 0.5494006966832469,
+      "market_price_at_entry": 0.0705,
+      "edge_at_entry": 0.47890069668324686,
+      "confidence": 0.2697160245139194,
+      "timestamp": "2026-04-10T22:45:45.432000+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4+profiles",
+      "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0040",
+      "market_id": "568646",
+      "question": "Will Tommy Fleetwood win the 2026 Masters tournament?",
+      "side": "YES",
+      "entry_price": 0.0595,
+      "shares": 104.5605,
+      "dollar_amount": 6.22,
+      "estimated_probability": 0.16609875663209223,
+      "market_price_at_entry": 0.0595,
+      "edge_at_entry": 0.10659875663209223,
+      "confidence": 0.8611142739572882,
+      "timestamp": "2026-04-10T22:45:45.438476+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4+profiles",
+      "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0041",
+      "market_id": "1919417",
+      "question": "US x Iran permanent peace deal by April 22, 2026?",
+      "side": "YES",
+      "entry_price": 0.145,
+      "shares": 47.3708,
+      "dollar_amount": 6.87,
+      "estimated_probability": 0.2480134758978481,
+      "market_price_at_entry": 0.145,
+      "edge_at_entry": 0.10301347589784812,
+      "confidence": 0.8943754535114566,
+      "timestamp": "2026-04-10T22:45:45.443593+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4+profiles",
+      "model_tag": "claude-sonnet-4"
     }
   ],
   "calibration": [
@@ -669,49 +829,49 @@
       "predicted": 0.7762355586390229,
       "actual": 1,
       "market_id": "1835958",
-      "time": "2026-04-09T15:09:22.498853+00:00"
+      "time": "2026-04-10T22:36:23.656806+00:00"
     },
     {
       "predicted": 0.5366642043870378,
       "actual": 1,
       "market_id": "1762466",
-      "time": "2026-04-09T15:09:22.498853+00:00"
+      "time": "2026-04-10T22:36:23.656806+00:00"
     },
     {
       "predicted": 0.5984215171254109,
       "actual": 0,
       "market_id": "1762490",
-      "time": "2026-04-09T15:09:22.498853+00:00"
+      "time": "2026-04-10T22:36:23.656806+00:00"
     },
     {
       "predicted": 0.5657331924746916,
       "actual": 0,
       "market_id": "1760063",
-      "time": "2026-04-09T15:09:22.498853+00:00"
+      "time": "2026-04-10T22:36:23.656806+00:00"
     },
     {
       "predicted": 0.18216162905254785,
       "actual": 0,
       "market_id": "1790928",
-      "time": "2026-04-09T15:09:22.498853+00:00"
+      "time": "2026-04-10T22:36:23.656806+00:00"
     },
     {
       "predicted": 0.5321472532406772,
       "actual": 0,
       "market_id": "1790935",
-      "time": "2026-04-09T15:09:22.498853+00:00"
+      "time": "2026-04-10T22:36:23.656806+00:00"
     },
     {
       "predicted": 0.34538003947464135,
       "actual": 0,
       "market_id": "1790915",
-      "time": "2026-04-09T15:09:22.498853+00:00"
+      "time": "2026-04-10T22:36:23.656806+00:00"
     },
     {
       "predicted": 0.5643290919810753,
       "actual": 1,
       "market_id": "1790940",
-      "time": "2026-04-09T15:09:22.498853+00:00"
+      "time": "2026-04-10T22:36:23.656806+00:00"
     }
   ]
 }

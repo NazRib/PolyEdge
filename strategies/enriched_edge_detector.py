@@ -212,6 +212,7 @@ class EnrichedEdgeDetector:
         max_cluster_exposure: float = 0.20,
         use_live_llm: bool = False,
         use_whale_profiles: bool = False,
+        enable_cross_event: bool = False,
         llm_skill_level: float = 0.35,
         data_dir: str = "data",
         llm_provider: str = PROVIDER_CLAUDE,
@@ -220,7 +221,9 @@ class EnrichedEdgeDetector:
         self.min_edge = min_edge
         self.min_scanner_score = min_scanner_score
         self.max_signals = max_signals
-        self.max_cluster_exposure = max_cluster_exposure  # Max % of initial bankroll per theme
+        self.max_cluster_exposure = max_cluster_exposure
+        self.use_live_llm = use_live_llm
+        self.enable_cross_event = enable_cross_event  # Max % of initial bankroll per theme
         
         # Validate and store provider
         self.llm_provider = validate_provider(llm_provider) if use_live_llm else ""
@@ -324,6 +327,27 @@ class EnrichedEdgeDetector:
         )
         candidates = [c for c in candidates if c.overall_score >= self.min_scanner_score]
         print(f"   Found {len(candidates)} candidates ({time.time()-t0:.1f}s)")
+        
+        # Step 1b: Cross-event dependency scan (runs once, results cached)
+        if self.enable_cross_event:
+            t_ce = time.time()
+            print("\n[X] Step 1b: Cross-event dependency scan...")
+            try:
+                from strategies.cross_event_arb import CrossEventScanner
+                ce_scanner = CrossEventScanner(client=self.client)
+                _, ce_pairs = ce_scanner.scan(
+                    max_markets=300,
+                    use_llm=self.use_live_llm,
+                )
+                self.enricher.set_cross_event_pairs(ce_pairs)
+                logical = [
+                    p for p in ce_pairs
+                    if p.dep_type not in ('correlated', 'independent', '')
+                ]
+                print(f"   Found {len(logical)} logical dependencies ({time.time()-t_ce:.1f}s)")
+            except Exception as e:
+                logger.warning(f"Cross-event scan failed: {e}")
+                print(f"   Cross-event scan failed: {e}")
         
         # Cache all market dicts for related-market lookup
         all_market_dicts = [self._scored_to_dict(c) for c in candidates]
