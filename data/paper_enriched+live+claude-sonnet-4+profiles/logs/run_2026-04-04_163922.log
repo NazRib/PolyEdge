@@ -1,0 +1,2068 @@
+==============================================================================
+  POLYMARKET EDGE — Pipeline Run Log
+  2026-04-04 16:39:22 UTC
+==============================================================================
+  Strategy:      enriched+live+claude-sonnet-4+profiles
+  Model:         claude-sonnet-4
+  Candidates:    17
+  Bankroll:      $1,054.62
+  Min edge:      5%
+  Kelly frac:    25%
+==============================================================================
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 1 of 17
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Indian Premier League: Gujarat Titans vs Rajasthan Royals
+  Market ID:     1762490
+  Market price:  37.5%
+  Volume 24h:    $504,904
+  Liquidity:     $64,547
+  Scanner score: 0.596
+  Days to res:   6.7
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news (1 of 5)
+  Time: 15.7s
+
+  News:
+    • Rajasthan Royals post commanding 210/6 total against Gujarat Titans in ongoing match
+    • Shubman Gill ruled out with muscle spasm, Rashid Khan captains GT
+    • Vaibhav Sooryavanshi continues explosive form with 31 off quick balls
+    • Dhruv Jurel smashes career-best 75 off 42 balls to power RR innings
+    • Gujarat Titans chase 211 runs for first win of IPL 2026 season
+    Sentiment: bullish_yes (strength: 75%)
+    Key facts:
+      - Match is currently in progress - RR scored 210/6, GT chasing
+      - GT captain Shubman Gill absent due to recurring neck injury/muscle spasm
+      - RR have won 2 of last 4 meetings vs GT, including dominant 8-wicket victory in 2025
+      - GT lost their opening match to Punjab Kings by 3 wickets
+      - RR won their opener against CSK by 8 wickets with Vaibhav's 15-ball fifty
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 4,766 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "In cricket matches between relatively evenly matched IPL teams, the base rate is approximately 50% for either team to win, absent specific information about current form or conditions.",
+      "news_impact": "The news is extremely significant - RR has already posted a commanding 210/6 total and GT is chasing without their captain Shubman Gill due to injury. This heavily favors RR as the match is already in progress with GT facing a difficult chase.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "RR posted a strong total of 210/6, putting pressure on GT",
+        "Dhruv Jurel's explosive 75 off 42 balls anchored RR's innings",
+        "GT missing captain Shubman Gill due to muscle spasm/neck injury",
+        "RR won 2 of last 4 meetings including a dominant 8-wicket victory in 2025"
+      ],
+      "factors_against": [
+        "GT still has batting firepower to chase down totals",
+        "Rashid Khan is an experienced captain leading GT",
+        "210 is challenging but not impossible in T20 cricket",
+        "GT's recent form may not reflect their full potential with key players"
+      ],
+      "probability": 0.75,
+      "reasoning": "The market price of 37.5% for GT appears significantly undervalued given the current match situation. RR has already posted 210/6, which is a strong total in T20 cricket, and GT must chase this without their captain Shubman Gill. The news sentiment is strongly bullish for RR (75% strength), and the recent head-to-head record favors RR. While 210 is chaseable, the absence of GT's key batsman and captain creates a substantial disadvantage.",
+      "confidence": "high",
+      "information_edge": "The market may be slow to adjust to the real-time match developments, particularly the impact of Gill's absence and RR's strong batting performance already completed."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   In cricket matches between relatively evenly matched IPL teams, the base rate is approximately 50% for either team to win, absent specific information about current form or conditions.
+    Factors FOR YES:
+      + RR posted a strong total of 210/6, putting pressure on GT
+      + Dhruv Jurel's explosive 75 off 42 balls anchored RR's innings
+      + GT missing captain Shubman Gill due to muscle spasm/neck injury
+      + RR won 2 of last 4 meetings including a dominant 8-wicket victory in 2025
+    Factors AGAINST:
+      - GT still has batting firepower to chase down totals
+      - Rashid Khan is an experienced captain leading GT
+      - 210 is challenging but not impossible in T20 cricket
+      - GT's recent form may not reflect their full potential with key players
+    Probability:       0.75
+    Confidence:        high
+    Reasoning:         The market price of 37.5% for GT appears significantly undervalued given the current match situation. RR has already posted 210/6, which is a strong total in T20 cricket, and GT must chase this without their captain Shubman Gill. The news sentiment is strongly bullish for RR (75% strength), and the recent head-to-head record favors RR. While 210 is chaseable, the absence of GT's key batsman and captain creates a substantial disadvantage.
+    Information edge:  The market may be slow to adjust to the real-time match developments, particularly the impact of Gill's absence and RR's strong batting performance already completed.
+
+  Calibration:
+    Raw LLM probability:    75.0%
+    Calibrated probability: 73.3%
+    Adjustment:             -1.7%
+
+  Confidence build-up:
+    Base (from LLM):        0.85 (high)
+    + enrichment bonus:     +0.05 (1 sources × 0.05)
+    × deviation penalty:    ×0.80 (deviation 35.8% > 15%)
+    Final confidence:       0.72
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  73.3%   0.72    0.324        23.7%
+  base_rate                0.150  37.5%   0.50    0.075         2.8%
+  momentum                 0.200  34.4%   0.52    0.103         3.5%
+  book_imbalance           0.150  37.4%   0.02    0.003         0.1%
+  whale_profiled           0.000  37.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.505        30.2%
+
+  Final probability: 30.2% / 0.505 = 59.8%
+  Ensemble confidence (agreement): 0.71
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    59.8%
+  Market price:    37.5%
+  Edge:            +22.3%
+  Direction:       YES (market underpriced)
+
+  Kelly sizing:
+    Full Kelly:      35.7% of bankroll
+    Fractional:      6.3% ($66.58)
+    Shares:          177.5 @ $0.3750
+    Max loss:        $66.58
+    Expected profit: $39.67
+    Risk/reward:     1.67
+
+  ✅ TRADE ENTERED
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 2 of 17
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will the San Antonio Spurs win the 2026 NBA Finals?
+  Market ID:     553866
+  Market price:  18.5%
+  Category:      San Antonio Spurs
+  Volume 24h:    $826,428
+  Liquidity:     $229,776
+  Scanner score: 0.630
+  Days to res:   87.3
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, kalshi (2 of 5)
+  Time: 19.2s
+
+  News:
+    • Spurs odds improve from +650 to +550 over past two weeks, now tied for second-best NBA championship odds
+    • San Antonio has won 9 of last 10 games with second-best net rating in Western Conference
+    • Spurs are 18-2 since All-Star break, now just 2.5 games behind Thunder in West standings
+    • Victor Wembanyama drops 41 points and 18 rebounds in dominant win over Warriors
+    • Spurs hold 4-1 head-to-head record against Thunder this season
+    Sentiment: bullish_yes (strength: 85%)
+    Key facts:
+      - Spurs championship odds shortened from +650 to +550 in two weeks
+      - Team has won 10 straight games overall, 15 consecutive with Wembanyama playing
+      - Spurs are 4-1 against defending champion Thunder this season
+      - Victor Wembanyama averaging 27.9 points, 12.3 rebounds during 15-game win streak
+      - Wembanyama named Western Conference Defensive Player of Month for March
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 3,910 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.033,
+      "base_rate_reasoning": "With 30 NBA teams, the naive base rate for any team winning the championship is 3.3%. However, championship success is highly concentrated among elite teams, so this should be adjusted based on team quality.",
+      "news_impact": "The recent news is extremely bullish - the Spurs have dramatically improved odds from +650 to +550, won 18 of last 20 games, and Wembanyama is playing at an elite level. This suggests significant undervaluation at 18.5%.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "Spurs odds improved dramatically from +650 to +550, now tied for second-best championship odds",
+        "Exceptional recent form: 18-2 since All-Star break, won 10 straight games overall",
+        "Victor Wembanyama playing at superstar level (41 points, 18 rebounds vs Warriors)",
+        "Strong head-to-head record against defending champion Thunder (4-1)",
+        "Second-best net rating in Western Conference during hot streak"
+      ],
+      "factors_against": [
+        "Still 2.5 games behind Thunder in standings with limited time to catch up",
+        "Championship requires sustained excellence over multiple playoff rounds",
+        "Young team may lack playoff experience for deep run",
+        "Western Conference remains highly competitive with multiple elite teams",
+        "Hot streaks don't always translate to championship success"
+      ],
+      "probability": 0.28,
+      "reasoning": "The market at 18.5% appears to significantly undervalue the Spurs' championship chances. Their odds have shortened dramatically to +550 (15.4% implied), they're playing elite basketball (18-2 since All-Star break), and Wembanyama is performing at a superstar level. While they face challenges in a competitive West, their recent dominance and improved betting odds suggest the true probability is meaningfully higher than the current market price.",
+      "confidence": "medium",
+      "information_edge": "Market may be slow to adjust to the Spurs' dramatic recent improvement and Wembanyama's elite play, creating a gap between betting odds (+550) and prediction market price (18.5%)"
+    }
+
+  Parsed response:
+    Base rate anchor:   0.033
+    Base rate reason:   With 30 NBA teams, the naive base rate for any team winning the championship is 3.3%. However, championship success is highly concentrated among elite teams, so this should be adjusted based on team quality.
+    Factors FOR YES:
+      + Spurs odds improved dramatically from +650 to +550, now tied for second-best championship odds
+      + Exceptional recent form: 18-2 since All-Star break, won 10 straight games overall
+      + Victor Wembanyama playing at superstar level (41 points, 18 rebounds vs Warriors)
+      + Strong head-to-head record against defending champion Thunder (4-1)
+      + Second-best net rating in Western Conference during hot streak
+    Factors AGAINST:
+      - Still 2.5 games behind Thunder in standings with limited time to catch up
+      - Championship requires sustained excellence over multiple playoff rounds
+      - Young team may lack playoff experience for deep run
+      - Western Conference remains highly competitive with multiple elite teams
+      - Hot streaks don't always translate to championship success
+    Probability:       0.28
+    Confidence:        medium
+    Reasoning:         The market at 18.5% appears to significantly undervalue the Spurs' championship chances. Their odds have shortened dramatically to +550 (15.4% implied), they're playing elite basketball (18-2 since All-Star break), and Wembanyama is performing at a superstar level. While they face challenges in a competitive West, their recent dominance and improved betting odds suggest the true probability is meaningfully higher than the current market price.
+    Information edge:  Market may be slow to adjust to the Spurs' dramatic recent improvement and Wembanyama's elite play, creating a gap between betting odds (+550) and prediction market price (18.5%)
+
+  Calibration:
+    Raw LLM probability:    28.0%
+    Calibrated probability: 32.6%
+    Adjustment:             +4.6%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.70
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  32.6%   0.70    0.315        10.3%
+  base_rate                0.150  18.5%   0.50    0.075         1.4%
+  momentum                 0.200  18.7%   0.03    0.006         0.1%
+  book_imbalance           0.150  16.0%   0.36    0.053         0.9%
+  whale_profiled           0.000  18.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.449        12.6%
+
+  Final probability: 12.6% / 0.449 = 28.1%
+  Ensemble confidence (agreement): 0.88
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    28.1%
+  Market price:    18.5%
+  Edge:            +9.6%
+  Direction:       YES (market underpriced)
+
+  Kelly sizing:
+    Full Kelly:      11.7% of bankroll
+    Fractional:      2.6% ($27.25)
+    Shares:          147.3 @ $0.1850
+    Max loss:        $27.25
+    Expected profit: $14.09
+    Risk/reward:     4.41
+
+  ⏭  SKIPPED (already have open position)
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 3 of 17
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Kharg Island no longer under Iranian control by April 30?
+  Market ID:     1611267
+  Market price:  19.5%
+  Category:      April 30
+  Volume 24h:    $225,096
+  Liquidity:     $213,897
+  Scanner score: 0.774
+  Days to res:   26.3
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 19.3s
+
+  News:
+    • Trump threatens to 'obliterate' Kharg Island if Iran doesn't reopen Strait of Hormuz
+    • US deploys 5,000+ Marines and 82nd Airborne to Persian Gulf for potential Kharg Island operation
+    • Iran fortifies Kharg Island with traps, additional air defenses ahead of possible US ground assault
+    • US officials tell allies ground operation to seize Kharg Island may be 'no alternative'
+    • Trump says US 'can take out Kharg Island at any time' but prefers diplomatic solution
+    Sentiment: bullish_yes (strength: 75%)
+    Key facts:
+      - US conducted major bombing raid on Kharg Island March 13, hitting 90+ military targets while sparing oil infrastructure
+      - Iran has been laying traps and moving additional MANPADs to Kharg Island in recent weeks
+      - 5,000+ US Marines from two Marine Expeditionary Units now deployed to Persian Gulf region
+      - 2,000+ soldiers from 82nd Airborne Division also being deployed to Middle East
+      - Kharg Island handles 90% of Iran's oil exports, mostly to China (1.1-1.5 million barrels/day)
+
+  Related markets:
+    [keyword_overlap] Kharg Island no longer under Iranian control by April 15?: 6%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 4,991 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.05,
+      "base_rate_reasoning": "Military invasions and territorial seizures of fortified islands are historically rare events, especially against major regional powers like Iran. Most military confrontations stop short of actual territorial occupation.",
+      "news_impact": "The news is extremely bullish for YES - Trump's explicit threats, massive troop deployments (5,000+ Marines, 82nd Airborne), and official statements about ground operations being 'no alternative' suggest concrete military planning beyond typical saber-rattling.",
+      "cross_platform_note": "The related April 15 market at 6% suggests very low probability for the earlier date, which is logically consistent with higher probability for the later April 30 deadline.",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "Explicit presidential threat to 'obliterate' Kharg Island creates political pressure to follow through",
+        "Massive military deployment (5,000+ Marines, 82nd Airborne) indicates serious operational planning",
+        "US officials telling allies ground operation may be 'no alternative' suggests decision-making process is advanced",
+        "Previous bombing raid demonstrates US willingness to strike Iranian assets",
+        "26+ days remaining provides sufficient time for military operation"
+      ],
+      "factors_against": [
+        "Iran is fortifying the island with traps and air defenses, making invasion costly",
+        "Seizing and holding territory requires sustained commitment beyond initial assault",
+        "International diplomatic pressure could constrain US actions",
+        "Military operations often face delays and complications",
+        "Market has remained stable at ~19.5% despite dramatic news, suggesting informed traders see obstacles"
+      ],
+      "probability": 0.28,
+      "reasoning": "Starting from a low base rate for territorial seizures, the recent developments represent a dramatic escalation beyond typical military posturing. The combination of explicit presidential threats, massive troop deployments, and official statements about ground operations suggests genuine preparation for invasion. However, the market's stability at 19.5% despite this news indicates sophisticated traders see significant obstacles, likely including operational complexity and Iranian defensive preparations.",
+      "confidence": "medium",
+      "information_edge": "The market may be underweighting the significance of the specific troop deployments and official statements, treating this as typical saber-rattling rather than genuine operational preparation."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.05
+    Base rate reason:   Military invasions and territorial seizures of fortified islands are historically rare events, especially against major regional powers like Iran. Most military confrontations stop short of actual territorial occupation.
+    Factors FOR YES:
+      + Explicit presidential threat to 'obliterate' Kharg Island creates political pressure to follow through
+      + Massive military deployment (5,000+ Marines, 82nd Airborne) indicates serious operational planning
+      + US officials telling allies ground operation may be 'no alternative' suggests decision-making process is advanced
+      + Previous bombing raid demonstrates US willingness to strike Iranian assets
+      + 26+ days remaining provides sufficient time for military operation
+    Factors AGAINST:
+      - Iran is fortifying the island with traps and air defenses, making invasion costly
+      - Seizing and holding territory requires sustained commitment beyond initial assault
+      - International diplomatic pressure could constrain US actions
+      - Military operations often face delays and complications
+      - Market has remained stable at ~19.5% despite dramatic news, suggesting informed traders see obstacles
+    Probability:       0.28
+    Confidence:        medium
+    Reasoning:         Starting from a low base rate for territorial seizures, the recent developments represent a dramatic escalation beyond typical military posturing. The combination of explicit presidential threats, massive troop deployments, and official statements about ground operations suggests genuine preparation for invasion. However, the market's stability at 19.5% despite this news indicates sophisticated traders see significant obstacles, likely including operational complexity and Iranian defensive preparations.
+    Information edge:  The market may be underweighting the significance of the specific troop deployments and official statements, treating this as typical saber-rattling rather than genuine operational preparation.
+
+  Calibration:
+    Raw LLM probability:    28.0%
+    Calibrated probability: 32.6%
+    Adjustment:             +4.6%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.70
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  32.6%   0.70    0.315        10.3%
+  base_rate                0.150  19.5%   0.50    0.075         1.5%
+  momentum                 0.200  19.3%   0.04    0.008         0.2%
+  book_imbalance           0.150  21.8%   0.33    0.049         1.1%
+  whale_profiled           0.000  19.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.447        12.9%
+
+  Final probability: 12.9% / 0.447 = 29.0%
+  Ensemble confidence (agreement): 0.90
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    29.0%
+  Market price:    19.5%
+  Edge:            +9.5%
+  Direction:       YES (market underpriced)
+
+  Kelly sizing:
+    Full Kelly:      11.8% of bankroll
+    Fractional:      2.6% ($27.82)
+    Shares:          142.6 @ $0.1950
+    Max loss:        $27.82
+    Expected profit: $13.49
+    Risk/reward:     4.13
+
+  ✅ TRADE ENTERED
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 4 of 17
+══════════════════════════════════════════════════════════════════════════════
+  Question:      US x Iran ceasefire by June 30?
+  Market ID:     1484895
+  Market price:  44.5%
+  Category:      June 30
+  Volume 24h:    $202,863
+  Liquidity:     $216,842
+  Scanner score: 0.739
+  Days to res:   86.3
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 16.0s
+
+  News:
+    • Regional ceasefire mediation efforts between US and Iran reach dead end
+    • Iran rejects US proposal for 48-hour ceasefire, calls demands unacceptable
+    • Qatar resists serving as key mediator in US-Iran ceasefire talks
+    • US F-15 fighter jet shot down over Iran, search continues for missing crew member
+    • Trump issues 48-hour deadline for Iran to open Strait of Hormuz or face escalation
+    Sentiment: bearish_yes (strength: 85%)
+    Key facts:
+      - Current mediation efforts led by Pakistan have reached a dead end as of April 3-4, 2026
+      - Iran rejected a US 48-hour ceasefire proposal on April 2, 2026
+      - Iran refuses to meet US officials in Islamabad and considers US demands unacceptable
+      - Qatar declined to serve as key mediator, complicating ceasefire negotiations
+      - US lost F-15 fighter jet over Iran on April 3, with one crew member still missing
+
+  Related markets:
+    [keyword_overlap] US x Iran ceasefire by April 30?: 18%
+    [keyword_overlap] US x Iran ceasefire by May 31?: 32%
+    [keyword_overlap] US forces enter Iran by April 30?: 80%
+    [keyword_overlap] Iran x Israel/US conflict ends by May 15?: 28%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,611 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "No specific historical base rate is available for US-Iran ceasefires, so starting with an uninformative prior of 50%.",
+      "news_impact": "Recent news is strongly negative - mediation efforts have reached a dead end, Iran rejected US ceasefire proposals, key mediators are backing out, and military escalation continues with a US fighter jet shot down. This significantly reduces the probability.",
+      "cross_platform_note": "Related markets show consistent pessimism with April 30 ceasefire at only 18% and May 31 at 32%, suggesting a logical progression.",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "86 days remaining provides substantial time for diplomatic breakthrough",
+        "High trading volume suggests active interest and potential for rapid developments",
+        "Strong buyer interest shown in order book imbalance"
+      ],
+      "factors_against": [
+        "Pakistan-led mediation efforts have reached a dead end as of April 3-4",
+        "Iran explicitly rejected US 48-hour ceasefire proposal on April 2",
+        "Qatar declined to serve as key mediator, removing crucial diplomatic channel",
+        "Active military escalation with US F-15 shot down over Iran",
+        "Iran considers US demands unacceptable and refuses direct meetings"
+      ],
+      "probability": 0.22,
+      "reasoning": "Starting from a 50% base rate, the recent diplomatic failures and military escalation strongly push the probability down. The complete breakdown of Pakistan-mediated talks, Iran's outright rejection of US proposals, and loss of Qatar as a mediator represent fundamental obstacles. The downing of a US fighter jet indicates active hostilities rather than de-escalation. While 86 days allows time for developments, the current trajectory shows hardening positions rather than movement toward ceasefire.",
+      "confidence": "high",
+      "information_edge": "Market may be overestimating the probability given the severity of recent diplomatic breakdowns and active military escalation - the 44.5% price seems too optimistic given current realities."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   No specific historical base rate is available for US-Iran ceasefires, so starting with an uninformative prior of 50%.
+    Factors FOR YES:
+      + 86 days remaining provides substantial time for diplomatic breakthrough
+      + High trading volume suggests active interest and potential for rapid developments
+      + Strong buyer interest shown in order book imbalance
+    Factors AGAINST:
+      - Pakistan-led mediation efforts have reached a dead end as of April 3-4
+      - Iran explicitly rejected US 48-hour ceasefire proposal on April 2
+      - Qatar declined to serve as key mediator, removing crucial diplomatic channel
+      - Active military escalation with US F-15 shot down over Iran
+      - Iran considers US demands unacceptable and refuses direct meetings
+    Probability:       0.22
+    Confidence:        high
+    Reasoning:         Starting from a 50% base rate, the recent diplomatic failures and military escalation strongly push the probability down. The complete breakdown of Pakistan-mediated talks, Iran's outright rejection of US proposals, and loss of Qatar as a mediator represent fundamental obstacles. The downing of a US fighter jet indicates active hostilities rather than de-escalation. While 86 days allows time for developments, the current trajectory shows hardening positions rather than movement toward ceasefire.
+    Information edge:  Market may be overestimating the probability given the severity of recent diplomatic breakdowns and active military escalation - the 44.5% price seems too optimistic given current realities.
+
+  Calibration:
+    Raw LLM probability:    22.0%
+    Calibrated probability: 26.9%
+    Adjustment:             +4.9%
+
+  Confidence build-up:
+    Base (from LLM):        0.85 (high)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    × deviation penalty:    ×0.80 (deviation 17.6% > 15%)
+    Final confidence:       0.76
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  26.9%   0.76    0.342         9.2%
+  base_rate                0.150  44.5%   0.50    0.075         3.3%
+  momentum                 0.200  43.6%   0.15    0.029         1.3%
+  book_imbalance           0.150  48.8%   0.50    0.075         3.7%
+  whale_profiled           0.000  44.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.521        17.5%
+
+  Final probability: 17.5% / 0.521 = 33.5%
+  Ensemble confidence (agreement): 0.85
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    33.5%
+  Market price:    44.5%
+  Edge:            -11.0%
+  Direction:       NO (market overpriced)
+
+  Kelly sizing:
+    Full Kelly:      24.7% of bankroll
+    Fractional:      5.2% ($55.27)
+    Shares:          99.6 @ $0.5550
+    Max loss:        $55.27
+    Expected profit: $10.95
+    Risk/reward:     0.80
+
+  ⏭  SKIPPED (already have open position)
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 5 of 17
+══════════════════════════════════════════════════════════════════════════════
+  Question:      US x Iran ceasefire by May 31?
+  Market ID:     1484894
+  Market price:  32.5%
+  Category:      May 31
+  Volume 24h:    $274,902
+  Liquidity:     $214,306
+  Scanner score: 0.768
+  Days to res:   56.3
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 18.3s
+
+  News:
+    • Regional ceasefire mediation efforts between US and Iran have reached a dead end, with Iran refusing to meet US officials in Islamabad
+    • Iran rejected US proposal for 48-hour ceasefire through mediators on Wednesday
+    • Trump claims Iran's president asked for ceasefire but Iran denies this, calling US demands 'maximalist and irrational'
+    • US extended deadline for Iran to reopen Strait of Hormuz to April 6, 2026 citing 'good diplomatic progress'
+    • Pakistan, Turkey, Saudi Arabia and Egypt forming 'Four-Nation Mediation Bloc' but talks stalled
+    Sentiment: bearish_yes (strength: 80%)
+    Key facts:
+      - Current war began February 28, 2026 with US-Israeli strikes killing Iran's Supreme Leader Ali Khamenei
+      - Iran has closed Strait of Hormuz since war began, through which 20% of world's oil normally flows
+      - Trump's current deadline for Iran to reopen strait is April 6, 2026 - extended twice
+      - Iran rejected 15-point US peace plan and issued own 5-point counteroffer demanding Hormuz sovereignty
+      - Multiple mediating countries (Pakistan, Turkey, Egypt, Saudi Arabia) report talks at 'dead end'
+
+  Related markets:
+    [keyword_overlap] US x Iran ceasefire by April 30?: 18%
+    [keyword_overlap] US x Iran ceasefire by June 30?: 44%
+    [keyword_overlap] Iran x Israel/US conflict ends by May 15?: 28%
+    [keyword_overlap] US forces enter Iran by April 30?: 80%
+    [keyword_overlap] US obtains Iranian enriched uranium by May 31?: 10%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,904 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "No specific historical base rate is available for US-Iran ceasefires, so starting with an uninformative prior of 50%.",
+      "news_impact": "Recent news is strongly negative - Iran rejected US ceasefire proposals, mediation efforts have reached a dead end, and both sides are making contradictory claims about ceasefire requests. This significantly reduces the probability from the base rate.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "US has extended deadline for Iran to reopen Strait of Hormuz twice, showing some diplomatic flexibility",
+        "High trading volume suggests active interest and potential for rapid developments",
+        "Related market shows 44% chance of ceasefire by June 30, indicating some optimism for near-term resolution"
+      ],
+      "factors_against": [
+        "Iran explicitly rejected US 48-hour ceasefire proposal through mediators",
+        "Mediation efforts have reached a dead end with Iran refusing to meet US officials",
+        "Fundamental disagreement on terms - US demands maximalist conditions while Iran issued counter-demands for Hormuz sovereignty",
+        "War began with killing of Iran's Supreme Leader, creating deep animosity that makes quick resolution unlikely",
+        "Only 56 days remaining with no current diplomatic momentum"
+      ],
+      "probability": 0.15,
+      "reasoning": "Starting from a 50% base rate, the recent news strongly pushes probability downward. Iran's explicit rejection of ceasefire proposals, the breakdown of mediation efforts, and fundamental disagreements on terms suggest very low likelihood of agreement by May 31. The market price of 32.5% appears too optimistic given the current diplomatic impasse and short timeframe remaining.",
+      "confidence": "high",
+      "information_edge": "Market may be overweighting the possibility of sudden diplomatic breakthrough while underweighting the severity of current impasse and fundamental disagreements between the parties."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   No specific historical base rate is available for US-Iran ceasefires, so starting with an uninformative prior of 50%.
+    Factors FOR YES:
+      + US has extended deadline for Iran to reopen Strait of Hormuz twice, showing some diplomatic flexibility
+      + High trading volume suggests active interest and potential for rapid developments
+      + Related market shows 44% chance of ceasefire by June 30, indicating some optimism for near-term resolution
+    Factors AGAINST:
+      - Iran explicitly rejected US 48-hour ceasefire proposal through mediators
+      - Mediation efforts have reached a dead end with Iran refusing to meet US officials
+      - Fundamental disagreement on terms - US demands maximalist conditions while Iran issued counter-demands for Hormuz sovereignty
+      - War began with killing of Iran's Supreme Leader, creating deep animosity that makes quick resolution unlikely
+      - Only 56 days remaining with no current diplomatic momentum
+    Probability:       0.15
+    Confidence:        high
+    Reasoning:         Starting from a 50% base rate, the recent news strongly pushes probability downward. Iran's explicit rejection of ceasefire proposals, the breakdown of mediation efforts, and fundamental disagreements on terms suggest very low likelihood of agreement by May 31. The market price of 32.5% appears too optimistic given the current diplomatic impasse and short timeframe remaining.
+    Information edge:  Market may be overweighting the possibility of sudden diplomatic breakthrough while underweighting the severity of current impasse and fundamental disagreements between the parties.
+
+  Calibration:
+    Raw LLM probability:    15.0%
+    Calibrated probability: 19.8%
+    Adjustment:             +4.8%
+
+  Confidence build-up:
+    Base (from LLM):        0.85 (high)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.95
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  19.8%   0.95    0.427         8.5%
+  base_rate                0.150  32.5%   0.50    0.075         2.4%
+  momentum                 0.200  32.2%   0.05    0.009         0.3%
+  book_imbalance           0.150  36.6%   0.50    0.075         2.7%
+  whale_profiled           0.000  32.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.587        13.9%
+
+  Final probability: 13.9% / 0.587 = 23.8%
+  Ensemble confidence (agreement): 0.89
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    23.8%
+  Market price:    32.5%
+  Edge:            -8.7%
+  Direction:       NO (market overpriced)
+
+  Kelly sizing:
+    Full Kelly:      26.9% of bankroll
+    Fractional:      6.0% ($62.86)
+    Shares:          93.1 @ $0.6750
+    Max loss:        $62.86
+    Expected profit: $8.14
+    Risk/reward:     0.48
+
+  ✅ TRADE ENTERED
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 6 of 17
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Iran x Israel/US conflict ends by May 15?
+  Market ID:     1484914
+  Market price:  27.5%
+  Category:      May 15
+  Volume 24h:    $219,477
+  Liquidity:     $89,483
+  Scanner score: 0.692
+  Days to res:   40.3
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 20.1s
+
+  News:
+    • Iran shoots down two US warplanes on day 35 of conflict, one crew member still missing
+    • Trump issues 48-hour ultimatum for Iran to open Strait of Hormuz or face 'all hell'
+    • US-Israeli strikes hit Iranian civilian infrastructure including bridges and medical centers
+    • Iran launches retaliatory missile strikes on Israel and Gulf states
+    • War enters 6th week with over 2,076 Iranian casualties and widespread infrastructure damage
+    Sentiment: bearish_yes (strength: 85%)
+    Key facts:
+      - War began February 28, 2026 with assassination of Supreme Leader Khamenei
+      - Two US aircraft shot down April 3-4, search ongoing for missing crew member
+      - Over 2,076 killed and 26,500 wounded in Iran since war started
+      - Strait of Hormuz remains closed, disrupting 20% of global oil/gas supplies
+      - Trump set multiple deadlines for Hormuz reopening, all extended or ignored
+
+  Related markets:
+    [keyword_overlap] US x Iran ceasefire by May 31?: 32%
+    [keyword_overlap] US x Iran ceasefire by April 30?: 18%
+    [keyword_overlap] US x Iran ceasefire by June 30?: 44%
+    [keyword_overlap] US forces enter Iran by April 30?: 80%
+    [keyword_overlap] US obtains Iranian enriched uranium by May 31?: 10%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,057 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.15,
+      "base_rate_reasoning": "Active military conflicts between major powers historically have very low rates of sudden cessation, especially when involving direct combat casualties and strategic infrastructure attacks.",
+      "news_impact": "The recent escalation with US warplanes shot down, Trump's 48-hour ultimatum, ongoing search for missing crew, and continued infrastructure strikes creates an extremely hostile environment making a 14-day ceasefire highly unlikely in the near term.",
+      "cross_platform_note": "Related markets show consistent pessimism with April 30 ceasefire at only 18% and even June 30 at 44%, suggesting traders see prolonged conflict.",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "Trump's ultimatum creates pressure for some resolution",
+        "High economic costs from Strait of Hormuz closure may force negotiations",
+        "International pressure for ceasefire is likely mounting"
+      ],
+      "factors_against": [
+        "Active combat with US aircraft shot down and missing crew member",
+        "Trump's 48-hour ultimatum suggests escalation rather than de-escalation",
+        "Over 2,000 Iranian casualties create domestic pressure for continued retaliation",
+        "Strait of Hormuz closure is a major strategic lever Iran won't easily abandon",
+        "Infrastructure attacks on civilian targets indicate total war posture"
+      ],
+      "probability": 0.12,
+      "reasoning": "The situation has escalated far beyond diplomatic tensions into active warfare with direct US-Iran combat, downed aircraft, missing personnel, and massive civilian casualties. Trump's ultimatum and the ongoing search for missing crew members make a 14-day pause extremely unlikely. The market at 27.5% appears to significantly overestimate the chances given the severity of current hostilities and the specific requirement for 14 consecutive days without military action.",
+      "confidence": "high",
+      "information_edge": "Market may be anchoring too heavily on general ceasefire possibilities rather than the specific 14-day continuous requirement during active hot war"
+    }
+
+  Parsed response:
+    Base rate anchor:   0.15
+    Base rate reason:   Active military conflicts between major powers historically have very low rates of sudden cessation, especially when involving direct combat casualties and strategic infrastructure attacks.
+    Factors FOR YES:
+      + Trump's ultimatum creates pressure for some resolution
+      + High economic costs from Strait of Hormuz closure may force negotiations
+      + International pressure for ceasefire is likely mounting
+    Factors AGAINST:
+      - Active combat with US aircraft shot down and missing crew member
+      - Trump's 48-hour ultimatum suggests escalation rather than de-escalation
+      - Over 2,000 Iranian casualties create domestic pressure for continued retaliation
+      - Strait of Hormuz closure is a major strategic lever Iran won't easily abandon
+      - Infrastructure attacks on civilian targets indicate total war posture
+    Probability:       0.12
+    Confidence:        high
+    Reasoning:         The situation has escalated far beyond diplomatic tensions into active warfare with direct US-Iran combat, downed aircraft, missing personnel, and massive civilian casualties. Trump's ultimatum and the ongoing search for missing crew members make a 14-day pause extremely unlikely. The market at 27.5% appears to significantly overestimate the chances given the severity of current hostilities and the specific requirement for 14 consecutive days without military action.
+    Information edge:  Market may be anchoring too heavily on general ceasefire possibilities rather than the specific 14-day continuous requirement during active hot war
+
+  Calibration:
+    Raw LLM probability:    12.0%
+    Calibrated probability: 16.5%
+    Adjustment:             +4.5%
+
+  Confidence build-up:
+    Base (from LLM):        0.85 (high)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.95
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  16.5%   0.95    0.427         7.1%
+  base_rate                0.150  27.5%   0.50    0.075         2.1%
+  momentum                 0.200  26.3%   0.20    0.039         1.0%
+  book_imbalance           0.150  31.3%   0.50    0.075         2.3%
+  whale_profiled           0.000  27.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.617        12.5%
+
+  Final probability: 12.5% / 0.617 = 20.3%
+  Ensemble confidence (agreement): 0.90
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    20.3%
+  Market price:    27.5%
+  Edge:            -7.2%
+  Direction:       NO (market overpriced)
+
+  Kelly sizing:
+    Full Kelly:      26.2% of bankroll
+    Fractional:      5.9% ($62.35)
+    Shares:          86.0 @ $0.7250
+    Max loss:        $62.35
+    Expected profit: $6.20
+    Risk/reward:     0.38
+
+  ✅ TRADE ENTERED
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 7 of 17
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will PSG win the 2025–26 Champions League?
+  Market ID:     566136
+  Market price:  14.5%
+  Category:      PSG
+  Volume 24h:    $273,023
+  Liquidity:     $258,776
+  Scanner score: 0.693
+  Days to res:   56.3
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news (1 of 5)
+  Time: 19.2s
+
+  News:
+    • PSG advance to Champions League quarterfinals after demolishing Chelsea 8-2 on aggregate
+    • PSG to face Liverpool in Champions League quarterfinals - first leg April 8 at Parc des Princes
+    • PSG are defending Champions League winners after claiming first title in 2025
+    • Bradley Barcola ruled out with ankle injury, no rush for return says Luis Enrique
+    • Fabian Ruiz continues recovery from knee injury, still doing individual work
+    Sentiment: bullish_yes (strength: 75%)
+    Key facts:
+      - PSG won their first Champions League title in 2025, defeating Inter Milan in the final
+      - PSG crushed Chelsea 8-2 on aggregate in Round of 16 with dominant performances
+      - PSG are currently 3rd in Champions League league phase standings
+      - Key players Barcola (ankle) and Fabian Ruiz (knee) are injured ahead of Liverpool tie
+      - PSG have scored 51 Champions League goals in calendar year 2025, breaking previous record
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 4,281 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.063,
+      "base_rate_reasoning": "Historically, about 1 in 16 teams win the Champions League each year. PSG as a top-tier club might have slightly better odds, but the base rate for any specific team winning is quite low.",
+      "news_impact": "The news is extremely bullish - PSG are defending champions, crushed Chelsea 8-2, and are performing well in the current tournament. However, they face injury concerns with key players Barcola and Fabian Ruiz ahead of a tough Liverpool quarterfinal.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "PSG are defending Champions League winners, having won their first title in 2025",
+        "Dominant 8-2 aggregate victory over Chelsea shows excellent current form",
+        "Currently 3rd in Champions League league phase standings",
+        "Strong squad depth and financial resources to compete at highest level"
+      ],
+      "factors_against": [
+        "Key injuries to Barcola (ankle) and Fabian Ruiz (knee) ahead of Liverpool quarterfinal",
+        "Must face strong Liverpool side in quarterfinals - historically difficult opponent",
+        "Champions League is highly competitive with many elite teams remaining",
+        "Defending champions often face increased pressure and tactical focus from opponents"
+      ],
+      "probability": 0.18,
+      "reasoning": "Starting from a low base rate of ~6% for any team to win the Champions League, PSG's status as defending champions and dominant recent form (8-2 vs Chelsea) significantly increases their chances. However, key injuries and the upcoming Liverpool tie present real challenges. The market at 14.5% seems slightly undervalued given their defending champion status and current form, but the injury concerns prevent a more aggressive upward adjustment.",
+      "confidence": "medium",
+      "information_edge": "Market may be underweighting the psychological and tactical advantages of being defending champions, plus the momentum from their dominant Chelsea victory"
+    }
+
+  Parsed response:
+    Base rate anchor:   0.063
+    Base rate reason:   Historically, about 1 in 16 teams win the Champions League each year. PSG as a top-tier club might have slightly better odds, but the base rate for any specific team winning is quite low.
+    Factors FOR YES:
+      + PSG are defending Champions League winners, having won their first title in 2025
+      + Dominant 8-2 aggregate victory over Chelsea shows excellent current form
+      + Currently 3rd in Champions League league phase standings
+      + Strong squad depth and financial resources to compete at highest level
+    Factors AGAINST:
+      - Key injuries to Barcola (ankle) and Fabian Ruiz (knee) ahead of Liverpool quarterfinal
+      - Must face strong Liverpool side in quarterfinals - historically difficult opponent
+      - Champions League is highly competitive with many elite teams remaining
+      - Defending champions often face increased pressure and tactical focus from opponents
+    Probability:       0.18
+    Confidence:        medium
+    Reasoning:         Starting from a low base rate of ~6% for any team to win the Champions League, PSG's status as defending champions and dominant recent form (8-2 vs Chelsea) significantly increases their chances. However, key injuries and the upcoming Liverpool tie present real challenges. The market at 14.5% seems slightly undervalued given their defending champion status and current form, but the injury concerns prevent a more aggressive upward adjustment.
+    Information edge:  Market may be underweighting the psychological and tactical advantages of being defending champions, plus the momentum from their dominant Chelsea victory
+
+  Calibration:
+    Raw LLM probability:    18.0%
+    Calibrated probability: 22.9%
+    Adjustment:             +4.9%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.05 (1 sources × 0.05)
+    Final confidence:       0.65
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  22.9%   0.65    0.293         6.7%
+  base_rate                0.150  14.5%   0.50    0.075         1.1%
+  momentum                 0.200  14.9%   0.06    0.013         0.2%
+  book_imbalance           0.150  12.2%   0.32    0.048         0.6%
+  whale_profiled           0.000  14.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.429         8.6%
+
+  Final probability: 8.6% / 0.429 = 20.0%
+  Ensemble confidence (agreement): 0.93
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    20.0%
+  Market price:    14.5%
+  Edge:            +5.5%
+  Direction:       YES (market underpriced)
+
+  Kelly sizing:
+    Full Kelly:      6.4% of bankroll
+    Fractional:      1.5% ($15.66)
+    Shares:          108.0 @ $0.1450
+    Max loss:        $15.66
+    Expected profit: $5.92
+    Risk/reward:     5.90
+
+  ✅ TRADE ENTERED
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 8 of 17
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Milwaukee Brewers vs. Kansas City Royals
+  Market ID:     1760063
+  Market price:  50.5%
+  Volume 24h:    $307,340
+  Liquidity:     $30,695
+  Scanner score: 0.802
+  Days to res:   6.3
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 19.6s
+
+  News:
+    • Brewers-Royals series opener postponed due to rain, doubleheader scheduled for Saturday
+    • Milwaukee enters with 5-1 record and MLB-leading 45 runs scored through 6 games
+    • Kansas City sits at 3-3 with offensive struggles outside of one big game
+    • Royals missing closer Carlos Estévez (foot injury) and starter Michael Wacha (illness)
+    • Brewers without key players Jackson Chourio and Andrew Vaughn due to hand injuries
+    Sentiment: bullish_yes (strength: 75%)
+    Key facts:
+      - Brewers lead MLB with 45 runs scored and 15 stolen bases through first 6 games
+      - Milwaukee has +28 run differential vs Kansas City's -5 differential
+      - Royals have struggled offensively with only 23 runs in 6 games (13 came in one game)
+      - Kansas City's bullpen has 8.44 ERA (28th in MLB) vs 1.98 starter ERA (3rd)
+      - Brewers made NLCS last season and swept White Sox to start 2026
+
+  Related markets:
+    [keyword_overlap] Indian Premier League: Gujarat Titans vs Rajasthan Royals: 38%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 4,447 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "MLB games between teams without significant historical advantage typically have close to 50-50 odds, especially early in the season.",
+      "news_impact": "The news strongly favors Milwaukee - they're 5-1 with MLB-leading offense (45 runs) while Kansas City struggles at 3-3 with only 23 runs scored. Key Royals injuries to closer Est\u00e9vez and starter Wacha further tilt the advantage.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "Brewers lead MLB with 45 runs scored through 6 games showing elite offensive form",
+        "Milwaukee has superior +28 run differential vs Kansas City's -5",
+        "Royals missing key closer Carlos Est\u00e9vez and starter Michael Wacha to injuries",
+        "Kansas City's bullpen has struggled with 8.44 ERA (28th in MLB)",
+        "Brewers have better record (5-1 vs 3-3) and momentum"
+      ],
+      "factors_against": [
+        "Early season sample sizes are small and can be misleading",
+        "Royals have strong starting pitching (1.98 ERA, 3rd in MLB)",
+        "Kansas City showed offensive capability with 13 runs in one game",
+        "Home field advantage if game is in Kansas City",
+        "Baseball has inherent randomness that can overcome talent gaps"
+      ],
+      "probability": 0.58,
+      "reasoning": "Starting from the 50% base rate for MLB games, the evidence strongly favors Milwaukee. Their elite offensive start (45 runs, +28 differential) contrasts sharply with Kansas City's struggles (23 runs, -5 differential). The Royals' key injuries to closer and starter compound their disadvantage. While Kansas City has good starting pitching, their bullpen weakness and offensive inconsistency are significant concerns. The market at 50.5% appears to undervalue Milwaukee's early-season dominance.",
+      "confidence": "medium",
+      "information_edge": "Market may be anchoring too heavily on preseason expectations rather than incorporating the significant performance gap and injury news favoring Milwaukee"
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   MLB games between teams without significant historical advantage typically have close to 50-50 odds, especially early in the season.
+    Factors FOR YES:
+      + Brewers lead MLB with 45 runs scored through 6 games showing elite offensive form
+      + Milwaukee has superior +28 run differential vs Kansas City's -5
+      + Royals missing key closer Carlos Estévez and starter Michael Wacha to injuries
+      + Kansas City's bullpen has struggled with 8.44 ERA (28th in MLB)
+      + Brewers have better record (5-1 vs 3-3) and momentum
+    Factors AGAINST:
+      - Early season sample sizes are small and can be misleading
+      - Royals have strong starting pitching (1.98 ERA, 3rd in MLB)
+      - Kansas City showed offensive capability with 13 runs in one game
+      - Home field advantage if game is in Kansas City
+      - Baseball has inherent randomness that can overcome talent gaps
+    Probability:       0.58
+    Confidence:        medium
+    Reasoning:         Starting from the 50% base rate for MLB games, the evidence strongly favors Milwaukee. Their elite offensive start (45 runs, +28 differential) contrasts sharply with Kansas City's struggles (23 runs, -5 differential). The Royals' key injuries to closer and starter compound their disadvantage. While Kansas City has good starting pitching, their bullpen weakness and offensive inconsistency are significant concerns. The market at 50.5% appears to undervalue Milwaukee's early-season dominance.
+    Information edge:  Market may be anchoring too heavily on preseason expectations rather than incorporating the significant performance gap and injury news favoring Milwaukee
+
+  Calibration:
+    Raw LLM probability:    58.0%
+    Calibrated probability: 58.6%
+    Adjustment:             +0.6%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.70
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  58.6%   0.70    0.315        18.5%
+  base_rate                0.150  50.5%   0.50    0.075         3.8%
+  momentum                 0.200  50.8%   0.04    0.009         0.4%
+  book_imbalance           0.150  52.1%   0.22    0.033         1.7%
+  whale_profiled           0.000  50.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.431        24.4%
+
+  Final probability: 24.4% / 0.431 = 56.6%
+  Ensemble confidence (agreement): 0.94
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    56.6%
+  Market price:    50.5%
+  Edge:            +6.1%
+  Direction:       YES (market underpriced)
+
+  Kelly sizing:
+    Full Kelly:      12.3% of bankroll
+    Fractional:      2.9% ($30.32)
+    Shares:          60.0 @ $0.5050
+    Max loss:        $30.32
+    Expected profit: $3.65
+    Risk/reward:     0.98
+
+  ✅ TRADE ENTERED
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 9 of 17
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will the next Prime Minister of Hungary be Viktor Orbán?
+  Market ID:     567560
+  Market price:  34.5%
+  Category:      Viktor Orbán
+  Volume 24h:    $326,489
+  Liquidity:     $310,842
+  Scanner score: 0.837
+  Days to res:   7.3
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news (1 of 5)
+  Time: 21.7s
+
+  News:
+    • Tisza Party leads Fidesz 56% to 37% among decided voters in latest poll, widening gap from 53%-39% three weeks prior
+    • Hungarian election on April 12, 2026 could end Viktor Orbán's 16-year rule as opposition gains unprecedented momentum
+    • Peter Magyar's Tisza Party maintains consistent polling lead throughout 2025-2026, marking most serious challenge to Orbán since 2010
+    • Multiple opposition parties withdrew from race to avoid vote splitting, consolidating behind Tisza Party
+    • Orbán receives endorsements from Donald Trump and Marco Rubio while facing allegations of sharing EU secrets with Russia
+    Sentiment: bearish_yes (strength: 75%)
+    Key facts:
+      - Election scheduled for April 12, 2026 - just 8 days away
+      - Latest 21 Research Centre poll shows Tisza at 56% vs Fidesz at 37% among decided voters
+      - 26% of respondents remain undecided according to recent polling
+      - Hungarian electoral system favors rural constituencies where Fidesz historically dominates
+      - Fidesz won 86 of 88 districts outside Budapest in 2022 election
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 4,425 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "Without specific historical data on Hungarian PM transitions, I use an uninformative prior of 50% for an incumbent facing reelection.",
+      "news_impact": "The polling data showing Tisza Party leading Fidesz 56% to 37% among decided voters represents a significant shift against Orb\u00e1n. This 19-point deficit, if accurate, would likely translate to electoral defeat given the timing just 8 days before the election.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "Orb\u00e1n has been in power for 16 years with extensive political machinery",
+        "Fidesz historically performs better in rural constituencies that are overrepresented",
+        "26% of voters remain undecided, providing potential for late swing",
+        "Hungarian electoral system can favor the incumbent party"
+      ],
+      "factors_against": [
+        "Tisza Party leads by 19 points (56% vs 37%) in latest polling",
+        "Opposition parties consolidated behind single candidate to avoid vote splitting",
+        "Polling lead has been consistent throughout 2025-2026 campaign period",
+        "This represents the most serious challenge to Orb\u00e1n since 2010",
+        "Election is only 8 days away, limiting time for major reversals"
+      ],
+      "probability": 0.25,
+      "reasoning": "The polling data showing a consistent 19-point deficit for Fidesz is extremely concerning for Orb\u00e1n's chances. While the Hungarian electoral system and rural overrepresentation could help Fidesz somewhat, a deficit of this magnitude with only 8 days remaining would be very difficult to overcome. The opposition's strategic consolidation behind Tisza Party addresses the historical vote-splitting problem. The 26% undecided voters represent uncertainty, but the trend has been consistently against Fidesz.",
+      "confidence": "medium",
+      "information_edge": "The market at 34.5% may be overestimating Orb\u00e1n's chances given the magnitude and consistency of his polling deficit so close to election day."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   Without specific historical data on Hungarian PM transitions, I use an uninformative prior of 50% for an incumbent facing reelection.
+    Factors FOR YES:
+      + Orbán has been in power for 16 years with extensive political machinery
+      + Fidesz historically performs better in rural constituencies that are overrepresented
+      + 26% of voters remain undecided, providing potential for late swing
+      + Hungarian electoral system can favor the incumbent party
+    Factors AGAINST:
+      - Tisza Party leads by 19 points (56% vs 37%) in latest polling
+      - Opposition parties consolidated behind single candidate to avoid vote splitting
+      - Polling lead has been consistent throughout 2025-2026 campaign period
+      - This represents the most serious challenge to Orbán since 2010
+      - Election is only 8 days away, limiting time for major reversals
+    Probability:       0.25
+    Confidence:        medium
+    Reasoning:         The polling data showing a consistent 19-point deficit for Fidesz is extremely concerning for Orbán's chances. While the Hungarian electoral system and rural overrepresentation could help Fidesz somewhat, a deficit of this magnitude with only 8 days remaining would be very difficult to overcome. The opposition's strategic consolidation behind Tisza Party addresses the historical vote-splitting problem. The 26% undecided voters represent uncertainty, but the trend has been consistently against Fidesz.
+    Information edge:  The market at 34.5% may be overestimating Orbán's chances given the magnitude and consistency of his polling deficit so close to election day.
+
+  Calibration:
+    Raw LLM probability:    25.0%
+    Calibrated probability: 29.8%
+    Adjustment:             +4.8%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.05 (1 sources × 0.05)
+    Final confidence:       0.65
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  29.8%   0.65    0.293         8.7%
+  base_rate                0.150  34.5%   0.50    0.075         2.6%
+  momentum                 0.200  34.7%   0.04    0.008         0.3%
+  book_imbalance           0.150  32.4%   0.30    0.045         1.5%
+  whale_profiled           0.000  34.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.420        13.0%
+
+  Final probability: 13.0% / 0.420 = 31.0%
+  Ensemble confidence (agreement): 0.96
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    31.0%
+  Market price:    34.5%
+  Edge:            -3.5%
+  Direction:       NO (market overpriced)
+
+  ❌ NO TRADE: Edge 3.5% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 10 of 17
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will Finland win Eurovision 2026?
+  Market ID:     842015
+  Market price:  39.1%
+  Category:      Finland
+  Volume 24h:    $148,259
+  Liquidity:     $490,923
+  Scanner score: 0.796
+  Days to res:   41.3
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news (1 of 5)
+  Time: 23.4s
+
+  News:
+    • Finland leads Eurovision 2026 betting odds with 'Liekinheitin' at 36% chance of victory, down from 40%
+    • Linda Lampenius & Pete Parkkonen won UMK 2026 with record-breaking 570 points and 1.8M viewers
+    • Eurovision prediction model 'The Model' shows Finland as frontrunner but with declining confidence
+    • France closes gap on Finland in betting markets, now second favorite at 17% probability
+    • Finland's Eurovision entry receives positive reviews from critics praising violin arrangements and staging
+    Sentiment: bullish_yes (strength: 75%)
+    Key facts:
+      - Finland currently leads Eurovision 2026 betting odds at 7/4 (36% implied probability), down from 6/4 (40%) last week
+      - UMK 2026 achieved record viewership of 1.8M average viewers with 2.5M peak, highest since 2012
+      - Liekinheitin won UMK with 570 points (492 public, 78 jury) - almost triple second place
+      - Finland will perform in first half of Semi-Final 1 on May 12, 2026
+      - The Model prediction system shows Finland winning with 384 points but notes declining confidence
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 4,303 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.02,
+      "base_rate_reasoning": "With ~40 countries typically competing in Eurovision, the base rate for any single country winning is approximately 2.5%. However, some countries historically perform better due to song quality, staging, and voting patterns.",
+      "news_impact": "The news is strongly positive for Finland - they're leading betting odds at 36%, won their national selection with record-breaking viewership and points, and have a song ('Liekinheitin') that's generating significant buzz. However, their odds have declined slightly from 40% to 36% recently.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "Leading Eurovision betting odds at 36% probability",
+        "Record-breaking UMK 2026 performance with 1.8M viewers and 570 points",
+        "Strong domestic support evidenced by viewership numbers",
+        "Favorable semi-final draw in first half of Semi-Final 1",
+        "Historical Eurovision competitiveness of Finland"
+      ],
+      "factors_against": [
+        "Recent decline in betting odds from 40% to 36%",
+        "France closing the gap as second favorite at 17%",
+        "Eurovision outcomes are notoriously unpredictable with many variables",
+        "Strong competition from 39+ other countries",
+        "Market price of 39.1% seems inflated compared to betting odds of 36%"
+      ],
+      "probability": 0.34,
+      "reasoning": "Finland appears to be the genuine frontrunner for Eurovision 2026 based on multiple converging signals: leading betting odds, record-breaking national selection performance, and strong domestic enthusiasm. However, the market price of 39.1% appears slightly inflated compared to the betting market consensus of 36%. The recent slight decline in betting odds and France's emergence as a stronger competitor suggest some cooling of Finland's prospects. Adjusting for Eurovision's inherent unpredictability while respecting the strong positive signals.",
+      "confidence": "medium",
+      "information_edge": "The market may be slightly overpricing Finland's chances relative to the betting market consensus, possibly due to early enthusiasm that hasn't fully adjusted to recent competitive developments."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.02
+    Base rate reason:   With ~40 countries typically competing in Eurovision, the base rate for any single country winning is approximately 2.5%. However, some countries historically perform better due to song quality, staging, and voting patterns.
+    Factors FOR YES:
+      + Leading Eurovision betting odds at 36% probability
+      + Record-breaking UMK 2026 performance with 1.8M viewers and 570 points
+      + Strong domestic support evidenced by viewership numbers
+      + Favorable semi-final draw in first half of Semi-Final 1
+      + Historical Eurovision competitiveness of Finland
+    Factors AGAINST:
+      - Recent decline in betting odds from 40% to 36%
+      - France closing the gap as second favorite at 17%
+      - Eurovision outcomes are notoriously unpredictable with many variables
+      - Strong competition from 39+ other countries
+      - Market price of 39.1% seems inflated compared to betting odds of 36%
+    Probability:       0.34
+    Confidence:        medium
+    Reasoning:         Finland appears to be the genuine frontrunner for Eurovision 2026 based on multiple converging signals: leading betting odds, record-breaking national selection performance, and strong domestic enthusiasm. However, the market price of 39.1% appears slightly inflated compared to the betting market consensus of 36%. The recent slight decline in betting odds and France's emergence as a stronger competitor suggest some cooling of Finland's prospects. Adjusting for Eurovision's inherent unpredictability while respecting the strong positive signals.
+    Information edge:  The market may be slightly overpricing Finland's chances relative to the betting market consensus, possibly due to early enthusiasm that hasn't fully adjusted to recent competitive developments.
+
+  Calibration:
+    Raw LLM probability:    34.0%
+    Calibrated probability: 38.0%
+    Adjustment:             +4.0%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.05 (1 sources × 0.05)
+    Final confidence:       0.65
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  38.0%   0.65    0.293        11.1%
+  base_rate                0.150  39.1%   0.50    0.075         2.9%
+  momentum                 0.200  39.3%   0.04    0.009         0.3%
+  book_imbalance           0.150  34.5%   0.50    0.075         2.6%
+  whale_profiled           0.000  39.1%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.451        17.0%
+
+  Final probability: 17.0% / 0.451 = 37.6%
+  Ensemble confidence (agreement): 0.96
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    37.6%
+  Market price:    39.1%
+  Edge:            -1.4%
+  Direction:       NO (market overpriced)
+
+  ❌ NO TRADE: Edge 1.4% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 11 of 17
+══════════════════════════════════════════════════════════════════════════════
+  Question:      St. Louis Cardinals vs. Detroit Tigers
+  Market ID:     1775804
+  Market price:  38.5%
+  Volume 24h:    $228,186
+  Liquidity:     $318,836
+  Scanner score: 0.726
+  Days to res:   7.0
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, kalshi (2 of 5)
+  Time: 18.5s
+
+  News:
+    • Tigers defeat Cardinals 4-0 in Detroit home opener on April 3, 2026
+    • Framber Valdez pitches 6 shutout innings for Tigers, allowing only 3 hits
+    • Cardinals' Lars Nootbaar transferred to 60-day IL due to heel surgery complications
+    • Tigers snap 4-game losing streak with dominant pitching performance
+    • Cardinals enter series 4-3 after winning 2 of 3 vs Mets, Tigers were 2-4 before game
+    Sentiment: bullish_yes (strength: 75%)
+    Key facts:
+      - Tigers won Game 1 of series 4-0 on April 3, 2026 at Comerica Park
+      - Cardinals record now 4-3 overall, 0-1 away; Tigers 3-4 overall, 1-0 home
+      - Dillon Dingler hit 2-run homer for Tigers, his 2nd of season
+      - Cardinals managed only 5 hits vs Tigers' 10 hits in Game 1
+      - Tigers lead all-time series 41-28, won 5 of last 6 meetings
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 4,260 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "In MLB, home teams historically win about 54% of games, but without specific team matchup history, I start with the uninformative prior of 50% for each team.",
+      "news_impact": "The recent news is strongly negative for Cardinals - they just lost 4-0 to Detroit, managed only 5 hits vs 10, and lost a key player (Nootbaar) to long-term injury. Tigers showed dominant pitching and broke their losing streak.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "Cardinals have better overall record (4-3 vs 3-4)",
+        "Tigers were on 4-game losing streak before yesterday",
+        "Cardinals may be motivated to bounce back after shutout loss"
+      ],
+      "factors_against": [
+        "Tigers just dominated Cardinals 4-0 with excellent pitching",
+        "Cardinals lost key player Nootbaar to 60-day IL",
+        "Tigers are at home where they just won convincingly",
+        "Cardinals managed only 5 hits in Game 1, showing offensive struggles",
+        "Tigers' Framber Valdez pitched 6 shutout innings, indicating strong rotation"
+      ],
+      "probability": 0.35,
+      "reasoning": "Starting from 50% base rate, the recent 4-0 Tigers victory is highly informative for the immediate rematch. The Cardinals showed clear offensive struggles (5 hits vs 10), lost a key player to injury, and face a Tigers team that just demonstrated dominant pitching at home. While the Cardinals have a slightly better record, recent head-to-head performance and momentum strongly favor Detroit. The market at 38.5% seems reasonable but slightly undervalues the Tigers' advantage.",
+      "confidence": "medium",
+      "information_edge": "Market may be underweighting the psychological and momentum impact of yesterday's dominant Tigers performance, particularly the offensive struggles shown by Cardinals"
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   In MLB, home teams historically win about 54% of games, but without specific team matchup history, I start with the uninformative prior of 50% for each team.
+    Factors FOR YES:
+      + Cardinals have better overall record (4-3 vs 3-4)
+      + Tigers were on 4-game losing streak before yesterday
+      + Cardinals may be motivated to bounce back after shutout loss
+    Factors AGAINST:
+      - Tigers just dominated Cardinals 4-0 with excellent pitching
+      - Cardinals lost key player Nootbaar to 60-day IL
+      - Tigers are at home where they just won convincingly
+      - Cardinals managed only 5 hits in Game 1, showing offensive struggles
+      - Tigers' Framber Valdez pitched 6 shutout innings, indicating strong rotation
+    Probability:       0.35
+    Confidence:        medium
+    Reasoning:         Starting from 50% base rate, the recent 4-0 Tigers victory is highly informative for the immediate rematch. The Cardinals showed clear offensive struggles (5 hits vs 10), lost a key player to injury, and face a Tigers team that just demonstrated dominant pitching at home. While the Cardinals have a slightly better record, recent head-to-head performance and momentum strongly favor Detroit. The market at 38.5% seems reasonable but slightly undervalues the Tigers' advantage.
+    Information edge:  Market may be underweighting the psychological and momentum impact of yesterday's dominant Tigers performance, particularly the offensive struggles shown by Cardinals
+
+  Calibration:
+    Raw LLM probability:    35.0%
+    Calibrated probability: 38.9%
+    Adjustment:             +3.9%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.70
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  38.9%   0.70    0.315        12.3%
+  base_rate                0.150  38.5%   0.50    0.075         2.9%
+  momentum                 0.200  38.1%   0.07    0.015         0.6%
+  book_imbalance           0.150  37.9%   0.08    0.013         0.5%
+  whale_profiled           0.000  38.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.417        16.2%
+
+  Final probability: 16.2% / 0.417 = 38.8%
+  Ensemble confidence (agreement): 0.99
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    38.8%
+  Market price:    38.5%
+  Edge:            +0.3%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: Edge 0.3% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 12 of 17
+══════════════════════════════════════════════════════════════════════════════
+  Question:      US forces enter Iran by April 30?
+  Market ID:     1640919
+  Market price:  80.5%
+  Category:      April 30
+  Volume 24h:    $5,339,253
+  Liquidity:     $756,216
+  Scanner score: 0.716
+  Days to res:   25.3
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 18.2s
+
+  News:
+    • US F-15E Strike Eagle shot down over Iran, one crew member rescued, search continues for second
+    • Pentagon preparing for weeks of limited ground operations in Iran including Kharg Island seizure
+    • Iran warns 'not a single person' will survive US ground invasion
+    • Trump issues 48-hour deadline for Iran to reopen Strait of Hormuz or face escalation
+    • US ground-capable forces including 2,500 Marines and 82nd Airborne arrive in Middle East
+    Sentiment: bullish_yes (strength: 75%)
+    Key facts:
+      - US forces are already conducting combat operations inside Iran with aircraft shot down April 3-4
+      - Pentagon has prepared plans for weeks of ground operations targeting Kharg Island and Strait of Hormuz coastal areas
+      - 2,500 Marines aboard USS Tripoli and elements of 82nd Airborne Division deployed to region
+      - Iran has blocked Strait of Hormuz causing 94% drop in shipping traffic and oil prices above $100/barrel
+      - 13 US service members killed in combat, over 300 wounded since Operation Epic Fury began February 28
+
+  Related markets:
+    [keyword_overlap] US x Iran ceasefire by April 30?: 18%
+    [keyword_overlap] US x Iran ceasefire by May 31?: 32%
+    [keyword_overlap] US x Iran ceasefire by June 30?: 44%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 4,815 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.05,
+      "base_rate_reasoning": "Historically, US ground invasions of sovereign nations are extremely rare events, occurring perhaps once every 10-20 years. Without specific historical precedent for Iran, I anchor to a very low base rate.",
+      "news_impact": "The news dramatically increases probability - US aircraft already shot down over Iran, Pentagon preparing ground operations targeting Kharg Island, Marines and 82nd Airborne deployed, and Trump's 48-hour ultimatum creates imminent escalation pressure.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "US F-15E already shot down over Iran showing active combat operations",
+        "Pentagon has prepared specific ground operation plans for Kharg Island seizure",
+        "2,500 Marines on USS Tripoli and 82nd Airborne elements already deployed to region",
+        "Trump's 48-hour ultimatum creates immediate escalation timeline",
+        "Iran's Strait of Hormuz blockade causing major economic pressure requiring military response"
+      ],
+      "factors_against": [
+        "Ground invasion of Iran would be massive military undertaking with enormous casualties",
+        "Iran has warned of total resistance to ground invasion",
+        "International diplomatic pressure would be intense",
+        "US public historically war-weary regarding Middle East ground operations",
+        "25 days remaining allows time for diplomatic resolution"
+      ],
+      "probability": 0.78,
+      "reasoning": "While the base rate for US ground invasions is extremely low, the current situation represents an active military escalation already in progress. US forces are conducting combat operations over Iran with aircraft shot down, specific ground operation plans are prepared, and forces are pre-positioned. Trump's 48-hour ultimatum creates immediate pressure for escalation. The market price of 80.5% appears roughly calibrated to these extraordinary circumstances, though I estimate slightly lower at 78% given the massive costs and risks of ground invasion.",
+      "confidence": "medium",
+      "information_edge": "Market may be slightly overestimating probability by not fully accounting for the massive military and political costs of ground invasion, even in current crisis."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.05
+    Base rate reason:   Historically, US ground invasions of sovereign nations are extremely rare events, occurring perhaps once every 10-20 years. Without specific historical precedent for Iran, I anchor to a very low base rate.
+    Factors FOR YES:
+      + US F-15E already shot down over Iran showing active combat operations
+      + Pentagon has prepared specific ground operation plans for Kharg Island seizure
+      + 2,500 Marines on USS Tripoli and 82nd Airborne elements already deployed to region
+      + Trump's 48-hour ultimatum creates immediate escalation timeline
+      + Iran's Strait of Hormuz blockade causing major economic pressure requiring military response
+    Factors AGAINST:
+      - Ground invasion of Iran would be massive military undertaking with enormous casualties
+      - Iran has warned of total resistance to ground invasion
+      - International diplomatic pressure would be intense
+      - US public historically war-weary regarding Middle East ground operations
+      - 25 days remaining allows time for diplomatic resolution
+    Probability:       0.78
+    Confidence:        medium
+    Reasoning:         While the base rate for US ground invasions is extremely low, the current situation represents an active military escalation already in progress. US forces are conducting combat operations over Iran with aircraft shot down, specific ground operation plans are prepared, and forces are pre-positioned. Trump's 48-hour ultimatum creates immediate pressure for escalation. The market price of 80.5% appears roughly calibrated to these extraordinary circumstances, though I estimate slightly lower at 78% given the massive costs and risks of ground invasion.
+    Information edge:  Market may be slightly overestimating probability by not fully accounting for the massive military and political costs of ground invasion, even in current crisis.
+
+  Calibration:
+    Raw LLM probability:    78.0%
+    Calibrated probability: 76.0%
+    Adjustment:             -2.0%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.70
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  76.0%   0.70    0.315        23.9%
+  base_rate                0.150  80.5%   0.50    0.075         6.0%
+  momentum                 0.200  80.6%   0.02    0.004         0.4%
+  book_imbalance           0.150  81.7%   0.17    0.025         2.0%
+  whale_profiled           0.000  80.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.419        32.4%
+
+  Final probability: 32.4% / 0.419 = 77.2%
+  Ensemble confidence (agreement): 0.96
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    77.2%
+  Market price:    80.5%
+  Edge:            -3.3%
+  Direction:       NO (market overpriced)
+
+  ❌ NO TRADE: Edge 3.3% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 13 of 17
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Kharg Island no longer under Iranian control by April 15?
+  Market ID:     1797309
+  Market price:  6.5%
+  Category:      April 15
+  Volume 24h:    $316,903
+  Liquidity:     $255,468
+  Scanner score: 0.688
+  Days to res:   11.3
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 21.1s
+
+  News:
+    • Iran fortifies Kharg Island with advanced missile systems, coastal traps, and underground tunnels in preparation for potential US ground assault
+    • US deploys over 50,000 troops to Middle East including 5,000 Marines and 82nd Airborne Division amid speculation of Kharg Island seizure
+    • Trump sets April 6 deadline for Iran deal, threatens strikes on energy sector while claiming US 'could take Kharg Island very easily'
+    • Iran launches 'Janfada' mobilization campaign recruiting millions of volunteers including children as young as 12 for potential conflict
+    • US intelligence reports Iran laying traps and moving MANPADs to Kharg Island while maintaining near-constant surveillance of the island
+    Sentiment: bullish_yes (strength: 75%)
+    Key facts:
+      - Kharg Island handles 90% of Iran's oil exports and is located just 15 miles off Iran's coast
+      - US conducted strikes on 90+ military targets on Kharg Island on March 13, 2026, sparing oil infrastructure
+      - Iran has moved additional MANPADs, laid anti-personnel mines, and built underground tunnels on Kharg Island
+      - Two Marine Expeditionary Units (4,500+ Marines) plus 2,000 82nd Airborne troops deployed to region
+      - Trump claims US has bombed 13,000 targets with 3,000 remaining, setting April 6 deadline for Iran deal
+
+  Related markets:
+    [keyword_overlap] Kharg Island no longer under Iranian control by April 30?: 20%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,203 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.05,
+      "base_rate_reasoning": "Military invasions and seizures of sovereign territory are historically rare events, especially against well-defended strategic assets of major regional powers like Iran.",
+      "news_impact": "The news significantly increases probability with concrete military deployments (50,000+ US troops, Marine units), Trump's explicit threats and April 6 deadline, and Iran's defensive preparations suggesting imminent conflict is possible.",
+      "cross_platform_note": "Related market shows 20% for April 30 deadline, suggesting market sees meaningful but declining probability over time.",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "Massive US military deployment of 50,000+ troops including specialized Marine and Airborne units",
+        "Trump's explicit April 6 deadline and public statements about easily taking Kharg Island",
+        "Recent US strikes on March 13 demonstrate operational capability and willingness to act",
+        "Kharg Island's strategic importance (90% of Iran's oil exports) makes it a high-value target",
+        "Iran's defensive preparations suggest they view invasion as credible threat"
+      ],
+      "factors_against": [
+        "Seizing and holding territory against Iran would be extremely costly and escalatory",
+        "Kharg Island is only 15 miles from Iranian coast, making sustained occupation very difficult",
+        "Iran has fortified the island with advanced missiles, mines, and underground tunnels",
+        "International consequences of territorial seizure would be severe",
+        "11.3 days is very short timeframe for such a major military operation"
+      ],
+      "probability": 0.18,
+      "reasoning": "While the base rate for territorial seizures is very low, the current military buildup and explicit threats create a genuinely elevated risk. The massive troop deployment, specific deadline, and Iran's defensive response suggest this isn't mere posturing. However, the extreme difficulty of holding territory so close to Iran's coast, combined with the short timeframe, limits the probability. The market at 6.5% appears to underweight the concrete military preparations and explicit timeline.",
+      "confidence": "medium",
+      "information_edge": "Market may be anchoring too heavily on historical base rates and underweighting the unprecedented scale of current military deployment and explicit threats with specific deadlines."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.05
+    Base rate reason:   Military invasions and seizures of sovereign territory are historically rare events, especially against well-defended strategic assets of major regional powers like Iran.
+    Factors FOR YES:
+      + Massive US military deployment of 50,000+ troops including specialized Marine and Airborne units
+      + Trump's explicit April 6 deadline and public statements about easily taking Kharg Island
+      + Recent US strikes on March 13 demonstrate operational capability and willingness to act
+      + Kharg Island's strategic importance (90% of Iran's oil exports) makes it a high-value target
+      + Iran's defensive preparations suggest they view invasion as credible threat
+    Factors AGAINST:
+      - Seizing and holding territory against Iran would be extremely costly and escalatory
+      - Kharg Island is only 15 miles from Iranian coast, making sustained occupation very difficult
+      - Iran has fortified the island with advanced missiles, mines, and underground tunnels
+      - International consequences of territorial seizure would be severe
+      - 11.3 days is very short timeframe for such a major military operation
+    Probability:       0.18
+    Confidence:        medium
+    Reasoning:         While the base rate for territorial seizures is very low, the current military buildup and explicit threats create a genuinely elevated risk. The massive troop deployment, specific deadline, and Iran's defensive response suggest this isn't mere posturing. However, the extreme difficulty of holding territory so close to Iran's coast, combined with the short timeframe, limits the probability. The market at 6.5% appears to underweight the concrete military preparations and explicit timeline.
+    Information edge:  Market may be anchoring too heavily on historical base rates and underweighting the unprecedented scale of current military deployment and explicit threats with specific deadlines.
+
+  Calibration:
+    Raw LLM probability:    18.0%
+    Calibrated probability: 22.9%
+    Adjustment:             +4.9%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    × deviation penalty:    ×0.80 (deviation 16.4% > 15%)
+    Final confidence:       0.56
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  22.9%   0.56    0.252         5.8%
+  base_rate                0.150   6.5%   0.50    0.075         0.5%
+  momentum                 0.200   5.7%   0.13    0.026         0.1%
+  book_imbalance           0.150   7.9%   0.20    0.029         0.2%
+  whale_profiled           0.000   6.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.382         6.6%
+
+  Final probability: 6.6% / 0.382 = 17.4%
+  Ensemble confidence (agreement): 0.87
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    17.4%
+  Market price:    6.5%
+  Edge:            +10.9%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: No edge found (best edge: +10.9%)
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 14 of 17
+══════════════════════════════════════════════════════════════════════════════
+  Question:      US x Iran ceasefire by April 30?
+  Market ID:     1466016
+  Market price:  17.5%
+  Category:      April 30
+  Volume 24h:    $518,268
+  Liquidity:     $433,553
+  Scanner score: 0.645
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 17.9s
+
+  News:
+    • Iran rejects all US ceasefire demands and refuses to meet officials in Islamabad - talks reach dead end
+    • Iran denies Trump's claims of requesting ceasefire, calls US demands 'maximalist and irrational'
+    • US F-15E Strike Eagle shot down by Iran - first US aircraft loss since February 28
+    • Qatar resists serving as key mediator in US-Iran ceasefire talks
+    • Turkey and Egypt seeking alternative venues for talks including Doha or Istanbul
+    Sentiment: bearish_yes (strength: 85%)
+    Key facts:
+      - Current mediation efforts led by Pakistan have reached a dead end as of April 3, 2026
+      - Iran officially told mediators it won't meet US officials in Islamabad and considers US demands unacceptable
+      - Iran rejected a US proposal for a 48-hour ceasefire on April 3, 2026
+      - War has entered its sixth week (started February 28, 2026)
+      - Trump's deadline for ending Iran's chokehold on Strait of Hormuz approaches April 30
+
+  Related markets:
+    [keyword_overlap] US x Iran ceasefire by May 31?: 32%
+    [keyword_overlap] US x Iran ceasefire by June 30?: 44%
+    [keyword_overlap] US forces enter Iran by April 30?: 80%
+    [keyword_overlap] Iran x Israel/US conflict ends by May 15?: 28%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,648 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.15,
+      "base_rate_reasoning": "Formal ceasefires between major powers during active conflicts are historically rare, especially within short timeframes. Most conflicts either escalate or end through decisive military outcomes rather than negotiated pauses.",
+      "news_impact": "The recent news is extremely negative for ceasefire prospects - Iran has explicitly rejected US demands, refused to meet officials, and mediation efforts have reached a dead end. The shooting down of a US F-15E indicates escalation rather than de-escalation.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "Market shows slight buyer imbalance suggesting some traders see value",
+        "Related markets show higher probabilities for longer timeframes (May 31: 32%, June 30: 44%), indicating eventual ceasefire is possible",
+        "Six weeks of conflict may create war fatigue"
+      ],
+      "factors_against": [
+        "Iran explicitly rejected US ceasefire demands and refuses to meet officials",
+        "Pakistan mediation efforts have reached a dead end as of April 3",
+        "Recent escalation with US aircraft shot down",
+        "Only 26 days remaining until deadline",
+        "Iran called US demands 'maximalist and irrational'",
+        "No active diplomatic channels currently functioning"
+      ],
+      "probability": 0.08,
+      "reasoning": "The recent diplomatic developments are decisively negative. Iran's outright rejection of US demands, refusal to meet officials, and the collapse of Pakistani mediation efforts indicate no viable path to a ceasefire by April 30. The shooting down of a US aircraft suggests continued escalation. While the market price of 17.5% may reflect some hope for surprise diplomatic breakthroughs, the concrete evidence points to an extremely low probability of formal ceasefire agreement within 26 days.",
+      "confidence": "high",
+      "information_edge": "Market may be overweighting the possibility of surprise diplomatic developments while underweighting the significance of Iran's explicit rejection and the collapse of current mediation efforts."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.15
+    Base rate reason:   Formal ceasefires between major powers during active conflicts are historically rare, especially within short timeframes. Most conflicts either escalate or end through decisive military outcomes rather than negotiated pauses.
+    Factors FOR YES:
+      + Market shows slight buyer imbalance suggesting some traders see value
+      + Related markets show higher probabilities for longer timeframes (May 31: 32%, June 30: 44%), indicating eventual ceasefire is possible
+      + Six weeks of conflict may create war fatigue
+    Factors AGAINST:
+      - Iran explicitly rejected US ceasefire demands and refuses to meet officials
+      - Pakistan mediation efforts have reached a dead end as of April 3
+      - Recent escalation with US aircraft shot down
+      - Only 26 days remaining until deadline
+      - Iran called US demands 'maximalist and irrational'
+      - No active diplomatic channels currently functioning
+    Probability:       0.08
+    Confidence:        high
+    Reasoning:         The recent diplomatic developments are decisively negative. Iran's outright rejection of US demands, refusal to meet officials, and the collapse of Pakistani mediation efforts indicate no viable path to a ceasefire by April 30. The shooting down of a US aircraft suggests continued escalation. While the market price of 17.5% may reflect some hope for surprise diplomatic breakthroughs, the concrete evidence points to an extremely low probability of formal ceasefire agreement within 26 days.
+    Information edge:  Market may be overweighting the possibility of surprise diplomatic developments while underweighting the significance of Iran's explicit rejection and the collapse of current mediation efforts.
+
+  Calibration:
+    Raw LLM probability:    8.0%
+    Calibrated probability: 12.1%
+    Adjustment:             +4.1%
+
+  Confidence build-up:
+    Base (from LLM):        0.85 (high)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.95
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  12.1%   0.95    0.427         5.2%
+  base_rate                0.150  17.5%   0.50    0.075         1.3%
+  momentum                 0.200  17.4%   0.02    0.004         0.1%
+  book_imbalance           0.150  21.3%   0.50    0.075         1.6%
+  whale_profiled           0.000  17.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.581         8.1%
+
+  Final probability: 8.1% / 0.581 = 14.0%
+  Ensemble confidence (agreement): 0.94
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    14.0%
+  Market price:    17.5%
+  Edge:            -3.5%
+  Direction:       NO (market overpriced)
+
+  ❌ NO TRADE: Edge 3.5% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 15 of 17
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will the Iranian regime fall by June 30?
+  Market ID:     958443
+  Market price:  13.5%
+  Volume 24h:    $353,369
+  Liquidity:     $1,404,345
+  Scanner score: 0.609
+  Days to res:   86.3
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news (1 of 5)
+  Time: 20.0s
+
+  News:
+    • Iran faces largest protests since 1979 revolution with thousands killed in government crackdown
+    • Supreme Leader Ali Khamenei assassinated in March 2026, succeeded by son Mojtaba
+    • US-Israel war against Iran ongoing since February 28, 2026 with extensive airstrikes
+    • No significant military defections reported despite massive pressure on regime
+    • Internet blackout continues since January 8 to suppress protest coordination
+    Sentiment: bearish_yes (strength: 80%)
+    Key facts:
+      - Death toll estimates range from 7,007 to 36,500 people killed in 2025-2026 protests
+      - Over 24,669 protesters detained as of January 18, 2026
+      - Iranian rial collapsed to 1.47 million per dollar by January 2026
+      - Protests spread to all 31 provinces with over 340 demonstrations reported
+      - No verified high-level military defections despite assassination of top IRGC commanders
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 4,879 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.05,
+      "base_rate_reasoning": "Regime changes in established authoritarian states are historically rare events, occurring perhaps 5-10% of the time even under severe stress over multi-year periods.",
+      "news_impact": "The assassination of Khamenei, massive protests with thousands killed, ongoing war, and economic collapse create unprecedented pressure on the regime. However, the succession to his son suggests institutional continuity rather than collapse.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "Supreme Leader assassinated creating leadership crisis and potential power vacuum",
+        "Largest protests since 1979 revolution with 7,000-36,500 killed showing massive popular uprising",
+        "Ongoing US-Israel war since February creating external military pressure",
+        "Economic collapse with rial at 1.47 million per dollar undermining regime legitimacy",
+        "Protests spread to all 31 provinces indicating nationwide resistance"
+      ],
+      "factors_against": [
+        "Smooth succession to Mojtaba Khamenei suggests institutional continuity and IRGC loyalty",
+        "No reported military defections despite massive pressure - security apparatus remains intact",
+        "Regime has successfully suppressed protests through brutal crackdown with 24,669+ detained",
+        "Historical resilience of Iranian regime through Iran-Iraq war, sanctions, and previous uprisings",
+        "Only 86 days remaining - insufficient time for regime collapse absent military coup"
+      ],
+      "probability": 0.18,
+      "reasoning": "While the current crisis is unprecedented with Khamenei's assassination, massive protests, war, and economic collapse, the regime's core institutions appear intact. The succession to Mojtaba Khamenei and lack of military defections suggest the IRGC and clerical establishment maintain control. Regime changes typically require either military defection or complete state collapse, neither of which has occurred despite enormous pressure. The 86-day timeframe is very short for such fundamental change.",
+      "confidence": "medium",
+      "information_edge": "Market may be underpricing the significance of Khamenei's assassination and the scale of current unrest, but overestimating the speed at which authoritarian regimes actually fall even under extreme pressure."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.05
+    Base rate reason:   Regime changes in established authoritarian states are historically rare events, occurring perhaps 5-10% of the time even under severe stress over multi-year periods.
+    Factors FOR YES:
+      + Supreme Leader assassinated creating leadership crisis and potential power vacuum
+      + Largest protests since 1979 revolution with 7,000-36,500 killed showing massive popular uprising
+      + Ongoing US-Israel war since February creating external military pressure
+      + Economic collapse with rial at 1.47 million per dollar undermining regime legitimacy
+      + Protests spread to all 31 provinces indicating nationwide resistance
+    Factors AGAINST:
+      - Smooth succession to Mojtaba Khamenei suggests institutional continuity and IRGC loyalty
+      - No reported military defections despite massive pressure - security apparatus remains intact
+      - Regime has successfully suppressed protests through brutal crackdown with 24,669+ detained
+      - Historical resilience of Iranian regime through Iran-Iraq war, sanctions, and previous uprisings
+      - Only 86 days remaining - insufficient time for regime collapse absent military coup
+    Probability:       0.18
+    Confidence:        medium
+    Reasoning:         While the current crisis is unprecedented with Khamenei's assassination, massive protests, war, and economic collapse, the regime's core institutions appear intact. The succession to Mojtaba Khamenei and lack of military defections suggest the IRGC and clerical establishment maintain control. Regime changes typically require either military defection or complete state collapse, neither of which has occurred despite enormous pressure. The 86-day timeframe is very short for such fundamental change.
+    Information edge:  Market may be underpricing the significance of Khamenei's assassination and the scale of current unrest, but overestimating the speed at which authoritarian regimes actually fall even under extreme pressure.
+
+  Calibration:
+    Raw LLM probability:    18.0%
+    Calibrated probability: 22.9%
+    Adjustment:             +4.9%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.05 (1 sources × 0.05)
+    Final confidence:       0.65
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  22.9%   0.65    0.293         6.7%
+  base_rate                0.150  13.5%   0.50    0.075         1.0%
+  momentum                 0.200  13.2%   0.05    0.010         0.1%
+  book_imbalance           0.150  15.9%   0.34    0.050         0.8%
+  whale_profiled           0.000  13.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.428         8.6%
+
+  Final probability: 8.6% / 0.428 = 20.2%
+  Ensemble confidence (agreement): 0.93
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    20.2%
+  Market price:    13.5%
+  Edge:            +6.7%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: No edge found (best edge: +6.7%)
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 16 of 17
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Strait of Hormuz traffic returns to normal by end of April?
+  Market ID:     1540766
+  Market price:  8.5%
+  Volume 24h:    $158,701
+  Liquidity:     $289,784
+  Scanner score: 0.589
+  Days to res:   25.3
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news (1 of 5)
+  Time: 25.3s
+
+  News:
+    • Iran allows selective passage for Philippine, Chinese, Russian, Indian, Iraqi, Pakistani, Malaysian, and Thai vessels through Strait of Hormuz
+    • UK leads 40+ nation coalition meeting on April 2 to discuss diplomatic solutions for reopening Strait of Hormuz
+    • Traffic through Strait collapsed 80-95% from over 100 daily transits to fewer than 25 as of April 2
+    • French container ship CMA CGM Kribi becomes first Western vessel to transit strait since crisis began
+    • Three Omani tankers successfully navigate strait using southern coastal route on April 2
+    Sentiment: bearish_yes (strength: 75%)
+    Key facts:
+      - Crisis began February 28, 2026 following US-Israel strikes on Iran
+      - Iran has made 21 confirmed attacks on merchant ships as of March 12
+      - Only 21 tankers have transited the route since war began vs 100+ ships daily before
+      - Oil prices peaked at $126/barrel, now around $114/barrel
+      - Strait normally carries 20% of global oil and 25% of maritime oil trade
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,081 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "No historical precedent for this specific scenario exists, so starting with uninformative prior of 50%.",
+      "news_impact": "The news is overwhelmingly negative - traffic has collapsed 80-95% from 100+ daily transits to under 25, with Iran making selective exceptions only for certain nations' vessels. This suggests normal traffic (60+ ships) is highly unlikely by April 30th.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "Iran is allowing selective passage for some nations (Philippine, Chinese, Russian, Indian, Iraqi, Pakistani, Malaysian, Thai vessels)",
+        "40+ nation coalition meeting on April 2 shows diplomatic pressure",
+        "One Western vessel (French CMA CGM Kribi) has successfully transited",
+        "Oil prices have declined from peak of $126 to $114, suggesting some market stabilization"
+      ],
+      "factors_against": [
+        "Traffic has collapsed 80-95% from normal levels of 100+ daily transits",
+        "Only 21 tankers have transited since crisis began vs normal 100+ ships daily",
+        "Iran has made 21 confirmed attacks on merchant ships as of March 12",
+        "Crisis is only ~5 weeks old with 25 days remaining - insufficient time for full normalization",
+        "Western vessels still largely blocked except for rare exceptions",
+        "Geopolitical tensions remain high following US-Israel strikes on Iran"
+      ],
+      "probability": 0.12,
+      "reasoning": "The market at 8.5% appears roughly correct but slightly undervalues the possibility of reaching 60 transits through selective Iranian permissions and diplomatic progress. Current traffic is under 25 ships daily versus the 60+ needed, requiring a 140%+ increase in just 25 days. While Iran's selective allowances and diplomatic efforts provide some hope, the scale of recovery needed in such a short timeframe amid ongoing hostilities makes this highly improbable.",
+      "confidence": "high",
+      "information_edge": "Market may slightly underestimate the cumulative effect of selective permissions for multiple nations' vessels, but the fundamental challenge of achieving 60+ daily transits remains enormous."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   No historical precedent for this specific scenario exists, so starting with uninformative prior of 50%.
+    Factors FOR YES:
+      + Iran is allowing selective passage for some nations (Philippine, Chinese, Russian, Indian, Iraqi, Pakistani, Malaysian, Thai vessels)
+      + 40+ nation coalition meeting on April 2 shows diplomatic pressure
+      + One Western vessel (French CMA CGM Kribi) has successfully transited
+      + Oil prices have declined from peak of $126 to $114, suggesting some market stabilization
+    Factors AGAINST:
+      - Traffic has collapsed 80-95% from normal levels of 100+ daily transits
+      - Only 21 tankers have transited since crisis began vs normal 100+ ships daily
+      - Iran has made 21 confirmed attacks on merchant ships as of March 12
+      - Crisis is only ~5 weeks old with 25 days remaining - insufficient time for full normalization
+      - Western vessels still largely blocked except for rare exceptions
+      - Geopolitical tensions remain high following US-Israel strikes on Iran
+    Probability:       0.12
+    Confidence:        high
+    Reasoning:         The market at 8.5% appears roughly correct but slightly undervalues the possibility of reaching 60 transits through selective Iranian permissions and diplomatic progress. Current traffic is under 25 ships daily versus the 60+ needed, requiring a 140%+ increase in just 25 days. While Iran's selective allowances and diplomatic efforts provide some hope, the scale of recovery needed in such a short timeframe amid ongoing hostilities makes this highly improbable.
+    Information edge:  Market may slightly underestimate the cumulative effect of selective permissions for multiple nations' vessels, but the fundamental challenge of achieving 60+ daily transits remains enormous.
+
+  Calibration:
+    Raw LLM probability:    12.0%
+    Calibrated probability: 16.5%
+    Adjustment:             +4.5%
+
+  Confidence build-up:
+    Base (from LLM):        0.85 (high)
+    + enrichment bonus:     +0.05 (1 sources × 0.05)
+    Final confidence:       0.90
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  16.5%   0.90    0.405         6.7%
+  base_rate                0.150   8.5%   0.50    0.075         0.6%
+  momentum                 0.200   8.4%   0.02    0.004         0.0%
+  book_imbalance           0.150   8.0%   0.07    0.011         0.1%
+  whale_profiled           0.000   8.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.495         7.5%
+
+  Final probability: 7.5% / 0.495 = 15.1%
+  Ensemble confidence (agreement): 0.93
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    15.1%
+  Market price:    8.5%
+  Edge:            +6.6%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: No edge found (best edge: +6.6%)
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 17 of 17
+══════════════════════════════════════════════════════════════════════════════
+  Question:      US obtains Iranian enriched uranium by May 31?
+  Market ID:     1808970
+  Market price:  10.5%
+  Volume 24h:    $198,266
+  Liquidity:     $119,063
+  Scanner score: 0.567
+  Days to res:   56.3
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 22.8s
+
+  News:
+    • Trump rules out ground forces for uranium seizure, calls Iran 'incapable' of nuclear weapon
+    • US military presents complex uranium extraction plan requiring excavation equipment and runway construction
+    • Iran's 440kg uranium stockpile believed concentrated at Isfahan underground facility
+    • Nuclear negotiations remain stalled with Iran rejecting US demands to ship uranium abroad
+    • IAEA inspectors denied access since mid-2025, breaking verification continuity
+    Sentiment: bearish_yes (strength: 80%)
+    Key facts:
+      - Iran possesses approximately 440 kilograms of uranium enriched to 60% purity, enough for multiple nuclear weapons if further processed
+      - Trump stated April 1 that Iran is 'incapable' of obtaining nuclear weapons and uranium is 'so far underground, I don't care about that'
+      - US military has prepared plans for uranium seizure involving excavation equipment and runway construction for cargo planes
+      - Isfahan facility, 480km inland, believed to house about half of Iran's enriched uranium stockpile in underground tunnels
+      - IAEA has been denied access to Iranian nuclear facilities since mid-2025, breaking verification continuity
+
+  Related markets:
+    [keyword_overlap] US x Iran ceasefire by May 31?: 32%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 4,997 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.05,
+      "base_rate_reasoning": "Historically, the US acquiring enriched uranium from adversarial nations through seizure or surrender is extremely rare, occurring perhaps once per decade in major geopolitical shifts.",
+      "news_impact": "Trump's explicit statement ruling out ground forces and calling Iran 'incapable' of nuclear weapons significantly reduces the probability of active seizure operations. The complex military plans requiring excavation equipment suggest any operation would be highly visible and politically costly.",
+      "cross_platform_note": "The related ceasefire market at 32% suggests ongoing tensions, but a ceasefire would actually make uranium acquisition less likely through military means.",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "Iran possesses significant uranium stockpile (440kg at 60% enrichment)",
+        "US military has prepared contingency plans for uranium extraction",
+        "Trump administration may pursue unpredictable foreign policy actions",
+        "Widespread reporting consensus could trigger resolution without formal announcement"
+      ],
+      "factors_against": [
+        "Trump explicitly ruled out ground forces for uranium seizure",
+        "Iran's uranium is stored in heavily fortified underground facilities 480km inland",
+        "No active negotiations or diplomatic progress toward uranium transfer",
+        "Military operation would require massive logistical effort (excavation, runway construction)",
+        "Iran has rejected demands to ship uranium abroad",
+        "Such an operation would likely trigger major regional conflict"
+      ],
+      "probability": 0.08,
+      "reasoning": "The base rate for such acquisitions is very low, and Trump's recent statements explicitly ruling out ground operations significantly reduce the probability below the market price. While Iran does possess substantial enriched uranium, it's stored in heavily fortified underground facilities that would require massive military operations to access. The lack of diplomatic progress and Iran's rejection of uranium transfer demands further reduce the likelihood of voluntary surrender.",
+      "confidence": "medium",
+      "information_edge": "The market may be overweighting the existence of military contingency plans while underweighting Trump's explicit statements ruling out the ground operations that would be necessary to execute those plans."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.05
+    Base rate reason:   Historically, the US acquiring enriched uranium from adversarial nations through seizure or surrender is extremely rare, occurring perhaps once per decade in major geopolitical shifts.
+    Factors FOR YES:
+      + Iran possesses significant uranium stockpile (440kg at 60% enrichment)
+      + US military has prepared contingency plans for uranium extraction
+      + Trump administration may pursue unpredictable foreign policy actions
+      + Widespread reporting consensus could trigger resolution without formal announcement
+    Factors AGAINST:
+      - Trump explicitly ruled out ground forces for uranium seizure
+      - Iran's uranium is stored in heavily fortified underground facilities 480km inland
+      - No active negotiations or diplomatic progress toward uranium transfer
+      - Military operation would require massive logistical effort (excavation, runway construction)
+      - Iran has rejected demands to ship uranium abroad
+      - Such an operation would likely trigger major regional conflict
+    Probability:       0.08
+    Confidence:        medium
+    Reasoning:         The base rate for such acquisitions is very low, and Trump's recent statements explicitly ruling out ground operations significantly reduce the probability below the market price. While Iran does possess substantial enriched uranium, it's stored in heavily fortified underground facilities that would require massive military operations to access. The lack of diplomatic progress and Iran's rejection of uranium transfer demands further reduce the likelihood of voluntary surrender.
+    Information edge:  The market may be overweighting the existence of military contingency plans while underweighting Trump's explicit statements ruling out the ground operations that would be necessary to execute those plans.
+
+  Calibration:
+    Raw LLM probability:    8.0%
+    Calibrated probability: 12.1%
+    Adjustment:             +4.1%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.70
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  12.1%   0.70    0.315         3.8%
+  base_rate                0.150  10.5%   0.50    0.075         0.8%
+  momentum                 0.200   9.4%   0.18    0.036         0.3%
+  book_imbalance           0.150   9.4%   0.15    0.023         0.2%
+  whale_profiled           0.000  10.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.449         5.1%
+
+  Final probability: 5.1% / 0.449 = 11.5%
+  Ensemble confidence (agreement): 0.98
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    11.5%
+  Market price:    10.5%
+  Edge:            +1.0%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: No edge found (best edge: +1.0%)
+
+
+==============================================================================
+  RUN SUMMARY
+==============================================================================
+  Markets evaluated: 17
+  Tradeable:         8
+  Trades entered:    6
+  Elapsed:           585.5s
+==============================================================================

@@ -1,0 +1,2822 @@
+==============================================================================
+  POLYMARKET EDGE — Pipeline Run Log
+  2026-04-09 14:47:50 UTC
+==============================================================================
+  Strategy:      enriched+live+claude-sonnet-4
+  Model:         claude-sonnet-4
+  Candidates:    30
+  Bankroll:      $339.33
+  Min edge:      5%
+  Kelly frac:    25%
+==============================================================================
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 1 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      JD Vance diplomatic meeting with Iran by April 10?
+  Market ID:     1709412
+  Market price:  43.0%
+  Category:       April 10
+  Volume 24h:    $400,648
+  Liquidity:     $20,323
+  Scanner score: 0.723
+  Days to res:   20.4
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 18.7s
+
+  News:
+    • JD Vance confirmed to lead US delegation at Iran peace talks in Pakistan on Saturday (April 12)
+    • White House officially announces Vance will head negotiations with Iran in Islamabad
+    • Trump expresses security concerns about Vance attending talks but expects them to proceed 'very soon'
+    • Pakistan PM confirms talks will take place April 10, 2026 in Islamabad
+    • Fragile ceasefire between US and Iran agreed Tuesday, creating opening for diplomatic talks
+    Sentiment: bullish_yes (strength: 85%)
+    Key facts:
+      - White House Press Secretary Karoline Leavitt confirmed JD Vance will lead US delegation to Pakistan for Iran talks
+      - Talks officially scheduled for Saturday morning local time in Islamabad (April 12, 2026)
+      - Pakistan PM Shehbaz Sharif confirmed meeting date as April 10, 2026
+      - US delegation includes Vance, Special Envoy Steve Witkoff, and Jared Kushner
+      - Iran delegation expected to be led by Parliament Speaker Mohammad Baqer Qalibaf and Foreign Minister Abbas Araghchi
+
+  Related markets:
+    [keyword_overlap] US x Iran meeting by April 30, 2026?: 92%
+    [keyword_overlap] Iran x Israel/US conflict ends by April 15?: 63%
+    [keyword_overlap] Will UAE strike Iran by April 30?: 14%
+    [keyword_overlap] Trump announces end of military operations against Iran by April 15th?: 6%
+    [keyword_overlap] Iran x Israel/US conflict ends by April 30?: 70%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,306 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "No specific historical base rate available for JD Vance diplomatic meetings with Iran, so starting with uninformative prior of 50%.",
+      "news_impact": "The news is extremely bullish - multiple official confirmations of scheduled talks including White House announcement that Vance will lead the delegation and Pakistan PM confirming the meeting date. However, there's a critical date discrepancy that creates uncertainty.",
+      "cross_platform_note": "Related Iran-US meeting market at 92% by April 30 suggests high confidence in diplomatic engagement occurring soon.",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "White House Press Secretary officially confirmed Vance will lead US delegation",
+        "Pakistan PM Shehbaz Sharif confirmed meeting arrangements",
+        "US delegation composition already announced including Vance, Witkoff, and Kushner",
+        "Related market pricing 92% for US-Iran meeting by April 30 indicates strong expectation of diplomatic engagement"
+      ],
+      "factors_against": [
+        "Critical date discrepancy: news mentions both April 10 and April 12, 2026 as meeting dates",
+        "Trump expressed security concerns about Vance attending, suggesting potential last-minute changes",
+        "Only 20 days until resolution leaves little time for schedule adjustments if complications arise",
+        "High-stakes diplomatic meetings often face delays or cancellations due to security or political considerations"
+      ],
+      "probability": 0.75,
+      "reasoning": "The official confirmations from both US and Pakistani governments strongly support the meeting occurring. However, the date discrepancy in the news (April 10 vs April 12) creates significant uncertainty about whether it will happen by the April 10 deadline. Given that Saturday April 12 seems to be the more consistently reported date, and the market resolves at April 10, there's meaningful risk the meeting occurs just after the resolution date.",
+      "confidence": "medium",
+      "information_edge": "The market may be underweighting the specific date discrepancy risk - official sources seem to point more toward April 12 than April 10, which would cause this market to resolve No despite the meeting occurring."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   No specific historical base rate available for JD Vance diplomatic meetings with Iran, so starting with uninformative prior of 50%.
+    Factors FOR YES:
+      + White House Press Secretary officially confirmed Vance will lead US delegation
+      + Pakistan PM Shehbaz Sharif confirmed meeting arrangements
+      + US delegation composition already announced including Vance, Witkoff, and Kushner
+      + Related market pricing 92% for US-Iran meeting by April 30 indicates strong expectation of diplomatic engagement
+    Factors AGAINST:
+      - Critical date discrepancy: news mentions both April 10 and April 12, 2026 as meeting dates
+      - Trump expressed security concerns about Vance attending, suggesting potential last-minute changes
+      - Only 20 days until resolution leaves little time for schedule adjustments if complications arise
+      - High-stakes diplomatic meetings often face delays or cancellations due to security or political considerations
+    Probability:       0.75
+    Confidence:        medium
+    Reasoning:         The official confirmations from both US and Pakistani governments strongly support the meeting occurring. However, the date discrepancy in the news (April 10 vs April 12) creates significant uncertainty about whether it will happen by the April 10 deadline. Given that Saturday April 12 seems to be the more consistently reported date, and the market resolves at April 10, there's meaningful risk the meeting occurs just after the resolution date.
+    Information edge:  The market may be underweighting the specific date discrepancy risk - official sources seem to point more toward April 12 than April 10, which would cause this market to resolve No despite the meeting occurring.
+
+  Calibration:
+    Raw LLM probability:    75.0%
+    Calibrated probability: 73.3%
+    Adjustment:             -1.7%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    × deviation penalty:    ×0.80 (deviation 30.2% > 15%)
+    Final confidence:       0.56
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  73.3%   0.56    0.252        18.5%
+  base_rate                0.150  43.0%   0.50    0.075         3.2%
+  momentum                 0.200  44.2%   0.19    0.038         1.7%
+  book_imbalance           0.150  44.2%   0.16    0.025         1.1%
+  whale_tracker            0.000  43.0%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.389        24.5%
+
+  Final probability: 24.5% / 0.389 = 62.8%
+  Ensemble confidence (agreement): 0.76
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    62.8%
+  Market price:    43.0%
+  Edge:            +19.7%
+  Direction:       YES (market underpriced)
+
+  Kelly sizing:
+    Full Kelly:      34.7% of bankroll
+    Fractional:      6.6% ($22.43)
+    Shares:          52.1 @ $0.4305
+    Max loss:        $22.43
+    Expected profit: $10.29
+    Risk/reward:     1.32
+
+  ✅ TRADE ENTERED
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 2 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will Arsenal win the 2025–26 Champions League?
+  Market ID:     566140
+  Market price:  29.5%
+  Category:      Arsenal
+  Volume 24h:    $252,854
+  Liquidity:     $272,565
+  Scanner score: 0.756
+  Days to res:   51.4
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 22.5s
+
+  News:
+    • Arsenal eliminated from Champions League semifinals by PSG 3-1 on aggregate (May 2026)
+    • Opta rates Arsenal as top Champions League favorites with 28.8% probability to win trophy
+    • Arsenal beat Sporting CP 1-0 in quarterfinals first leg with Kai Havertz 91st minute winner
+    • Arsenal reached Champions League semifinals for first time since 2008-09 after beating Real Madrid 5-1 on aggregate
+    • Arsenal currently in quarterfinals stage, advancing to semifinals against PSG
+    Sentiment: bearish_yes (strength: 80%)
+    Key facts:
+      - Arsenal were eliminated in Champions League semifinals by PSG in May 2025 (3-1 aggregate)
+      - Arsenal finished 3rd in Champions League league phase, bypassing play-offs to reach last 16
+      - Arsenal beat Real Madrid 5-1 on aggregate in quarterfinals, reaching semifinals for first time since 2008-09
+      - Opta analytics gives Arsenal highest probability (28.8%) to win 2025-26 Champions League
+      - Arsenal beat Sporting CP 1-0 in first leg of quarterfinals with late Havertz goal
+
+  Related markets:
+    [keyword_overlap] Will Atletico Madrid win the 2025–26 Champions League?: 7%
+    [keyword_overlap] Will Barcelona win the 2025–26 Champions League?: 7%
+    [keyword_overlap] Will PSG win the 2025–26 Champions League?: 20%
+    [keyword_overlap] Will Arsenal win the 2025–26 English Premier League?: 86%
+    [keyword_overlap] Will Real Madrid win the 2025–26 Champions League?: 5%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 4,783 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.06,
+      "base_rate_reasoning": "Historically, about 16-20 teams compete seriously for the Champions League each year, giving any top team roughly a 5-7% base rate chance of winning.",
+      "news_impact": "The news is contradictory and confusing - it mentions Arsenal being eliminated by PSG in May 2026 semifinals, but also references them as current favorites for 2025-26. This suggests data quality issues, but the elimination news would make the true probability near zero if accurate.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "Opta analytics rates Arsenal as top favorite with 28.8% probability",
+        "Strong recent Champions League performance reaching semifinals",
+        "High market confidence with 86% probability to win Premier League suggests strong squad"
+      ],
+      "factors_against": [
+        "News reports Arsenal was eliminated by PSG in May 2026 semifinals",
+        "Historical difficulty of winning Champions League even for top teams",
+        "Market showing seller imbalance with more ask depth than bid depth"
+      ],
+      "probability": 0.02,
+      "reasoning": "The critical factor is the news reporting Arsenal's elimination by PSG in the semifinals in May 2026. If this is accurate, Arsenal cannot win the 2025-26 Champions League as they've already been eliminated. However, given some contradictory information in the data, there's a small probability this news is incorrect or refers to a different tournament. The market price of 29.5% seems dramatically mispriced if the elimination is real.",
+      "confidence": "medium",
+      "information_edge": "The market appears to be severely mispricing this if Arsenal has indeed been eliminated from the tournament, suggesting traders haven't fully processed this elimination news."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.06
+    Base rate reason:   Historically, about 16-20 teams compete seriously for the Champions League each year, giving any top team roughly a 5-7% base rate chance of winning.
+    Factors FOR YES:
+      + Opta analytics rates Arsenal as top favorite with 28.8% probability
+      + Strong recent Champions League performance reaching semifinals
+      + High market confidence with 86% probability to win Premier League suggests strong squad
+    Factors AGAINST:
+      - News reports Arsenal was eliminated by PSG in May 2026 semifinals
+      - Historical difficulty of winning Champions League even for top teams
+      - Market showing seller imbalance with more ask depth than bid depth
+    Probability:       0.02
+    Confidence:        medium
+    Reasoning:         The critical factor is the news reporting Arsenal's elimination by PSG in the semifinals in May 2026. If this is accurate, Arsenal cannot win the 2025-26 Champions League as they've already been eliminated. However, given some contradictory information in the data, there's a small probability this news is incorrect or refers to a different tournament. The market price of 29.5% seems dramatically mispriced if the elimination is real.
+    Information edge:  The market appears to be severely mispricing this if Arsenal has indeed been eliminated from the tournament, suggesting traders haven't fully processed this elimination news.
+
+  Calibration:
+    Raw LLM probability:    2.0%
+    Calibrated probability: 4.4%
+    Adjustment:             +2.4%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    × deviation penalty:    ×0.80 (deviation 25.1% > 15%)
+    Final confidence:       0.56
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450   4.4%   0.56    0.252         1.1%
+  base_rate                0.150  29.5%   0.50    0.075         2.2%
+  momentum                 0.200  30.8%   0.21    0.042         1.3%
+  book_imbalance           0.150  27.2%   0.32    0.048         1.3%
+  whale_tracker            0.000  29.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.417         5.9%
+
+  Final probability: 5.9% / 0.417 = 14.2%
+  Ensemble confidence (agreement): 0.80
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    14.2%
+  Market price:    29.5%
+  Edge:            -15.3%
+  Direction:       NO (market overpriced)
+
+  Kelly sizing:
+    Full Kelly:      52.0% of bankroll
+    Fractional:      10.0% ($33.93)
+    Shares:          48.1 @ $0.7050
+    Max loss:        $33.93
+    Expected profit: $7.38
+    Risk/reward:     0.42
+
+  ✅ TRADE ENTERED
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 3 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Iran x Israel/US conflict ends by April 30?
+  Market ID:     1567747
+  Market price:  69.5%
+  Category:      April 30
+  Volume 24h:    $297,236
+  Liquidity:     $50,954
+  Scanner score: 0.746
+  Days to res:   20.4
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 21.8s
+
+  News:
+    • US-Iran agree to fragile 2-week ceasefire, talks set for Islamabad April 10
+    • Israel launches massive Lebanon strikes killing 254+ despite ceasefire, claims Lebanon not included
+    • Iran accuses US of ceasefire violations, threatens to halt Strait of Hormuz reopening
+    • Iranian Parliament Speaker calls ceasefire 'unreasonable' citing 3 US violations
+    • VP Vance to lead US delegation to Pakistan talks, describes truce as 'fragile'
+    Sentiment: bearish_yes (strength: 80%)
+    Key facts:
+      - 2-week ceasefire agreed April 8, 2026 between US-Iran after 40 days of war
+      - Peace talks scheduled for April 10 in Islamabad, Pakistan with Pakistani mediation
+      - Major dispute over Lebanon inclusion - Iran says yes, US/Israel say no
+      - Israel killed 254+ in Lebanon on April 8, largest strikes since war began
+      - Iran threatens to close Strait of Hormuz again over Lebanon attacks
+
+  Related markets:
+    [keyword_overlap] Iran x Israel/US conflict ends by April 15?: 63%
+    [keyword_overlap] US x Iran meeting by April 30, 2026?: 92%
+    [keyword_overlap] Israel x Hezbollah ceasefire by April 30, 2026?: 46%
+    [keyword_overlap] JD Vance diplomatic meeting with Iran by April 10?: 43%
+    [keyword_overlap] Will UAE strike Iran by April 30?: 14%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,120 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "No historical base rate available for this specific type of conflict cessation, so starting with uninformative prior of 50%.",
+      "news_impact": "Recent news is highly bearish for YES - while a 2-week ceasefire was agreed April 8, it's already showing major strain with Israel's massive Lebanon strikes killing 254+ and Iran accusing the US of violations. The fundamental disagreement over Lebanon's inclusion suggests the ceasefire is fragile.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "2-week ceasefire already agreed between US-Iran on April 8",
+        "Peace talks scheduled for April 10 in Islamabad with Pakistani mediation",
+        "High trading volume suggests market confidence in current pricing",
+        "Only 20 days left until resolution, reducing time for new conflicts"
+      ],
+      "factors_against": [
+        "Israel's massive Lebanon strikes on April 8 killed 254+ despite ceasefire, showing violations already occurring",
+        "Iran accuses US of 3 ceasefire violations and threatens Strait of Hormuz closure",
+        "Fundamental disagreement over Lebanon inclusion in ceasefire",
+        "Iranian Parliament Speaker calls ceasefire 'unreasonable'",
+        "Related Israel x Hezbollah ceasefire market only at 46%, suggesting Lebanon conflict continues"
+      ],
+      "probability": 0.42,
+      "reasoning": "Starting from 50% base rate, the recent ceasefire agreement initially suggests higher probability, but the immediate violations and disputes significantly reduce confidence. Israel's massive Lebanon strikes just hours after the ceasefire, killing 254+, demonstrates the fragility of the agreement. Iran's accusations of US violations and threats over Hormuz, combined with the Iranian Parliament's opposition, suggest the ceasefire may not hold for the required 14 continuous days. The market at 69.5% appears overoptimistic given these early warning signs.",
+      "confidence": "medium",
+      "information_edge": "Market may be overweighting the ceasefire announcement while underweighting the immediate violations and structural disagreements, particularly over Lebanon's inclusion."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   No historical base rate available for this specific type of conflict cessation, so starting with uninformative prior of 50%.
+    Factors FOR YES:
+      + 2-week ceasefire already agreed between US-Iran on April 8
+      + Peace talks scheduled for April 10 in Islamabad with Pakistani mediation
+      + High trading volume suggests market confidence in current pricing
+      + Only 20 days left until resolution, reducing time for new conflicts
+    Factors AGAINST:
+      - Israel's massive Lebanon strikes on April 8 killed 254+ despite ceasefire, showing violations already occurring
+      - Iran accuses US of 3 ceasefire violations and threatens Strait of Hormuz closure
+      - Fundamental disagreement over Lebanon inclusion in ceasefire
+      - Iranian Parliament Speaker calls ceasefire 'unreasonable'
+      - Related Israel x Hezbollah ceasefire market only at 46%, suggesting Lebanon conflict continues
+    Probability:       0.42
+    Confidence:        medium
+    Reasoning:         Starting from 50% base rate, the recent ceasefire agreement initially suggests higher probability, but the immediate violations and disputes significantly reduce confidence. Israel's massive Lebanon strikes just hours after the ceasefire, killing 254+, demonstrates the fragility of the agreement. Iran's accusations of US violations and threats over Hormuz, combined with the Iranian Parliament's opposition, suggest the ceasefire may not hold for the required 14 continuous days. The market at 69.5% appears overoptimistic given these early warning signs.
+    Information edge:  Market may be overweighting the ceasefire announcement while underweighting the immediate violations and structural disagreements, particularly over Lebanon's inclusion.
+
+  Calibration:
+    Raw LLM probability:    42.0%
+    Calibrated probability: 45.0%
+    Adjustment:             +3.0%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    × deviation penalty:    ×0.80 (deviation 24.5% > 15%)
+    Final confidence:       0.56
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  45.0%   0.56    0.252        11.3%
+  base_rate                0.150  69.5%   0.50    0.075         5.2%
+  momentum                 0.200  70.4%   0.16    0.032         2.2%
+  book_imbalance           0.150  73.7%   0.50    0.075         5.5%
+  whale_tracker            0.000  69.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.434        24.3%
+
+  Final probability: 24.3% / 0.434 = 56.1%
+  Ensemble confidence (agreement): 0.79
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    56.1%
+  Market price:    69.5%
+  Edge:            -13.4%
+  Direction:       NO (market overpriced)
+
+  Kelly sizing:
+    Full Kelly:      19.3% of bankroll
+    Fractional:      3.8% ($12.96)
+    Shares:          42.5 @ $0.3050
+    Max loss:        $12.96
+    Expected profit: $5.70
+    Risk/reward:     2.28
+
+  ✅ TRADE ENTERED
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 4 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Indian Premier League: Kolkata Knight Riders vs Lucknow Super Giants
+  Market ID:     1831591
+  Market price:  58.5%
+  Volume 24h:    $361,531
+  Liquidity:     $44,440
+  Scanner score: 0.701
+  Days to res:   6.8
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news (1 of 5)
+  Time: 19.6s
+
+  News:
+    • KKR still searching for first win of IPL 2026 season with 0 wins, 2 losses, 1 no result
+    • LSG bounced back with clinical 5-wicket victory over SRH, Pant scored unbeaten 50
+    • KKR's bowling severely depleted with injuries to key players including Varun Chakravarthy
+    • Sunil Narine recovered from illness and expected to return for KKR vs LSG match
+    • LSG have best powerplay bowling in IPL 2026 with 7 wickets and 4.58 economy rate
+    Sentiment: bearish_yes (strength: 75%)
+    Key facts:
+      - KKR have lost their last 4 of 5 completed games at Eden Gardens
+      - LSG's Mohammed Shami took 2/9 in 4 overs against SRH in their recent win
+      - KKR were 25/2 after 3.4 overs vs PBKS before rain saved them
+      - LSG's bowling attack includes Shami, Avesh Khan, and Prince Yadav who all took 2 wickets each vs SRH
+      - KKR's mystery spinners Narine and Varun have combined economy of 10+ RPO with just 1 wicket between them
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 4,865 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "In cricket matches between two teams, the base rate is 50% absent specific information about relative strength or home advantage.",
+      "news_impact": "The news is strongly negative for KKR - they're winless this season (0-2-1), have key bowling injuries, and poor recent home form. LSG just won convincingly with strong bowling performances from Shami and others.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "Sunil Narine returning from illness could strengthen KKR's bowling",
+        "Home advantage at Eden Gardens",
+        "Cricket can be unpredictable with individual performances changing games"
+      ],
+      "factors_against": [
+        "KKR winless this season (0-2-1 record)",
+        "Key bowler Varun Chakravarthy injured, bowling attack depleted",
+        "Lost 4 of last 5 completed games at Eden Gardens",
+        "LSG coming off clinical 5-wicket win with strong bowling display",
+        "LSG's Mohammed Shami in excellent form (2/9 in 4 overs)",
+        "KKR's batting fragile (25/2 after 3.4 overs vs PBKS before rain)"
+      ],
+      "probability": 0.35,
+      "reasoning": "Starting from the 50% base rate, the evidence strongly favors LSG. KKR's winless season, depleted bowling attack, poor recent home form, and fragile batting create multiple vulnerabilities. LSG's recent clinical victory and strong bowling performances, particularly Shami's form, suggest they're the stronger team currently. The market's 58.5% for KKR appears to overweight home advantage while underweighting KKR's clear structural weaknesses this season.",
+      "confidence": "medium",
+      "information_edge": "Market may be overvaluing home advantage and underweighting the significance of KKR's bowling injuries and poor season start"
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   In cricket matches between two teams, the base rate is 50% absent specific information about relative strength or home advantage.
+    Factors FOR YES:
+      + Sunil Narine returning from illness could strengthen KKR's bowling
+      + Home advantage at Eden Gardens
+      + Cricket can be unpredictable with individual performances changing games
+    Factors AGAINST:
+      - KKR winless this season (0-2-1 record)
+      - Key bowler Varun Chakravarthy injured, bowling attack depleted
+      - Lost 4 of last 5 completed games at Eden Gardens
+      - LSG coming off clinical 5-wicket win with strong bowling display
+      - LSG's Mohammed Shami in excellent form (2/9 in 4 overs)
+      - KKR's batting fragile (25/2 after 3.4 overs vs PBKS before rain)
+    Probability:       0.35
+    Confidence:        medium
+    Reasoning:         Starting from the 50% base rate, the evidence strongly favors LSG. KKR's winless season, depleted bowling attack, poor recent home form, and fragile batting create multiple vulnerabilities. LSG's recent clinical victory and strong bowling performances, particularly Shami's form, suggest they're the stronger team currently. The market's 58.5% for KKR appears to overweight home advantage while underweighting KKR's clear structural weaknesses this season.
+    Information edge:  Market may be overvaluing home advantage and underweighting the significance of KKR's bowling injuries and poor season start
+
+  Calibration:
+    Raw LLM probability:    35.0%
+    Calibrated probability: 38.9%
+    Adjustment:             +3.9%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.05 (1 sources × 0.05)
+    × deviation penalty:    ×0.80 (deviation 19.6% > 15%)
+    Final confidence:       0.52
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  38.9%   0.52    0.234         9.1%
+  base_rate                0.150  58.5%   0.50    0.075         4.4%
+  momentum                 0.200  58.6%   0.01    0.002         0.1%
+  book_imbalance           0.150  59.4%   0.13    0.020         1.2%
+  whale_tracker            0.000  58.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.331        14.8%
+
+  Final probability: 14.8% / 0.331 = 44.7%
+  Ensemble confidence (agreement): 0.84
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    44.7%
+  Market price:    58.5%
+  Edge:            -13.8%
+  Direction:       NO (market overpriced)
+
+  Kelly sizing:
+    Full Kelly:      23.6% of bankroll
+    Fractional:      5.0% ($16.84)
+    Shares:          40.6 @ $0.4150
+    Max loss:        $16.84
+    Expected profit: $5.60
+    Risk/reward:     1.41
+
+  ✅ TRADE ENTERED
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 5 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Iran x Israel/US conflict ends by April 15?
+  Market ID:     1567746
+  Market price:  63.4%
+  Category:      April 15
+  Volume 24h:    $835,130
+  Liquidity:     $178,497
+  Scanner score: 0.835
+  Days to res:   5.4
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 24.0s
+
+  News:
+    • US-Iran agree to fragile 2-week ceasefire hours before Trump's deadline, talks set for Islamabad April 10
+    • Israel launches massive Lebanon strikes killing 254+ people, claims ceasefire doesn't cover Hezbollah
+    • Iran accuses US of ceasefire violations, threatens to halt Strait of Hormuz shipping again
+    • Pakistani PM confirms peace talks begin Saturday in Islamabad with US delegation led by VP Vance
+    • Iran claims victory, says US accepted its 10-point plan including uranium enrichment rights
+    Sentiment: bearish_yes (strength: 75%)
+    Key facts:
+      - Ceasefire agreed April 8, 2026 just hours before Trump's 8pm deadline to destroy Iranian civilization
+      - Iran's 10-point proposal includes uranium enrichment rights, US troop withdrawal, sanctions lifting
+      - US insists no uranium enrichment allowed, creating major disagreement for talks
+      - Israel explicitly excluded Lebanon from ceasefire, continued massive strikes on Hezbollah
+      - Iran threatened to leave ceasefire over Israeli Lebanon violations on first day
+
+  Related markets:
+    [keyword_overlap] Iran x Israel/US conflict ends by April 30?: 70%
+    [keyword_overlap] US x Iran meeting by April 30, 2026?: 92%
+    [keyword_overlap] Israel x Hezbollah ceasefire by April 30, 2026?: 46%
+    [keyword_overlap] JD Vance diplomatic meeting with Iran by April 10?: 43%
+    [keyword_overlap] Will UAE strike Iran by April 30?: 14%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,245 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "No historical base rate provided, so using uninformative prior of 50% as starting point for this specific conflict resolution scenario.",
+      "news_impact": "Recent news is highly bearish for YES - while a fragile ceasefire was agreed April 8th, Israel explicitly excluded Lebanon and continues massive strikes on Hezbollah, Iran accuses US of violations, and fundamental disagreements remain on uranium enrichment.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "Ceasefire agreement reached on April 8th provides framework for 14-day period",
+        "High-level talks scheduled in Islamabad with VP Vance delegation",
+        "Strong market pressure from Trump's deadline may incentivize compliance",
+        "Only 5.4 days remaining reduces window for violations"
+      ],
+      "factors_against": [
+        "Israel explicitly excluded Lebanon from ceasefire and continues massive strikes killing 254+",
+        "Iran already accusing US of ceasefire violations",
+        "Fundamental disagreement on uranium enrichment creates instability",
+        "Ceasefire described as 'fragile' with threats to halt Strait of Hormuz shipping",
+        "Related Hezbollah ceasefire market only at 46% suggests continued Lebanon conflict likely"
+      ],
+      "probability": 0.38,
+      "reasoning": "While a ceasefire was technically agreed on April 8th, the immediate violations and exclusions make a continuous 14-day period highly unlikely. Israel's continued massive strikes in Lebanon (explicitly excluded from ceasefire) and Iran's accusations of US violations suggest the agreement is already breaking down. The fundamental disagreement on uranium enrichment and Iran's threats regarding Strait of Hormuz indicate the ceasefire is too fragile to last 14 continuous days. The market at 63.4% appears overoptimistic given these immediate implementation failures.",
+      "confidence": "high",
+      "information_edge": "Market may be overweighting the existence of a ceasefire agreement while underweighting the immediate violations and structural disagreements that make 14 continuous days of peace unlikely."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   No historical base rate provided, so using uninformative prior of 50% as starting point for this specific conflict resolution scenario.
+    Factors FOR YES:
+      + Ceasefire agreement reached on April 8th provides framework for 14-day period
+      + High-level talks scheduled in Islamabad with VP Vance delegation
+      + Strong market pressure from Trump's deadline may incentivize compliance
+      + Only 5.4 days remaining reduces window for violations
+    Factors AGAINST:
+      - Israel explicitly excluded Lebanon from ceasefire and continues massive strikes killing 254+
+      - Iran already accusing US of ceasefire violations
+      - Fundamental disagreement on uranium enrichment creates instability
+      - Ceasefire described as 'fragile' with threats to halt Strait of Hormuz shipping
+      - Related Hezbollah ceasefire market only at 46% suggests continued Lebanon conflict likely
+    Probability:       0.38
+    Confidence:        high
+    Reasoning:         While a ceasefire was technically agreed on April 8th, the immediate violations and exclusions make a continuous 14-day period highly unlikely. Israel's continued massive strikes in Lebanon (explicitly excluded from ceasefire) and Iran's accusations of US violations suggest the agreement is already breaking down. The fundamental disagreement on uranium enrichment and Iran's threats regarding Strait of Hormuz indicate the ceasefire is too fragile to last 14 continuous days. The market at 63.4% appears overoptimistic given these immediate implementation failures.
+    Information edge:  Market may be overweighting the existence of a ceasefire agreement while underweighting the immediate violations and structural disagreements that make 14 continuous days of peace unlikely.
+
+  Calibration:
+    Raw LLM probability:    38.0%
+    Calibrated probability: 41.6%
+    Adjustment:             +3.6%
+
+  Confidence build-up:
+    Base (from LLM):        0.85 (high)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    × deviation penalty:    ×0.80 (deviation 21.9% > 15%)
+    Final confidence:       0.76
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  41.6%   0.76    0.342        14.2%
+  base_rate                0.150  63.4%   0.50    0.075         4.8%
+  momentum                 0.200  65.0%   0.26    0.053         3.4%
+  book_imbalance           0.150  67.7%   0.50    0.075         5.1%
+  whale_tracker            0.000  63.4%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.545        27.5%
+
+  Final probability: 27.5% / 0.545 = 50.4%
+  Ensemble confidence (agreement): 0.81
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    50.4%
+  Market price:    63.4%
+  Edge:            -13.0%
+  Direction:       NO (market overpriced)
+
+  Kelly sizing:
+    Full Kelly:      20.5% of bankroll
+    Fractional:      4.2% ($14.10)
+    Shares:          38.6 @ $0.3655
+    Max loss:        $14.10
+    Expected profit: $5.02
+    Risk/reward:     1.74
+
+  ✅ TRADE ENTERED
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 6 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will WTI Crude Oil (WTI) hit (HIGH) $120 in April?
+  Market ID:     1712297
+  Market price:  37.5%
+  Category:      ↑ $120
+  Volume 24h:    $481,158
+  Liquidity:     $76,862
+  Scanner score: 0.788
+  Days to res:   20.4
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 21.8s
+
+  News:
+    • WTI crude oil plunged 15% to $95 after Trump delayed Iran attack threat by two weeks in 'double-sided ceasefire'
+    • Iran agreed to temporarily reopen Strait of Hormuz for two weeks if hostilities pause
+    • WTI surged to $111.54 in early April, up 11.94% in holiday-shortened week
+    • Polymarket poll shows 76% odds WTI hits $120 in April, 21% odds for $150
+    • EIA forecasts Brent to peak at $115/b in Q2 2026 with production shut-ins at 9.1 million b/d in April
+    Sentiment: bearish_yes (strength: 70%)
+    Key facts:
+      - Current WTI price around $97.53 after sharp 15% decline from recent highs near $118
+      - Strait of Hormuz handles 20% of global oil flows and remains partially closed
+      - Middle East production shut-ins estimated at 7.5 million b/d in March, rising to 9.1 million b/d in April
+      - WTI hit $111.29 on April 2nd and $111.54 by April 3rd before recent selloff
+      - Brent-WTI spread forecast to peak at $15/b in April due to production disruptions
+
+  Related markets:
+    [keyword_overlap] Will WTI Crude Oil (WTI) hit (LOW) $90 in April?: 64%
+    [keyword_overlap] Will WTI Crude Oil (WTI) hit (LOW) $80 in April?: 28%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 6,090 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "No specific historical base rate is available for WTI hitting $120 in a given month, so starting with an uninformative prior of 50%.",
+      "news_impact": "Recent news is mixed but leans bearish - WTI plunged 15% to $95 after Trump delayed Iran attack threat and Iran agreed to temporarily reopen Strait of Hormuz. However, significant production shut-ins (9.1 million b/d expected in April) and the fact that WTI already hit $111.54 early in April before the selloff suggests upside potential remains.",
+      "cross_platform_note": "Polymarket shows 76% odds for WTI hitting $120 in April, significantly higher than the current 37.5% market price.",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "WTI already reached $111.54 in early April, only $8.46 away from $120 target",
+        "Massive production shut-ins of 9.1 million b/d expected in April due to Middle East conflicts",
+        "Strait of Hormuz only temporarily reopened for two weeks - closure risk remains high",
+        "Oil markets historically volatile during geopolitical crises with potential for sharp spikes",
+        "Strong order book imbalance (+0.61) suggests more buyers than sellers"
+      ],
+      "factors_against": [
+        "Recent 15% plunge from $118 to $95 shows market volatility cuts both ways",
+        "Trump's delay of Iran attack threat reduces immediate geopolitical premium",
+        "Two-week ceasefire agreement provides temporary supply relief",
+        "Current price at $97.53 requires 23% gain to reach $120",
+        "Only 20.4 days remaining in April for the target to be hit"
+      ],
+      "probability": 0.58,
+      "reasoning": "The market appears to be underpricing this outcome. WTI already demonstrated it can reach $111+ in early April before geopolitical tensions temporarily eased. With massive production shut-ins continuing (9.1 million b/d), the Strait of Hormuz only temporarily reopened, and high oil market volatility during crises, a spike to $120 remains plausible. The cross-platform signal from Polymarket (76% vs 37.5%) suggests informed traders see higher odds. While the recent selloff creates headwinds, the fundamental supply disruption story remains intact.",
+      "confidence": "medium",
+      "information_edge": "Market may be overreacting to the temporary ceasefire news while underweighting the scale of ongoing production disruptions and oil's demonstrated ability to spike quickly during geopolitical events."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   No specific historical base rate is available for WTI hitting $120 in a given month, so starting with an uninformative prior of 50%.
+    Factors FOR YES:
+      + WTI already reached $111.54 in early April, only $8.46 away from $120 target
+      + Massive production shut-ins of 9.1 million b/d expected in April due to Middle East conflicts
+      + Strait of Hormuz only temporarily reopened for two weeks - closure risk remains high
+      + Oil markets historically volatile during geopolitical crises with potential for sharp spikes
+      + Strong order book imbalance (+0.61) suggests more buyers than sellers
+    Factors AGAINST:
+      - Recent 15% plunge from $118 to $95 shows market volatility cuts both ways
+      - Trump's delay of Iran attack threat reduces immediate geopolitical premium
+      - Two-week ceasefire agreement provides temporary supply relief
+      - Current price at $97.53 requires 23% gain to reach $120
+      - Only 20.4 days remaining in April for the target to be hit
+    Probability:       0.58
+    Confidence:        medium
+    Reasoning:         The market appears to be underpricing this outcome. WTI already demonstrated it can reach $111+ in early April before geopolitical tensions temporarily eased. With massive production shut-ins continuing (9.1 million b/d), the Strait of Hormuz only temporarily reopened, and high oil market volatility during crises, a spike to $120 remains plausible. The cross-platform signal from Polymarket (76% vs 37.5%) suggests informed traders see higher odds. While the recent selloff creates headwinds, the fundamental supply disruption story remains intact.
+    Information edge:  Market may be overreacting to the temporary ceasefire news while underweighting the scale of ongoing production disruptions and oil's demonstrated ability to spike quickly during geopolitical events.
+
+  Calibration:
+    Raw LLM probability:    58.0%
+    Calibrated probability: 58.6%
+    Adjustment:             +0.6%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    × deviation penalty:    ×0.80 (deviation 21.1% > 15%)
+    Final confidence:       0.56
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  58.6%   0.56    0.252        14.8%
+  base_rate                0.150  37.5%   0.50    0.075         2.8%
+  momentum                 0.200  40.0%   0.41    0.082         3.3%
+  book_imbalance           0.150  40.5%   0.42    0.064         2.6%
+  whale_tracker            0.000  37.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.472        23.4%
+
+  Final probability: 23.4% / 0.472 = 49.6%
+  Ensemble confidence (agreement): 0.84
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    49.6%
+  Market price:    37.5%
+  Edge:            +12.1%
+  Direction:       YES (market underpriced)
+
+  Kelly sizing:
+    Full Kelly:      19.4% of bankroll
+    Fractional:      4.1% ($13.81)
+    Shares:          36.8 @ $0.3750
+    Max loss:        $13.81
+    Expected profit: $4.46
+    Risk/reward:     1.67
+
+  ✅ TRADE ENTERED
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 7 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will Elon Musk post 260-279 tweets from April 3 to April 10, 2026?
+  Market ID:     1800079
+  Market price:  34.5%
+  Category:      260-279
+  Volume 24h:    $159,878
+  Liquidity:     $37,222
+  Scanner score: 0.656
+  Days to res:   1.0
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news (1 of 5)
+  Time: 28.1s
+
+  News:
+    • Musk posted 194 tweets from April 3-10 as of April 9, averaging 32 daily
+    • Previous week March 31-April 7 totaled approximately 268 posts
+    • Recent posting pace down from March's 37 daily average to 32 posts per day
+    • 260-279 range leads prediction markets at 23% probability for April 10-17
+    • Daily posting varies sharply: peaked at 77 on April 1, then 22 on April 2
+    Sentiment: neutral (strength: 60%)
+    Key facts:
+      - Current April 3-10 period shows 194 posts averaging 32 daily as of April 9
+      - March 31-April 7 period had approximately 268 total posts
+      - Historical 2024-2025 averages were 68-101 tweets per day
+      - Recent slowdown to 32 posts/day from March's 37 daily pace
+      - 260-279 range target would require ~33-35 posts daily over 8 days
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 4,322 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.2,
+      "base_rate_reasoning": "Without historical data on Musk's specific posting patterns in 260-279 ranges, I anchor to a relatively low probability since this represents a specific narrow band out of many possible ranges.",
+      "news_impact": "The current data shows Musk at 194 posts through April 9, averaging 32 daily, which puts him on pace for ~224 total posts by April 10 - well below the 260-279 target range. This significantly reduces the probability.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "Market price has risen from 23.5% to 34.5% over 7 days, suggesting some informed betting",
+        "Previous week (March 31-April 7) hit 268 posts, showing Musk can reach this range",
+        "One day remaining allows for potential posting surge"
+      ],
+      "factors_against": [
+        "Current pace of 32 posts/day would yield only ~224 total posts, far below 260 minimum",
+        "Recent slowdown from March's 37 daily average to current 32 daily pace",
+        "Would need 66+ posts on April 10 alone to reach minimum threshold - highly unlikely given recent patterns",
+        "194 posts through April 9 means needing massive acceleration"
+      ],
+      "probability": 0.08,
+      "reasoning": "The math is stark: with 194 posts through April 9 and averaging 32 daily, Musk would need 66+ posts on April 10 alone to reach the 260 minimum. His recent pace shows a slowdown to 32 posts/day from March's 37 average. While he hit 268 posts the previous week, his current trajectory puts him around 224 total posts. The market at 34.5% appears to significantly overestimate the probability given the concrete posting data.",
+      "confidence": "high",
+      "information_edge": "Market appears to underweight the mathematical constraint - current posting pace makes 260-279 range extremely unlikely with only one day remaining"
+    }
+
+  Parsed response:
+    Base rate anchor:   0.2
+    Base rate reason:   Without historical data on Musk's specific posting patterns in 260-279 ranges, I anchor to a relatively low probability since this represents a specific narrow band out of many possible ranges.
+    Factors FOR YES:
+      + Market price has risen from 23.5% to 34.5% over 7 days, suggesting some informed betting
+      + Previous week (March 31-April 7) hit 268 posts, showing Musk can reach this range
+      + One day remaining allows for potential posting surge
+    Factors AGAINST:
+      - Current pace of 32 posts/day would yield only ~224 total posts, far below 260 minimum
+      - Recent slowdown from March's 37 daily average to current 32 daily pace
+      - Would need 66+ posts on April 10 alone to reach minimum threshold - highly unlikely given recent patterns
+      - 194 posts through April 9 means needing massive acceleration
+    Probability:       0.08
+    Confidence:        high
+    Reasoning:         The math is stark: with 194 posts through April 9 and averaging 32 daily, Musk would need 66+ posts on April 10 alone to reach the 260 minimum. His recent pace shows a slowdown to 32 posts/day from March's 37 average. While he hit 268 posts the previous week, his current trajectory puts him around 224 total posts. The market at 34.5% appears to significantly overestimate the probability given the concrete posting data.
+    Information edge:  Market appears to underweight the mathematical constraint - current posting pace makes 260-279 range extremely unlikely with only one day remaining
+
+  Calibration:
+    Raw LLM probability:    8.0%
+    Calibrated probability: 12.1%
+    Adjustment:             +4.1%
+
+  Confidence build-up:
+    Base (from LLM):        0.85 (high)
+    + enrichment bonus:     +0.05 (1 sources × 0.05)
+    × deviation penalty:    ×0.80 (deviation 22.4% > 15%)
+    Final confidence:       0.72
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  12.1%   0.72    0.324         3.9%
+  base_rate                0.150  34.5%   0.50    0.075         2.6%
+  momentum                 0.200  38.2%   0.61    0.122         4.7%
+  book_imbalance           0.150  31.2%   0.47    0.070         2.2%
+  whale_tracker            0.000  34.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.591        13.3%
+
+  Final probability: 13.3% / 0.591 = 22.6%
+  Ensemble confidence (agreement): 0.81
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    22.6%
+  Market price:    34.5%
+  Edge:            -11.9%
+  Direction:       NO (market overpriced)
+
+  Kelly sizing:
+    Full Kelly:      34.6% of bankroll
+    Fractional:      7.0% ($23.91)
+    Shares:          36.5 @ $0.6550
+    Max loss:        $23.91
+    Expected profit: $4.36
+    Risk/reward:     0.53
+
+  ✅ TRADE ENTERED
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 8 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Israel x Hezbollah ceasefire by April 30, 2026?
+  Market ID:     1707841
+  Market price:  46.2%
+  Category:      April 30
+  Volume 24h:    $354,792
+  Liquidity:     $42,042
+  Scanner score: 0.807
+  Days to res:   20.4
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 19.1s
+
+  News:
+    • Israel launches largest strikes on Lebanon since war began, killing 250+ people hours after US-Iran ceasefire announced
+    • Hezbollah resumes rocket attacks on northern Israel, citing Israeli ceasefire violations in Lebanon
+    • Iran threatens to withdraw from ceasefire deal over Israeli attacks on Lebanon, pauses Strait of Hormuz shipping
+    • US and Israel maintain Lebanon not covered by ceasefire despite Pakistani mediator claiming it was included
+    • Peace talks scheduled for Pakistan on Saturday between US delegation led by VP Vance and Iranian negotiators
+    Sentiment: bearish_yes (strength: 85%)
+    Key facts:
+      - US-Iran two-week ceasefire announced April 7-8, 2026, but Israel explicitly excluded Lebanon operations
+      - Israel conducted 'Operation Eternal Darkness' - 100 strikes in 10 minutes across Lebanon on April 8
+      - At least 254 people killed in Israeli strikes on Lebanon since ceasefire announcement
+      - Hezbollah initially paused attacks but resumed firing rockets at Israel on April 9
+      - Iran's Parliament Speaker claims US violated 3 conditions of ceasefire deal
+
+  Related markets:
+    [keyword_overlap] Iran x Israel/US conflict ends by April 15?: 63%
+    [keyword_overlap] Iran x Israel/US conflict ends by April 30?: 70%
+    [keyword_overlap] US x Iran meeting by April 30, 2026?: 92%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,381 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "No specific historical base rate provided, so using uninformative prior of 50% as starting point for ceasefire agreements between these parties.",
+      "news_impact": "Recent news is extremely negative - Israel launched massive strikes killing 250+ people in Lebanon just hours after the US-Iran ceasefire, and Hezbollah has resumed rocket attacks. The exclusion of Lebanon from the US-Iran ceasefire deal creates a separate conflict dynamic.",
+      "cross_platform_note": "Related Iran-Israel conflict markets show 63-70% resolution probability, but those specifically exclude Lebanon operations, creating inconsistency.",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "Strong order book imbalance (+0.92) suggests informed buyers see value at current price",
+        "US diplomatic engagement with Iran shows broader regional de-escalation efforts",
+        "High trading volume ($354k in 24h) indicates active informed participation",
+        "20+ days remaining allows time for diplomatic intervention"
+      ],
+      "factors_against": [
+        "Israel explicitly excluded Lebanon from US-Iran ceasefire, indicating intent to continue operations",
+        "Massive escalation with 'Operation Eternal Darkness' - 100 strikes in 10 minutes shows military momentum",
+        "254+ killed in recent strikes represents significant escalation, not de-escalation",
+        "Hezbollah resumed attacks after brief pause, showing cycle of retaliation continues",
+        "Iran threatening to withdraw from broader ceasefire over Lebanon attacks"
+      ],
+      "probability": 0.28,
+      "reasoning": "The recent massive escalation fundamentally changes the conflict dynamics. Israel's explicit exclusion of Lebanon from the US-Iran ceasefire and immediate launch of the largest strikes since the war began signals a deliberate strategy to continue operations against Hezbollah. The 254+ casualties and Hezbollah's resumed rocket attacks create a cycle of retaliation that makes near-term ceasefire unlikely. While the market shows buyer interest, the news sentiment is overwhelmingly bearish and the military actions contradict ceasefire prospects.",
+      "confidence": "high",
+      "information_edge": "Market may be overweighting the broader US-Iran diplomatic progress while underweighting Israel's explicit exclusion of Lebanon operations and the massive recent escalation."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   No specific historical base rate provided, so using uninformative prior of 50% as starting point for ceasefire agreements between these parties.
+    Factors FOR YES:
+      + Strong order book imbalance (+0.92) suggests informed buyers see value at current price
+      + US diplomatic engagement with Iran shows broader regional de-escalation efforts
+      + High trading volume ($354k in 24h) indicates active informed participation
+      + 20+ days remaining allows time for diplomatic intervention
+    Factors AGAINST:
+      - Israel explicitly excluded Lebanon from US-Iran ceasefire, indicating intent to continue operations
+      - Massive escalation with 'Operation Eternal Darkness' - 100 strikes in 10 minutes shows military momentum
+      - 254+ killed in recent strikes represents significant escalation, not de-escalation
+      - Hezbollah resumed attacks after brief pause, showing cycle of retaliation continues
+      - Iran threatening to withdraw from broader ceasefire over Lebanon attacks
+    Probability:       0.28
+    Confidence:        high
+    Reasoning:         The recent massive escalation fundamentally changes the conflict dynamics. Israel's explicit exclusion of Lebanon from the US-Iran ceasefire and immediate launch of the largest strikes since the war began signals a deliberate strategy to continue operations against Hezbollah. The 254+ casualties and Hezbollah's resumed rocket attacks create a cycle of retaliation that makes near-term ceasefire unlikely. While the market shows buyer interest, the news sentiment is overwhelmingly bearish and the military actions contradict ceasefire prospects.
+    Information edge:  Market may be overweighting the broader US-Iran diplomatic progress while underweighting Israel's explicit exclusion of Lebanon operations and the massive recent escalation.
+
+  Calibration:
+    Raw LLM probability:    28.0%
+    Calibrated probability: 32.6%
+    Adjustment:             +4.6%
+
+  Confidence build-up:
+    Base (from LLM):        0.85 (high)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.95
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  32.6%   0.95    0.427        13.9%
+  base_rate                0.150  46.2%   0.50    0.075         3.5%
+  momentum                 0.200  45.1%   0.18    0.035         1.6%
+  book_imbalance           0.150  50.8%   0.50    0.075         3.8%
+  whale_tracker            0.000  46.2%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.613        22.8%
+
+  Final probability: 22.8% / 0.613 = 37.2%
+  Ensemble confidence (agreement): 0.88
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    37.2%
+  Market price:    46.2%
+  Edge:            -9.0%
+  Direction:       NO (market overpriced)
+
+  Kelly sizing:
+    Full Kelly:      19.4% of bankroll
+    Fractional:      4.3% ($14.48)
+    Shares:          26.9 @ $0.5385
+    Max loss:        $14.48
+    Expected profit: $2.41
+    Risk/reward:     0.86
+
+  ✅ TRADE ENTERED
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 10 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Cincinnati Reds vs. Miami Marlins
+  Market ID:     1844632
+  Market price:  47.5%
+  Volume 24h:    $338,424
+  Liquidity:     $492,842
+  Scanner score: 0.787
+  Days to res:   7.0
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news (1 of 5)
+  Time: 19.0s
+
+  News:
+    • Miami Marlins snap Cincinnati Reds' 5-game winning streak with 7-4 victory
+    • Reds complete dramatic comeback in extra innings, beat Marlins 6-3 for 5th straight win
+    • Cincinnati wins series opener 2-0 behind shutout pitching performance
+    • Sal Stewart homers twice in series, continues hot start for rookie
+    • Sandy Alcantara's shutout streak ends at 24 innings in Tuesday's loss
+    Sentiment: neutral (strength: 50%)
+    Key facts:
+      - Series currently tied 2-2 with finale scheduled for Thursday
+      - Reds won games 1 and 2 (2-0, 6-3), Marlins won game 3 (7-4)
+      - Cincinnati entered series with 5-game winning streak before Wednesday loss
+      - Reds are 8-4 overall, 5-1 on road; Marlins are 7-5 overall
+      - Brady Singer struggled in game 3, allowing 6 runs in 2.2 innings
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 4,197 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "In MLB, home teams historically win about 54% of games, but this appears to be a neutral site or the venue isn't clearly specified, so I'm anchoring to 50% as an uninformative prior.",
+      "news_impact": "The series is tied 2-2 with both teams showing competitive play - Reds won the first two games but Marlins bounced back to win game 3, suggesting relatively even matchup strength.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "Reds have better overall record (8-4 vs 7-5)",
+        "Cincinnati has strong road performance (5-1)",
+        "Reds had a 5-game winning streak before Wednesday's loss, showing recent form",
+        "Market has been stable around 47-48%, suggesting informed consensus"
+      ],
+      "factors_against": [
+        "Marlins just broke Cincinnati's winning streak with a convincing 7-4 victory",
+        "Miami has shown they can compete, winning decisively in game 3",
+        "Series is tied 2-2, indicating teams are evenly matched",
+        "Order book shows slight seller imbalance (-0.16), suggesting some bearish sentiment on Reds"
+      ],
+      "probability": 0.48,
+      "reasoning": "Starting from a 50% base rate, the Reds' slightly better record and road performance push probability up, but the Marlins' recent momentum from breaking the winning streak and the tied series status pull it back down. The market price of 47.5% appears well-calibrated given the available information, with both teams demonstrating competitive ability in this series.",
+      "confidence": "medium",
+      "information_edge": "none"
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   In MLB, home teams historically win about 54% of games, but this appears to be a neutral site or the venue isn't clearly specified, so I'm anchoring to 50% as an uninformative prior.
+    Factors FOR YES:
+      + Reds have better overall record (8-4 vs 7-5)
+      + Cincinnati has strong road performance (5-1)
+      + Reds had a 5-game winning streak before Wednesday's loss, showing recent form
+      + Market has been stable around 47-48%, suggesting informed consensus
+    Factors AGAINST:
+      - Marlins just broke Cincinnati's winning streak with a convincing 7-4 victory
+      - Miami has shown they can compete, winning decisively in game 3
+      - Series is tied 2-2, indicating teams are evenly matched
+      - Order book shows slight seller imbalance (-0.16), suggesting some bearish sentiment on Reds
+    Probability:       0.48
+    Confidence:        medium
+    Reasoning:         Starting from a 50% base rate, the Reds' slightly better record and road performance push probability up, but the Marlins' recent momentum from breaking the winning streak and the tied series status pull it back down. The market price of 47.5% appears well-calibrated given the available information, with both teams demonstrating competitive ability in this series.
+    Information edge:  none
+
+  Calibration:
+    Raw LLM probability:    48.0%
+    Calibrated probability: 50.2%
+    Adjustment:             +2.2%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.05 (1 sources × 0.05)
+    Final confidence:       0.65
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  50.2%   0.65    0.293        14.7%
+  base_rate                0.150  47.5%   0.50    0.075         3.6%
+  momentum                 0.200  47.9%   0.06    0.013         0.6%
+  book_imbalance           0.150  46.7%   0.11    0.017         0.8%
+  whale_tracker            0.000  47.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.397        19.6%
+
+  Final probability: 19.6% / 0.397 = 49.5%
+  Ensemble confidence (agreement): 0.98
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    49.5%
+  Market price:    47.5%
+  Edge:            +2.0%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: No edge found (best edge: +2.0%)
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 11 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will WTI Crude Oil (WTI) hit (LOW) $90 in April?
+  Market ID:     1894790
+  Market price:  63.5%
+  Category:      ↓ $90
+  Volume 24h:    $303,838
+  Liquidity:     $30,398
+  Scanner score: 0.760
+  Days to res:   20.4
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 17.1s
+
+  News:
+    • WTI crude plunged 15% to $95 after Trump delayed Iran strike threat for two weeks
+    • Goldman Sachs trimmed Q2 2026 WTI forecast to $87 per barrel
+    • EIA forecasts Brent to fall below $90 in Q4 2026, WTI spread peaks at $15 in April
+    • Current WTI trading around $97.53, finding support near $96.69 channel bottom
+    • Iran agrees to reopen Strait of Hormuz temporarily if hostilities pause
+    Sentiment: bearish_yes (strength: 75%)
+    Key facts:
+      - WTI currently trading at $97.53, down from recent highs above $113
+      - Goldman Sachs forecasts WTI at $87 for Q2 2026
+      - EIA projects Brent-WTI spread to peak at $15 in April 2026
+      - Technical support identified at $96.69 channel bottom
+      - Break below $91.16 would challenge broader bullish structure
+
+  Related markets:
+    [keyword_overlap] Will WTI Crude Oil (WTI) hit (HIGH) $120 in April?: 38%
+    [keyword_overlap] Will WTI Crude Oil (WTI) hit (LOW) $80 in April?: 28%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,975 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "Without specific historical data on WTI hitting $90 in April timeframes, I anchor to an uninformative prior of 50%.",
+      "news_impact": "Recent news is strongly bearish - WTI plunged 15% to $95 after geopolitical tensions eased, Goldman Sachs cut Q2 2026 forecast to $87, and EIA projects further weakness. This significantly increases the probability of hitting $90.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "WTI already dropped 15% to $95, only $5 above the $90 target",
+        "Goldman Sachs forecasts WTI at $87 for Q2 2026, well below $90",
+        "EIA projects continued weakness with Brent-WTI spread widening to $15 in April",
+        "Geopolitical risk premium removed after Trump delayed Iran strike threat",
+        "Technical support at $96.69 is close to current levels and could break"
+      ],
+      "factors_against": [
+        "Current price at $97.53 shows some stability above the channel bottom",
+        "Oil markets can be volatile and geopolitical events could reverse the decline",
+        "April is still over 20 days away, allowing time for market dynamics to change",
+        "Technical support at $96.69 may hold and prevent further decline"
+      ],
+      "probability": 0.72,
+      "reasoning": "The market price of 63.5% appears too low given the recent fundamental developments. WTI has already fallen 15% to $95, putting it just $5 above the $90 target. Goldman Sachs' Q2 2026 forecast of $87 and EIA projections of continued weakness provide strong fundamental support for further declines. The removal of geopolitical risk premium after Trump's Iran delay removes a key price support. With 20+ days remaining in April, there's ample time for the relatively small additional decline needed.",
+      "confidence": "high",
+      "information_edge": "The market may be underweighting the significance of recent fundamental shifts, particularly Goldman's forecast revision and the removal of geopolitical premium, which together suggest a higher probability of reaching $90."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   Without specific historical data on WTI hitting $90 in April timeframes, I anchor to an uninformative prior of 50%.
+    Factors FOR YES:
+      + WTI already dropped 15% to $95, only $5 above the $90 target
+      + Goldman Sachs forecasts WTI at $87 for Q2 2026, well below $90
+      + EIA projects continued weakness with Brent-WTI spread widening to $15 in April
+      + Geopolitical risk premium removed after Trump delayed Iran strike threat
+      + Technical support at $96.69 is close to current levels and could break
+    Factors AGAINST:
+      - Current price at $97.53 shows some stability above the channel bottom
+      - Oil markets can be volatile and geopolitical events could reverse the decline
+      - April is still over 20 days away, allowing time for market dynamics to change
+      - Technical support at $96.69 may hold and prevent further decline
+    Probability:       0.72
+    Confidence:        high
+    Reasoning:         The market price of 63.5% appears too low given the recent fundamental developments. WTI has already fallen 15% to $95, putting it just $5 above the $90 target. Goldman Sachs' Q2 2026 forecast of $87 and EIA projections of continued weakness provide strong fundamental support for further declines. The removal of geopolitical risk premium after Trump's Iran delay removes a key price support. With 20+ days remaining in April, there's ample time for the relatively small additional decline needed.
+    Information edge:  The market may be underweighting the significance of recent fundamental shifts, particularly Goldman's forecast revision and the removal of geopolitical premium, which together suggest a higher probability of reaching $90.
+
+  Calibration:
+    Raw LLM probability:    72.0%
+    Calibrated probability: 70.6%
+    Adjustment:             -1.4%
+
+  Confidence build-up:
+    Base (from LLM):        0.85 (high)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.95
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  70.6%   0.95    0.427        30.2%
+  base_rate                0.150  63.5%   0.50    0.075         4.8%
+  momentum                 0.200  59.8%   0.62    0.124         7.4%
+  book_imbalance           0.150  66.9%   0.48    0.072         4.8%
+  whale_tracker            0.000  63.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.698        47.1%
+
+  Final probability: 47.1% / 0.698 = 67.6%
+  Ensemble confidence (agreement): 0.93
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    67.6%
+  Market price:    63.5%
+  Edge:            +4.1%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: Edge 4.1% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 12 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Strait of Hormuz traffic returns to normal by end of April?
+  Market ID:     1540766
+  Market price:  22.5%
+  Volume 24h:    $554,774
+  Liquidity:     $249,558
+  Scanner score: 0.750
+  Days to res:   20.4
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 18.7s
+
+  News:
+    • Two-week US-Iran ceasefire agreed hours before Trump's deadline to reopen Strait of Hormuz
+    • Oil tanker traffic halted again after Israeli strikes on Lebanon despite ceasefire
+    • Only 4-7 ships transited Strait of Hormuz on April 8-9, compared to normal 100-135 daily
+    • Iran demands cryptocurrency tolls for ship passage through strait
+    • Over 800 ships remain stranded in Persian Gulf awaiting safe passage
+    Sentiment: bearish_yes (strength: 75%)
+    Key facts:
+      - Strait blocked since February 28, 2026 following US-Israeli strikes on Iran
+      - Normal traffic: 100-135 ships daily, current: 4-7 ships daily maximum
+      - 20% of world's oil and gas normally passes through the strait
+      - Iran laid sea mines and launched 21 confirmed attacks on merchant ships
+      - Oil prices reached $114+ per barrel, up from pre-crisis levels
+
+  Related markets:
+    [keyword_overlap] Trump announces end of military operations against Iran by April 15th?: 6%
+    [keyword_overlap] Trump announces end of military operations against Iran by April 30th?: 40%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,169 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "No historical base rate available for Strait of Hormuz blockade resolution, so using uninformative prior of 50%.",
+      "news_impact": "Recent news is highly negative - the strait has been blocked since February 28, current traffic is only 4-7 ships daily versus normal 100-135, and Iran is demanding cryptocurrency tolls while maintaining sea mines and attacks on merchant vessels.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "Two-week US-Iran ceasefire recently agreed",
+        "Trump has set deadline to reopen strait",
+        "Related market shows 40% chance of ending military operations by April 30th",
+        "20 days remaining provides some time for diplomatic resolution"
+      ],
+      "factors_against": [
+        "Traffic currently at only 3-7% of normal levels (4-7 vs 100-135 ships)",
+        "Iran actively demanding cryptocurrency tolls for passage",
+        "Sea mines still deployed in the strait",
+        "Oil tanker traffic halted again after Israeli strikes despite ceasefire",
+        "Iran has launched 21 confirmed attacks on merchant ships",
+        "Blockade has persisted for over a month already"
+      ],
+      "probability": 0.18,
+      "reasoning": "The market needs a 7-day moving average of 60+ transit calls, but current traffic is catastrophically low at 4-7 ships daily versus normal 100-135. Even with the ceasefire, Iran continues demanding cryptocurrency tolls and maintaining hostile posture. The related market showing only 40% chance of ending military operations by April 30th suggests limited optimism for full resolution. The current 22.5% market price appears slightly optimistic given the severity of the disruption.",
+      "confidence": "medium",
+      "information_edge": "Market may be underweighting how dramatically low current traffic levels are - achieving 60+ daily average from 4-7 current levels requires near-complete normalization, not just partial improvement."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   No historical base rate available for Strait of Hormuz blockade resolution, so using uninformative prior of 50%.
+    Factors FOR YES:
+      + Two-week US-Iran ceasefire recently agreed
+      + Trump has set deadline to reopen strait
+      + Related market shows 40% chance of ending military operations by April 30th
+      + 20 days remaining provides some time for diplomatic resolution
+    Factors AGAINST:
+      - Traffic currently at only 3-7% of normal levels (4-7 vs 100-135 ships)
+      - Iran actively demanding cryptocurrency tolls for passage
+      - Sea mines still deployed in the strait
+      - Oil tanker traffic halted again after Israeli strikes despite ceasefire
+      - Iran has launched 21 confirmed attacks on merchant ships
+      - Blockade has persisted for over a month already
+    Probability:       0.18
+    Confidence:        medium
+    Reasoning:         The market needs a 7-day moving average of 60+ transit calls, but current traffic is catastrophically low at 4-7 ships daily versus normal 100-135. Even with the ceasefire, Iran continues demanding cryptocurrency tolls and maintaining hostile posture. The related market showing only 40% chance of ending military operations by April 30th suggests limited optimism for full resolution. The current 22.5% market price appears slightly optimistic given the severity of the disruption.
+    Information edge:  Market may be underweighting how dramatically low current traffic levels are - achieving 60+ daily average from 4-7 current levels requires near-complete normalization, not just partial improvement.
+
+  Calibration:
+    Raw LLM probability:    18.0%
+    Calibrated probability: 22.9%
+    Adjustment:             +4.9%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.70
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  22.9%   0.70    0.315         7.2%
+  base_rate                0.150  22.5%   0.50    0.075         1.7%
+  momentum                 0.200  21.0%   0.25    0.050         1.0%
+  book_imbalance           0.150  21.1%   0.19    0.029         0.6%
+  whale_tracker            0.000  22.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.468        10.5%
+
+  Final probability: 10.5% / 0.468 = 22.5%
+  Ensemble confidence (agreement): 0.98
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    22.5%
+  Market price:    22.5%
+  Edge:            +0.0%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: Edge 0.0% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 15 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will the next Prime Minister of Hungary be Péter Magyar?
+  Market ID:     567561
+  Market price:  67.5%
+  Category:      Péter Magyar
+  Volume 24h:    $905,009
+  Liquidity:     $315,739
+  Scanner score: 0.728
+  Days to res:   2.4
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 25.6s
+
+  News:
+    • Péter Magyar's Tisza Party leads in most polls by 10+ points ahead of April 12 election
+    • Polymarket traders give Magyar 71.5% probability to become next PM
+    • US VP JD Vance visits Budapest to support Orbán, Magyar calls it foreign interference
+    • Latest polls show Tisza at 41-49% vs Fidesz at 30-41% depending on pollster
+    • Magyar accuses Orbán of 'treason' over leaked calls with Russian FM Lavrov
+    Sentiment: bullish_yes (strength: 75%)
+    Key facts:
+      - Election is April 12, 2026 (3 days away)
+      - Independent polls show Tisza Party leading by 8-19 points among likely voters
+      - Medián poll: Tisza 58% vs Fidesz 35% among decided voters
+      - PolitPro trend: Tisza 49% vs Fidesz 40.7%
+      - Magyar is former Fidesz insider and ex-husband of former Justice Minister
+
+  Related markets:
+    [keyword_overlap] Will the next Prime Minister of Hungary be Viktor Orbán?: 32%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 4,287 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "No specific historical base rate available for Hungarian PM transitions, so using uninformative prior of 50% as starting point.",
+      "news_impact": "Recent polling data strongly favors Magyar's Tisza Party, with leads of 8-19 points across multiple pollsters and some showing as high as 58% vs 35% for Fidesz. This significantly increases probability above base rate.",
+      "cross_platform_note": "Polymarket shows 71.5% for Magyar, slightly higher than current market price of 67.5%, suggesting some cross-platform bullish signal.",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "Consistent polling leads of 8-19 points across multiple independent pollsters",
+        "Medi\u00e1n poll shows decisive 58% vs 35% margin among decided voters",
+        "Election is only 3 days away, reducing time for major shifts",
+        "High trading volume ($905k in 24h) suggests informed market participation",
+        "Cross-platform consensus around 67-72% probability range"
+      ],
+      "factors_against": [
+        "Orb\u00e1n/Fidesz has significant institutional advantages and resources",
+        "Polls can be wrong, especially in countries with media control issues",
+        "Hungarian electoral system may favor incumbent party",
+        "Related market shows 32% chance Orb\u00e1n remains PM, suggesting some uncertainty",
+        "Order book shows more sellers than buyers (imbalance of -0.47)"
+      ],
+      "probability": 0.69,
+      "reasoning": "Starting from 50% base rate, the consistent polling leads of 8-19 points across multiple pollsters just 3 days before election strongly support Magyar. The Medi\u00e1n poll showing 58% vs 35% is particularly compelling. However, I'm slightly more bullish than current market price due to the strength and consistency of polling data, while remaining cautious about potential institutional advantages for the incumbent.",
+      "confidence": "medium",
+      "information_edge": "Market may be slightly underweighting the consistency and magnitude of polling leads across multiple independent sources"
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   No specific historical base rate available for Hungarian PM transitions, so using uninformative prior of 50% as starting point.
+    Factors FOR YES:
+      + Consistent polling leads of 8-19 points across multiple independent pollsters
+      + Medián poll shows decisive 58% vs 35% margin among decided voters
+      + Election is only 3 days away, reducing time for major shifts
+      + High trading volume ($905k in 24h) suggests informed market participation
+      + Cross-platform consensus around 67-72% probability range
+    Factors AGAINST:
+      - Orbán/Fidesz has significant institutional advantages and resources
+      - Polls can be wrong, especially in countries with media control issues
+      - Hungarian electoral system may favor incumbent party
+      - Related market shows 32% chance Orbán remains PM, suggesting some uncertainty
+      - Order book shows more sellers than buyers (imbalance of -0.47)
+    Probability:       0.69
+    Confidence:        medium
+    Reasoning:         Starting from 50% base rate, the consistent polling leads of 8-19 points across multiple pollsters just 3 days before election strongly support Magyar. The Medián poll showing 58% vs 35% is particularly compelling. However, I'm slightly more bullish than current market price due to the strength and consistency of polling data, while remaining cautious about potential institutional advantages for the incumbent.
+    Information edge:  Market may be slightly underweighting the consistency and magnitude of polling leads across multiple independent sources
+
+  Calibration:
+    Raw LLM probability:    69.0%
+    Calibrated probability: 68.0%
+    Adjustment:             -1.0%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.70
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  68.0%   0.70    0.315        21.4%
+  base_rate                0.150  67.5%   0.50    0.075         5.1%
+  momentum                 0.200  67.8%   0.05    0.011         0.7%
+  book_imbalance           0.150  65.2%   0.33    0.049         3.2%
+  whale_tracker            0.000  67.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.450        30.4%
+
+  Final probability: 30.4% / 0.450 = 67.6%
+  Ensemble confidence (agreement): 0.98
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    67.6%
+  Market price:    67.5%
+  Edge:            +0.1%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: Edge 0.1% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 16 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will Scottie Scheffler win the 2026 Masters tournament?
+  Market ID:     568629
+  Market price:  13.5%
+  Category:      Scottie Scheffler
+  Volume 24h:    $881,852
+  Liquidity:     $158,407
+  Scanner score: 0.728
+  Days to res:   3.4
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, kalshi, related_markets (3 of 5)
+  Time: 25.6s
+
+  News:
+    • Scottie Scheffler is the betting favorite at +550 odds for the 2026 Masters despite recent form concerns
+    • Scheffler welcomed second child Remy just 12 days ago, bringing family to Augusta for Par 3 Contest
+    • World No. 1 has finished outside top 10 in last three PGA Tour starts - his worst run in four years
+    • Scheffler has never finished outside top 20 at Augusta National in six previous appearances
+    • Two-time Masters champion (2022, 2024) seeking third green jacket to join elite company
+    Sentiment: neutral (strength: 60%)
+    Key facts:
+      - Scheffler is 6-1 favorite at BetMGM, +550 at most sportsbooks for 2026 Masters
+      - Won American Express in January 2026, then had back-to-back top-5 finishes at Phoenix and Pebble Beach
+      - Finished outside top 10 in last three PGA Tour events - worst stretch since 2022
+      - Has not competed since Players Championship in mid-March due to wife giving birth March 27
+      - Perfect Masters record: never finished outside top 20 in six appearances, won twice (2022, 2024)
+
+  Related markets:
+    [keyword_overlap] Will Bryson Dechambeau win the 2026 Masters tournament?: 5%
+    [keyword_overlap] Will Rory McIlroy win the 2026 Masters tournament?: 6%
+    [keyword_overlap] Will Jon Rahm win the 2026 Masters tournament?: 8%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 4,511 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.067,
+      "base_rate_reasoning": "With roughly 15 elite golfers having realistic Masters chances each year, the base rate for any individual player is around 6-7%.",
+      "news_impact": "Recent news is mixed - Scheffler is the betting favorite but has concerning recent form with three straight finishes outside top 10, his worst stretch in four years. The birth of his second child 12 days ago adds personal distraction but he's bringing family to Augusta.",
+      "cross_platform_note": "Traditional sportsbooks have Scheffler as 6-1 favorite (+550 odds \u2248 15.4% implied probability), slightly higher than the 13.5% Polymarket price.",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "World No. 1 ranking and betting favorite status",
+        "Exceptional Augusta National record - never finished outside top 20 in six appearances",
+        "Won American Express in January 2026 with back-to-back top-5 finishes after",
+        "Course familiarity and proven major championship ability"
+      ],
+      "factors_against": [
+        "Worst form stretch in four years - three straight finishes outside top 10",
+        "Personal distraction from newborn child born just 12 days ago",
+        "Hasn't competed since mid-March Players Championship due to family situation",
+        "Strong field with multiple other contenders (McIlroy 6%, Rahm 8%, DeChambeau 5%)"
+      ],
+      "probability": 0.145,
+      "reasoning": "Starting from a 6.7% base rate, Scheffler's exceptional Augusta record and World No. 1 status justify a significant premium. However, his recent poor form and personal circumstances from the new baby create meaningful headwinds. The sportsbook consensus around 15.4% seems reasonable given these competing factors. The Polymarket price of 13.5% appears slightly undervalued relative to his proven Augusta excellence.",
+      "confidence": "medium",
+      "information_edge": "Market may be overweighting recent poor form while underweighting his historically dominant Augusta National performance and course-specific advantages."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.067
+    Base rate reason:   With roughly 15 elite golfers having realistic Masters chances each year, the base rate for any individual player is around 6-7%.
+    Factors FOR YES:
+      + World No. 1 ranking and betting favorite status
+      + Exceptional Augusta National record - never finished outside top 20 in six appearances
+      + Won American Express in January 2026 with back-to-back top-5 finishes after
+      + Course familiarity and proven major championship ability
+    Factors AGAINST:
+      - Worst form stretch in four years - three straight finishes outside top 10
+      - Personal distraction from newborn child born just 12 days ago
+      - Hasn't competed since mid-March Players Championship due to family situation
+      - Strong field with multiple other contenders (McIlroy 6%, Rahm 8%, DeChambeau 5%)
+    Probability:       0.145
+    Confidence:        medium
+    Reasoning:         Starting from a 6.7% base rate, Scheffler's exceptional Augusta record and World No. 1 status justify a significant premium. However, his recent poor form and personal circumstances from the new baby create meaningful headwinds. The sportsbook consensus around 15.4% seems reasonable given these competing factors. The Polymarket price of 13.5% appears slightly undervalued relative to his proven Augusta excellence.
+    Information edge:  Market may be overweighting recent poor form while underweighting his historically dominant Augusta National performance and course-specific advantages.
+
+  Calibration:
+    Raw LLM probability:    14.5%
+    Calibrated probability: 19.3%
+    Adjustment:             +4.8%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.15 (3 sources × 0.05)
+    Final confidence:       0.75
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  19.3%   0.75    0.338         6.5%
+  base_rate                0.150  13.5%   0.50    0.075         1.0%
+  momentum                 0.200  13.5%   0.00    0.001         0.0%
+  book_imbalance           0.150   9.8%   0.50    0.075         0.7%
+  whale_tracker            0.000  13.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.488         8.3%
+
+  Final probability: 8.3% / 0.488 = 16.9%
+  Ensemble confidence (agreement): 0.94
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    16.9%
+  Market price:    13.5%
+  Edge:            +3.4%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: Edge 3.4% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 17 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Trump announces end of military operations against Iran by April 15th?
+  Market ID:     1662802
+  Market price:  6.5%
+  Category:      April 15
+  Volume 24h:    $332,336
+  Liquidity:     $255,798
+  Scanner score: 0.719
+  Days to res:   6.4
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 17.9s
+
+  News:
+    • Trump announces two-week ceasefire with Iran after threatening 'whole civilization will die tonight'
+    • U.S. and Iran agree to negotiations in Islamabad on Friday, April 10, 2026
+    • Trump warns military will remain deployed around Iran until 'real agreement' is reached
+    • Iran's 10-point proposal includes uranium enrichment rights and sanctions lifting
+    • Ceasefire shows strain over Israeli operations in Lebanon not covered by deal
+    Sentiment: bearish_yes (strength: 75%)
+    Key facts:
+      - Two-week ceasefire agreed April 8, 2026, with Iran reopening Strait of Hormuz
+      - Negotiations scheduled for Islamabad on Friday, April 10, 2026
+      - Trump says U.S. military forces will remain deployed until 'real agreement' complied with
+      - Iran's 10-point plan includes uranium enrichment rights, sanctions lifting, U.S. troop withdrawal
+      - White House calls Iran's original 10-point plan 'unserious' and 'thrown in garbage'
+
+  Related markets:
+    [keyword_overlap] Trump announces end of military operations against Iran by April 30th?: 40%
+    [keyword_overlap] Iran x Israel/US conflict ends by April 15?: 63%
+    [keyword_overlap] JD Vance diplomatic meeting with Iran by April 10?: 43%
+    [keyword_overlap] Will UAE strike Iran by April 30?: 14%
+    [keyword_overlap] Iran x Israel/US conflict ends by April 30?: 70%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 4,826 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "No specific historical base rate available for Trump announcing end of military operations within specific timeframes, so using uninformative prior of 50%.",
+      "news_impact": "The two-week ceasefire agreed April 8th and scheduled negotiations on April 10th create a pathway for resolution, but Trump's explicit statement that military forces will remain deployed until a 'real agreement' is reached suggests operations won't end by April 15th without a comprehensive deal.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "Two-week ceasefire already agreed starting April 8th",
+        "Negotiations scheduled for April 10th in Islamabad",
+        "Iran has presented a 10-point proposal showing willingness to negotiate",
+        "Related market shows 63% chance Iran/Israel/US conflict ends by April 15th"
+      ],
+      "factors_against": [
+        "Trump explicitly stated military will remain deployed until 'real agreement' is reached",
+        "Only 6.4 days remaining with complex negotiations needed",
+        "Iran's 10-point plan includes contentious demands like uranium enrichment rights",
+        "Market price has fallen dramatically from 19.5% to 6.5% over past week",
+        "Trump's pattern of maintaining pressure until comprehensive deals"
+      ],
+      "probability": 0.12,
+      "reasoning": "While the ceasefire and scheduled negotiations create some possibility of resolution, Trump's explicit statement about keeping forces deployed until a 'real agreement' strongly suggests military operations won't end by April 15th. The dramatic price decline from 19.5% to 6.5% reflects market recognition of this reality. Complex negotiations involving uranium enrichment and sanctions are unlikely to conclude successfully in just 6.4 days.",
+      "confidence": "medium",
+      "information_edge": "Market may be slightly underpricing the small chance that negotiations produce a surprise breakthrough, but the 6.5% price reasonably reflects the low probability given Trump's explicit conditions."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   No specific historical base rate available for Trump announcing end of military operations within specific timeframes, so using uninformative prior of 50%.
+    Factors FOR YES:
+      + Two-week ceasefire already agreed starting April 8th
+      + Negotiations scheduled for April 10th in Islamabad
+      + Iran has presented a 10-point proposal showing willingness to negotiate
+      + Related market shows 63% chance Iran/Israel/US conflict ends by April 15th
+    Factors AGAINST:
+      - Trump explicitly stated military will remain deployed until 'real agreement' is reached
+      - Only 6.4 days remaining with complex negotiations needed
+      - Iran's 10-point plan includes contentious demands like uranium enrichment rights
+      - Market price has fallen dramatically from 19.5% to 6.5% over past week
+      - Trump's pattern of maintaining pressure until comprehensive deals
+    Probability:       0.12
+    Confidence:        medium
+    Reasoning:         While the ceasefire and scheduled negotiations create some possibility of resolution, Trump's explicit statement about keeping forces deployed until a 'real agreement' strongly suggests military operations won't end by April 15th. The dramatic price decline from 19.5% to 6.5% reflects market recognition of this reality. Complex negotiations involving uranium enrichment and sanctions are unlikely to conclude successfully in just 6.4 days.
+    Information edge:  Market may be slightly underpricing the small chance that negotiations produce a surprise breakthrough, but the 6.5% price reasonably reflects the low probability given Trump's explicit conditions.
+
+  Calibration:
+    Raw LLM probability:    12.0%
+    Calibrated probability: 16.5%
+    Adjustment:             +4.5%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.70
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  16.5%   0.70    0.315         5.2%
+  base_rate                0.150   6.5%   0.50    0.075         0.5%
+  momentum                 0.200   3.3%   0.53    0.106         0.4%
+  book_imbalance           0.150   8.2%   0.24    0.036         0.3%
+  whale_tracker            0.000   6.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.532         6.3%
+
+  Final probability: 6.3% / 0.532 = 11.9%
+  Ensemble confidence (agreement): 0.91
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    11.9%
+  Market price:    6.5%
+  Edge:            +5.4%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: No edge found (best edge: +5.4%)
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 19 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      US x Iran meeting by April 30, 2026?
+  Market ID:     1570155
+  Market price:  92.5%
+  Category:      April 30
+  Volume 24h:    $275,191
+  Liquidity:     $176,869
+  Scanner score: 0.712
+  Days to res:   20.4
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 17.3s
+
+  News:
+    • US-Iran peace talks confirmed for April 10, 2026 in Islamabad, Pakistan
+    • VP JD Vance to lead US delegation, Iranian Parliament Speaker Ghalibaf to lead Iran side
+    • Two-week ceasefire agreed between US and Iran after 40 days of war
+    • Pakistan declares public holidays April 9-10 for historic diplomatic talks
+    • Iran's 10-point proposal forms basis for negotiations addressing nuclear program and sanctions
+    Sentiment: bullish_yes (strength: 85%)
+    Key facts:
+      - Meeting scheduled for April 10, 2026 (tomorrow) in Islamabad, Pakistan
+      - Highest-level US-Iran meeting since 1979 Islamic revolution
+      - US delegation led by Vice President JD Vance, includes Steve Witkoff and Jared Kushner
+      - Iranian delegation led by Parliament Speaker Mohammad Bagher Ghalibaf
+      - Talks follow two-week ceasefire agreement reached April 7, 2026
+
+  Related markets:
+    [keyword_overlap] Iran x Israel/US conflict ends by April 15?: 63%
+    [keyword_overlap] JD Vance diplomatic meeting with Iran by April 10?: 43%
+    [keyword_overlap] Iran x Israel/US conflict ends by April 30?: 70%
+    [keyword_overlap] Will UAE strike Iran by April 30?: 14%
+    [keyword_overlap] Israel x Hezbollah ceasefire by April 30, 2026?: 46%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,025 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "No specific historical base rate available for US-Iran diplomatic meetings, so starting with uninformative prior of 50%.",
+      "news_impact": "The news is extremely bullish - confirmed peace talks are scheduled for tomorrow (April 10, 2026) in Islamabad with high-level delegations from both sides. This represents the highest-level US-Iran meeting since 1979.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "Peace talks officially confirmed for April 10, 2026 (tomorrow) in Islamabad",
+        "High-level delegations confirmed: VP JD Vance leading US side, Parliament Speaker Ghalibaf leading Iran side",
+        "Two-week ceasefire already agreed, creating conducive environment",
+        "Pakistan declaring public holidays shows serious diplomatic commitment",
+        "Meeting date is well within the April 30 deadline with 20 days to spare"
+      ],
+      "factors_against": [
+        "Diplomatic talks can be cancelled at last minute due to political developments",
+        "Security concerns or incidents could derail the meeting",
+        "Internal political pressure in either country could force withdrawal",
+        "Historical precedent shows US-Iran relations are highly volatile"
+      ],
+      "probability": 0.88,
+      "reasoning": "The market price of 92.5% appears slightly overconfident given the inherent volatility of US-Iran relations. While the peace talks are officially confirmed for tomorrow with high-level delegations and supportive infrastructure (ceasefire, Pakistani holidays), diplomatic meetings can still be cancelled due to last-minute political developments or security concerns. The 88% estimate reflects high confidence in the meeting occurring while maintaining some caution about the unpredictable nature of Middle Eastern diplomacy.",
+      "confidence": "high",
+      "information_edge": "Market may be slightly overpricing the certainty - while the meeting is highly likely, 92.5% doesn't adequately account for last-minute cancellation risks in volatile US-Iran relations"
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   No specific historical base rate available for US-Iran diplomatic meetings, so starting with uninformative prior of 50%.
+    Factors FOR YES:
+      + Peace talks officially confirmed for April 10, 2026 (tomorrow) in Islamabad
+      + High-level delegations confirmed: VP JD Vance leading US side, Parliament Speaker Ghalibaf leading Iran side
+      + Two-week ceasefire already agreed, creating conducive environment
+      + Pakistan declaring public holidays shows serious diplomatic commitment
+      + Meeting date is well within the April 30 deadline with 20 days to spare
+    Factors AGAINST:
+      - Diplomatic talks can be cancelled at last minute due to political developments
+      - Security concerns or incidents could derail the meeting
+      - Internal political pressure in either country could force withdrawal
+      - Historical precedent shows US-Iran relations are highly volatile
+    Probability:       0.88
+    Confidence:        high
+    Reasoning:         The market price of 92.5% appears slightly overconfident given the inherent volatility of US-Iran relations. While the peace talks are officially confirmed for tomorrow with high-level delegations and supportive infrastructure (ceasefire, Pakistani holidays), diplomatic meetings can still be cancelled due to last-minute political developments or security concerns. The 88% estimate reflects high confidence in the meeting occurring while maintaining some caution about the unpredictable nature of Middle Eastern diplomacy.
+    Information edge:  Market may be slightly overpricing the certainty - while the meeting is highly likely, 92.5% doesn't adequately account for last-minute cancellation risks in volatile US-Iran relations
+
+  Calibration:
+    Raw LLM probability:    88.0%
+    Calibrated probability: 85.4%
+    Adjustment:             -2.6%
+
+  Confidence build-up:
+    Base (from LLM):        0.85 (high)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.95
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  85.4%   0.95    0.427        36.5%
+  base_rate                0.150  92.5%   0.50    0.075         6.9%
+  momentum                 0.200  94.8%   0.39    0.077         7.3%
+  book_imbalance           0.150  90.8%   0.24    0.036         3.2%
+  whale_tracker            0.000  92.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.616        54.0%
+
+  Final probability: 54.0% / 0.616 = 87.8%
+  Ensemble confidence (agreement): 0.94
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    87.8%
+  Market price:    92.5%
+  Edge:            -4.7%
+  Direction:       NO (market overpriced)
+
+  ❌ NO TRADE: Edge 4.7% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 20 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will Arsenal win the 2025–26 English Premier League?
+  Market ID:     566187
+  Market price:  85.5%
+  Category:      Arsenal
+  Volume 24h:    $159,197
+  Liquidity:     $340,595
+  Scanner score: 0.693
+  Days to res:   47.4
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 24.3s
+
+  News:
+    • Arsenal leads Premier League by 9 points over Manchester City with 70 points from 31 games
+    • Opta's supercomputer predicts 97% odds of Arsenal winning the Premier League title
+    • Arsenal defeated Southampton 2-1 in FA Cup but lost to Man City 2-0 in EFL Cup final
+    • Multiple key players including Saka, Rice, Gabriel, and Timber dealing with injury concerns
+    • Arsenal faces crucial Champions League quarter-final vs Sporting CP amid injury crisis
+    Sentiment: bullish_yes (strength: 85%)
+    Key facts:
+      - Arsenal currently sits 1st in Premier League with 70 points, 9 points ahead of Manchester City
+      - Arsenal has played one more match than Manchester City who have a game in hand
+      - Key fixture: Arsenal vs Manchester City at Etihad Stadium on April 19, 2026
+      - Arsenal reached Champions League quarter-finals while Man City was eliminated in Round of 16
+      - Multiple first-team players injured: Saka, Rice, Gabriel, Timber, Eze, Merino, Hincapie
+
+  Related markets:
+    [keyword_overlap] Will Arsenal win the 2025–26 Champions League?: 30%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 4,383 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.05,
+      "base_rate_reasoning": "Historically, any single team has roughly a 1/20 chance of winning the Premier League in a given season, though top-6 teams have higher base rates around 10-15%.",
+      "news_impact": "The news is extremely bullish - Arsenal leads by 9 points with 7 games remaining, and Opta's supercomputer gives them 97% odds. However, Manchester City has a game in hand which reduces the effective lead.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "9-point lead over Manchester City with 7 games remaining",
+        "Opta supercomputer predicts 97% odds",
+        "Strong current form and league position",
+        "Manchester City eliminated early from Champions League suggesting possible decline"
+      ],
+      "factors_against": [
+        "Manchester City has a game in hand, reducing effective lead to 6 points",
+        "Key injury concerns to multiple starters including Saka, Rice, Gabriel",
+        "Crucial head-to-head fixture at Etihad still to play",
+        "Manchester City's historical ability to win consecutive games when needed",
+        "Arsenal's history of late-season collapses in title races"
+      ],
+      "probability": 0.82,
+      "reasoning": "While Arsenal's 9-point lead appears commanding, the effective lead is only 6 points given City's game in hand. The market at 85.5% seems slightly overconfident given injury concerns and the remaining Etihad fixture. Historical precedent shows leads can evaporate quickly, especially against a team like City with Guardiola's track record. However, Arsenal's position is genuinely strong with mathematical elimination becoming increasingly difficult for competitors.",
+      "confidence": "medium",
+      "information_edge": "Market may be underweighting the significance of City's game in hand and Arsenal's injury list, while overweighting the current points gap"
+    }
+
+  Parsed response:
+    Base rate anchor:   0.05
+    Base rate reason:   Historically, any single team has roughly a 1/20 chance of winning the Premier League in a given season, though top-6 teams have higher base rates around 10-15%.
+    Factors FOR YES:
+      + 9-point lead over Manchester City with 7 games remaining
+      + Opta supercomputer predicts 97% odds
+      + Strong current form and league position
+      + Manchester City eliminated early from Champions League suggesting possible decline
+    Factors AGAINST:
+      - Manchester City has a game in hand, reducing effective lead to 6 points
+      - Key injury concerns to multiple starters including Saka, Rice, Gabriel
+      - Crucial head-to-head fixture at Etihad still to play
+      - Manchester City's historical ability to win consecutive games when needed
+      - Arsenal's history of late-season collapses in title races
+    Probability:       0.82
+    Confidence:        medium
+    Reasoning:         While Arsenal's 9-point lead appears commanding, the effective lead is only 6 points given City's game in hand. The market at 85.5% seems slightly overconfident given injury concerns and the remaining Etihad fixture. Historical precedent shows leads can evaporate quickly, especially against a team like City with Guardiola's track record. However, Arsenal's position is genuinely strong with mathematical elimination becoming increasingly difficult for competitors.
+    Information edge:  Market may be underweighting the significance of City's game in hand and Arsenal's injury list, while overweighting the current points gap
+
+  Calibration:
+    Raw LLM probability:    82.0%
+    Calibrated probability: 79.6%
+    Adjustment:             -2.4%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.70
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  79.6%   0.70    0.315        25.1%
+  base_rate                0.150  85.5%   0.50    0.075         6.4%
+  momentum                 0.200  85.5%   0.00    0.001         0.1%
+  book_imbalance           0.150  87.4%   0.26    0.040         3.5%
+  whale_tracker            0.000  85.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.430        35.0%
+
+  Final probability: 35.0% / 0.430 = 81.4%
+  Ensemble confidence (agreement): 0.95
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    81.4%
+  Market price:    85.5%
+  Edge:            -4.1%
+  Direction:       NO (market overpriced)
+
+  ❌ NO TRADE: Edge 4.1% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 21 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will Rory McIlroy win the 2026 Masters tournament?
+  Market ID:     568630
+  Market price:  6.5%
+  Category:      Rory McIlroy
+  Volume 24h:    $359,116
+  Liquidity:     $116,722
+  Scanner score: 0.678
+  Days to res:   3.4
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, kalshi, related_markets (3 of 5)
+  Time: 23.7s
+
+  News:
+    • Rory McIlroy returns as defending Masters champion, seeking to become just the fourth golfer to win back-to-back Masters titles
+    • McIlroy described as 'relaxed' ahead of title defense with 'big weight off shoulders' after completing career Grand Slam
+    • McIlroy's recent form concerning: T46 at Players Championship, withdrew from Arnold Palmer with back injury, hasn't won since Irish Open in September 2025
+    • Betting odds show McIlroy at +1200-1300, fourth favorite behind Scheffler (+550), Rahm (+900-1000), and DeChambeau (+1000)
+    • Expert analysis mixed on McIlroy: some cite his resilience and Augusta course fit, others concerned about recent struggles and back injury
+    Sentiment: bearish_yes (strength: 65%)
+    Key facts:
+      - McIlroy won 2025 Masters in playoff to complete career Grand Slam after 11-year major drought
+      - Current world ranking #2, but ranked 31st in FedEx Cup points this season with only 476 points
+      - Recent results: T2 at Genesis Invitational, T3 at Dubai Invitational, T46 at Players Championship
+      - Withdrew from Arnold Palmer Invitational due to back injury concerns
+      - Statistical strengths: #1 in Strokes Gained Off-the-Tee (0.799), #10 in Approach shots (0.748)
+
+  Related markets:
+    [keyword_overlap] Will Scottie Scheffler win the 2026 Masters tournament?: 14%
+    [keyword_overlap] Will Bryson Dechambeau win the 2026 Masters tournament?: 5%
+    [keyword_overlap] Will Jon Rahm win the 2026 Masters tournament?: 8%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 4,680 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.065,
+      "base_rate_reasoning": "For any individual golfer to win a specific major tournament, the base rate is typically 5-8% for top players, given the field size and competitive depth.",
+      "news_impact": "Recent news is concerning for McIlroy - poor recent form (T46 at Players, withdrew with back injury), hasn't won since September 2025, and ranked only 31st in FedEx Cup points this season despite being world #2.",
+      "cross_platform_note": "Betting odds show McIlroy as fourth favorite at +1200-1300, which translates to roughly 7-8% implied probability, consistent with the 6.5% market price.",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "Defending Masters champion with recent Augusta National success",
+        "Completed career Grand Slam in 2025, removing psychological pressure",
+        "World #2 ranking indicates elite skill level",
+        "Described as 'relaxed' heading into title defense"
+      ],
+      "factors_against": [
+        "Poor recent form with T46 at Players Championship and withdrawal due to back injury",
+        "Only 476 FedEx Cup points this season, ranked 31st",
+        "Hasn't won since Irish Open in September 2025",
+        "Back-to-back Masters wins are extremely rare (only 3 golfers have achieved this)",
+        "Strong competition from Scheffler, Rahm, and DeChambeau who are higher betting favorites"
+      ],
+      "probability": 0.055,
+      "reasoning": "While McIlroy is the defending champion and has the psychological advantage of completing his career Grand Slam, his recent form is deeply concerning. The back injury withdrawal and poor results suggest he may not be physically or competitively sharp. Historical precedent shows back-to-back Masters wins are exceptionally rare. The market price of 6.5% appears slightly optimistic given his current struggles and strong competition from players in better form.",
+      "confidence": "medium",
+      "information_edge": "Market may be overweighting his defending champion status while underweighting the significance of his recent poor form and injury concerns"
+    }
+
+  Parsed response:
+    Base rate anchor:   0.065
+    Base rate reason:   For any individual golfer to win a specific major tournament, the base rate is typically 5-8% for top players, given the field size and competitive depth.
+    Factors FOR YES:
+      + Defending Masters champion with recent Augusta National success
+      + Completed career Grand Slam in 2025, removing psychological pressure
+      + World #2 ranking indicates elite skill level
+      + Described as 'relaxed' heading into title defense
+    Factors AGAINST:
+      - Poor recent form with T46 at Players Championship and withdrawal due to back injury
+      - Only 476 FedEx Cup points this season, ranked 31st
+      - Hasn't won since Irish Open in September 2025
+      - Back-to-back Masters wins are extremely rare (only 3 golfers have achieved this)
+      - Strong competition from Scheffler, Rahm, and DeChambeau who are higher betting favorites
+    Probability:       0.055
+    Confidence:        medium
+    Reasoning:         While McIlroy is the defending champion and has the psychological advantage of completing his career Grand Slam, his recent form is deeply concerning. The back injury withdrawal and poor results suggest he may not be physically or competitively sharp. Historical precedent shows back-to-back Masters wins are exceptionally rare. The market price of 6.5% appears slightly optimistic given his current struggles and strong competition from players in better form.
+    Information edge:  Market may be overweighting his defending champion status while underweighting the significance of his recent poor form and injury concerns
+
+  Calibration:
+    Raw LLM probability:    5.5%
+    Calibrated probability: 9.1%
+    Adjustment:             +3.6%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.15 (3 sources × 0.05)
+    Final confidence:       0.75
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450   9.1%   0.75    0.338         3.1%
+  base_rate                0.150   6.5%   0.50    0.075         0.5%
+  momentum                 0.200   6.5%   0.00    0.000         0.0%
+  book_imbalance           0.150   2.9%   0.50    0.075         0.2%
+  whale_tracker            0.000   6.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.487         3.8%
+
+  Final probability: 3.8% / 0.487 = 7.7%
+  Ensemble confidence (agreement): 0.96
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    7.7%
+  Market price:    6.5%
+  Edge:            +1.2%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: No edge found (best edge: +1.2%)
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 22 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will Bryson Dechambeau win the 2026 Masters tournament?
+  Market ID:     568631
+  Market price:  5.0%
+  Category:      Bryson Dechambeau
+  Volume 24h:    $521,510
+  Liquidity:     $120,102
+  Scanner score: 0.673
+  Days to res:   3.4
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 19.2s
+
+  News:
+    • DeChambeau wins back-to-back LIV Golf tournaments in Singapore and South Africa
+    • Experts rank DeChambeau among top Masters favorites at +800 odds
+    • DeChambeau says his game is 'in the best place of its career'
+    • Recent trend suggests players with more than a week off can't win Masters
+    • DeChambeau finished T6 and T5 in last two Masters appearances
+    Sentiment: bullish_yes (strength: 75%)
+    Key facts:
+      - DeChambeau won his last two LIV Golf starts (Singapore and South Africa) in March 2026
+      - He earned $8.9 million in prize money from consecutive wins
+      - Finished T6 (2024) and T5 (2025) in his last two Masters appearances
+      - Currently ranked as second betting favorite at 10-1 odds per FanDuel
+      - At 32 years 208 days on Masters Sunday, matches average age of first 89 Masters winners
+
+  Related markets:
+    [keyword_overlap] Will Scottie Scheffler win the 2026 Masters tournament?: 14%
+    [keyword_overlap] Will Rory McIlroy win the 2026 Masters tournament?: 6%
+    [keyword_overlap] Will Jon Rahm win the 2026 Masters tournament?: 8%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 4,368 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.063,
+      "base_rate_reasoning": "With approximately 16 top contenders in a typical Masters field, the base rate for any single elite player is around 6.3%. DeChambeau qualifies as elite given his recent form and past Masters performance.",
+      "news_impact": "The recent news is strongly positive - back-to-back LIV wins, $8.9M in prize money, and DeChambeau stating his game is in the best place of his career all suggest peak form heading into the Masters.",
+      "cross_platform_note": "FanDuel has DeChambeau at 10-1 odds (9.1% implied), slightly higher than the 5% Polymarket price, suggesting some upside.",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "Won back-to-back LIV tournaments in March 2026 showing peak current form",
+        "Strong recent Masters history with T6 (2024) and T5 (2025) finishes",
+        "Second betting favorite at major sportsbooks at 10-1 odds",
+        "Self-reported confidence that his game is in the best place of his career",
+        "Earned $8.9 million in recent wins demonstrating elite performance level"
+      ],
+      "factors_against": [
+        "Historical trend suggests players with more than a week off struggle at Masters",
+        "LIV Golf competition level may not translate directly to major championship pressure",
+        "Strong field with Scheffler (14%) and other top contenders limiting individual win probability",
+        "Masters requires specific course management skills that differ from standard tour events",
+        "Recent price decline from 6.5% to 5% suggests market cooling on his chances"
+      ],
+      "probability": 0.078,
+      "reasoning": "Starting from a 6.3% base rate for elite players, DeChambeau's exceptional recent form (consecutive wins, peak confidence) and strong Masters track record (T5, T6 finishes) justify an upward adjustment. The FanDuel odds at 9.1% implied probability suggest the Polymarket price of 5% may be undervaluing him. However, the concern about time off and the strength of the field (Scheffler at 14%) provide some downward pressure. The recent news is genuinely bullish and represents new information that may not be fully reflected in the current price.",
+      "confidence": "medium",
+      "information_edge": "Market may be underweighting the significance of his back-to-back wins and peak form declaration, while the sportsbook odds suggest fair value is closer to 8-9%"
+    }
+
+  Parsed response:
+    Base rate anchor:   0.063
+    Base rate reason:   With approximately 16 top contenders in a typical Masters field, the base rate for any single elite player is around 6.3%. DeChambeau qualifies as elite given his recent form and past Masters performance.
+    Factors FOR YES:
+      + Won back-to-back LIV tournaments in March 2026 showing peak current form
+      + Strong recent Masters history with T6 (2024) and T5 (2025) finishes
+      + Second betting favorite at major sportsbooks at 10-1 odds
+      + Self-reported confidence that his game is in the best place of his career
+      + Earned $8.9 million in recent wins demonstrating elite performance level
+    Factors AGAINST:
+      - Historical trend suggests players with more than a week off struggle at Masters
+      - LIV Golf competition level may not translate directly to major championship pressure
+      - Strong field with Scheffler (14%) and other top contenders limiting individual win probability
+      - Masters requires specific course management skills that differ from standard tour events
+      - Recent price decline from 6.5% to 5% suggests market cooling on his chances
+    Probability:       0.078
+    Confidence:        medium
+    Reasoning:         Starting from a 6.3% base rate for elite players, DeChambeau's exceptional recent form (consecutive wins, peak confidence) and strong Masters track record (T5, T6 finishes) justify an upward adjustment. The FanDuel odds at 9.1% implied probability suggest the Polymarket price of 5% may be undervaluing him. However, the concern about time off and the strength of the field (Scheffler at 14%) provide some downward pressure. The recent news is genuinely bullish and represents new information that may not be fully reflected in the current price.
+    Information edge:  Market may be underweighting the significance of his back-to-back wins and peak form declaration, while the sportsbook odds suggest fair value is closer to 8-9%
+
+  Calibration:
+    Raw LLM probability:    7.8%
+    Calibrated probability: 11.8%
+    Adjustment:             +4.0%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.70
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  11.8%   0.70    0.315         3.7%
+  base_rate                0.150   5.0%   0.50    0.075         0.4%
+  momentum                 0.200   5.2%   0.03    0.006         0.0%
+  book_imbalance           0.150   1.0%   0.50    0.075         0.1%
+  whale_tracker            0.000   5.0%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.471         4.2%
+
+  Final probability: 4.2% / 0.471 = 8.9%
+  Ensemble confidence (agreement): 0.93
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    8.9%
+  Market price:    5.0%
+  Edge:            +3.9%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: Edge 3.9% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 23 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will Atletico Madrid win the 2025–26 Champions League?
+  Market ID:     566146
+  Market price:  7.4%
+  Category:      Atletico Madrid
+  Volume 24h:    $845,095
+  Liquidity:     $216,474
+  Scanner score: 0.663
+  Days to res:   51.4
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 23.2s
+
+  News:
+    • Atletico Madrid defeats Barcelona 2-0 in Champions League quarterfinal first leg at Camp Nou
+    • Julian Alvarez scores stunning free-kick after Barcelona's Pau Cubarsi sent off for last-man foul
+    • Alexander Sorloth adds second goal to give Atletico commanding 2-0 aggregate lead
+    • Atletico ends 20-year winless streak at Camp Nou, first victory since February 2006
+    • Barcelona faces uphill battle in second leg without suspended Cubarsi and injured Raphinha
+    Sentiment: bullish_yes (strength: 85%)
+    Key facts:
+      - Atletico Madrid won 2-0 at Barcelona in Champions League quarterfinal first leg on April 8, 2026
+      - Barcelona played with 10 men after Pau Cubarsi's 44th minute red card for last-man challenge
+      - Julian Alvarez scored brilliant free-kick immediately after red card, Alexander Sorloth added second in 70th minute
+      - Second leg scheduled for April 14, 2026 at Atletico's Metropolitano Stadium
+      - Barcelona missing key players: Raphinha (hamstring), Cubarsi (suspension), potential doubts over Pedri and de Jong
+
+  Related markets:
+    [keyword_overlap] Will Real Madrid win the 2025–26 Champions League?: 5%
+    [keyword_overlap] Will Barcelona win the 2025–26 Champions League?: 7%
+    [keyword_overlap] Will PSG win the 2025–26 Champions League?: 20%
+    [keyword_overlap] Will Arsenal win the 2025–26 Champions League?: 30%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 4,689 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.06,
+      "base_rate_reasoning": "Historically, Champions League winners are typically from the top 4-5 clubs globally. Atletico Madrid, while strong, has only reached 3 finals in the modern era and never won, suggesting a base rate around 6% among serious contenders.",
+      "news_impact": "The 2-0 victory at Camp Nou is extremely significant - ending a 20-year winless streak there and taking commanding control of the quarterfinal. This dramatically increases their chances of reaching the semifinals and potentially going further.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "Commanding 2-0 lead over Barcelona in quarterfinal",
+        "Historic victory at Camp Nou breaking 20-year drought",
+        "Strong defensive organization under Simeone",
+        "Experience in Champions League knockout rounds",
+        "Julian Alvarez and Sorloth providing attacking threat"
+      ],
+      "factors_against": [
+        "Historical pattern of falling short in finals (0-3 record)",
+        "Still need to complete Barcelona tie and face stronger teams",
+        "Arsenal (30%) and PSG (20%) have higher market odds suggesting stronger squads",
+        "Atletico's style can struggle against top attacking teams",
+        "Tournament still has many rounds remaining with elite competition"
+      ],
+      "probability": 0.12,
+      "reasoning": "The market at 7.4% appears to undervalue Atletico's current position. Their dominant performance against Barcelona - a team that was previously favored - suggests they're peaking at the right time. However, the base rate for Atletico winning major European trophies remains low, and stronger teams like Arsenal and PSG still exist in the tournament. The 2-0 lead makes semifinals likely, but Champions League history shows Atletico often falls short in the final stages.",
+      "confidence": "medium",
+      "information_edge": "Market may be underweighting the psychological impact of finally beating Barcelona at Camp Nou and the momentum this creates for a team that has historically struggled with mental barriers in big moments."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.06
+    Base rate reason:   Historically, Champions League winners are typically from the top 4-5 clubs globally. Atletico Madrid, while strong, has only reached 3 finals in the modern era and never won, suggesting a base rate around 6% among serious contenders.
+    Factors FOR YES:
+      + Commanding 2-0 lead over Barcelona in quarterfinal
+      + Historic victory at Camp Nou breaking 20-year drought
+      + Strong defensive organization under Simeone
+      + Experience in Champions League knockout rounds
+      + Julian Alvarez and Sorloth providing attacking threat
+    Factors AGAINST:
+      - Historical pattern of falling short in finals (0-3 record)
+      - Still need to complete Barcelona tie and face stronger teams
+      - Arsenal (30%) and PSG (20%) have higher market odds suggesting stronger squads
+      - Atletico's style can struggle against top attacking teams
+      - Tournament still has many rounds remaining with elite competition
+    Probability:       0.12
+    Confidence:        medium
+    Reasoning:         The market at 7.4% appears to undervalue Atletico's current position. Their dominant performance against Barcelona - a team that was previously favored - suggests they're peaking at the right time. However, the base rate for Atletico winning major European trophies remains low, and stronger teams like Arsenal and PSG still exist in the tournament. The 2-0 lead makes semifinals likely, but Champions League history shows Atletico often falls short in the final stages.
+    Information edge:  Market may be underweighting the psychological impact of finally beating Barcelona at Camp Nou and the momentum this creates for a team that has historically struggled with mental barriers in big moments.
+
+  Calibration:
+    Raw LLM probability:    12.0%
+    Calibrated probability: 16.5%
+    Adjustment:             +4.5%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.70
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  16.5%   0.70    0.315         5.2%
+  base_rate                0.150   7.4%   0.50    0.075         0.6%
+  momentum                 0.200   8.6%   0.19    0.038         0.3%
+  book_imbalance           0.150   3.0%   0.50    0.075         0.2%
+  whale_tracker            0.000   7.4%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.503         6.3%
+
+  Final probability: 6.3% / 0.503 = 12.6%
+  Ensemble confidence (agreement): 0.91
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    12.6%
+  Market price:    7.4%
+  Edge:            +5.1%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: No edge found (best edge: +5.1%)
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 24 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will Barcelona win the 2025–26 Champions League?
+  Market ID:     566138
+  Market price:  6.6%
+  Category:      Barcelona
+  Volume 24h:    $335,945
+  Liquidity:     $196,981
+  Scanner score: 0.658
+  Days to res:   51.4
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 16.1s
+
+  News:
+    • Barcelona lose 2-0 to Atletico Madrid in Champions League quarter-final first leg at Camp Nou
+    • Pau Cubarsi red card and Julian Alvarez free-kick goal turn match in Atletico's favor
+    • Barcelona now face uphill battle to qualify for Champions League semi-finals
+    • Hansi Flick insists Barcelona's Champions League hopes are still alive despite defeat
+    • Barcelona missing key player Raphinha due to injury for both legs of quarter-final tie
+    Sentiment: bearish_yes (strength: 80%)
+    Key facts:
+      - Barcelona lost 2-0 to Atletico Madrid in the first leg of their Champions League quarter-final on April 8, 2026
+      - Barcelona were reduced to 10 men when Pau Cubarsi received a red card in the 42nd minute
+      - Julian Alvarez scored a stunning free-kick goal just before halftime to give Atletico the lead
+      - Alexander Sorloth scored the second goal for Atletico Madrid
+      - Barcelona are currently priced at +500 to +600 odds to win the 2025-26 Champions League
+
+  Related markets:
+    [keyword_overlap] Will Atletico Madrid win the 2025–26 Champions League?: 7%
+    [keyword_overlap] Will PSG win the 2025–26 Champions League?: 20%
+    [keyword_overlap] Will Arsenal win the 2025–26 Champions League?: 30%
+    [keyword_overlap] Will Real Madrid win the 2025–26 Champions League?: 5%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 4,646 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.063,
+      "base_rate_reasoning": "With 16 teams in Champions League quarter-finals, the naive base rate would be 6.25%. However, Barcelona is historically a strong team with multiple Champions League titles, so a slight premium above base rate is warranted.",
+      "news_impact": "The recent 2-0 defeat to Atletico Madrid in the quarter-final first leg is devastating for Barcelona's chances. Being down 2-0 with a red card received makes qualification to the semi-finals extremely unlikely, effectively ending their tournament hopes.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "Barcelona has historically strong Champions League pedigree",
+        "Hansi Flick maintains optimism about their chances",
+        "Second leg still to be played, comebacks are possible"
+      ],
+      "factors_against": [
+        "Lost 2-0 in quarter-final first leg at home",
+        "Pau Cubarsi red card weakened team significantly",
+        "Must overcome 2-goal deficit away from home",
+        "Atletico Madrid is defensively strong and unlikely to concede easily",
+        "Market price has fallen dramatically from 16.5% to 6.6% in past week"
+      ],
+      "probability": 0.02,
+      "reasoning": "The recent 2-0 defeat to Atletico Madrid in the quarter-final first leg has essentially eliminated Barcelona's realistic chances of winning the Champions League. Overcoming a 2-goal deficit against a defensively solid Atletico team is extremely difficult. The market's dramatic price drop from 16.5% to 6.6% reflects this reality, but even 6.6% seems too generous given the mathematical improbability of the required comeback.",
+      "confidence": "high",
+      "information_edge": "The market may still be overpricing Barcelona's chances at 6.6% - the required comeback against Atletico Madrid is so unlikely that the true probability is closer to 2%"
+    }
+
+  Parsed response:
+    Base rate anchor:   0.063
+    Base rate reason:   With 16 teams in Champions League quarter-finals, the naive base rate would be 6.25%. However, Barcelona is historically a strong team with multiple Champions League titles, so a slight premium above base rate is warranted.
+    Factors FOR YES:
+      + Barcelona has historically strong Champions League pedigree
+      + Hansi Flick maintains optimism about their chances
+      + Second leg still to be played, comebacks are possible
+    Factors AGAINST:
+      - Lost 2-0 in quarter-final first leg at home
+      - Pau Cubarsi red card weakened team significantly
+      - Must overcome 2-goal deficit away from home
+      - Atletico Madrid is defensively strong and unlikely to concede easily
+      - Market price has fallen dramatically from 16.5% to 6.6% in past week
+    Probability:       0.02
+    Confidence:        high
+    Reasoning:         The recent 2-0 defeat to Atletico Madrid in the quarter-final first leg has essentially eliminated Barcelona's realistic chances of winning the Champions League. Overcoming a 2-goal deficit against a defensively solid Atletico team is extremely difficult. The market's dramatic price drop from 16.5% to 6.6% reflects this reality, but even 6.6% seems too generous given the mathematical improbability of the required comeback.
+    Information edge:  The market may still be overpricing Barcelona's chances at 6.6% - the required comeback against Atletico Madrid is so unlikely that the true probability is closer to 2%
+
+  Calibration:
+    Raw LLM probability:    2.0%
+    Calibrated probability: 4.4%
+    Adjustment:             +2.4%
+
+  Confidence build-up:
+    Base (from LLM):        0.85 (high)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.95
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450   4.4%   0.95    0.427         1.9%
+  base_rate                0.150   6.6%   0.50    0.075         0.5%
+  momentum                 0.200   3.4%   0.52    0.105         0.4%
+  book_imbalance           0.150   2.6%   0.50    0.075         0.2%
+  whale_tracker            0.000   6.6%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.682         2.9%
+
+  Final probability: 2.9% / 0.682 = 4.3%
+  Ensemble confidence (agreement): 0.97
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    4.3%
+  Market price:    6.6%
+  Edge:            -2.3%
+  Direction:       NO (market overpriced)
+
+  ❌ NO TRADE: Edge 2.3% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 25 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will Real Madrid win the 2025–26 Champions League?
+  Market ID:     566139
+  Market price:  5.1%
+  Category:      Real Madrid
+  Volume 24h:    $157,646
+  Liquidity:     $165,646
+  Scanner score: 0.636
+  Days to res:   51.4
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: kalshi, related_markets (2 of 5)
+  Time: 12.4s
+
+  Related markets:
+    [keyword_overlap] Will Atletico Madrid win the 2025–26 Champions League?: 7%
+    [keyword_overlap] Will Barcelona win the 2025–26 Champions League?: 7%
+    [keyword_overlap] Will PSG win the 2025–26 Champions League?: 20%
+    [keyword_overlap] Will Arsenal win the 2025–26 Champions League?: 30%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 3,817 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.063,
+      "base_rate_reasoning": "With 16 teams typically in the Champions League knockout phase, a naive base rate would be 1/16 = 6.25%. However, Real Madrid has historically been the most successful club with 15 titles, suggesting a higher base rate around 6-7%.",
+      "news_impact": "No specific recent news provided, but the stable market price over the past week suggests no major developments affecting Real Madrid's prospects.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "Real Madrid is historically the most successful Champions League club with 15 titles",
+        "Strong squad depth and experience in high-pressure European matches",
+        "Proven ability to perform in knockout tournaments",
+        "Financial resources to maintain competitive squad"
+      ],
+      "factors_against": [
+        "Competition from other elite clubs like PSG (20% market price) and Arsenal (30% market price)",
+        "Tournament involves significant randomness over knockout rounds",
+        "Current squad may be in transition period",
+        "Other Spanish clubs (Barcelona 7%, Atletico 7%) also competing for similar talent pool"
+      ],
+      "probability": 0.055,
+      "reasoning": "Starting from a base rate around 6.3% for an elite club, I adjust slightly downward to 5.5%. The related markets show Arsenal at 30% and PSG at 20%, suggesting these are viewed as stronger favorites currently. The stable 5.1% market price with high volume ($4.3M total) indicates informed trading. Real Madrid's historical success is offset by current competitive landscape and the inherent randomness of knockout tournaments.",
+      "confidence": "medium",
+      "information_edge": "The market appears reasonably efficient at 5.1%, though there may be slight undervaluation of Real Madrid's tournament experience relative to clubs like Arsenal who lack recent Champions League success."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.063
+    Base rate reason:   With 16 teams typically in the Champions League knockout phase, a naive base rate would be 1/16 = 6.25%. However, Real Madrid has historically been the most successful club with 15 titles, suggesting a higher base rate around 6-7%.
+    Factors FOR YES:
+      + Real Madrid is historically the most successful Champions League club with 15 titles
+      + Strong squad depth and experience in high-pressure European matches
+      + Proven ability to perform in knockout tournaments
+      + Financial resources to maintain competitive squad
+    Factors AGAINST:
+      - Competition from other elite clubs like PSG (20% market price) and Arsenal (30% market price)
+      - Tournament involves significant randomness over knockout rounds
+      - Current squad may be in transition period
+      - Other Spanish clubs (Barcelona 7%, Atletico 7%) also competing for similar talent pool
+    Probability:       0.055
+    Confidence:        medium
+    Reasoning:         Starting from a base rate around 6.3% for an elite club, I adjust slightly downward to 5.5%. The related markets show Arsenal at 30% and PSG at 20%, suggesting these are viewed as stronger favorites currently. The stable 5.1% market price with high volume ($4.3M total) indicates informed trading. Real Madrid's historical success is offset by current competitive landscape and the inherent randomness of knockout tournaments.
+    Information edge:  The market appears reasonably efficient at 5.1%, though there may be slight undervaluation of Real Madrid's tournament experience relative to clubs like Arsenal who lack recent Champions League success.
+
+  Calibration:
+    Raw LLM probability:    5.5%
+    Calibrated probability: 9.1%
+    Adjustment:             +3.6%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.70
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450   9.1%   0.70    0.315         2.9%
+  base_rate                0.150   5.1%   0.50    0.075         0.4%
+  momentum                 0.200   5.4%   0.06    0.011         0.1%
+  book_imbalance           0.150   1.0%   0.50    0.075         0.1%
+  whale_tracker            0.000   5.1%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.476         3.4%
+
+  Final probability: 3.4% / 0.476 = 7.1%
+  Ensemble confidence (agreement): 0.95
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    7.1%
+  Market price:    5.1%
+  Edge:            +2.0%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: Edge 2.0% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 26 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will Jon Rahm win the 2026 Masters tournament?
+  Market ID:     568632
+  Market price:  8.1%
+  Category:      Jon Rahm
+  Volume 24h:    $339,714
+  Liquidity:     $18,669
+  Scanner score: 0.635
+  Days to res:   3.4
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: kalshi, related_markets (2 of 5)
+  Time: 3.6s
+
+  Related markets:
+    [keyword_overlap] Will Scottie Scheffler win the 2026 Masters tournament?: 14%
+    [keyword_overlap] Will Bryson Dechambeau win the 2026 Masters tournament?: 5%
+    [keyword_overlap] Will Rory McIlroy win the 2026 Masters tournament?: 6%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 3,665 chars
+
+  ⚠ LLM CALL RETURNED NO RESPONSE
+    The API call returned None. Possible causes:
+    - max_output_tokens too low for reasoning model
+    - API timeout or network error
+    - Model refused the request
+    → Estimate fell back to market price with 0.10 confidence
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450   8.1%   0.10    0.045         0.4%
+  base_rate                0.150   8.1%   0.50    0.075         0.6%
+  momentum                 0.200   8.2%   0.01    0.002         0.0%
+  book_imbalance           0.150   9.9%   0.26    0.039         0.4%
+  whale_tracker            0.000   8.1%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.161         1.4%
+
+  Final probability: 1.4% / 0.161 = 8.5%
+  Ensemble confidence (agreement): 0.99
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    8.5%
+  Market price:    8.1%
+  Edge:            +0.4%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: No edge found (best edge: +0.4%)
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 27 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Upper Austria Ladies Linz: Lilli Tagger vs Liudmila Samsonova
+  Market ID:     1912526
+  Market price:  84.5%
+  Volume 24h:    $203,828
+  Liquidity:     $120,213
+  Scanner score: 0.626
+  Days to res:   6.7
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: none (0 of 5)
+  Time: 4.2s
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 3,836 chars
+
+  ⚠ LLM CALL RETURNED NO RESPONSE
+    The API call returned None. Possible causes:
+    - max_output_tokens too low for reasoning model
+    - API timeout or network error
+    - Model refused the request
+    → Estimate fell back to market price with 0.10 confidence
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  84.5%   0.10    0.045         3.8%
+  base_rate                0.150  84.5%   0.50    0.075         6.3%
+  momentum                 0.200  87.4%   0.49    0.097         8.5%
+  book_imbalance           0.150  85.4%   0.13    0.019         1.6%
+  whale_tracker            0.000  84.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.237        20.3%
+
+  Final probability: 20.3% / 0.237 = 85.8%
+  Ensemble confidence (agreement): 0.98
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    85.8%
+  Market price:    84.5%
+  Edge:            +1.3%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: Edge 1.3% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 29 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      US obtains Iranian enriched uranium by May 31?
+  Market ID:     1808970
+  Market price:  19.5%
+  Volume 24h:    $168,928
+  Liquidity:     $56,488
+  Scanner score: 0.618
+  Days to res:   51.4
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: none (0 of 5)
+  Time: 5.3s
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 3,979 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.05,
+      "base_rate_reasoning": "Historically, the US acquiring Iranian enriched uranium through any means is extremely rare, with no clear precedent in recent decades despite ongoing tensions.",
+      "news_impact": "No specific recent news provided, but the stable market price around 19.5% suggests no major developments have shifted expectations significantly.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "factors_for": [
+        "Military escalation or conflict could create opportunities for seizure",
+        "Diplomatic breakthrough could lead to negotiated transfer",
+        "Intelligence operations might enable covert acquisition",
+        "Iranian nuclear facilities could be targeted in broader conflict"
+      ],
+      "factors_against": [
+        "Iran tightly controls its nuclear materials with extensive security",
+        "No current diplomatic framework exists for such transfers",
+        "International law and sovereignty make seizure extremely difficult",
+        "Iran would likely destroy materials before allowing US possession",
+        "Current geopolitical tensions make cooperation unlikely"
+      ],
+      "probability": 0.12,
+      "reasoning": "Starting from a very low base rate of ~5% for such unprecedented events, the market price of 19.5% appears inflated. While military conflict or dramatic diplomatic shifts could theoretically enable US acquisition of Iranian uranium, the practical barriers are enormous. Iran's nuclear program is heavily guarded, and any scenario leading to US possession would require either major warfare (with uncertain outcomes) or unprecedented cooperation. The stable market price suggests no imminent catalysts.",
+      "confidence": "medium",
+      "information_edge": "Market may be overweighting dramatic scenarios while underweighting the practical impossibility of Iran voluntarily or involuntarily surrendering nuclear materials"
+    }
+
+  Parsed response:
+    Base rate anchor:   0.05
+    Base rate reason:   Historically, the US acquiring Iranian enriched uranium through any means is extremely rare, with no clear precedent in recent decades despite ongoing tensions.
+    Factors FOR YES:
+      + Military escalation or conflict could create opportunities for seizure
+      + Diplomatic breakthrough could lead to negotiated transfer
+      + Intelligence operations might enable covert acquisition
+      + Iranian nuclear facilities could be targeted in broader conflict
+    Factors AGAINST:
+      - Iran tightly controls its nuclear materials with extensive security
+      - No current diplomatic framework exists for such transfers
+      - International law and sovereignty make seizure extremely difficult
+      - Iran would likely destroy materials before allowing US possession
+      - Current geopolitical tensions make cooperation unlikely
+    Probability:       0.12
+    Confidence:        medium
+    Reasoning:         Starting from a very low base rate of ~5% for such unprecedented events, the market price of 19.5% appears inflated. While military conflict or dramatic diplomatic shifts could theoretically enable US acquisition of Iranian uranium, the practical barriers are enormous. Iran's nuclear program is heavily guarded, and any scenario leading to US possession would require either major warfare (with uncertain outcomes) or unprecedented cooperation. The stable market price suggests no imminent catalysts.
+    Information edge:  Market may be overweighting dramatic scenarios while underweighting the practical impossibility of Iran voluntarily or involuntarily surrendering nuclear materials
+
+  Calibration:
+    Raw LLM probability:    12.0%
+    Calibrated probability: 16.5%
+    Adjustment:             +4.5%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    Final confidence:       0.60
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  16.5%   0.60    0.270         4.5%
+  base_rate                0.150  19.5%   0.50    0.075         1.5%
+  momentum                 0.200  19.7%   0.04    0.008         0.2%
+  book_imbalance           0.150  21.0%   0.21    0.031         0.6%
+  whale_tracker            0.000  19.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.384         6.7%
+
+  Final probability: 6.7% / 0.384 = 17.5%
+  Ensemble confidence (agreement): 0.97
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    17.5%
+  Market price:    19.5%
+  Edge:            -2.0%
+  Direction:       NO (market overpriced)
+
+  ❌ NO TRADE: Edge 2.0% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 30 of 30
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will UAE strike Iran by April 30?
+  Market ID:     1693042
+  Market price:  13.5%
+  Category:      UAE
+  Volume 24h:    $363,839
+  Liquidity:     $61,905
+  Scanner score: 0.612
+  Days to res:   20.4
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: related_markets (1 of 5)
+  Time: 17.5s
+
+  Related markets:
+    [keyword_overlap] Iran x Israel/US conflict ends by April 15?: 63%
+    [keyword_overlap] JD Vance diplomatic meeting with Iran by April 10?: 43%
+    [keyword_overlap] Trump announces end of military operations against Iran by April 15th?: 6%
+    [keyword_overlap] Iran x Israel/US conflict ends by April 30?: 70%
+    [keyword_overlap] US x Iran meeting by April 30, 2026?: 92%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 4,308 chars
+
+  ⚠ LLM CALL RETURNED NO RESPONSE
+    The API call returned None. Possible causes:
+    - max_output_tokens too low for reasoning model
+    - API timeout or network error
+    - Model refused the request
+    → Estimate fell back to market price with 0.10 confidence
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  13.5%   0.10    0.045         0.6%
+  base_rate                0.150  13.5%   0.50    0.075         1.0%
+  momentum                 0.200   9.1%   0.70    0.140         1.3%
+  book_imbalance           0.150  12.4%   0.15    0.023         0.3%
+  whale_tracker            0.000  13.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.283         3.2%
+
+  Final probability: 3.2% / 0.283 = 11.2%
+  Ensemble confidence (agreement): 0.97
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    11.2%
+  Market price:    13.5%
+  Edge:            -2.3%
+  Direction:       NO (market overpriced)
+
+  ❌ NO TRADE: Edge 2.3% below minimum 5.0%
+
+
+==============================================================================
+  RUN SUMMARY
+==============================================================================
+  Markets evaluated: 30
+  Tradeable:         8
+  Trades entered:    8
+  Elapsed:           851.5s
+==============================================================================

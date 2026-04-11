@@ -6,7 +6,9 @@ Usage:
     python run_pipeline.py                    # Full pipeline (scan → estimate → paper trade)
     python run_pipeline.py --scan-only        # Just scan and show opportunities
     python run_pipeline.py --enriched         # Enriched pipeline (with context enrichment)
-    python run_pipeline.py --enriched --live  # Enriched + real Claude API calls
+    python run_pipeline.py --enriched --live  # Enriched + real LLM API calls (Claude default)
+    python run_pipeline.py --enriched --live --model gpt   # Use GPT-5.4 via Azure
+    python run_pipeline.py --enriched --live --model claude # Use Claude (default)
     python run_pipeline.py --enriched --whale-profiles  # Enriched + profile-aware whale signals
     python run_pipeline.py --profile-whales   # Build/refresh whale behavioral profiles
     python run_pipeline.py --whale-report     # Show whale profiler report
@@ -15,11 +17,19 @@ Usage:
     python run_pipeline.py --whale-backtest   # A/B backtest: profiled vs naive whale signal
     python run_pipeline.py --enrich-demo      # Demo the context enrichment sources
     python run_pipeline.py --report           # Show paper trading report
+    python run_pipeline.py --report-compare   # A/B strategy comparison
+    python run_pipeline.py --report-models    # Compare LLM model performance
     python run_pipeline.py --demo             # Run with simulated data (no API calls)
 """
 
 import sys
 import logging
+
+# Force UTF-8 output on Windows to avoid cp1252 encoding errors
+# from emojis and special characters in market names
+if sys.stdout.encoding and sys.stdout.encoding.lower() != 'utf-8':
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+    sys.stderr.reconfigure(encoding='utf-8', errors='replace')
 
 logging.basicConfig(
     level=logging.INFO,
@@ -49,10 +59,26 @@ def main():
         remaining = [a for a in args if a != "--whale-inspect"]
         filt = remaining[0] if remaining else ""
         print(profiler.diagnostic_report(wallet_filter=filt))
+    elif "--report-compare" in args:
+        run_strategy_comparison()
+    elif "--report-models" in args:
+        run_strategy_comparison()  # Same logic — models are captured in strategy tags
     elif "--report" in args:
-        from core.paper_trader import PaperTrader
-        trader = PaperTrader()
-        print(trader.report())
+        run_report(args)
+    elif "--cross-event" in args and "--enriched" not in args:
+        from strategies.cross_event_arb import run_cross_event_scan
+        top = 300
+        min_edge = 3.0
+        verbose = "--verbose" in args
+        if "--top" in args:
+            idx = args.index("--top")
+            if idx + 1 < len(args):
+                top = int(args[idx + 1])
+        if "--min-edge" in args:
+            idx = args.index("--min-edge")
+            if idx + 1 < len(args):
+                min_edge = float(args[idx + 1])
+        run_cross_event_scan(max_markets=top, min_edge=min_edge, verbose=verbose)
     elif "--scan-only" in args:
         from core.market_scanner import demo_scan
         demo_scan()
@@ -60,10 +86,31 @@ def main():
         from strategies.enriched_edge_detector import run_enriched_pipeline
         use_live = "--live" in args
         use_profiles = "--whale-profiles" in args
+        enable_cross_event = "--cross-event" in args
+        
+        # Determine LLM provider: --model gpt | --model claude (default)
+        llm_provider = "claude"
+        if "--model" in args:
+            idx = args.index("--model")
+            if idx + 1 < len(args):
+                llm_provider = args[idx + 1]
+        
+        # Validate credentials before launching
+        if use_live:
+            from core.llm_providers import provider_ready
+            ready, msg = provider_ready(llm_provider)
+            if not ready:
+                print(f"\n  ❌ {msg}")
+                print(f"     Cannot run --live with --model {llm_provider}")
+                return
+            print(f"\n  🤖 LLM provider: {llm_provider} ({msg})")
+        
         run_enriched_pipeline(
             bankroll=1000,
             use_live_llm=use_live,
             use_whale_profiles=use_profiles,
+            enable_cross_event=enable_cross_event,
+            llm_provider=llm_provider,
         )
     elif "--enrich-demo" in args:
         from core.context_enricher import demo as enrich_demo
@@ -106,6 +153,107 @@ def run_whale_profiler():
     
     print(f"\n✅ Profiled {count} whales (total in database: {profiler.profile_count})")
     print(profiler.report())
+
+
+def run_strategy_comparison():
+    """
+    Load paper traders from all data/paper_* directories and produce
+    a side-by-side comparison report.
+    """
+    import os
+    from core.paper_trader import PaperTrader
+    
+    data_root = "data"
+    paper_dirs = sorted([
+        d for d in os.listdir(data_root)
+        if d.startswith("paper_") and os.path.isdir(os.path.join(data_root, d))
+    ])
+    
+    if not paper_dirs:
+        # Fall back to legacy single-file mode
+        trader = PaperTrader(data_dir=data_root)
+        if trader.trades:
+            print(trader.compare_strategies())
+        else:
+            print("No paper trades found. Run the pipeline first.")
+        return
+    
+    # Load each strategy's trader independently
+    all_traders: dict[str, PaperTrader] = {}
+    for d in paper_dirs:
+        tag = d.replace("paper_", "")
+        trader = PaperTrader(bankroll=1000, data_dir=os.path.join(data_root, d))
+        if trader.trades:
+            all_traders[tag] = trader
+    
+    if not all_traders:
+        print("No paper trades found in any strategy directory.")
+        return
+    
+    if len(all_traders) < 2:
+        tag, trader = next(iter(all_traders.items()))
+        print(f"Only one strategy found ({tag}). Need at least 2 for comparison.")
+        print(trader.report())
+        return
+    
+    # Merge all trades into one trader for the compare_strategies method
+    merged = PaperTrader(bankroll=1000, data_dir="/tmp/merged_comparison")
+    for tag, trader in all_traders.items():
+        for trade in trader.trades:
+            # Ensure strategy_tag is set from the directory name
+            if not trade.strategy_tag:
+                trade.strategy_tag = tag
+            merged.trades.append(trade)
+    
+    print(merged.compare_strategies())
+
+
+def run_report(args):
+    """
+    Show paper trading report, optionally for a specific strategy.
+    
+    Usage:
+        --report                 # Shows all strategies
+        --report enriched+live   # Shows specific strategy
+    """
+    import os
+    from core.paper_trader import PaperTrader
+    
+    data_root = "data"
+    paper_dirs = sorted([
+        d for d in os.listdir(data_root)
+        if d.startswith("paper_") and os.path.isdir(os.path.join(data_root, d))
+    ])
+    
+    # Check for a specific strategy argument
+    remaining = [a for a in args if a not in ("--report",)]
+    requested_tag = remaining[0] if remaining else ""
+    
+    if not paper_dirs:
+        # Fall back to legacy single-file mode
+        trader = PaperTrader(data_dir=data_root)
+        print(trader.report())
+        return
+    
+    if requested_tag:
+        # Find matching directory
+        match = [d for d in paper_dirs if requested_tag in d]
+        if match:
+            trader = PaperTrader(bankroll=1000, data_dir=os.path.join(data_root, match[0]))
+            print(f"\n  Strategy: {match[0].replace('paper_', '')}")
+            print(trader.report())
+        else:
+            print(f"No strategy matching '{requested_tag}' found.")
+            print(f"Available: {', '.join(d.replace('paper_', '') for d in paper_dirs)}")
+        return
+    
+    # Show all strategies
+    for d in paper_dirs:
+        tag = d.replace("paper_", "")
+        trader = PaperTrader(bankroll=1000, data_dir=os.path.join(data_root, d))
+        if trader.trades:
+            print(f"\n  Strategy: {tag}")
+            print(trader.report())
 
 
 def run_demo():

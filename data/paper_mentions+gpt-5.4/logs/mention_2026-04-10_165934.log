@@ -1,0 +1,109 @@
+==============================================================================
+  POLYMARKET EDGE -- Mention Strategy Run Log
+  2026-04-10 16:59:34 UTC
+==============================================================================
+  Mode:             live
+  Strategy:         mentions
+  Model:            gpt-5.4
+  Events found:     1
+  Bankroll:         $1,000.00
+  Min edge:         5%
+  Kelly fraction:   20%
+  Event exposure:   25% of bankroll
+==============================================================================
+
+
+==============================================================================
+  EVENT: What will Trump say this week? (April 12)
+==============================================================================
+  Slug:            what-will-trump-say-this-week-april-12
+  Scope:           weekly
+  Subject:         Trump
+  Words/outcomes:  16
+  Days to resolve: 1.3
+  Total volume:    $41,897
+
+--- CONTEXT (web-search grounded) --------------------------------------------
+  Here’s a concise, factual briefing for the **weekly Trump “What will Trump say this week?” market ending Sunday, April 12, 2026 at 12:00 a.m. ET**.
+  
+  ## 1) Agenda / topic for the relevant event, and participants
+  
+  **Trump’s only clearly scheduled public-facing travel event before the resolution deadline is in Charlottesville, Virginia on Friday evening, April 10.** The official public schedule lists:  
+  - **6:30 p.m.** — **“MAGA Inc. Meeting”** at **Trump Winery, Charlottesville, VA**  
+  - **7:15 p.m.** — **“MAGA Inc. Roundtable Dinner”** at **Trump Winery, Charlottesville, VA** ([rollcall.com](https://rollcall.com/factbase/trump/calendar/april-2026/))
+  
+  **Participants publicly identified:**  
+  - **President Donald Trump**  
+  - The event is described as a **MAGA Inc.** meeting / roundtable, so the other participants appear to be **MAGA Inc.-related political/donor attendees**, but the public schedule does **not** name individual participants. ([rollcall.com](https://rollcall.com/factbase/trump/calendar/april-2026/))
+  
+  **What the event appears to be about:**  
+  The schedule language indicates a **political meeting and dinner roundtable**, not a formal White House policy speech, rally, or press conference. No official agenda item in the schedule says there will be policy remarks, a speech, or Q&A. ([rollcall.com](https://rollcall.com/factbase/trump/calendar/april-2026/))
+  
+  ## 2) Top current news topics involving Trump right now
+  
+  The main Trump-related topics showing up in current official releases and recent coverage are:
+  
+  1. **Iran / ceasefire / Strait of Hormuz / broader peace talks.**  
+     The White House said Iran agreed to a ceasefire and reopening of the Strait of Hormuz, and framed this as part of a broader peace effort. ([whitehouse.gov](https://www.whitehouse.gov/releases/2026/04/peace-through-strength-operation-epic-fury-crushes-iranian-threat-as-ceasefire-takes-hold/))
+  
+  2. **Trump’s threat of 50% tariffs on countries supplying weapons to Iran.**  
+     Multiple outlets reported Trump threatened immediate 50% tariffs on countries supplying military weapons to Iran. ([cnbc.com](https://www.cnbc.com/2026/04/08/trump-threatens-tariffs-countries-supplying-weapons-iran-ceasefire.html))
+  
+  3. **Immigration enforcement / immigration courts.**  
+     A White House release on April 9 emphasized that the “era of amnesty is over” and highlighted restoring rule of law to immigration courts. ([whitehouse.gov](https://www.whitehouse.gov/news/))
+  
+  4. **Charlottesville political trip / MAGA Inc. event.**  
+     Local and schedule reporting show Trump traveling to Charlottesville on April 10 for a MAGA Inc. meeting and roundtable dinner. ([wric.com](https://www.wric.com/news/local-news/charlottesville/trump-charlottesville/))
+  
+  5. **Recent White House messaging around ceremonial / commemorative statements.**  
+     On April 9 the White House posted presidential messages tied to Appomattox, POW Recognition Day, and the Masters Tournament. These are official statements but are less likely than Iran or immigration to dominate unscripted remarks. ([whitehouse.gov](https://www.whitehouse.gov/briefings-statements/))
+  
+  ## 3) Publicly available schedule of Trump’s upcoming appearances
+  
+  Yes. A publicly available presidential
+
+--- BROADCAST FORMAT ASSESSMENT ----------------------------------------------
+  Classification:  weekly
+  Reasoning:       This is a weekly market covering any public verbal statement across the full window, so even though the only clearly scheduled travel event looks like a donor-style meeting with uncertain public remarks, Trump is still likely to generate some public spoken content during the week. That means normal weekly estimation applies, with some discount for the relatively thin visible schedule and the possibility that many remarks are brief or off-topic.
+
+  >> IMPACT: Multiple appearances during window. Normal estimation.
+
+--- WORD-BY-WORD ESTIMATES ---------------------------------------------------
+
+  Word                          Our P  Mkt P    Edge  Conf  Reasoning
+  ----------------------------------------------------------------------------------------------------
+    Pam / Bondi                    22%   24%    -2%   0.7  Pam Bondi is a plausible political ally/reference point, but there is no strong visible hook in the current news cycle making her especially likely this week.
+    Lee / Zeldin                   46%   50%    -3%   0.6  Lee Zeldin is a recognizable Trump-world figure and could come up in political or administrative remarks, though not from the clearest top-line topics.
+    Boots on the ground            27%   29%    -2%   0.7  Given the Iran/ceasefire news, this phrase has a real pathway in foreign-policy comments, but Trump often uses simpler formulations instead of this exact phrase.
+[-] Delcy / Rodriguez              14%   26%   -12%   0.8  This is a specific foreign name with little obvious connection to the main publicly visible Trump topics this week, making an exact mention relatively unlikely.
+[-] Kharg Island                   11%   30%   -18%   0.8  Although Iran is in the news, Kharg Island is too specific and technical for Trump's usual public phrasing unless prompted by a very particular question.
+    Predict / Prediction / Predicted   36%   38%    -2%   0.7  These are common enough words in off-the-cuff political speech and could arise in discussing markets, war outcomes, polls, or media commentary.
+[-] King Charles                   18%   32%   -14%   0.8  There is no strong UK-monarchy hook in the provided agenda, so this would likely require an unrelated press question or digression.
+    Two weeks                      13%   15%    -2%   0.7  Trump does use time-horizon language, but the exact phrase 'two weeks' is narrower than generic timing talk and lacks a clear topical trigger here.
+    Tube                            6%   10%    -4%   0.9  This word has very few natural pathways in the visible agenda or news topics and is not a notable Trump verbal habit.
+[-] Potato                          4%   12%    -8%   0.9  Absent a joke, food anecdote, or bizarre aside, 'potato' has almost no connection to the week's likely subject matter.
+    Coffee                          7%    8%    -2%   0.9  Coffee is a common everyday word, but there is no obvious issue context making it likely in Trump's public remarks this week.
+    Witch                          12%   16%    -4%   0.8  Trump has a history with 'witch hunt,' but unless he pivots to grievance or investigations, the standalone word 'witch' is still not especially likely.
+    Common Sense / Commonsense     34%   36%    -2%   0.7  This is a natural Trump-friendly rhetorical phrase for immigration, law-and-order, and political messaging, giving it a decent weekly chance.
+[-] Keir / Starmer                 21%   48%   -27%   0.7  A UK-related question could produce this, but there is no strong sign from the known schedule or top domestic topics that Starmer will come up.
+    Crypto / Bitcoin                8%    9%    -1%   0.8  Unless asked directly about markets or digital assets, crypto terminology seems peripheral to the week's visible themes.
+    Six Seven                       5%   10%    -4%   0.9  The exact phrase 'six seven' is highly idiosyncratic and lacks any clear topical or habitual basis for appearing in Trump's remarks.
+
+--- EVENT SUMMARY ------------------------------------------------------------
+  Event:             What will Trump say this week? (April 12)
+  Words estimated:   0
+  Tradeable edges:   0
+  Trades entered:    0
+  Event exposure:    $0.00 / $250.00
+
+
+==============================================================================
+  RUN SUMMARY
+==============================================================================
+  Events processed:    1
+  Words evaluated:     0
+  Trades entered:      0
+  Remaining bankroll:  $1000.00
+  Elapsed:             73.1s
+==============================================================================
+

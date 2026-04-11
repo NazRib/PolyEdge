@@ -19,7 +19,7 @@ STOP_LOSS_PCT = 0.50        # Exit if position loses this % of entry value
 MIN_VOLUME_24H = 1000       # Minimum 24h volume in USD
 MIN_LIQUIDITY = 5000        # Minimum total liquidity in USD
 PRICE_RANGE = (0.05, 0.95)  # Only trade markets in this probability range
-MAX_DAYS_TO_RESOLUTION = 90 # Skip markets resolving too far out
+MAX_DAYS_TO_RESOLUTION = 30 # Skip markets resolving too far out
 MIN_DAYS_TO_RESOLUTION = 1  # Skip markets resolving too soon (can't exit)
 
 # ─── Probability Estimation ─────────────────────────────
@@ -39,3 +39,17 @@ MARKETS_CACHE = "data/markets_cache.json"
 
 # ─── Logging ─────────────────────────────────────────────
 LOG_LEVEL = "INFO"
+
+# ─── LLM Provider Configuration ─────────────────────────
+# Default provider: "claude" or "gpt"
+LLM_PROVIDER = "claude"
+
+# Claude (Anthropic) — set ANTHROPIC_API_KEY env var
+CLAUDE_MODEL = "claude-sonnet-4-20250514"
+
+# GPT-5.4 (Azure AI Foundry Responses API)
+# Set these env vars:
+#   AZURE_OPENAI_API_KEY      — your Azure OpenAI API key
+#   AZURE_OPENAI_ENDPOINT     — e.g. https://your-resource.openai.azure.com
+#   AZURE_OPENAI_DEPLOYMENT   — deployment name (default: gpt-5.4-pro)
+AZURE_OPENAI_DEPLOYMENT = "gpt-5.4"

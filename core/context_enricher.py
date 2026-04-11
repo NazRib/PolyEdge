@@ -39,15 +39,30 @@ ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages"
 
 class NewsEnricher:
     """
-    Uses Claude API with web_search tool to find recent news relevant 
+    Uses an LLM with web search to find recent news relevant 
     to a prediction market question.
+    
+    Supports both Claude (web_search_20250305 tool) and GPT-5.4
+    (Azure Responses API with web_search tool).
     
     This is the single highest-value enrichment source — recent news that
     the market hasn't fully priced in is where alpha lives.
     """
     
-    def __init__(self, api_key: Optional[str] = None, model: str = "claude-sonnet-4-20250514"):
-        self.api_key = api_key or os.environ.get("ANTHROPIC_API_KEY")
+    def __init__(
+        self,
+        api_key: Optional[str] = None,
+        model: str = "claude-sonnet-4-20250514",
+        llm_provider: str = "claude",
+    ):
+        from core.llm_providers import validate_provider, PROVIDER_CLAUDE
+        self.provider = validate_provider(llm_provider)
+        
+        if self.provider == PROVIDER_CLAUDE:
+            self.api_key = api_key or os.environ.get("ANTHROPIC_API_KEY")
+        else:
+            self.api_key = api_key or os.environ.get("AZURE_OPENAI_API_KEY")
+        
         self.model = model
     
     def search(self, question: str, category: str = "", max_results: int = 5) -> dict:
@@ -68,11 +83,17 @@ class NewsEnricher:
         # Build search-optimized queries from the question
         queries = self._extract_search_queries(question, category)
         
-        # Use Claude with web_search to gather and synthesize news
+        # Use LLM with web_search to gather and synthesize news
         prompt = self._build_news_prompt(question, queries)
         
         try:
-            result = self._call_claude_with_search(prompt)
+            from core.llm_providers import call_llm_with_search
+            result = call_llm_with_search(
+                user_prompt=prompt,
+                provider=self.provider,
+                model=self.model if self.provider == "claude" else None,
+                api_key=self.api_key,
+            )
             if result:
                 return self._parse_news_result(result)
         except Exception as e:
@@ -171,6 +192,16 @@ Respond with ONLY this JSON:
     
     def _parse_news_result(self, raw: str) -> dict:
         """Parse the JSON response from the news search."""
+        # Detect LLM refusal messages before parsing
+        refusal_patterns = [
+            "i'm sorry", "i cannot assist", "i can't assist",
+            "i'm unable to", "i can't help", "i cannot help",
+            "i'm not able to", "against my guidelines",
+        ]
+        if any(p in raw.lower() for p in refusal_patterns):
+            logger.info("News search: LLM refused this query — returning empty result")
+            return self._empty_result()
+        
         # Strip markdown fences
         text = raw.strip()
         if "```" in text:
@@ -907,6 +938,9 @@ class EnrichedContext:
     # Whale positions
     whale_positions: list[dict] = field(default_factory=list)
     
+    # Cross-event dependencies (Phase C)
+    cross_event_deps: list[dict] = field(default_factory=list)
+    
     # Enrichment metadata
     enrichment_time_seconds: float = 0.0
     sources_used: list[str] = field(default_factory=list)
@@ -1043,6 +1077,50 @@ class EnrichedContext:
                     )
             sections.append("")
         
+        # Cross-event logical dependencies
+        if self.cross_event_deps:
+            sections.append("CROSS-EVENT DEPENDENCIES (logically related markets in other events):")
+            for dep in self.cross_event_deps[:5]:
+                dep_type = dep.get("dep_type", "related")
+                other_q = dep.get("other_question", "")
+                other_price = dep.get("other_price", 0)
+                direction = dep.get("direction", "")
+                reason = dep.get("reason", "")
+                
+                if dep_type == "implication":
+                    if direction == "this_implies_other":
+                        sections.append(
+                            f"  [IMPLIES] If THIS market is YES, then: "
+                            f'"{other_q}" must also be YES (priced at {other_price:.0%})'
+                        )
+                        sections.append(f"    Constraint: This market's price should be <= {other_price:.0%}")
+                    else:
+                        sections.append(
+                            f"  [IMPLIED BY] If this is YES: "
+                            f'"{other_q}" (priced at {other_price:.0%}) implies THIS must be YES'
+                        )
+                        sections.append(f"    Constraint: {other_price:.0%} should be <= this market's price")
+                elif dep_type == "mutual_exclusion":
+                    sections.append(
+                        f"  [MUTUALLY EXCLUSIVE] Cannot both be YES with: "
+                        f'"{other_q}" (priced at {other_price:.0%})'
+                    )
+                    total = self.market_price + other_price
+                    sections.append(f"    Combined price: {total:.0%} (should be <= 100%)")
+                elif dep_type == "subsumption":
+                    sections.append(
+                        f"  [SCOPE] Related by scope/timeline to: "
+                        f'"{other_q}" (priced at {other_price:.0%})'
+                    )
+                else:
+                    sections.append(
+                        f"  [CORRELATED] Related to: "
+                        f'"{other_q}" (priced at {other_price:.0%})'
+                    )
+                if reason:
+                    sections.append(f"    Reason: {reason}")
+            sections.append("")
+        
         if not sections:
             return "ADDITIONAL CONTEXT: No additional data sources available for this market."
         
@@ -1061,6 +1139,8 @@ class EnrichedContext:
             parts.append(f"{len(self.related_markets)} related markets")
         if self.whale_positions:
             parts.append(f"{len(self.whale_positions)} whale positions")
+        if self.cross_event_deps:
+            parts.append(f"{len(self.cross_event_deps)} cross-event deps")
         
         return (
             f"Enriched from {len(self.sources_used)} sources "
@@ -1096,17 +1176,90 @@ class ContextEnricher:
         anthropic_api_key: Optional[str] = None,
         fred_api_key: Optional[str] = None,
         whale_profiler: "WhaleProfiler | None" = None,
+        llm_provider: str = "claude",
+        cross_event_pairs: list = None,
     ):
-        self.news_enricher = NewsEnricher(api_key=anthropic_api_key) if enable_news else None
+        self.news_enricher = (
+            NewsEnricher(api_key=anthropic_api_key, llm_provider=llm_provider)
+            if enable_news else None
+        )
         self.kalshi_enricher = KalshiPriceEnricher() if enable_kalshi else None
         self.fred_enricher = EconomicEnricher(api_key=fred_api_key) if enable_fred else None
         self.related_enricher = RelatedMarketsEnricher() if enable_related else None
         self.whale_enricher = WhaleEnricher(profiler=whale_profiler) if enable_whales else None
         self.whale_profiler = whale_profiler
         
+        # Cross-event dependency pairs from the cross-event scanner
+        # List of DependencyPair objects (or equivalent dicts)
+        self._cross_event_pairs = cross_event_pairs or []
+        
         # Pre-load the whale registry so it's ready for the pipeline loop
         if self.whale_enricher:
             self.whale_enricher.load_whale_registry()
+    
+    def set_cross_event_pairs(self, pairs: list):
+        """
+        Set cross-event dependency pairs from a completed cross-event scan.
+        Called once after the scan completes, before the per-market enrich loop.
+        """
+        self._cross_event_pairs = pairs
+        logical = [
+            p for p in pairs
+            if getattr(p, 'dep_type', '') not in ('correlated', 'independent', '')
+        ]
+        logger.info(f"Cross-event enricher loaded: {len(logical)} logical deps from {len(pairs)} total pairs")
+    
+    def _lookup_cross_event_deps(self, question: str, market_id: str) -> list[dict]:
+        """
+        Find cross-event dependencies involving this market.
+        Returns a list of dicts ready for EnrichedContext.cross_event_deps.
+        """
+        deps = []
+        for pair in self._cross_event_pairs:
+            # Skip non-logical dependencies
+            dep_type = getattr(pair, 'dep_type', '')
+            if dep_type in ('correlated', 'independent', ''):
+                continue
+            
+            # Check if this market is in the pair
+            a_id = getattr(pair.market_a, 'id', '') if hasattr(pair, 'market_a') else ''
+            b_id = getattr(pair.market_b, 'id', '') if hasattr(pair, 'market_b') else ''
+            a_q = getattr(pair.market_a, 'question', '') if hasattr(pair, 'market_a') else ''
+            b_q = getattr(pair.market_b, 'question', '') if hasattr(pair, 'market_b') else ''
+            
+            direction = getattr(pair, 'direction', '')
+            reason = getattr(pair, 'reason', '')
+            
+            if market_id == a_id or question == a_q:
+                # This market is "A" in the pair
+                other_price = getattr(pair.market_b, 'yes_price', 0) if hasattr(pair, 'market_b') else 0
+                dep_direction = "this_implies_other" if "a_implies_b" in direction else "other_implies_this"
+                if direction == "symmetric":
+                    dep_direction = "symmetric"
+                deps.append({
+                    "dep_type": dep_type,
+                    "other_question": b_q,
+                    "other_price": other_price,
+                    "other_market_id": b_id,
+                    "direction": dep_direction,
+                    "reason": reason,
+                })
+            elif market_id == b_id or question == b_q:
+                # This market is "B" in the pair
+                other_price = getattr(pair.market_a, 'yes_price', 0) if hasattr(pair, 'market_a') else 0
+                dep_direction = "other_implies_this" if "a_implies_b" in direction else "this_implies_other"
+                if direction == "symmetric":
+                    dep_direction = "symmetric"
+                deps.append({
+                    "dep_type": dep_type,
+                    "other_question": a_q,
+                    "other_price": other_price,
+                    "other_market_id": a_id,
+                    "direction": dep_direction,
+                    "reason": reason,
+                })
+        
+        return deps
     
     def enrich(
         self,
@@ -1183,6 +1336,14 @@ class ContextEnricher:
             if ctx.whale_positions:
                 sources_used.append("whales")
         
+        # 6. Cross-event dependencies
+        if self._cross_event_pairs:
+            deps = self._lookup_cross_event_deps(question, str(market_id))
+            if deps:
+                ctx.cross_event_deps = deps
+                sources_used.append("cross_event")
+                logger.info(f"  [X] Found {len(deps)} cross-event dependencies")
+        
         ctx.sources_used = sources_used
         ctx.enrichment_time_seconds = time.time() - start
         
@@ -1230,6 +1391,17 @@ IMPORTANT INSTRUCTIONS:
   * Pay attention to category specialization — a politics specialist's signal on 
     a politics market is far more valuable than their signal on a crypto market.
   * If multiple conviction traders agree on a direction, that's a strong signal.
+- CROSS-EVENT DEPENDENCIES: If cross-event dependencies are listed above, your 
+  estimate MUST be logically consistent with them:
+  * IMPLICATION: If A implies B, then P(A) <= P(B). Adjust accordingly.
+  * MUTUAL EXCLUSION: If A and B are mutually exclusive, P(A) + P(B) <= 1.0.
+  * Use the other market's price as a consistency anchor for your estimate.
+- CROSS-EVENT DEPENDENCIES: If cross-event data is present, your estimate MUST
+  be logically consistent with the stated constraints:
+  * IMPLICATION: If A implies B, then P(A) <= P(B). Adjust accordingly.
+  * MUTUAL EXCLUSION: If A and B can't both be YES, then P(A) + P(B) <= 1.0.
+  * Use the other market's price as an anchor — if it's well-traded, it carries
+    information about what the market thinks.
 
 Respond with ONLY this JSON structure, no other text:
 {{
@@ -1238,6 +1410,7 @@ Respond with ONLY this JSON structure, no other text:
     "news_impact": "<how does the recent news affect the probability? 1-2 sentences>",
     "cross_platform_note": "<any cross-platform signal? 1 sentence, or 'N/A'>",
     "whale_signal_note": "<how did you weight the whale signals? Which traders were most credible for this market? 1-2 sentences, or 'N/A'>",
+    "cross_event_note": "<any cross-event dependency constraints affecting your estimate? 1 sentence, or 'N/A'>",
     "factors_for": ["<factor 1 supporting YES>", "<factor 2>", ...],
     "factors_against": ["<factor 1 supporting NO>", "<factor 2>", ...],
     "probability": <float between 0.01 and 0.99>,

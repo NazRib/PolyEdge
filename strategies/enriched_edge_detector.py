@@ -7,6 +7,7 @@ information sources before making probability estimates.
 """
 
 import logging
+import os
 import re
 import time
 from typing import Optional
@@ -28,6 +29,11 @@ from core.llm_estimator import (
     build_market_context, call_claude, parse_llm_response,
     FORECASTER_SYSTEM_PROMPT,
 )
+from core.llm_providers import (
+    call_llm, validate_provider, model_tag_for_provider,
+    provider_ready, PROVIDER_CLAUDE, PROVIDER_GPT,
+)
+from core.pipeline_logger import PipelineLogger
 
 logger = logging.getLogger(__name__)
 
@@ -39,7 +45,7 @@ class EnrichedLLMEstimator:
     This is the "full power" version that:
     1. Gathers context from news, Kalshi, FRED, and related markets
     2. Builds a rich prompt with all available information
-    3. Calls Claude for a probability estimate
+    3. Calls the configured LLM (Claude or GPT) for a probability estimate
     4. Applies calibration correction
     
     For ensemble integration:
@@ -53,13 +59,21 @@ class EnrichedLLMEstimator:
         calibration: CalibrationModel = None,
         api_key: Optional[str] = None,
         model: str = "claude-sonnet-4-20250514",
+        llm_provider: str = PROVIDER_CLAUDE,
     ):
+        self.provider = validate_provider(llm_provider)
         self.enricher = enricher or ContextEnricher()
-        self.calibration = calibration or CalibrationModel()
+        self.calibration = calibration or CalibrationModel(provider=self.provider)
         self.api_key = api_key
         self.model = model
         self._all_markets_cache: list[dict] = []
         self._enrichment_cache: dict[str, EnrichedContext] = {}
+        # Stores detail from the most recent estimation for pipeline logging
+        self._last_detail: Optional[dict] = None
+    
+    @property
+    def model_tag(self) -> str:
+        return model_tag_for_provider(self.provider)
     
     def set_market_universe(self, markets: list[dict]):
         """Cache the list of all active markets for related-market enrichment."""
@@ -71,7 +85,7 @@ class EnrichedLLMEstimator:
         
         1. Enrich the context
         2. Build full prompt
-        3. Call Claude
+        3. Call the configured LLM
         4. Calibrate
         5. Return (probability, confidence)
         """
@@ -104,11 +118,12 @@ class EnrichedLLMEstimator:
             enriched,
         )
         
-        # Call Claude
-        raw_response = call_claude(
+        # Call the configured LLM provider
+        raw_response = call_llm(
             user_prompt=prompt,
             system_prompt=FORECASTER_SYSTEM_PROMPT,
-            model=self.model,
+            provider=self.provider,
+            model=self.model if self.provider == PROVIDER_CLAUDE else None,
             temperature=0.2,
             api_key=self.api_key,
         )
@@ -117,6 +132,15 @@ class EnrichedLLMEstimator:
         
         if parsed is None:
             # Fallback: use market price with low confidence
+            self._last_detail = {
+                "provider": self.provider,
+                "model_tag": self.model_tag,
+                "prompt_length": len(prompt),
+                "raw_response": raw_response,
+                "parsed": None,
+                "calibration": None,
+                "confidence_breakdown": None,
+            }
             return context_dict.get("market_price", 0.5), 0.1
         
         raw_prob = float(parsed.get("probability", 0.5))
@@ -127,16 +151,40 @@ class EnrichedLLMEstimator:
         
         # Confidence scoring
         confidence_map = {"low": 0.3, "medium": 0.6, "high": 0.85}
-        confidence = confidence_map.get(parsed.get("confidence", "medium"), 0.5)
+        base_label = parsed.get("confidence", "medium")
+        base_conf = confidence_map.get(base_label, 0.5)
         
         # Boost confidence if we have enrichment data
-        if enriched.sources_used:
-            confidence = min(0.95, confidence + 0.05 * len(enriched.sources_used))
+        n_sources = len(enriched.sources_used) if enriched.sources_used else 0
+        enrichment_bonus = 0.05 * n_sources
+        confidence = min(0.95, base_conf + enrichment_bonus)
         
         # Reduce confidence for large deviations from market
         deviation = abs(calibrated - context_dict.get("market_price", 0.5))
-        if deviation > 0.15:
-            confidence *= 0.8
+        dev_penalty = 0.8 if deviation > 0.15 else 1.0
+        confidence *= dev_penalty
+        
+        # Store full detail for pipeline logger
+        self._last_detail = {
+            "provider": self.provider,
+            "model_tag": self.model_tag,
+            "prompt_length": len(prompt),
+            "raw_response": raw_response,
+            "parsed": parsed,
+            "calibration": {
+                "raw": raw_prob,
+                "calibrated": calibrated,
+            },
+            "confidence_breakdown": {
+                "base": base_conf,
+                "base_label": base_label,
+                "enrichment_bonus": enrichment_bonus,
+                "n_sources": n_sources,
+                "deviation": deviation,
+                "deviation_penalty": dev_penalty,
+                "final": confidence,
+            },
+        }
         
         return float(calibrated), float(confidence)
 
@@ -164,22 +212,45 @@ class EnrichedEdgeDetector:
         max_cluster_exposure: float = 0.20,
         use_live_llm: bool = False,
         use_whale_profiles: bool = False,
+        enable_cross_event: bool = False,
         llm_skill_level: float = 0.35,
         data_dir: str = "data",
+        llm_provider: str = PROVIDER_CLAUDE,
     ):
         self.kelly_fraction = kelly_fraction
         self.min_edge = min_edge
         self.min_scanner_score = min_scanner_score
         self.max_signals = max_signals
-        self.max_cluster_exposure = max_cluster_exposure  # Max % of initial bankroll per theme
+        self.max_cluster_exposure = max_cluster_exposure
+        self.use_live_llm = use_live_llm
+        self.enable_cross_event = enable_cross_event  # Max % of initial bankroll per theme
+        
+        # Validate and store provider
+        self.llm_provider = validate_provider(llm_provider) if use_live_llm else ""
+        
+        # Model tag for paper-trade comparison (e.g. "claude-sonnet-4", "gpt-5.4")
+        self.model_tag = model_tag_for_provider(self.llm_provider) if self.llm_provider else "simulated"
+        
+        # Strategy tag for A/B comparison in paper trading
+        tag_parts = ["enriched"]
+        if use_live_llm:
+            tag_parts.append("live")
+            tag_parts.append(self.model_tag)
+        if use_whale_profiles:
+            tag_parts.append("profiles")
+        self.strategy_tag = "+".join(tag_parts)
         
         self.client = PolymarketClient()
         self.scanner = MarketScanner(client=self.client)
         
-        # Paper trader — loads persisted state (bankroll, open trades, calibration)
-        self.trader = PaperTrader(bankroll=bankroll, data_dir=data_dir)
+        # Each strategy configuration gets its own paper trader directory
+        # so bankrolls, trades, and resolutions are fully independent.
+        # This is critical for A/B comparison — without isolation, the
+        # first run resolves trades and the second run sees nothing.
+        paper_dir = os.path.join(data_dir, f"paper_{self.strategy_tag}")
+        self.trader = PaperTrader(bankroll=bankroll, data_dir=paper_dir)
         
-        # Whale profiler (optional — loads from disk if profiles exist)
+        # Whale profiler reads from the main data dir (profiles are shared)
         self.whale_profiler = None
         if use_whale_profiles:
             from core.whale_profiler import WhaleProfiler
@@ -202,13 +273,17 @@ class EnrichedEdgeDetector:
             enable_related=True,
             enable_whales=True,
             whale_profiler=self.whale_profiler,
+            llm_provider=self.llm_provider or PROVIDER_CLAUDE,
         )
         
         # Build ensemble
         self.ensemble = EnsembleEstimator()
         
         if use_live_llm:
-            self.llm_estimator = EnrichedLLMEstimator(enricher=self.enricher)
+            self.llm_estimator = EnrichedLLMEstimator(
+                enricher=self.enricher,
+                llm_provider=self.llm_provider,
+            )
             self.ensemble.add_estimator(
                 "enriched_llm", self.llm_estimator.estimate_for_ensemble, weight=0.45
             )
@@ -238,6 +313,7 @@ class EnrichedEdgeDetector:
         
         print("\n" + "=" * 70)
         print("  POLYMARKET EDGE — Enriched Pipeline")
+        print(f"  Strategy: {self.strategy_tag}  |  Model: {self.model_tag}")
         print("=" * 70)
         
         # Step 0: Check open trades for resolution
@@ -252,28 +328,85 @@ class EnrichedEdgeDetector:
         candidates = [c for c in candidates if c.overall_score >= self.min_scanner_score]
         print(f"   Found {len(candidates)} candidates ({time.time()-t0:.1f}s)")
         
+        # Step 1b: Cross-event dependency scan (runs once, results cached)
+        if self.enable_cross_event:
+            t_ce = time.time()
+            print("\n[X] Step 1b: Cross-event dependency scan...")
+            try:
+                from strategies.cross_event_arb import CrossEventScanner
+                ce_scanner = CrossEventScanner(client=self.client)
+                _, ce_pairs = ce_scanner.scan(
+                    max_markets=300,
+                    use_llm=self.use_live_llm,
+                )
+                self.enricher.set_cross_event_pairs(ce_pairs)
+                logical = [
+                    p for p in ce_pairs
+                    if p.dep_type not in ('correlated', 'independent', '')
+                ]
+                print(f"   Found {len(logical)} logical dependencies ({time.time()-t_ce:.1f}s)")
+            except Exception as e:
+                logger.warning(f"Cross-event scan failed: {e}")
+                print(f"   Cross-event scan failed: {e}")
+        
         # Cache all market dicts for related-market lookup
         all_market_dicts = [self._scored_to_dict(c) for c in candidates]
         if hasattr(self.llm_estimator, 'set_market_universe'):
             self.llm_estimator.set_market_universe(all_market_dicts)
         
+        # Pipeline logger — writes detailed per-market log to data/logs/
+        plog = PipelineLogger(data_dir=self.trader.data_dir.as_posix()
+                              if hasattr(self.trader.data_dir, "as_posix")
+                              else str(self.trader.data_dir))
+        plog.log_run_header(
+            strategy_tag=self.strategy_tag,
+            model_tag=self.model_tag,
+            n_candidates=len(candidates),
+            bankroll=self.trader.bankroll,
+            min_edge=self.min_edge,
+            kelly_fraction=self.kelly_fraction,
+        )
+        
         # Step 2 & 3: Enrich + Estimate for each candidate
         print(f"\n🔬 Step 2-3: Enriching & estimating {len(candidates)} markets...")
         signals = []
-        
+
+        # Build open-trade IDs before the loop so duplicates are caught before
+        # any LLM calls are made (news enrichment + probability estimate = 2 calls
+        # per market that would otherwise be wasted on already-held positions).
+        existing_ids = {
+            t.market_id for t in self.trader.trades if t.status == "OPEN"
+        }
+
         for i, scored in enumerate(candidates):
             market = scored.market
             context = self._build_context(market, scored)
-            
+            market_id = context.get("market_id", market.id)
+
             # Log progress
             print(f"\n  [{i+1}/{len(candidates)}] {market.question[:55]}...")
-            
-            # Throttle between markets to avoid Claude API rate limits
-            # Each market triggers ~2 Claude calls (news search + estimation)
+
+            # Skip before any LLM calls if we already hold an open trade here.
+            if market_id in existing_ids:
+                print("    ⬜ Skip (open trade exists — no LLM calls made)")
+                signals.append({
+                    "market": market,
+                    "scored": scored,
+                    "context": context,
+                    "estimate": None,
+                    "position": None,
+                    "should_trade": False,
+                    "enriched": None,
+                    "llm_detail": None,
+                    "trade_result": "duplicate",
+                })
+                continue
+
+            # Throttle between markets that reach LLM calls.
             if i > 0:
                 time.sleep(1.5)
-            
-            # Estimate
+
+            # Estimate (LLM is called here for live runs)
             estimate = self.ensemble.estimate(context)
             
             # Size — use paper trader's current bankroll
@@ -286,12 +419,23 @@ class EnrichedEdgeDetector:
                 confidence=estimate.confidence,
             )
             
+            # Capture enrichment and LLM detail for logging
+            market_id = context.get("market_id", "")
+            enriched = (self.llm_estimator._enrichment_cache.get(market_id)
+                        if hasattr(self.llm_estimator, '_enrichment_cache')
+                        else None)
+            llm_detail = (getattr(self.llm_estimator, '_last_detail', None))
+            
             signal = {
                 "market": market,
                 "scored": scored,
+                "context": context,
                 "estimate": estimate,
                 "position": position,
                 "should_trade": position.should_trade,
+                "enriched": enriched,
+                "llm_detail": llm_detail,
+                "trade_result": None,  # filled in trade-entry loop
             }
             signals.append(signal)
             
@@ -314,12 +458,10 @@ class EnrichedEdgeDetector:
         tradeable = [s for s in signals if s["should_trade"]]
         trades_entered = 0
         trades_blocked_cluster = 0
-        
-        # Precompute existing open trade IDs
-        existing_ids = {
-            t.market_id for t in self.trader.trades if t.status == "OPEN"
-        }
-        
+
+        # existing_ids was built before Step 2-3 to gate LLM calls early.
+        # It is reused here and extended as trades are entered to block
+        # same-run duplicates (e.g. if a market appears twice in scan results).
         for s in tradeable[:self.max_signals]:
             question = s["market"].question
             market_id = s["estimate"].market_id
@@ -331,6 +473,7 @@ class EnrichedEdgeDetector:
                     f"  Skipping duplicate: already have open trade in "
                     f"{question[:40]}..."
                 )
+                s["trade_result"] = "duplicate"
                 continue
             
             # Correlation guard — check cluster exposure
@@ -338,14 +481,53 @@ class EnrichedEdgeDetector:
             if not allowed:
                 trades_blocked_cluster += 1
                 print(f"    🚫 Blocked: {question[:40]}... — {reason}")
+                s["trade_result"] = "blocked"
                 continue
             
-            trade = self.trader.enter_trade(s["estimate"], s["position"])
+            trade = self.trader.enter_trade(
+                s["estimate"], s["position"],
+                strategy_tag=self.strategy_tag,
+                model_tag=self.model_tag,
+            )
             if trade:
                 trades_entered += 1
                 existing_ids.add(market_id)  # Prevent further duplicates this run
+                s["trade_result"] = "entered"
         
         total_time = time.time() - t0
+        
+        # Step 5: Write detailed per-market logs
+        for i, s in enumerate(signals, 1):
+            trade_result = s.get("trade_result")
+            if trade_result is None and not s["should_trade"]:
+                trade_result = "skipped"
+            # Duplicate-skipped markets have no estimate — nothing to log in detail.
+            if s["estimate"] is None:
+                continue
+            try:
+                plog.log_market(
+                    index=i,
+                    total=len(signals),
+                    market=s["market"],
+                    scored=s["scored"],
+                    context=s.get("context", {}),
+                    enriched=s.get("enriched"),
+                    llm_detail=s.get("llm_detail"),
+                    estimate=s["estimate"],
+                    position=s["position"],
+                    trade_result=trade_result,
+                )
+            except Exception as e:
+                logger.warning(f"Failed to log market {i}: {e}")
+        
+        plog.log_run_summary(
+            signals=signals,
+            trades_entered=trades_entered,
+            trades_blocked=trades_blocked_cluster,
+            elapsed_seconds=total_time,
+        )
+        plog.close()
+        print(f"\n  📋 Detailed log: {plog.filepath}")
         
         # Summary
         print(f"\n{'=' * 70}")

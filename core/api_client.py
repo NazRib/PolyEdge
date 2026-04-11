@@ -210,7 +210,45 @@ class PolymarketClient:
     
     def get_event(self, slug: str) -> dict:
         """Fetch an event with all its markets by slug."""
-        return self._get(self.gamma_url, f"/events/{slug}")
+        return self._get(self.gamma_url, f"/events/slug/{slug}")
+
+    def get_events_list(
+        self,
+        limit: int = 50,
+        offset: int = 0,
+        closed: bool = False,
+        order: str = "id",
+        ascending: bool = False,
+    ) -> list[dict]:
+        """
+        Fetch events from the Gamma /events endpoint.
+
+        Each event dict contains a nested 'markets' list with all
+        sub-markets belonging to that event.
+
+        Args:
+            limit: Max events per page (API max ~50)
+            offset: Pagination offset
+            closed: Include closed events
+            order: Sort field ('id', 'volume', 'liquidity', 'startDate', 'endDate')
+            ascending: Sort direction
+
+        Returns:
+            List of raw event dicts (each with nested 'markets' array)
+        """
+        params = {
+            "closed": str(closed).lower(),
+            "limit": limit,
+            "offset": offset,
+            "order": order,
+            "ascending": str(ascending).lower(),
+        }
+        raw = self._get(self.gamma_url, "/events", params)
+        if isinstance(raw, dict):
+            raw = raw.get("data", raw.get("events", []))
+        if not isinstance(raw, list):
+            return []
+        return raw
     
     def get_market_by_slug(self, slug: str) -> Optional[Market]:
         """Fetch a single market by its slug."""
