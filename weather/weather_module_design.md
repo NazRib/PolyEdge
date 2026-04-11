@@ -4,7 +4,7 @@
 
 A specialized module for trading daily temperature prediction markets on Polymarket, built as an extension to the existing Polymarket Edge system. Weather markets present a structurally distinct opportunity: unlike political or economic markets where the outcome is genuinely uncertain until it happens, temperature outcomes can be modeled probabilistically using numerical weather prediction (NWP) data that is freely available but not yet fully priced into the market.
 
-The module follows the existing enrichment + estimation architecture, with one critical difference — for weather markets, the probability estimation is primarily data-driven (multi-model ensemble forecast) rather than LLM-driven. The LLM estimator becomes a secondary signal rather than the primary one.
+The module operates as a **standalone pipeline** alongside (not integrated into) the main Polymarket Edge system. This architectural decision was made because weather markets are fundamentally different from binary prediction markets: they are multi-outcome (8-10 temperature buckets per event), require multi-outcome Kelly sizing, use numerical weather models instead of LLM estimation, and follow model update cycles rather than general market scanning. The weather pipeline shares `PaperTrader` and `PolymarketClient` from `core/` but runs its own market discovery, probability computation, and position sizing.
 
 
 ## Market Structure (What We're Trading)
@@ -202,7 +202,7 @@ Runs in parallel with the backtest, capturing live data going forward. This serv
 **What it does:**
 
 1. Identifies active temperature markets from the Gamma API by filtering on category/tags and parsing the question format to extract city, date, and temperature unit.
-2. For each market, pulls forecasts from multiple weather models via Open-Meteo (free, no API key, no rate limits to worry about).
+2. For each market, pulls forecasts from multiple weather models via Open-Meteo (free tier, no API key required, but burst rate limits apply — see Risks).
 3. Logs a daily snapshot: `{city, date, model_forecasts[], market_bucket_prices[], timestamp}` to `data/weather_snapshots.json`.
 4. After markets resolve, records the actual outcome from the resolved market data (winning bucket goes to $1.00).
 5. Produces a daily report comparing model-implied probabilities vs. market prices vs. actual outcome.
@@ -341,204 +341,88 @@ STRONG tier shows genuine calibration advantage (positive delta) with 47% win ra
 
 ---
 
-### Phase 2 — Weather Enricher Integration (Week 3-4)
+### Forward Validation Results (Phase 3 — in progress)
 
-**Goal:** Wire weather model data into the existing enrichment pipeline as a new source, so weather markets get specialized treatment automatically.
+**Paper trading period:** March 26 — April 7, 2026 (~10 days, 4 scans/day).
 
-**New file:** `weather/enricher.py`
+**Latest report (April 7, 2026, after bug fixes):**
 
-**Integration point:** Plugs into `ContextEnricher` alongside news, Kalshi, FRED, and related markets. The `ContextEnricher.__init__()` gets a new `enable_weather: bool` flag and instantiates a `WeatherEnricher` when true.
+| Metric | Value | Backtest comparison |
+|--------|-------|---------------------|
+| Resolved trades | 101 (9W / 92L) | — |
+| Win rate | 9% | Backtest: 13-16% |
+| Avg win | $71.14 | Backtest: $336 |
+| Avg loss | $14.41 | Backtest: $47 |
+| Total P&L | -$685.79 | Backtest: +$13,657 |
+| Brier score | 0.117 | Backtest: 0.080 |
+| Expected value/trade | -$6.70 | Backtest: +$19 |
 
-**What `WeatherEnricher` provides:**
+**Assessment:** Forward results are significantly worse than backtest. The win rate (9%) is below the backtest range (13-16%), and critically the avg win ($71) is much smaller than backtest ($336), indicating the market prices the winning buckets more tightly in live trading — there's less payoff upside when you win.
 
-```python
-@dataclass
-class WeatherForecast:
-    """Forecast data for a single city/date from multiple models."""
-    city: str
-    station_icao: str
-    target_date: date
-    unit: str                          # "F" or "C"
-    bucket_size: int                   # 2 for °F, 1 for °C
+**Data quality issues discovered and fixed during paper trading:**
 
-    # Per-model point forecasts (daily high)
-    model_forecasts: dict[str, float]  # {"ecmwf": 14.2, "gfs": 13.8, ...}
+1. **Duplicate trades (fixed March 29):** The scanner re-entered trades on the same bucket across scan cycles. ~5 buckets had doubled positions, amplifying losses. Fix: deduplication check against open `market_id` set.
 
-    # Ensemble-derived probability distribution
-    bucket_probabilities: dict[str, float]  # {"13°C": 0.15, "14°C": 0.62, "15°C": 0.18, ...}
+2. **Missing model quality gate (fixed April 7):** Open-Meteo deterministic API returned 502/429 rate limit errors, leaving events with "0 models + 80 ensemble". The scanner traded these with no bias correction and no model agreement signal — effectively degraded data. Fix: quality gate requiring ≥3 deterministic models to trade.
 
-    # Consensus metrics
-    model_agreement: float             # 0-1, what fraction of models agree on the same bucket
-    ensemble_mean: float               # Mean of all ensemble members
-    ensemble_std: float                # Std dev across ensemble members
-    forecast_hours_out: int            # How far out this forecast is (fewer = more accurate)
+3. **API rate limiting (fixed April 7):** Rate limit delay was 0.15s between requests, causing burst throttling on Open-Meteo's free tier. Increased to 1.0s.
 
-    # Confidence tier (following Degen Doppler's taxonomy)
-    confidence_tier: str               # "LOCK" | "STRONG" | "SAFE" | "NEAR_SAFE" | "LOW"
-```
+4. **SSL transient errors (fixed March 28):** Open-Meteo connections dropped intermittently. Fix: application-level retry with 2s/4s backoff for SSLError and ConnectionError.
 
-**Probability computation from ensemble members:**
+**Current status:** Paper trading reset with all fixes applied. Running clean data collection to determine whether the strategy is viable after correcting the data quality issues, or whether the market has become too efficient.
 
-For each temperature bucket [low, high), count what fraction of ensemble members have their daily-max forecast falling in that bucket. Apply a small Gaussian smoothing kernel (σ ≈ 1.0-2.0°F) to account for sub-grid-scale error and station-specific bias, then normalize to sum to 1.0. This gives a principled probability distribution that respects forecast uncertainty.
+#### Competitive Landscape (discovered March 30, 2026)
 
-```python
-def compute_bucket_probabilities(
-    ensemble_forecasts: list[float],   # 51+ member forecasts
-    buckets: list[tuple[float, float]], # [(low, high), ...]
-    smoothing_sigma: float = 1.5,      # Gaussian kernel width
-) -> dict[str, float]:
-    """
-    Convert ensemble member forecasts into bucket probabilities.
-    Uses kernel density estimation rather than raw binning to handle
-    the discretization gracefully.
-    """
-```
+Research revealed a crowded and growing field of automated weather traders on Polymarket:
 
-**How it flows into `EnrichedContext`:**
+- **Known profitable bots:** One turned $1,000 → $24,000 on London weather since April 2025. Another made $65,000 across NYC, London, Seoul. A trader "meropi" is cited as a top automated weather trader.
+- **Public tooling:** Multiple open-source GitHub repos (polyBot-Weather, polymarket-kalshi-weather-bot), Medium tutorials, and no-code bot platforms (PolyTraderBot at $250) all implement the same core strategy — compare weather model forecasts to Polymarket prices, trade the discrepancy.
+- **Common approach:** Most use GFS ensemble (31 members) from Open-Meteo, 8% edge threshold, Kelly sizing — nearly identical to our setup.
+- **Implication:** The easy edge may have been competed away since the backtest period (pre-February 2026). The February 2026 viral articles publicizing the strategy likely brought many new automated participants, making prices more efficient.
 
-The `EnrichedContext` dataclass gets a new field:
-```python
-weather_forecast: Optional[WeatherForecast] = None
-```
-
-And `to_prompt_section()` gains a weather block that shows the model consensus to the LLM (for cases where we still want LLM input). But critically, for weather markets the LLM is secondary — see Phase 3.
+**Our potential differentiators:** Multi-model ensemble (5 deterministic + 2 ensemble vs most bots using only GFS), per-station bias correction, city-level exclusion. However, the marginal improvement from these may not overcome the fundamental efficiency gain from dozens of bots arbitraging the same signal.
 
 ---
 
-### Phase 3 — Weather-Specific Estimator (Week 4-5)
+### Phase 2 — Standalone Scanner & Paper Trading (completed)
 
-**Goal:** Replace the LLM-primary estimation with a model-consensus-primary estimation for weather markets.
+**Decision:** Weather markets were built as a standalone pipeline rather than integrated into the main enrichment pipeline. The main pipeline is designed for binary markets with LLM-driven estimation. Forcing multi-outcome weather markets through that architecture would have required different scanning logic, multi-outcome Kelly sizing, different ensemble weights, and scheduling around model update cycles. A standalone approach is cleaner and more portable.
 
-**New file:** `weather/estimator.py`
+**What was built:** `weather/scanner.py` — a complete trading pipeline:
 
-**Core idea:** For weather markets, the ensemble estimator weights flip. Instead of 40% LLM / 30% base rate / 15% momentum / 15% whale, the weather estimator uses:
+1. **Discovery** — Fetches open temperature events from Gamma API using tag 103040, filters to 7 tradeable cities
+2. **Enrichment** — Fetches live deterministic (5 models) + ensemble (80+ members) forecasts, applies bias correction
+3. **Edge detection** — Compares model probabilities against market prices across all buckets per event
+4. **Position sizing** — Per-bucket Kelly sizing with three exposure caps: per-bucket ($50), per-city/date ($150), portfolio (30%)
+5. **Paper trading** — Uses `core.PaperTrader` with separate `data/weather/` data directory
+6. **Resolution checking** — Monitors open trades and resolves against Gamma API outcomes
+7. **Quality gate** — Requires ≥3 deterministic models before trading; skips events where API failures left only ensemble data
 
-| Signal | Weight | Source |
-|--------|--------|--------|
-| Multi-model ensemble consensus | 0.55 | Open-Meteo ensemble API |
-| Deterministic model agreement | 0.20 | Open-Meteo forecast API (5+ models) |
-| Market momentum | 0.10 | Existing momentum estimator |
-| Whale/book imbalance | 0.10 | Existing whale tracker |
-| LLM override (edge cases only) | 0.05 | Claude — for unusual weather events |
+**Also built:** `weather/enricher.py` — a `WeatherEnricher` class that can optionally plug into `ContextEnricher` for cases where a temperature market appears in the general scanner. Not currently wired in — the standalone scanner handles all weather trading.
 
-**The `WeatherEstimator` class:**
-
-```python
-class WeatherEstimator:
-    """
-    Probability estimator specialized for temperature markets.
-
-    Unlike the general-purpose ensemble that relies heavily on LLM reasoning,
-    this estimator treats numerical weather models as the primary signal.
-    The LLM is only consulted for edge cases (extreme weather events,
-    station anomalies, etc.).
-    """
-
-    def estimate_for_ensemble(self, context_dict: dict) -> tuple[float, float]:
-        """
-        Returns (probability, confidence) for a specific temperature bucket.
-
-        The context_dict must include:
-            - weather_forecast: WeatherForecast object
-            - bucket_label: which bucket this market outcome represents (e.g., "14°C")
-            - market_price: current market price for this bucket
-        """
-```
-
-**Confidence scoring:**
-
-Confidence is derived from forecast characteristics, not from LLM self-assessment:
-
-- `forecast_hours_out < 24` → high confidence (0.85-0.95)
-- `forecast_hours_out 24-48` → medium-high (0.70-0.85)
-- `forecast_hours_out 48-72` → medium (0.55-0.70)
-- `forecast_hours_out > 72` → lower confidence (0.40-0.55)
-- Model agreement bonus: if 4+ models agree on the same bucket, confidence += 0.10
-- Extreme weather penalty: if ensemble spread is unusually wide, confidence -= 0.10
-
-**Station bias correction (critical for edge):**
-
-Weather models forecast for a grid cell, not a specific weather station. The airport station Polymarket resolves on may have a systematic offset from the model grid point (urban heat island, elevation, coastal effects). Phase 1 data collection builds a bias correction table:
-
-```python
-# Built from Phase 1 data: model_forecast - actual_observed
-STATION_BIAS = {
-    "KLGA": {"ecmwf": +0.3, "gfs": -0.5, "icon": +0.1, ...},  # °F
-    "EDDM": {"ecmwf": -0.2, "gfs": +0.4, "icon": -0.1, ...},  # °C
-}
-```
-
-Apply bias correction before computing bucket probabilities. This is a meaningful edge that casual traders won't have — they look at the raw model output without adjusting for station-specific error.
+**Scheduler:** `run_weather_collector.py` — runs both data collection and scanner paper trading at 04, 10, 16, 22 UTC (4h after each model update cycle). Supports `--once`, `--collect-only`, `--scan-only` flags.
 
 ---
 
-### Phase 4 — Weather Market Scanner & Paper Trading (Week 5-6)
+### Phase 3 — Live Validation (in progress)
 
-**Goal:** Automatically scan temperature markets, identify mispriced buckets, size positions, and paper trade them.
+**Goal:** Validate that the backtest edge holds in real-time with live ensemble data and actual market prices.
 
-**New file:** `weather/scanner.py`
-
-**Integration:** The main `run_pipeline.py` gets a `--weather` flag that activates the weather-specific scanning path. Weather markets are handled by a separate scanner that understands the multi-outcome bucket structure.
-
-**Scanning logic:**
-
-1. Fetch all active markets with category "Weather" or "Daily Temperature" from Gamma API.
-2. Parse each market question to extract: city, date, unit, bucket boundaries.
-3. For each city/date pair, pull multi-model forecasts once (not per-bucket).
-4. Compute bucket probabilities from the ensemble.
-5. Compare model-implied probability for each bucket against market price.
-6. Flag buckets where `model_probability - market_price > MIN_EDGE`.
-
-**Multi-outcome position sizing (different from binary markets):**
-
-Temperature markets are multi-outcome, not binary. Your existing Kelly implementation assumes a single binary bet. For weather, you often want to trade multiple correlated buckets simultaneously (the "temperature ladder" strategy). The position sizer needs to account for the fact that exactly one bucket wins:
-
-```python
-def kelly_multi_outcome(
-    model_probs: dict[str, float],     # {"13°C": 0.15, "14°C": 0.62, "15°C": 0.18}
-    market_prices: dict[str, float],   # {"13°C": 0.10, "14°C": 0.55, "15°C": 0.22}
-    bankroll: float,
-    kelly_fraction: float = 0.25,
-) -> dict[str, float]:
-    """
-    Kelly sizing across multiple mutually exclusive outcomes.
-    Only sizes positions where model_prob > market_price (positive EV).
-    Returns dict of {bucket: dollar_amount}.
-    """
-```
-
-**Paper trading integration:**
-
-Each weather trade goes through the existing `PaperTrader` with additional metadata:
-- `category: "weather_temperature"`
-- `weather_meta: {city, station, forecast_hours_out, model_agreement, confidence_tier}`
-
-This lets you filter the performance report by weather trades specifically and measure the weather module's Brier score independently.
+**Status as of April 7, 2026:** Paper trading running for ~10 days. See "Forward Validation Results" section above for detailed metrics.
 
 ---
 
-### Phase 5 — Automation & Speed (Week 7+)
+### Phase 4 — Live Execution (pending validation)
 
-**Goal:** Run the weather pipeline on a schedule to capture edge from model update cycles.
+**Goal:** If paper trading validates the edge, execute real trades via Polymarket CLOB API with a funded wallet.
 
-**New file:** `weather/scheduler.py`
+**Prerequisites:** Paper trading must show positive P&L over 30+ resolved trades with clean data (no duplicate trade bugs, no missing-model trades). Current results are under assessment after fixing multiple data quality issues.
 
-**Model update schedule awareness:**
+---
 
-The biggest speed-based edge comes from trading right after a model update shifts the forecast. The major update times (UTC):
+### Phase 5 — Automation & Speed (pending)
 
-| Model | Run Times (UTC) | Data Available (approx.) |
-|-------|-----------------|--------------------------|
-| ECMWF IFS | 00, 06, 12, 18 | +5-6h after init |
-| GFS | 00, 06, 12, 18 | +3.5-4h after init |
-| ICON | 00, 06, 12, 18 | +2-4h after init |
-| HRRR | Every hour | +1h after init |
-
-The scheduler runs the pipeline after each major model update and checks if the new forecast materially changed the probability distribution. If the shift is significant (>5% change in any bucket probability), it triggers a scan for mispriced markets.
-
-**Rate of edge decay:**
-
-Early in the day (12-24h before resolution), markets are less efficient — fewer traders have processed the latest model run. As the day progresses and more model runs confirm the forecast, the market converges to the correct price and edge disappears. The scheduler should prioritize trading early after model updates and avoid chasing markets that have already converged.
+**Goal:** Optimize execution timing around model update cycles for maximum edge capture at the 48h window.
 
 
 ## File Structure
@@ -546,17 +430,17 @@ Early in the day (12-24h before resolution), markets are less efficient — fewe
 ```
 weather/
 ├── __init__.py
-├── config.py              # Weather-specific config (cities, stations, models, tag IDs)
-├── backtest.py             # Phase 1A: historical backfill + edge analysis
-├── bias.py                 # Station bias correction (build, save, load, apply)
-├── data_collector.py       # Phase 1B: forward live data collection
-├── models.py               # Open-Meteo API client for multi-model forecasts (live + historical)
-├── enricher.py             # Phase 2: WeatherEnricher for context pipeline
-├── estimator.py            # Phase 3: model-consensus probability estimator
-├── scanner.py              # Phase 4: weather market scanner + multi-outcome Kelly
-├── scheduler.py            # Phase 5: automated scheduling around model updates
-├── station_registry.py     # City → ICAO station mapping + coordinates + bias data
-└── utils.py                # Question parsing, bucket extraction, unit conversion
+├── config.py               # Cities, stations, models, tag IDs, trading parameters
+├── utils.py                # Question parsing, bucket extraction, probability computation
+├── models.py               # Open-Meteo API client (deterministic + ensemble, with retry)
+├── bias.py                 # Station bias correction (build, save, load, apply per-city/model)
+├── backtest.py             # Phase 1A: historical edge analysis with tag-based enumeration
+├── data_collector.py       # Phase 1B: forward live snapshot collection
+├── scanner.py              # Phase 2: standalone market scanner + paper trading pipeline
+├── enricher.py             # Optional: WeatherEnricher for main pipeline integration
+└── weather_module_design.md # This document
+
+run_weather_collector.py    # Scheduler: runs collector + scanner at 04/10/16/22 UTC
 ```
 
 
@@ -674,6 +558,12 @@ WEATHER_MAX_CITY_EXPOSURE = 150  # Max $ total across all buckets for one city/d
 **Risk: Non-stationary bias (confirmed for Seoul).** Some cities exhibit model biases that shift with weather patterns or seasons, making a flat mean correction counterproductive. The backtest showed Seoul's GEM bias at +3.3° was not stable — correction worsened P&L from -$3,642 to -$5,066.
 *Mitigation:* Exclude cities where bias correction worsens performance. For future work, consider rolling-window bias (last 14 days) or weather-regime-dependent corrections rather than a flat historical mean. Monitor included cities monthly for bias drift.
 
+**Risk: Open-Meteo free tier rate limiting (confirmed).** With 7 cities × 5 days × 2 API calls per event, plus the data collector making similar calls, the scanner triggers 429 (rate limit) and 502 errors on Open-Meteo's free tier during burst periods. When deterministic models fail but ensemble succeeds, the system previously traded on degraded ensemble-only data with no bias correction.
+*Mitigation:* Increased inter-request delay from 0.15s to 1.0s. Added quality gate requiring ≥3 deterministic models before trading. Consider Open-Meteo's paid tier if the strategy proves viable, or stagger city requests across scan cycles.
+
+**Risk: Competitive edge compression (confirmed in forward validation).** The weather trading strategy was publicly documented in viral February 2026 articles and multiple open-source implementations. The backtest (using pre-February data) showed +$13,657 P&L; forward paper trading (post-February) shows -$685 P&L. The market appears to have become significantly more efficient as automated participants increased.
+*Mitigation:* Monitor forward results for another week with clean data. If the edge has been competed away, consider: (a) abandoning weather for other market categories, (b) looking for second-order edges the simple bots miss (e.g., regime-dependent bias, extreme weather events, precipitation markets), or (c) focusing only on cities/times where competition is thinnest.
+
 
 ## Dependencies
 
@@ -712,40 +602,55 @@ No additional API keys are needed beyond what is already configured (Anthropic, 
 
 ### Phase 2-5 — Live Validation & Trading
 
-| Metric | Target | Measurement |
-|--------|--------|-------------|
-| Paper P&L | Positive over 2 weeks | Net profit from live paper trades |
-| Calibration (with ensemble) | Model BS < Market BS for tradeable cities | Compare ensemble-based vs. point-forecast BS |
-| Edge per trade | > $0.08 mean | Average edge across traded buckets |
-| Win rate on STRONG tier | > 40% | Accuracy by confidence tier (backtest showed 47%) |
-| Bias table stability | Monthly re-evaluation | Check if bias corrections remain accurate over time |
-| City-level monitoring | All included cities remain P&L positive | Drop any city that turns negative over 30+ markets |
+| Metric | Target | Actual (April 7) | Status |
+|--------|--------|-------------------|--------|
+| Paper P&L | Positive over 2 weeks | -$685.79 over 10 days | ❌ |
+| Win rate | 10-16% (matching backtest) | 9% (101 trades) | ⚠️ Below target |
+| Avg win / Avg loss ratio | > 5:1 | 4.9:1 ($71/$14) | ⚠️ Borderline |
+| Brier score | < 0.10 (matching backtest) | 0.117 | ❌ Worse than backtest |
+| Win rate on STRONG tier | > 40% | Not yet measured post-fix | ⏳ |
+| Data quality | Clean (no bugs) | 3 bugs found and fixed | ✅ Fixed |
+| API reliability | <5% failure rate | ~15% 502/429 failures at 0.15s | ✅ Fixed (1.0s delay) |
+
+**Interpretation:** Forward results are materially worse than backtest on every metric. Two possible explanations: (1) data quality bugs degraded ~30-40% of trades (duplicate positions, missing-model trades), contaminating the results, or (2) the market has become more efficient post-February 2026 due to increased bot competition. The paper trading was reset on April 7 with all bugs fixed — the next week of clean data will disambiguate.
 
 
 ## Implementation Priority
 
 ### Completed
 
-- **Phase 1A — Historical Backtest**: Built and validated. 540 data points across 10 cities, 30 days, 3 lead times. Pipeline: tag-based market enumeration → historical forecast retrieval (previous-runs API + historical-forecast API) → point-forecast-based probability computation → CLOB price history retrieval → Brier scoring → Kelly P&L simulation.
-- **Station Bias Correction**: Built from backtest residuals. Per-city, per-model mean bias table. Flipped Atlanta from -$1,839 to +$659. Applied via `--bias-correct` flag.
-- **City Selection**: Identified 7 profitable cities (London, NYC, Hong Kong, Atlanta, Beijing, Denver, Houston) and 3 exclusions (Seoul, Wellington, Munich).
+- **Phase 1A — Historical Backtest**: 540 data points across 10 cities, 30 days, 3 lead times. Tag-based market enumeration → historical forecast retrieval → probability computation → CLOB price history → Brier scoring → Kelly P&L simulation. Result: +$13,657 simulated P&L.
+- **Station Bias Correction**: Per-city, per-model mean bias table from backtest residuals. Flipped Atlanta from -$1,839 to +$659. Applied via `--bias-correct` flag in backtest, loaded automatically in live scanner.
+- **City Selection**: 7 profitable cities (London, NYC, Hong Kong, Atlanta, Beijing, Denver, Houston). 3 excluded (Seoul, Wellington, Munich).
+- **Standalone Weather Scanner**: Full pipeline in `weather/scanner.py` — discovery, enrichment, edge detection, Kelly sizing, paper trading, resolution checking.
+- **Forward Data Collector**: Running on 6h schedule, 885+ snapshots collected across 10 cities.
+- **Automated Scheduler**: `run_weather_collector.py` runs both collector and scanner at 04/10/16/22 UTC.
+- **Bug Fixes**: Duplicate trade dedup, missing-model quality gate (≥3 required), API rate limit increase (0.15s → 1.0s), SSL retry logic, Gamma API slug endpoint (`/events/slug/{slug}`), tag ID hardcoding.
 
-### Next Steps (in priority order)
+### In Progress
 
-1. **Phase 1B — Forward Data Collection**: Run `data_collector.py` daily to capture live snapshots. Validates that backtest findings hold in real-time. Target: 2 weeks of forward data across the 7 tradeable cities.
+- **Forward Validation (Phase 3)**: Paper trading reset on April 7 with all bugs fixed. Accumulating clean data to determine if the edge exists in real-time or has been competed away. Decision point: 1 week of clean results.
 
-2. **Phase 2 — Weather Enricher Integration**: Wire `WeatherEnricher` into the existing `ContextEnricher` pipeline. Use live ensemble data from `ensemble-api.open-meteo.com` (51 ECMWF + 31 GFS members) for sharper probability distributions. The backtest was point-forecast-only; ensemble data should improve calibration.
+### Next Steps (conditional on validation results)
 
-3. **Phase 3 — Weather-Specific Estimator**: Build the weather-specific ensemble weights (55% model consensus, 20% deterministic agreement, 10% momentum, 10% whale, 5% LLM). Integrate bias correction into the live estimation path.
+**If paper trading turns positive (win rate ≥12%, positive P&L over 30+ trades):**
+1. Phase 4 — Live execution via CLOB API with funded wallet
+2. Phase 5 — Execution speed optimization around model update cycles
+3. Consider Open-Meteo paid tier for API reliability
 
-4. **Phase 4 — Weather Market Scanner & Paper Trading**: Automated scanning at 48h lead time, multi-outcome Kelly sizing, paper trading with city-level exposure limits. Restrict to the 7 validated cities.
-
-5. **Phase 5 — Automation & Speed**: Schedule pipeline runs around model update cycles (GFS/ECMWF every 6h). Priority: trade promptly after model updates at the 48h window.
+**If paper trading remains negative:**
+1. Conclude that the weather market edge has been competed away by the growing bot ecosystem
+2. Preserve the infrastructure for potential future use (new cities, precipitation markets, regime changes)
+3. Redirect effort to the main pipeline (Phase 5 paper trading for political/economic markets)
 
 ### Key Technical Learnings
 
-- **Open-Meteo historical ensemble data is NOT available.** The `previous-runs-api` and `historical-forecast-api` subdomains both 404 on `/v1/ensemble`. Historical backtests must use point forecasts with wider Gaussian σ. Live forecasts have full ensemble access.
+- **Open-Meteo historical ensemble data is NOT available.** The `previous-runs-api` and `historical-forecast-api` subdomains both 404 on `/v1/ensemble`. Historical backtests must use point forecasts with wider Gaussian σ. Live forecasts have full ensemble access (confirmed: 80+ members from `ensemble-api.open-meteo.com`).
 - **The Gamma API `/tags` endpoint does not reliably list temperature tags.** Tag IDs must be discovered from actual market metadata and hardcoded (temperature = 103040, weather = 84).
 - **CLOB price history can be sparse for low-activity buckets.** A progressive window search (6h → 12h → 24h) recovers most data points, but some lead times still have no market prices and must be skipped.
 - **Post-resolution prices must never be used as a market baseline** — they give Brier score ≈ 0.0 and make the comparison meaningless.
 - **Polymarket uses both "or above/below" and "or higher/lower"** for edge bucket labels — both variants must be parsed.
+- **Open-Meteo free tier has burst rate limits.** At 0.15s between requests, 70+ calls in a scan cycle trigger 429/502 errors. Increased to 1.0s.
+- **Always gate on data quality before trading.** When deterministic model API fails but ensemble succeeds, the system has degraded data (no bias correction, no model agreement). A quality gate requiring ≥3 deterministic models prevents trading on incomplete signals.
+- **Deduplication is essential for scheduled scanners.** Without checking open positions, the scanner re-enters the same bucket trade every cycle, doubling risk.
+- **Backtest-to-live divergence is a real risk.** The backtest used pre-February 2026 data. The strategy went viral in February 2026, bringing many new automated participants. The market may have structurally changed between the backtest period and the live trading period.

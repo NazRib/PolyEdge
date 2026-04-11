@@ -428,6 +428,17 @@ class WeatherScanner:
             if not edges:
                 continue
             
+            # Quality gate: require deterministic models for bias correction
+            # and model agreement. Ensemble-only data (0 models) means the
+            # deterministic API failed — probabilities are less reliable.
+            if event.n_models < 3:
+                logger.info(
+                    f"    ⚠ {event.city} {event.target_date}: skipping — "
+                    f"only {event.n_models} deterministic models (need 3+)"
+                )
+                trades_skipped += 1
+                continue
+            
             # Track exposure for this city/date
             city_exposure = self._get_city_exposure(event.city, event.target_date)
             

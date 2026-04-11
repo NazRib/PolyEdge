@@ -106,7 +106,7 @@ class OpenMeteoClient:
         forecast = client.get_historical_forecast(station, date(2026, 1, 20), lead_days=5)
     """
     
-    def __init__(self, rate_limit_delay: float = 0.15, max_retries: int = 3):
+    def __init__(self, rate_limit_delay: float = 1.0, max_retries: int = 3):
         from requests.adapters import HTTPAdapter
         from urllib3.util.retry import Retry
         
