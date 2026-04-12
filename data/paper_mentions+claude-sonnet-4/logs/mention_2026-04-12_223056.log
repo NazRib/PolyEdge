@@ -1,0 +1,1013 @@
+==============================================================================
+  POLYMARKET EDGE -- Mention Strategy Run Log
+  2026-04-12 22:30:56 UTC
+==============================================================================
+  Mode:             live
+  Strategy:         mentions
+  Model:            claude-sonnet-4
+  Events found:     3
+  Bankroll:         $1,000.00
+  Min edge:         5%
+  Kelly fraction:   20%
+  Event exposure:   25% of bankroll
+==============================================================================
+
+
+==============================================================================
+  EVENT: What will Trump say this week? (April 12)
+==============================================================================
+  Slug:            what-will-trump-say-this-week-april-12
+  Scope:           weekly
+  Subject:         Trump
+  Words/outcomes:  16
+  Days to resolve: 0.0
+  Total volume:    $71,082
+
+--- CONTEXT (web-search grounded) --------------------------------------------
+  I'll help you gather context for this Trump prediction market question. Let me search for current information about Trump's activities and schedule.
+  Let me search for more specific information about Trump's current news topics and recent statements.
+  Now let me search for Trump's recent statements and any scheduled appearances for today specifically.
+  Let me search for any specific scheduled events or press conferences for Trump today.
+  Based on my research, here's a concise factual summary for the Trump prediction market question:
+  
+  ## RESEARCH SUMMARY - Trump Week of April 12, 2026
+  
+  ### 1. AGENDA/EVENT CONTEXT
+  No specific scheduled event identified for April 12, 2026. 
+  Trump spoke with reporters as he left for Joint Base Andrews on April 12
+  , suggesting travel/departure remarks rather than a formal event.
+  
+  ### 2. TOP CURRENT NEWS TOPICS (April 2026)
+  **Primary Focus: Iran War/Peace Talks**
+  - 
+  U.S.-Iran peace talks in Islamabad collapsed on April 12 after Vice President JD Vance announced "we have not reached an agreement"
+  
+  - 
+  Trump claimed on social media that the U.S. would "blockade" the Strait of Hormuz after talks failed
+  
+  - 
+  Key sticking points: Strait of Hormuz control, nuclear issues, sanctions, reparations
+  
+  
+  **Secondary Topics:**
+  - 
+  First Lady Melania Trump made a statement on the Epstein controversy on April 12
+  
+  - Gas prices and economic impacts from the Iran conflict
+  
+  ### 3. TRUMP'S RECENT STATEMENTS (Last 48 Hours)
+  - 
+  On Saturday, Trump said "We win, regardless" of negotiation outcomes, adding "we've totally defeated that country"
+  
+  - 
+  Trump posted on social media that talks failed because "IRAN IS UNWILLING TO GIVE UP ITS NUCLEAR AMBITIONS!"
+  
+  
+  ### 4. PUBLICLY AVAILABLE SCHEDULE
+  ... (23 more lines)
+
+--- BROADCAST FORMAT ASSESSMENT ----------------------------------------------
+  Classification:  weekly
+  Reasoning:       This is a weekly market covering all public verbal statements from April 6-12, 2026, which would include multiple appearances including the departure remarks on April 12.
+
+  >> IMPACT: Multiple appearances during window. Normal estimation.
+
+--- WORD-BY-WORD ESTIMATES ---------------------------------------------------
+
+  Word                          Our P  Mkt P    Edge  Conf  Reasoning
+  ----------------------------------------------------------------------------------------------------
+    Pam / Bondi                     8%    6%    +2%   0.7  Pam Bondi is not currently in Trump's administration or prominently in news, making mentions unlikely during Iran-focused week.
+    Lee / Zeldin                    9%    7%    +2%   0.7  Lee Zeldin not prominently featured in current Iran crisis news cycle or Trump's recent statements.
+[+] Boots on the ground            25%   10%   +15%   0.8  Military phrase highly relevant to Iran conflict discussions and Trump's aggressive rhetoric about defeating Iran.
+    Delcy / Rodriguez               6%    5%    +1%   0.8  Venezuelan official not connected to current Iran crisis dominating Trump's focus this week.
+[+] Kharg Island                   15%    8%    +7%   0.6  Iranian oil facility could come up in Strait of Hormuz blockade discussions, but quite specific.
+    Predict / Prediction / Predicted   95%  100%    -5%   0.9  Trump frequently uses prediction language about outcomes, especially regarding Iran negotiations and future actions.
+    King Charles                   12%   12%    +0%   0.7  No clear connection to Iran crisis or current Trump focus areas this week.
+[+] Two weeks                      35%   17%   +18%   0.8  Trump often gives specific timeframes for actions or outcomes, relevant to Iran situation timeline.
+    Tube                            8%    9%    -1%   0.6  No clear relevance to Iran crisis or Trump's typical vocabulary patterns.
+    Potato                          5%    8%    -3%   0.8  No connection to current Iran-focused news cycle or typical Trump topics.
+    Coffee                         12%   10%    +2%   0.6  Could come up in casual remarks but not directly relevant to Iran crisis focus.
+[+] Witch                          18%    6%   +12%   0.7  Trump uses 'witch hunt' frequently when discussing investigations or criticism, could apply to Iran situation.
+[+] Common Sense / Commonsense     45%   11%   +34%   0.8  Trump frequently uses this phrase to justify his positions, very likely when discussing Iran policy.
+[-] Keir / Starmer                 85%  100%   -15%   0.8  UK PM likely involved in Iran crisis discussions and international coordination efforts.
+    Crypto / Bitcoin               15%   12%    +3%   0.7  Not directly related to Iran crisis but Trump occasionally mentions crypto in economic contexts.
+    Six Seven                       8%    4%    +4%   0.6  No clear relevance to Iran situation or Trump's typical speech patterns this week.
+
+--- TRADE: Keir / Starmer ----------------------------------------------------
+  Our estimate:        85.0%
+  Market price:        99.6%
+  Edge:                -14.6%
+  Confidence:          0.80
+  LLM reasoning:       UK PM likely involved in Iran crisis discussions and international coordination efforts.
+
+  Direction:           BUY NO (market overpriced)
+
+  Kelly sizing:
+    Side:              NO
+    Entry price:       $0.0040
+    Dollar amount:     $23.45
+    Shares:            5863.5
+    Expected profit:   $+856.06
+
+  Event exposure:      $23.45 / $250.00 (9%)
+  DECISION: TRADE ENTERED
+
+--- TRADE: Predict / Prediction / Predicted ----------------------------------
+  Our estimate:        95.0%
+  Market price:        99.8%
+  Edge:                -4.8%
+  Confidence:          0.90
+  LLM reasoning:       Trump frequently uses prediction language about outcomes, especially regarding Iran negotiations and future actions.
+
+  Direction:           BUY NO (market overpriced)
+
+  DECISION: NO TRADE
+  Reason:    Edge 4.8% below minimum 5.0%
+
+--- EVENT SUMMARY ------------------------------------------------------------
+  Event:             What will Trump say this week? (April 12)
+  Words estimated:   2
+  Tradeable edges:   1
+  Trades entered:    1
+  Event exposure:    $23.45 / $250.00
+  Edge range:        -15% to -5%
+  Avg |edge|:        10%
+
+
+==============================================================================
+  EVENT: What will Bernie Sanders and Zohran Mamdani say at NYC Rally on April 12? 
+==============================================================================
+  Slug:            what-will-bernie-sanders-and-zohran-mamdani-say-at-nyc-rally-on-april-12
+  Scope:           event
+  Subject:         Bernie Sanders
+  Words/outcomes:  18
+  Days to resolve: 0.0
+  Total volume:    $36,882
+
+--- CONTEXT (web-search grounded) --------------------------------------------
+  I'll help you gather context for this prediction market question about Bernie Sanders and Zohran Mamdani's NYC rally on April 12. Let me search for the relevant information.
+  Now let me search for current news topics involving Bernie Sanders:
+  Now let me search for Bernie Sanders' upcoming schedule and recent statements:
+  Let me search for more specific information about the broadcast format of the NYC rally:
+  Based on my research, here's a comprehensive factual summary for the prediction market question:
+  
+  ## Event Context Summary
+  
+  ### 1. Event Details & Participants
+  
+  Bernie Sanders announced on April 8 a New York City rally on April 12 at 2PM ET with Mayor Zohran Mamdani and labor advocate Sara Innamorato to address AI and robotics threats to jobs, urging stronger unions and worker voice amid automation risks.
+   
+  The 'Union Now' rally will feature speeches from Sen. Bernie Sanders and Mayor Zohran Mamdani, as well as appearances by AFA-CWA president Sara Nelson and musician Josh Ritter.
+   
+  Sen. Bernie Sanders and New York City Mayor Zohran Mamdani are set to headline 'Union Now: Building the Labor Movement' on Sunday at Terminal 5 in Midtown Manhattan, turning the West Side music venue into a full-blown pro-labor pep rally.
+  
+  
+  ### 2. Top Current News Topics Involving Bernie Sanders
+  - **AI/Automation Regulation**: 
+  Sen. Bernie Sanders (I-Vt.) and Rep. Alexandria Ocasio-Cortez (D-N.Y.) today announced the Artificial Intelligence (AI) Data Center Moratorium Act, legislation that would enact a reasonable pause to the development of AI to ensure the safety of humanity. "AI and robotics are creating the most sweeping technological revolution in the history of humanity.
+  
+  - **Billionaire Tax Push**: 
+  Bernie Sanders says 938 people stand between most working Americans and a $3,000 check. In a scathing op-ed published Wednesday in the Guardian, the Vermont senator named every name and put every number on the table. "The richest people in America have never ever had it so good," he wrote, while mentioning that 60% of Americans live paycheck to paycheck and 85 million are uninsured or underinsured.
+  
+  - **Iran War Opposition**: 
+  Sen. Bernie Sanders (I-Vt.) slammed President Trump's recent post attacking Iran over the Strait of Hormuz, calling the president's comments "ravings." "These are the ravings of a dangerous and mentally unbalanced individual. Congress has got to act NOW. End this war," the Vermont senator added.
+  
+  - **Healthcare System Reform**: 
+  Sen. Bernie Sanders (I-Vt.), Ranking Member of the Senate Health, Education, Labor, and Pensions (HELP) Committee, and Sen. Ron Wyden (D-Ore.), Ranking Member of the Senate Finance Committee, today called on committee leadership to hold hearings with the CEOs of the nation's largest health insurance companies to address a fundamentally broken health care system
+  
+  
+  ### 3. Bernie Sanders' Schedule
+  
+  RSVP today to say you'll join Bernie in Los Angeles on Saturday, April 12! Fighting Oligarchy: Where We Go From Here with Bernie Sanders in Los Angeles With Special Guest Alexandria Ocasio-Cortez With Special Musical Guests Neil Young, Maggie Rogers, Joan Baez, and others Saturday, April 12 9:00am PT Doors Open
+   - This indicates Sanders has a Los Angeles event on the same day, but the NYC rally is at 2PM ET.
+  
+  ### 4. Recent Statements (Last 48 Hours)
+  No specific statements from the last 48 hours were found in the search results, but recent themes include AI regulation, wealth inequality, and labor rights.
+  
+  ### 5. **CRITICAL - BROADCAST FORMAT**
+  ... (3 more lines)
+
+--- BROADCAST FORMAT ASSESSMENT ----------------------------------------------
+  Classification:  open_broadcast
+  Reasoning:       This is a confirmed public rally at Terminal 5 with live broadcast coverage, featuring speeches from Sanders and Mamdani focused on labor and AI/automation themes.
+
+  >> IMPACT: Normal estimation. Full live coverage expected.
+
+--- WORD-BY-WORD ESTIMATES ---------------------------------------------------
+
+  Word                          Our P  Mkt P    Edge  Conf  Reasoning
+  ----------------------------------------------------------------------------------------------------
+[-] Billionaire 5+ times           85%  100%   -15%   0.8  Sanders consistently attacks billionaires in labor-focused speeches, and this is a core theme of his recent messaging about wealth inequality.
+[+] Billionaire 10+ times          25%    1%   +24%   0.6  While Sanders uses 'billionaire' frequently, 10+ times in a single speech requires extended focus on wealth inequality themes.
+[+] Trump 10+ times                15%    1%   +14%   0.5  Labor rally focused on AI/automation may reference Trump policies, but 10+ mentions would require making Trump a central theme.
+[+] Healthcare / Health care 6+ times   35%    1%   +34%   0.6  Healthcare is a Sanders staple but this rally is specifically about labor/AI, so 6+ mentions would need healthcare-labor connections.
+    Iran                            5%    1%    +4%   0.7  Labor/AI rally has no clear connection to Iran foreign policy issues.
+[+] Nuclear                         8%    1%    +7%   0.6  Could come up in context of AI safety or energy policy, but not central to labor themes.
+[+] Affordability                  45%    2%   +43%   0.7  Labor rallies often discuss cost of living and worker economic struggles, making this moderately likely.
+    Maduro                          2%    1%    +1%   0.8  Venezuela's leader has no clear connection to NYC labor/AI rally themes.
+[+] Immigrant / Immigration        25%    0%   +24%   0.6  Labor organizing often includes immigrant worker rights, though not the primary rally focus.
+[+] Revolution / Revolutionary     40%    0%   +40%   0.7  Sanders frequently uses revolutionary language about AI/automation changes and labor movements.
+[+] Oil / Gas / Gasoline           15%    2%   +14%   0.6  Could come up in context of energy transition and worker retraining, but not central to AI/labor themes.
+[+] Republican                     30%    2%   +28%   0.6  Sanders often contrasts Democratic labor policies with Republican positions, moderately likely in political rally.
+[+] Kathy / Hochul                 20%    1%   +19%   0.5  NYC rally might reference NY Governor Hochul's labor policies, but not guaranteed focus.
+[+] Climate                        25%    1%   +24%   0.6  Climate often connects to labor through green jobs and just transition themes.
+[+] Israel / Israeli                8%    1%    +7%   0.6  Middle East policy not clearly connected to labor/AI rally themes.
+    Bipartisan                      5%    0%    +5%   0.7  Sanders rarely emphasizes bipartisanship and this is a progressive labor rally.
+[+] Shutdown / Shut Down           12%    1%   +11%   0.6  Could reference factory shutdowns or AI displacing workers, but not a primary theme.
+    Crypto / Bitcoin                3%    0%    +2%   0.8  Cryptocurrency has no clear connection to labor organizing or AI worker protection themes.
+
+--- TRADE: Affordability -----------------------------------------------------
+  Our estimate:        45.0%
+  Market price:        2.0%
+  Edge:                +43.0%
+  Confidence:          0.70
+  LLM reasoning:       Labor rallies often discuss cost of living and worker economic struggles, making this moderately likely.
+
+  Direction:           BUY YES (market underpriced)
+
+  Kelly sizing:
+    Side:              YES
+    Entry price:       $0.0200
+    Dollar amount:     $59.99
+    Shares:            2999.4
+    Expected profit:   $+1289.74
+
+  Event exposure:      $59.99 / $244.14 (25%)
+  DECISION: TRADE ENTERED
+
+--- TRADE: Revolution / Revolutionary ----------------------------------------
+  Our estimate:        40.0%
+  Market price:        0.5%
+  Edge:                +39.5%
+  Confidence:          0.70
+  LLM reasoning:       Sanders frequently uses revolutionary language about AI/automation changes and labor movements.
+
+  Direction:           BUY YES (market underpriced)
+
+  Kelly sizing:
+    Side:              YES
+    Entry price:       $0.0050
+    Dollar amount:     $50.94
+    Shares:            10188.1
+    Expected profit:   $+4024.30
+
+  Event exposure:      $110.93 / $244.14 (45%)
+  DECISION: TRADE ENTERED
+
+--- TRADE: Healthcare / Health care 6+ times ---------------------------------
+  Our estimate:        35.0%
+  Market price:        1.5%
+  Edge:                +33.5%
+  Confidence:          0.60
+  LLM reasoning:       Healthcare is a Sanders staple but this rally is specifically about labor/AI, so 6+ mentions would need healthcare-labor connections.
+
+  Direction:           BUY YES (market underpriced)
+
+  Kelly sizing:
+    Side:              YES
+    Entry price:       $0.0145
+    Dollar amount:     $35.36
+    Shares:            2438.8
+    Expected profit:   $+818.22
+
+  Event exposure:      $146.29 / $244.14 (60%)
+  DECISION: TRADE ENTERED
+
+--- TRADE: Republican --------------------------------------------------------
+  Our estimate:        30.0%
+  Market price:        1.5%
+  Edge:                +28.5%
+  Confidence:          0.60
+  LLM reasoning:       Sanders often contrasts Democratic labor policies with Republican positions, moderately likely in political rally.
+
+  Direction:           BUY YES (market underpriced)
+
+  Kelly sizing:
+    Side:              YES
+    Entry price:       $0.0150
+    Dollar amount:     $28.83
+    Shares:            1921.8
+    Expected profit:   $+547.72
+
+  Event exposure:      $175.12 / $244.14 (72%)
+  DECISION: TRADE ENTERED
+
+--- TRADE: Immigrant / Immigration -------------------------------------------
+  Our estimate:        25.0%
+  Market price:        0.5%
+  Edge:                +24.5%
+  Confidence:          0.60
+  LLM reasoning:       Labor organizing often includes immigrant worker rights, though not the primary rally focus.
+
+  Direction:           BUY YES (market underpriced)
+
+  Kelly sizing:
+    Side:              YES
+    Entry price:       $0.0050
+    Dollar amount:     $23.68
+    Shares:            4736.1
+    Expected profit:   $+1160.34
+
+  Event exposure:      $198.80 / $244.14 (81%)
+  DECISION: TRADE ENTERED
+
+--- TRADE: Billionaire 10+ times ---------------------------------------------
+  Our estimate:        25.0%
+  Market price:        1.3%
+  Edge:                +23.7%
+  Confidence:          0.60
+  LLM reasoning:       While Sanders uses 'billionaire' frequently, 10+ times in a single speech requires extended focus on wealth inequality themes.
+
+  Direction:           BUY YES (market underpriced)
+
+  Kelly sizing:
+    Side:              YES
+    Entry price:       $0.0130
+    Dollar amount:     $22.41
+    Shares:            1723.9
+    Expected profit:   $+408.56
+
+  Event exposure:      $221.21 / $244.14 (91%)
+  DECISION: TRADE ENTERED
+
+--- TRADE: Climate -----------------------------------------------------------
+  Our estimate:        25.0%
+  Market price:        1.5%
+  Edge:                +23.5%
+  Confidence:          0.60
+  LLM reasoning:       Climate often connects to labor through green jobs and just transition themes.
+
+  Direction:           BUY YES (market underpriced)
+
+  Kelly sizing:
+    Side:              YES
+    Entry price:       $0.0145
+    Dollar amount:     $21.66
+    Shares:            1493.8
+    Expected profit:   $+351.79
+
+  Event exposure:      $242.87 / $244.14 (99%)
+  DECISION: TRADE ENTERED
+
+--- TRADE: Kathy / Hochul ----------------------------------------------------
+  Our estimate:        20.0%
+  Market price:        1.5%
+  Edge:                +18.6%
+  Confidence:          0.50
+  LLM reasoning:       NYC rally might reference NY Governor Hochul's labor policies, but not guaranteed focus.
+
+  Direction:           BUY YES (market underpriced)
+
+  Kelly sizing:
+    Side:              YES
+    Entry price:       $0.0145
+    Dollar amount:     $13.81
+    Shares:            952.4
+    Expected profit:   $+176.67
+
+  Event exposure:      $242.87 / $244.14 (99%)
+  DECISION: BLOCKED (event exposure cap reached)
+
+--- TRADE: Billionaire 5+ times ----------------------------------------------
+  Our estimate:        85.0%
+  Market price:        100.0%
+  Edge:                -15.0%
+  Confidence:          0.80
+  LLM reasoning:       Sanders consistently attacks billionaires in labor-focused speeches, and this is a core theme of his recent messaging about wealth inequality.
+
+  Direction:           BUY NO (market overpriced)
+
+  Kelly sizing:
+    Side:              NO
+    Entry price:       $0.0005
+    Dollar amount:     $17.56
+    Shares:            35116.8
+    Expected profit:   $+5249.96
+
+  Event exposure:      $242.87 / $244.14 (99%)
+  DECISION: BLOCKED (event exposure cap reached)
+
+--- TRADE: Trump 10+ times ---------------------------------------------------
+  Our estimate:        15.0%
+  Market price:        1.0%
+  Edge:                +14.0%
+  Confidence:          0.50
+  LLM reasoning:       Labor rally focused on AI/automation may reference Trump policies, but 10+ mentions would require making Trump a central theme.
+
+  Direction:           BUY YES (market underpriced)
+
+  Kelly sizing:
+    Side:              YES
+    Entry price:       $0.0100
+    Dollar amount:     $10.38
+    Shares:            1037.5
+    Expected profit:   $+145.25
+
+  Event exposure:      $242.87 / $244.14 (99%)
+  DECISION: BLOCKED (event exposure cap reached)
+
+--- TRADE: Oil / Gas / Gasoline ----------------------------------------------
+  Our estimate:        15.0%
+  Market price:        1.5%
+  Edge:                +13.5%
+  Confidence:          0.60
+  LLM reasoning:       Could come up in context of energy transition and worker retraining, but not central to AI/labor themes.
+
+  Direction:           BUY YES (market underpriced)
+
+  Kelly sizing:
+    Side:              YES
+    Entry price:       $0.0150
+    Dollar amount:     $12.07
+    Shares:            804.4
+    Expected profit:   $+108.60
+
+  Event exposure:      $242.87 / $244.14 (99%)
+  DECISION: BLOCKED (event exposure cap reached)
+
+--- TRADE: Shutdown / Shut Down ----------------------------------------------
+  Our estimate:        12.0%
+  Market price:        1.5%
+  Edge:                +10.5%
+  Confidence:          0.60
+  LLM reasoning:       Could reference factory shutdowns or AI displacing workers, but not a primary theme.
+
+  Direction:           BUY YES (market underpriced)
+
+  Kelly sizing:
+    Side:              YES
+    Entry price:       $0.0145
+    Dollar amount:     $9.43
+    Shares:            650.0
+    Expected profit:   $+68.58
+
+  Event exposure:      $242.87 / $244.14 (99%)
+  DECISION: BLOCKED (event exposure cap reached)
+
+--- TRADE: Nuclear -----------------------------------------------------------
+  Our estimate:        8.0%
+  Market price:        1.5%
+  Edge:                +6.6%
+  Confidence:          0.60
+  LLM reasoning:       Could come up in context of AI safety or energy policy, but not central to labor themes.
+
+  Direction:           BUY YES (market underpriced)
+
+  Kelly sizing:
+    Side:              YES
+    Entry price:       $0.0145
+    Dollar amount:     $5.85
+    Shares:            403.6
+    Expected profit:   $+26.43
+
+  Event exposure:      $242.87 / $244.14 (99%)
+  DECISION: BLOCKED (event exposure cap reached)
+
+--- TRADE: Israel / Israeli --------------------------------------------------
+  Our estimate:        8.0%
+  Market price:        1.5%
+  Edge:                +6.6%
+  Confidence:          0.60
+  LLM reasoning:       Middle East policy not clearly connected to labor/AI rally themes.
+
+  Direction:           BUY YES (market underpriced)
+
+  Kelly sizing:
+    Side:              YES
+    Entry price:       $0.0145
+    Dollar amount:     $5.85
+    Shares:            403.6
+    Expected profit:   $+26.43
+
+  Event exposure:      $242.87 / $244.14 (99%)
+  DECISION: BLOCKED (event exposure cap reached)
+
+--- TRADE: Bipartisan --------------------------------------------------------
+  Our estimate:        5.0%
+  Market price:        0.5%
+  Edge:                +4.5%
+  Confidence:          0.70
+  LLM reasoning:       Sanders rarely emphasizes bipartisanship and this is a progressive labor rally.
+
+  Direction:           BUY YES (market underpriced)
+
+  DECISION: NO TRADE
+  Reason:    Edge 4.5% below minimum 5.0%
+
+--- TRADE: Iran --------------------------------------------------------------
+  Our estimate:        5.0%
+  Market price:        1.5%
+  Edge:                +3.6%
+  Confidence:          0.70
+  LLM reasoning:       Labor/AI rally has no clear connection to Iran foreign policy issues.
+
+  Direction:           BUY YES (market underpriced)
+
+  DECISION: NO TRADE
+  Reason:    Edge 3.6% below minimum 5.0%
+
+--- TRADE: Crypto / Bitcoin --------------------------------------------------
+  Our estimate:        3.0%
+  Market price:        0.5%
+  Edge:                +2.5%
+  Confidence:          0.80
+  LLM reasoning:       Cryptocurrency has no clear connection to labor organizing or AI worker protection themes.
+
+  Direction:           BUY YES (market underpriced)
+
+  DECISION: NO TRADE
+  Reason:    Edge 2.5% below minimum 5.0%
+
+--- TRADE: Maduro ------------------------------------------------------------
+  Our estimate:        2.0%
+  Market price:        1.5%
+  Edge:                +0.5%
+  Confidence:          0.80
+  LLM reasoning:       Venezuela's leader has no clear connection to NYC labor/AI rally themes.
+
+  Direction:           BUY YES (market underpriced)
+
+  DECISION: NO TRADE
+  Reason:    Edge 0.5% below minimum 5.0%
+
+--- EVENT SUMMARY ------------------------------------------------------------
+  Event:             What will Bernie Sanders and Zohran Mamdani say at NYC Rally
+  Words estimated:   18
+  Tradeable edges:   14
+  Trades entered:    7
+  Blocked by cap:    7
+  Event exposure:    $242.87 / $244.14
+  Edge range:        -15% to +43%
+  Avg |edge|:        17%
+
+
+==============================================================================
+  EVENT: What will Trump say this week? (April 19)
+==============================================================================
+  Slug:            what-will-trump-say-this-week-april-19
+  Scope:           weekly
+  Subject:         Trump
+  Words/outcomes:  28
+  Days to resolve: 6.1
+  Total volume:    $48,238
+
+--- CONTEXT (web-search grounded) --------------------------------------------
+  I'll help you gather context for this prediction market question about what Trump will say during the week ending April 19, 2026. Let me search for current information.
+  Based on my research, here's a concise factual summary for the prediction market question about what Trump will say during the week ending April 19, 2026:
+  
+  ## CONTEXT SUMMARY
+  
+  **1. AGENDA/EVENT PARTICIPANTS:**
+  
+  Trump is scheduled to visit Charlottesville for MAGA events, including a meeting with MAGA, Inc. PAC members and a roundtable dinner at Trump Winery
+  . However, specific details about the April 13-19 week are limited in available schedules.
+  
+  **2. TOP CURRENT NEWS TOPICS INVOLVING TRUMP:**
+  
+  - **Iran War/Strait of Hormuz Crisis**: 
+  Trump announced a US Navy blockade of the Strait of Hormuz after Iran peace talks collapsed, saying "We win, regardless" and that the US will "BLOCKADE any and all Ships trying to enter, or leave, the Strait of Hormuz"
+  
+  
+  - **Failed Peace Negotiations**: 
+  Vice President JD Vance announced that US-Iran peace talks in Pakistan failed, stating "The bad news is that we have not reached an agreement. And I think that's bad news for Iran much more than it's bad news for the U.S."
+  
+  
+  - **Economic Impact**: 
+  Oil prices have surged with Brent crude at $95.20/barrel (up 31% since the war began) and US crude at $96.57/barrel (up 44%)
+  
+  
+  - **China Tariff Threats**: 
+  Trump warned China would face a 50% tariff if it transfers weapons to Iran
+  
+  
+  - **Melania Trump Epstein Statement**: 
+  First Lady Melania Trump made a statement on the Epstein controversy
+  
+  
+  **3. RECENT STATEMENTS (Last 48 Hours):**
+  
+  Trump spoke with reporters as he left for Joint Base Andrews on April 12
+  , and 
+  the White House posted videos on April 11-12, including a 44-minute video on Sunday, April 12
+  .
+  
+  **4. PUBLICLY AVAILABLE SCHEDULE:**
+  ... (14 more lines)
+
+--- BROADCAST FORMAT ASSESSMENT ----------------------------------------------
+  Classification:  weekly
+  Reasoning:       This is a weekly market covering all public verbal statements from April 13-19, 2026, so Trump will almost certainly make multiple public appearances during this window.
+
+  >> IMPACT: Multiple appearances during window. Normal estimation.
+
+--- WORD-BY-WORD ESTIMATES ---------------------------------------------------
+
+  Word                          Our P  Mkt P    Edge  Conf  Reasoning
+  ----------------------------------------------------------------------------------------------------
+[+] Make America Great Again       85%   76%    +9%   0.9  Trump's signature slogan that he uses in virtually every public appearance.
+[-] Transgender                    65%   72%    -6%   0.7  A frequent culture war topic Trump addresses regularly, especially during political periods.
+[-] Epic Fury                      15%   82%   -66%   0.6  Unusual phrase combination that Trump rarely uses, despite current Iran war tensions.
+[+] Sleepy Joe                     80%   74%    +7%   0.8  Trump's standard nickname for Biden that he uses frequently in political contexts.
+    Ass                            45%   48%    -2%   0.6  Trump occasionally uses crude language but not consistently in every appearance.
+    Sucker / Loser                 70%   66%    +3%   0.7  Common Trump insults he uses regularly when criticizing opponents or policies.
+    Barack Hussein Obama           75%   76%    -2%   0.8  Trump frequently references Obama with full name, especially when criticizing current administration.
+[+] Hezbollah                      60%   50%   +10%   0.7  Highly relevant given current Iran war and Middle East tensions dominating news.
+[-] Christmas                      12%   20%    -8%   0.8  No seasonal relevance in April and no clear contextual hook for the topic.
+[-] Boy oh boy                     25%   32%    -7%   0.6  Not a typical Trump verbal tic, though he might use it as an exclamation.
+[-] TACO / Trump Always Chickens Out    8%   24%   -15%   0.7  Highly unlikely Trump would reference this specific acronym about himself.
+    AOC                            35%   31%    +4%   0.6  Trump occasionally references Alexandria Ocasio-Cortez but not in every appearance.
+[-] Losing MAGA                    10%   24%   -13%   0.7  Trump would be very unlikely to use 'losing' in connection with his own movement.
+    All over the place             55%   51%    +4%   0.6  Common Trump phrase when criticizing opponents or chaotic situations.
+    Jesus                          30%   31%    -1%   0.6  Trump occasionally makes religious references but not consistently.
+[-] Two week / two-week            50%   60%   -10%   0.6  Common timeframe reference Trump might use for policy implementations or negotiations.
+[-] Gulf of America                20%   28%    -8%   0.7  Specific geographic reference with no clear current relevance to Iran crisis.
+[+] See what happens               80%   74%    +6%   0.8  Classic Trump phrase he uses frequently when discussing uncertain outcomes.
+[-] Six Seven                      15%   24%    -9%   0.6  Specific number combination with no clear contextual relevance.
+[-] Peanut                          8%   23%   -15%   0.7  No clear relevance to current events or typical Trump vocabulary.
+[+] Central Casting                40%   31%    +9%   0.7  Trump occasionally uses this phrase when describing people's appearance or roles.
+[-] Regarded                       25%   33%    -8%   0.6  Not a typical Trump word choice, though he might use it in formal contexts.
+[-] Crypto / Bitcoin               30%   36%    -6%   0.6  Trump has shown interest in cryptocurrency topics but doesn't discuss them weekly.
+    No No No                       75%   74%    +1%   0.7  Trump frequently uses repetitive negatives for emphasis when rejecting ideas.
+[-] Gay for Palestine               2%    9%    -7%   0.9  Extremely unlikely phrase that Trump would never use in public.
+[+] Nuke                           45%   36%   +10%   0.7  Relevant to Iran tensions and military discussions, though Trump might use 'nuclear' instead.
+[-] Melania                        40%   48%    -8%   0.6  Trump occasionally references his wife, especially given recent Epstein statement context.
+[-] Four to Six                    18%   24%    -5%   0.6  Specific number range with no clear contextual hook for current events.
+
+--- TRADE: Epic Fury ---------------------------------------------------------
+  Our estimate:        15.0%
+  Market price:        81.5%
+  Edge:                -66.5%
+  Confidence:          0.60
+  LLM reasoning:       Unusual phrase combination that Trump rarely uses, despite current Iran war tensions.
+
+  Direction:           BUY NO (market overpriced)
+
+  Kelly sizing:
+    Side:              NO
+    Entry price:       $0.1850
+    Dollar amount:     $71.84
+    Shares:            388.3
+    Expected profit:   $+258.23
+
+  Event exposure:      $71.84 / $183.42 (39%)
+  DECISION: TRADE ENTERED
+
+--- TRADE: TACO / Trump Always Chickens Out ----------------------------------
+  Our estimate:        8.0%
+  Market price:        23.5%
+  Edge:                -15.5%
+  Confidence:          0.70
+  LLM reasoning:       Highly unlikely Trump would reference this specific acronym about himself.
+
+  Direction:           BUY NO (market overpriced)
+
+  Kelly sizing:
+    Side:              NO
+    Entry price:       $0.7650
+    Dollar amount:     $61.11
+    Shares:            79.9
+    Expected profit:   $+12.38
+
+  Event exposure:      $132.95 / $183.42 (72%)
+  DECISION: TRADE ENTERED
+
+--- TRADE: Peanut ------------------------------------------------------------
+  Our estimate:        8.0%
+  Market price:        23.0%
+  Edge:                -15.0%
+  Confidence:          0.70
+  LLM reasoning:       No clear relevance to current events or typical Trump vocabulary.
+
+  Direction:           BUY NO (market overpriced)
+
+  Kelly sizing:
+    Side:              NO
+    Entry price:       $0.7700
+    Dollar amount:     $54.85
+    Shares:            71.2
+    Expected profit:   $+10.68
+
+  Event exposure:      $187.80 / $183.42 (102%)
+  DECISION: TRADE ENTERED
+
+--- TRADE: Losing MAGA -------------------------------------------------------
+  Our estimate:        10.0%
+  Market price:        23.5%
+  Edge:                -13.5%
+  Confidence:          0.70
+  LLM reasoning:       Trump would be very unlikely to use 'losing' in connection with his own movement.
+
+  Direction:           BUY NO (market overpriced)
+
+  Kelly sizing:
+    Side:              NO
+    Entry price:       $0.7650
+    Dollar amount:     $43.90
+    Shares:            57.4
+    Expected profit:   $+7.75
+
+  Event exposure:      $187.80 / $183.42 (102%)
+  DECISION: BLOCKED (event exposure cap reached)
+
+--- TRADE: Hezbollah ---------------------------------------------------------
+  Our estimate:        60.0%
+  Market price:        49.5%
+  Edge:                +10.5%
+  Confidence:          0.70
+  LLM reasoning:       Highly relevant given current Iran war and Middle East tensions dominating news.
+
+  Direction:           BUY YES (market underpriced)
+
+  Kelly sizing:
+    Side:              YES
+    Entry price:       $0.4950
+    Dollar amount:     $15.89
+    Shares:            32.1
+    Expected profit:   $+3.37
+
+  Event exposure:      $187.80 / $183.42 (102%)
+  DECISION: BLOCKED (event exposure cap reached)
+
+--- TRADE: Two week / two-week -----------------------------------------------
+  Our estimate:        50.0%
+  Market price:        60.5%
+  Edge:                -10.5%
+  Confidence:          0.60
+  LLM reasoning:       Common timeframe reference Trump might use for policy implementations or negotiations.
+
+  Direction:           BUY NO (market overpriced)
+
+  Kelly sizing:
+    Side:              NO
+    Entry price:       $0.3950
+    Dollar amount:     $11.37
+    Shares:            28.8
+    Expected profit:   $+3.02
+
+  Event exposure:      $187.80 / $183.42 (102%)
+  DECISION: BLOCKED (event exposure cap reached)
+
+--- TRADE: Nuke --------------------------------------------------------------
+  Our estimate:        45.0%
+  Market price:        35.5%
+  Edge:                +9.5%
+  Confidence:          0.70
+  LLM reasoning:       Relevant to Iran tensions and military discussions, though Trump might use 'nuclear' instead.
+
+  Direction:           BUY YES (market underpriced)
+
+  Kelly sizing:
+    Side:              YES
+    Entry price:       $0.3550
+    Dollar amount:     $11.26
+    Shares:            31.7
+    Expected profit:   $+3.01
+
+  Event exposure:      $187.80 / $183.42 (102%)
+  DECISION: BLOCKED (event exposure cap reached)
+
+--- TRADE: Make America Great Again ------------------------------------------
+  Our estimate:        85.0%
+  Market price:        75.5%
+  Edge:                +9.5%
+  Confidence:          0.90
+  LLM reasoning:       Trump's signature slogan that he uses in virtually every public appearance.
+
+  Direction:           BUY YES (market underpriced)
+
+  Kelly sizing:
+    Side:              YES
+    Entry price:       $0.7550
+    Dollar amount:     $38.10
+    Shares:            50.5
+    Expected profit:   $+4.79
+
+  Event exposure:      $187.80 / $183.42 (102%)
+  DECISION: BLOCKED (event exposure cap reached)
+
+--- TRADE: Six Seven ---------------------------------------------------------
+  Our estimate:        15.0%
+  Market price:        24.0%
+  Edge:                -9.0%
+  Confidence:          0.60
+  LLM reasoning:       Specific number combination with no clear contextual relevance.
+
+  Direction:           BUY NO (market overpriced)
+
+  Kelly sizing:
+    Side:              NO
+    Entry price:       $0.7600
+    Dollar amount:     $24.56
+    Shares:            32.3
+    Expected profit:   $+2.91
+
+  Event exposure:      $187.80 / $183.42 (102%)
+  DECISION: BLOCKED (event exposure cap reached)
+
+--- TRADE: Melania -----------------------------------------------------------
+  Our estimate:        40.0%
+  Market price:        48.5%
+  Edge:                -8.5%
+  Confidence:          0.60
+  LLM reasoning:       Trump occasionally references his wife, especially given recent Epstein statement context.
+
+  Direction:           BUY NO (market overpriced)
+
+  Kelly sizing:
+    Side:              NO
+    Entry price:       $0.5150
+    Dollar amount:     $11.48
+    Shares:            22.3
+    Expected profit:   $+1.89
+
+  Event exposure:      $187.80 / $183.42 (102%)
+  DECISION: BLOCKED (event exposure cap reached)
+
+--- TRADE: Christmas ---------------------------------------------------------
+  Our estimate:        12.0%
+  Market price:        20.0%
+  Edge:                -8.0%
+  Confidence:          0.80
+  LLM reasoning:       No seasonal relevance in April and no clear contextual hook for the topic.
+
+  Direction:           BUY NO (market overpriced)
+
+  Kelly sizing:
+    Side:              NO
+    Entry price:       $0.8000
+    Dollar amount:     $34.94
+    Shares:            43.7
+    Expected profit:   $+3.49
+
+  Event exposure:      $187.80 / $183.42 (102%)
+  DECISION: BLOCKED (event exposure cap reached)
+
+--- TRADE: Gay for Palestine -------------------------------------------------
+  Our estimate:        2.0%
+  Market price:        9.0%
+  Edge:                -7.0%
+  Confidence:          0.90
+  LLM reasoning:       Extremely unlikely phrase that Trump would never use in public.
+
+  Direction:           BUY NO (market overpriced)
+
+  Kelly sizing:
+    Side:              NO
+    Entry price:       $0.9100
+    Dollar amount:     $54.59
+    Shares:            60.0
+    Expected profit:   $+4.20
+
+  Event exposure:      $187.80 / $183.42 (102%)
+  DECISION: BLOCKED (event exposure cap reached)
+
+--- TRADE: Sleepy Joe --------------------------------------------------------
+  Our estimate:        80.0%
+  Market price:        73.5%
+  Edge:                +6.5%
+  Confidence:          0.80
+  LLM reasoning:       Trump's standard nickname for Biden that he uses frequently in political contexts.
+
+  Direction:           BUY YES (market underpriced)
+
+  Kelly sizing:
+    Side:              YES
+    Entry price:       $0.7350
+    Dollar amount:     $21.42
+    Shares:            29.1
+    Expected profit:   $+1.89
+
+  Event exposure:      $187.80 / $183.42 (102%)
+  DECISION: BLOCKED (event exposure cap reached)
+
+--- TRADE: Crypto / Bitcoin --------------------------------------------------
+  Our estimate:        30.0%
+  Market price:        36.5%
+  Edge:                -6.5%
+  Confidence:          0.60
+  LLM reasoning:       Trump has shown interest in cryptocurrency topics but doesn't discuss them weekly.
+
+  Direction:           BUY NO (market overpriced)
+
+  Kelly sizing:
+    Side:              NO
+    Entry price:       $0.6350
+    Dollar amount:     $11.67
+    Shares:            18.4
+    Expected profit:   $+1.19
+
+  Event exposure:      $187.80 / $183.42 (102%)
+  DECISION: BLOCKED (event exposure cap reached)
+
+--- TRADE: Transgender -------------------------------------------------------
+  Our estimate:        65.0%
+  Market price:        71.5%
+  Edge:                -6.5%
+  Confidence:          0.70
+  LLM reasoning:       A frequent culture war topic Trump addresses regularly, especially during political periods.
+
+  Direction:           BUY NO (market overpriced)
+
+  Kelly sizing:
+    Side:              NO
+    Entry price:       $0.2850
+    Dollar amount:     $6.95
+    Shares:            24.4
+    Expected profit:   $+1.58
+
+  Event exposure:      $187.80 / $183.42 (102%)
+  DECISION: BLOCKED (event exposure cap reached)
+
+--- TRADE: See what happens --------------------------------------------------
+  Our estimate:        80.0%
+  Market price:        74.5%
+  Edge:                +5.5%
+  Confidence:          0.80
+  LLM reasoning:       Classic Trump phrase he uses frequently when discussing uncertain outcomes.
+
+  Direction:           BUY YES (market underpriced)
+
+  Kelly sizing:
+    Side:              YES
+    Entry price:       $0.7450
+    Dollar amount:     $18.84
+    Shares:            25.3
+    Expected profit:   $+1.39
+
+  Event exposure:      $187.80 / $183.42 (102%)
+  DECISION: BLOCKED (event exposure cap reached)
+
+--- TRADE: Ass ---------------------------------------------------------------
+  Our estimate:        45.0%
+  Market price:        47.5%
+  Edge:                -2.5%
+  Confidence:          0.60
+  LLM reasoning:       Trump occasionally uses crude language but not consistently in every appearance.
+
+  Direction:           BUY NO (market overpriced)
+
+  DECISION: NO TRADE
+  Reason:    Edge 2.5% below minimum 5.0%
+
+--- TRADE: Barack Hussein Obama ----------------------------------------------
+  Our estimate:        75.0%
+  Market price:        76.5%
+  Edge:                -1.5%
+  Confidence:          0.80
+  LLM reasoning:       Trump frequently references Obama with full name, especially when criticizing current administration.
+
+  Direction:           BUY NO (market overpriced)
+
+  DECISION: NO TRADE
+  Reason:    Edge 1.5% below minimum 5.0%
+
+--- TRADE: Jesus -------------------------------------------------------------
+  Our estimate:        30.0%
+  Market price:        31.0%
+  Edge:                -1.0%
+  Confidence:          0.60
+  LLM reasoning:       Trump occasionally makes religious references but not consistently.
+
+  Direction:           BUY NO (market overpriced)
+
+  DECISION: NO TRADE
+  Reason:    Edge 1.0% below minimum 5.0%
+
+--- TRADE: No No No ----------------------------------------------------------
+  Our estimate:        75.0%
+  Market price:        74.0%
+  Edge:                +1.0%
+  Confidence:          0.70
+  LLM reasoning:       Trump frequently uses repetitive negatives for emphasis when rejecting ideas.
+
+  Direction:           BUY YES (market underpriced)
+
+  DECISION: NO TRADE
+  Reason:    Edge 1.0% below minimum 5.0%
+
+--- EVENT SUMMARY ------------------------------------------------------------
+  Event:             What will Trump say this week? (April 19)
+  Words estimated:   20
+  Tradeable edges:   16
+  Trades entered:    3
+  Blocked by cap:    13
+  Event exposure:    $187.80 / $183.42
+  Edge range:        -66% to +10%
+  Avg |edge|:        11%
+
+
+==============================================================================
+  RUN SUMMARY
+==============================================================================
+  Events processed:    3
+  Words evaluated:     40
+  Trades entered:      11
+  Blocked by cap:      20
+  Edge range:          -66% to +43%
+  Actionable (>=5%):   31 / 40
+  Total risked:        $454.12
+  Total expected P&L:  $+9738.02
+  Remaining bankroll:  $545.88
+  Elapsed:             196.0s
+==============================================================================
+

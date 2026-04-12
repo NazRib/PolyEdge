@@ -2638,5 +2638,235 @@
     "confidence": 0.99,
     "reason": "Only one person can win the Republican presidential nomination in 2028.",
     "classified_at": "2026-04-10T21:51:42.691536+00:00"
+  },
+  {
+    "key": "will fidesz\u2013kdnp win the most national list votes in the 2026 hungarian parliamentary election?|||will fidesz\u2013kdnp win the most seats in the next hungarian parliamentary election?",
+    "q_a": "Will Fidesz\u2013KDNP win the most seats in the next Hungarian parliamentary election?",
+    "q_b": "Will Fidesz\u2013KDNP win the most national list votes in the 2026 Hungarian parliamentary election?",
+    "dep_type": "correlated",
+    "direction": "symmetric",
+    "confidence": 0.85,
+    "reason": "Winning most seats and most national list votes are highly correlated but not identical due to Hungary's mixed electoral system.",
+    "classified_at": "2026-04-12T07:51:44.508015+00:00"
+  },
+  {
+    "key": "will tisza win the most national list votes in the 2026 hungarian parliamentary election?|||will tisza \u2013 respect and freedom party (tisza) win the most seats in the next hungarian parliamentary election?",
+    "q_a": "Will TISZA \u2013 Respect and Freedom Party (TISZA) win the most seats in the next Hungarian parliamentary election?",
+    "q_b": "Will Tisza win the most national list votes in the 2026 Hungarian parliamentary election?",
+    "dep_type": "correlated",
+    "direction": "symmetric",
+    "confidence": 0.85,
+    "reason": "Winning most seats and most national list votes are highly correlated but not identical due to Hungary's mixed electoral system.",
+    "classified_at": "2026-04-12T07:51:44.508015+00:00"
+  },
+  {
+    "key": "military action against iran ends by april 30, 2026?|||military action against iran ends on april 29, 2026?",
+    "q_a": "Military action against Iran ends on April 29, 2026?",
+    "q_b": "Military action against Iran ends by April 30, 2026?",
+    "dep_type": "implication",
+    "direction": "a_implies_b",
+    "confidence": 0.95,
+    "reason": "If military action ends on April 29, it necessarily ends by April 30.",
+    "classified_at": "2026-04-12T07:51:44.508015+00:00"
+  },
+  {
+    "key": "military action against iran ends by april 30, 2026?|||military action against iran ends on april 9, 2026?",
+    "q_a": "Military action against Iran ends on April 9, 2026?",
+    "q_b": "Military action against Iran ends by April 30, 2026?",
+    "dep_type": "implication",
+    "direction": "a_implies_b",
+    "confidence": 0.95,
+    "reason": "If military action ends on April 9, it necessarily ends by April 30.",
+    "classified_at": "2026-04-12T07:51:44.508015+00:00"
+  },
+  {
+    "key": "military action against iran ends by april 30, 2026?|||military action against iran ends on april 10, 2026?",
+    "q_a": "Military action against Iran ends on April 10, 2026?",
+    "q_b": "Military action against Iran ends by April 30, 2026?",
+    "dep_type": "implication",
+    "direction": "a_implies_b",
+    "confidence": 0.95,
+    "reason": "If military action ends on April 10, it necessarily ends by April 30.",
+    "classified_at": "2026-04-12T07:51:44.508015+00:00"
+  },
+  {
+    "key": "military action against iran ends by april 30, 2026?|||military action against iran ends on april 11, 2026?",
+    "q_a": "Military action against Iran ends on April 11, 2026?",
+    "q_b": "Military action against Iran ends by April 30, 2026?",
+    "dep_type": "implication",
+    "direction": "a_implies_b",
+    "confidence": 1.0,
+    "reason": "If military action ends on April 11, it necessarily ends by April 30.",
+    "classified_at": "2026-04-12T07:51:49.798241+00:00"
+  },
+  {
+    "key": "military action against iran ends by april 30, 2026?|||military action against iran ends on april 12, 2026?",
+    "q_a": "Military action against Iran ends on April 12, 2026?",
+    "q_b": "Military action against Iran ends by April 30, 2026?",
+    "dep_type": "implication",
+    "direction": "a_implies_b",
+    "confidence": 1.0,
+    "reason": "If military action ends on April 12, it necessarily ends by April 30.",
+    "classified_at": "2026-04-12T07:51:49.798241+00:00"
+  },
+  {
+    "key": "military action against iran ends by april 30, 2026?|||military action against iran ends on april 26, 2026?",
+    "q_a": "Military action against Iran ends by April 30, 2026?",
+    "q_b": "Military action against Iran ends on April 26, 2026?",
+    "dep_type": "implication",
+    "direction": "b_implies_a",
+    "confidence": 1.0,
+    "reason": "If military action ends on April 26, it necessarily ends by April 30.",
+    "classified_at": "2026-04-12T07:51:49.798241+00:00"
+  },
+  {
+    "key": "military action against iran ends by april 30, 2026?|||military action against iran ends on april 15, 2026?",
+    "q_a": "Military action against Iran ends by April 30, 2026?",
+    "q_b": "Military action against Iran ends on April 15, 2026?",
+    "dep_type": "implication",
+    "direction": "b_implies_a",
+    "confidence": 1.0,
+    "reason": "If military action ends on April 15, it necessarily ends by April 30.",
+    "classified_at": "2026-04-12T07:51:49.798241+00:00"
+  },
+  {
+    "key": "military action against iran ends by april 30, 2026?|||military action against iran ends on april 24, 2026?",
+    "q_a": "Military action against Iran ends by April 30, 2026?",
+    "q_b": "Military action against Iran ends on April 24, 2026?",
+    "dep_type": "implication",
+    "direction": "b_implies_a",
+    "confidence": 1.0,
+    "reason": "If military action ends on April 24, it necessarily ends by April 30.",
+    "classified_at": "2026-04-12T07:51:49.798241+00:00"
+  },
+  {
+    "key": "military action against iran ends by april 30, 2026?|||military action against iran ends on april 13, 2026?",
+    "q_a": "Military action against Iran ends by April 30, 2026?",
+    "q_b": "Military action against Iran ends on April 13, 2026?",
+    "dep_type": "implication",
+    "direction": "b_implies_a",
+    "confidence": 1.0,
+    "reason": "If military action ends on April 13, 2026, it necessarily ends by April 30, 2026.",
+    "classified_at": "2026-04-12T07:51:55.650546+00:00"
+  },
+  {
+    "key": "military action against iran ends by april 30, 2026?|||military action against iran ends on april 27, 2026?",
+    "q_a": "Military action against Iran ends by April 30, 2026?",
+    "q_b": "Military action against Iran ends on April 27, 2026?",
+    "dep_type": "implication",
+    "direction": "b_implies_a",
+    "confidence": 1.0,
+    "reason": "If military action ends on April 27, 2026, it necessarily ends by April 30, 2026.",
+    "classified_at": "2026-04-12T07:51:55.650546+00:00"
+  },
+  {
+    "key": "military action against iran ends by april 30, 2026?|||military action against iran ends on april 22, 2026?",
+    "q_a": "Military action against Iran ends by April 30, 2026?",
+    "q_b": "Military action against Iran ends on April 22, 2026?",
+    "dep_type": "implication",
+    "direction": "b_implies_a",
+    "confidence": 1.0,
+    "reason": "If military action ends on April 22, 2026, it necessarily ends by April 30, 2026.",
+    "classified_at": "2026-04-12T07:51:55.650546+00:00"
+  },
+  {
+    "key": "military action against iran ends by april 30, 2026?|||military action against iran ends on april 14, 2026?",
+    "q_a": "Military action against Iran ends by April 30, 2026?",
+    "q_b": "Military action against Iran ends on April 14, 2026?",
+    "dep_type": "implication",
+    "direction": "b_implies_a",
+    "confidence": 1.0,
+    "reason": "If military action ends on April 14, 2026, it necessarily ends by April 30, 2026.",
+    "classified_at": "2026-04-12T07:51:55.650546+00:00"
+  },
+  {
+    "key": "military action against iran ends by april 30, 2026?|||military action against iran ends on april 16, 2026?",
+    "q_a": "Military action against Iran ends by April 30, 2026?",
+    "q_b": "Military action against Iran ends on April 16, 2026?",
+    "dep_type": "implication",
+    "direction": "b_implies_a",
+    "confidence": 1.0,
+    "reason": "If military action ends on April 16, 2026, it necessarily ends by April 30, 2026.",
+    "classified_at": "2026-04-12T07:51:55.650546+00:00"
+  },
+  {
+    "key": "military action against iran ends by april 30, 2026?|||military action against iran ends on april 17, 2026?",
+    "q_a": "Military action against Iran ends by April 30, 2026?",
+    "q_b": "Military action against Iran ends on April 17, 2026?",
+    "dep_type": "implication",
+    "direction": "b_implies_a",
+    "confidence": 0.95,
+    "reason": "If military action ends on April 17, 2026, it necessarily ends by April 30, 2026.",
+    "classified_at": "2026-04-12T07:52:00.262441+00:00"
+  },
+  {
+    "key": "military action against iran ends by april 30, 2026?|||military action against iran ends on april 19, 2026?",
+    "q_a": "Military action against Iran ends by April 30, 2026?",
+    "q_b": "Military action against Iran ends on April 19, 2026?",
+    "dep_type": "implication",
+    "direction": "b_implies_a",
+    "confidence": 0.95,
+    "reason": "If military action ends on April 19, 2026, it necessarily ends by April 30, 2026.",
+    "classified_at": "2026-04-12T07:52:00.262441+00:00"
+  },
+  {
+    "key": "military action against iran ends by april 30, 2026?|||military action against iran ends on april 28, 2026?",
+    "q_a": "Military action against Iran ends by April 30, 2026?",
+    "q_b": "Military action against Iran ends on April 28, 2026?",
+    "dep_type": "implication",
+    "direction": "b_implies_a",
+    "confidence": 0.95,
+    "reason": "If military action ends on April 28, 2026, it necessarily ends by April 30, 2026.",
+    "classified_at": "2026-04-12T07:52:00.262441+00:00"
+  },
+  {
+    "key": "will cho kuk win the 2026 seoul mayoral election|||will na kyung-won win the 2026 seoul mayoral election",
+    "q_a": "Will Na Kyung-won win the 2026 Seoul Mayoral Election",
+    "q_b": "Will Cho Kuk win the 2026 Seoul Mayoral Election",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one person can win the same mayoral election.",
+    "classified_at": "2026-04-12T08:24:01.551781+00:00"
+  },
+  {
+    "key": "will cho kuk win the 2026 seoul mayoral election|||will kang hoon-sik win the 2026 seoul mayoral election",
+    "q_a": "Will Kang Hoon-sik win the 2026 Seoul Mayoral Election",
+    "q_b": "Will Cho Kuk win the 2026 Seoul Mayoral Election",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one person can win the same mayoral election.",
+    "classified_at": "2026-04-12T08:24:01.551781+00:00"
+  },
+  {
+    "key": "will cho kuk win the 2026 seoul mayoral election|||will jeon hyun-heui win the 2026 seoul mayoral election",
+    "q_a": "Will Jeon Hyun-heui win the 2026 Seoul Mayoral Election",
+    "q_b": "Will Cho Kuk win the 2026 Seoul Mayoral Election",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one person can win the same mayoral election.",
+    "classified_at": "2026-04-12T08:24:01.551781+00:00"
+  },
+  {
+    "key": "will cho kuk win the 2026 seoul mayoral election|||will park hong-keun win the 2026 seoul mayoral election",
+    "q_a": "Will Park Hong-keun win the 2026 Seoul Mayoral Election",
+    "q_b": "Will Cho Kuk win the 2026 Seoul Mayoral Election",
+    "dep_type": "mutual_exclusion",
+    "direction": "symmetric",
+    "confidence": 1.0,
+    "reason": "Only one person can win the same mayoral election.",
+    "classified_at": "2026-04-12T08:24:01.551781+00:00"
+  },
+  {
+    "key": "military action against iran ends by april 30, 2026?|||military action against iran ends on april 23, 2026?",
+    "q_a": "Military action against Iran ends by April 30, 2026?",
+    "q_b": "Military action against Iran ends on April 23, 2026?",
+    "dep_type": "implication",
+    "direction": "b_implies_a",
+    "confidence": 1.0,
+    "reason": "If military action ends on April 23, 2026, it necessarily ends by April 30, 2026.",
+    "classified_at": "2026-04-12T08:24:01.551781+00:00"
   }
 ]

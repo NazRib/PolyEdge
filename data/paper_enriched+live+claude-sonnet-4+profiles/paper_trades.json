@@ -1,7 +1,7 @@
 {
-  "bankroll": 233.02089999999973,
+  "bankroll": 188.84089999999975,
   "initial_bankroll": 1000,
-  "trade_counter": 41,
+  "trade_counter": 45,
   "trades": [
     {
       "trade_id": "PT-0001",
@@ -822,6 +822,86 @@
       "pnl": 0.0,
       "strategy_tag": "enriched+live+claude-sonnet-4+profiles",
       "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0042",
+      "market_id": "1818721",
+      "question": "Will FC Barcelona win on 2026-04-14?",
+      "side": "NO",
+      "entry_price": 0.45499999999999996,
+      "shares": 36.0952,
+      "dollar_amount": 16.42,
+      "estimated_probability": 0.35307251229504505,
+      "market_price_at_entry": 0.545,
+      "edge_at_entry": -0.191927487704955,
+      "confidence": 0.8005448558725241,
+      "timestamp": "2026-04-12T07:58:25.791325+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4+profiles",
+      "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0043",
+      "market_id": "1823776",
+      "question": "Will Bitcoin reach $80,000 in April?",
+      "side": "YES",
+      "entry_price": 0.175,
+      "shares": 36.0735,
+      "dollar_amount": 6.31,
+      "estimated_probability": 0.28041442849635967,
+      "market_price_at_entry": 0.175,
+      "edge_at_entry": 0.10541442849635968,
+      "confidence": 0.8480968523523604,
+      "timestamp": "2026-04-12T07:58:25.809828+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4+profiles",
+      "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0044",
+      "market_id": "566187",
+      "question": "Will Arsenal win the 2025\u201326 English Premier League?",
+      "side": "YES",
+      "entry_price": 0.685,
+      "shares": 20.8094,
+      "dollar_amount": 14.25,
+      "estimated_probability": 0.7761898785722845,
+      "market_price_at_entry": 0.685,
+      "edge_at_entry": 0.09118987857228444,
+      "confidence": 0.8452384479767372,
+      "timestamp": "2026-04-12T07:58:25.809828+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4+profiles",
+      "model_tag": "claude-sonnet-4"
+    },
+    {
+      "trade_id": "PT-0045",
+      "market_id": "1947754",
+      "question": "Wuning: Harry Wendelken vs Pavel Kotov",
+      "side": "YES",
+      "entry_price": 0.435,
+      "shares": 16.5617,
+      "dollar_amount": 7.2,
+      "estimated_probability": 0.5299724304517751,
+      "market_price_at_entry": 0.435,
+      "edge_at_entry": 0.09497243045177511,
+      "confidence": 0.8744970871610594,
+      "timestamp": "2026-04-12T08:29:11.054534+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "enriched+live+claude-sonnet-4+profiles",
+      "model_tag": "claude-sonnet-4"
     }
   ],
   "calibration": [
@@ -829,49 +909,49 @@
       "predicted": 0.7762355586390229,
       "actual": 1,
       "market_id": "1835958",
-      "time": "2026-04-10T22:36:23.656806+00:00"
+      "time": "2026-04-12T08:23:21.658533+00:00"
     },
     {
       "predicted": 0.5366642043870378,
       "actual": 1,
       "market_id": "1762466",
-      "time": "2026-04-10T22:36:23.656806+00:00"
+      "time": "2026-04-12T08:23:21.658533+00:00"
     },
     {
       "predicted": 0.5984215171254109,
       "actual": 0,
       "market_id": "1762490",
-      "time": "2026-04-10T22:36:23.656806+00:00"
+      "time": "2026-04-12T08:23:21.658533+00:00"
     },
     {
       "predicted": 0.5657331924746916,
       "actual": 0,
       "market_id": "1760063",
-      "time": "2026-04-10T22:36:23.656806+00:00"
+      "time": "2026-04-12T08:23:21.658533+00:00"
     },
     {
       "predicted": 0.18216162905254785,
       "actual": 0,
       "market_id": "1790928",
-      "time": "2026-04-10T22:36:23.656806+00:00"
+      "time": "2026-04-12T08:23:21.658533+00:00"
     },
     {
       "predicted": 0.5321472532406772,
       "actual": 0,
       "market_id": "1790935",
-      "time": "2026-04-10T22:36:23.656806+00:00"
+      "time": "2026-04-12T08:23:21.658533+00:00"
     },
     {
       "predicted": 0.34538003947464135,
       "actual": 0,
       "market_id": "1790915",
-      "time": "2026-04-10T22:36:23.656806+00:00"
+      "time": "2026-04-12T08:23:21.658533+00:00"
     },
     {
       "predicted": 0.5643290919810753,
       "actual": 1,
       "market_id": "1790940",
-      "time": "2026-04-10T22:36:23.656806+00:00"
+      "time": "2026-04-12T08:23:21.658533+00:00"
     }
   ]
 }

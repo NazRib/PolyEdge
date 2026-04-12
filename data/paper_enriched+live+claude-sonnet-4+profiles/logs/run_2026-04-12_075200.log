@@ -1,0 +1,1347 @@
+==============================================================================
+  POLYMARKET EDGE — Pipeline Run Log
+  2026-04-12 07:52:00 UTC
+==============================================================================
+  Strategy:      enriched+live+claude-sonnet-4+profiles
+  Model:         claude-sonnet-4
+  Candidates:    26
+  Bankroll:      $233.02
+  Min edge:      5%
+  Kelly frac:    25%
+==============================================================================
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 1 of 26
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will FC Barcelona win on 2026-04-14?
+  Market ID:     1818721
+  Market price:  54.5%
+  Category:      FC Barcelona
+  Volume 24h:    $150,719
+  Liquidity:     $164,692
+  Scanner score: 0.629
+  Days to res:   2.5
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news (1 of 5)
+  Time: 19.2s
+
+  News:
+    • Barcelona lost 2-0 to Atletico Madrid in Champions League quarter-final first leg at Camp Nou on April 8, 2026
+    • Pau Cubarsi sent off for Barcelona after VAR review, Julian Alvarez scored brilliant free-kick opener
+    • Alexander Sorloth doubled Atletico's lead in second half, giving them commanding advantage
+    • Barcelona must win by at least 2 goals in second leg at Metropolitano on April 14 to advance
+    • Key injuries: Raphinha out until May, Marc Bernal doubtful with ankle injury, Frenkie de Jong potentially returning
+    Sentiment: bearish_yes (strength: 75%)
+    Key facts:
+      - Barcelona are down 2-0 from first leg and need to overturn deficit away from home
+      - Match is at Riyadh Air Metropolitano on Tuesday April 14, 2026 at 21:00 local time
+      - Barcelona missing key winger Raphinha (hamstring) until May 3
+      - Marc Bernal remains doubtful with ankle injury suffered against Atletico
+      - Frenkie de Jong could return for second leg after long hamstring injury layoff
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,244 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "With no specific base rate provided, I anchor to 50% as an uninformative prior for a single football match outcome.",
+      "news_impact": "The news is extremely negative for Barcelona - they lost 2-0 at home in the first leg and now must win by at least 2 goals away at Atletico's stadium to advance. They're also missing key player Raphinha and have injury doubts over Marc Bernal.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "N/A",
+      "factors_for": [
+        "Barcelona are a historically strong team capable of comebacks",
+        "They have quality players who could perform in a high-pressure situation",
+        "Atletico might play more defensively knowing they have a 2-goal cushion"
+      ],
+      "factors_against": [
+        "Barcelona must overcome a 2-goal deficit away from home",
+        "They're missing key winger Raphinha until May 3",
+        "Marc Bernal remains doubtful with ankle injury",
+        "Atletico Madrid are strong at home and have momentum from the first leg",
+        "Barcelona need to win by at least 2 goals, not just win the match"
+      ],
+      "probability": 0.25,
+      "reasoning": "Starting from a 50% base rate, the news heavily shifts the probability downward. Barcelona face an extremely difficult task: overturning a 2-goal deficit away from home against a strong Atletico Madrid side, while missing key players. The market price of 54.5% appears to significantly overestimate Barcelona's chances given the specific context of needing a 2+ goal victory away from home after losing 2-0 at their own stadium.",
+      "confidence": "high",
+      "information_edge": "The market seems to be anchoring too heavily on Barcelona's general quality rather than the specific match situation - needing to win by 2+ goals away after a poor home performance, with key injuries."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   With no specific base rate provided, I anchor to 50% as an uninformative prior for a single football match outcome.
+    Factors FOR YES:
+      + Barcelona are a historically strong team capable of comebacks
+      + They have quality players who could perform in a high-pressure situation
+      + Atletico might play more defensively knowing they have a 2-goal cushion
+    Factors AGAINST:
+      - Barcelona must overcome a 2-goal deficit away from home
+      - They're missing key winger Raphinha until May 3
+      - Marc Bernal remains doubtful with ankle injury
+      - Atletico Madrid are strong at home and have momentum from the first leg
+      - Barcelona need to win by at least 2 goals, not just win the match
+    Probability:       0.25
+    Confidence:        high
+    Reasoning:         Starting from a 50% base rate, the news heavily shifts the probability downward. Barcelona face an extremely difficult task: overturning a 2-goal deficit away from home against a strong Atletico Madrid side, while missing key players. The market price of 54.5% appears to significantly overestimate Barcelona's chances given the specific context of needing a 2+ goal victory away from home after losing 2-0 at their own stadium.
+    Information edge:  The market seems to be anchoring too heavily on Barcelona's general quality rather than the specific match situation - needing to win by 2+ goals away after a poor home performance, with key injuries.
+
+  Calibration:
+    Raw LLM probability:    25.0%
+    Calibrated probability: 29.8%
+    Adjustment:             +4.8%
+
+  Confidence build-up:
+    Base (from LLM):        0.85 (high)
+    + enrichment bonus:     +0.05 (1 sources × 0.05)
+    × deviation penalty:    ×0.80 (deviation 24.7% > 15%)
+    Final confidence:       0.72
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  29.8%   0.72    0.324         9.6%
+  base_rate                0.150  54.5%   0.50    0.075         4.1%
+  momentum                 0.200  54.7%   0.04    0.007         0.4%
+  book_imbalance           0.150  55.0%   0.07    0.011         0.6%
+  whale_profiled           0.000  54.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.417        14.7%
+
+  Final probability: 14.7% / 0.417 = 35.3%
+  Ensemble confidence (agreement): 0.80
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    35.3%
+  Market price:    54.5%
+  Edge:            -19.2%
+  Direction:       NO (market overpriced)
+
+  Kelly sizing:
+    Full Kelly:      35.2% of bankroll
+    Fractional:      7.0% ($16.42)
+    Shares:          36.1 @ $0.4550
+    Max loss:        $16.42
+    Expected profit: $6.93
+    Risk/reward:     1.20
+
+  ✅ TRADE ENTERED
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 2 of 26
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will Bitcoin reach $80,000 in April?
+  Market ID:     1823776
+  Market price:  17.5%
+  Category:      ↑ 80,000
+  Volume 24h:    $181,363
+  Liquidity:     $118,114
+  Scanner score: 0.725
+  Days to res:   18.8
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news (1 of 5)
+  Time: 21.0s
+
+  News:
+    • Bitcoin surges above $70,000 after U.S.-Iran ceasefire announcement, reaching 3-week high
+    • $80,000 call becomes most popular trade on Deribit as sentiment flips bullish
+    • Whale accumulation hits 270,000 BTC in 30 days - largest monthly buy since 2013
+    • Exchange reserves drop to 7-year low of 2.21M BTC as institutional buying accelerates
+    • Bitcoin ETFs record $358M inflows led by BlackRock's $269M single-day purchase
+    Sentiment: bullish_yes (strength: 75%)
+    Key facts:
+      - Bitcoin currently trading around $71,000-$72,000 as of April 8-12, 2026
+      - Whale addresses (1,000+ BTC) accumulated 270,000 BTC in past 30 days worth ~$23 billion
+      - Exchange reserves at 7-year low of 2.21M BTC (5.88% of circulating supply)
+      - U.S. spot Bitcoin ETFs saw $358M net inflows on April 9, best day since March
+      - Key resistance levels at $73,595 and $74,000-$75,000 range identified by analysts
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,216 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.15,
+      "base_rate_reasoning": "Bitcoin reaching a new all-time high in any given month is historically rare, occurring perhaps 10-20% of the time during bull markets. Starting from ~$72k to reach $80k requires an 11% move in 18.8 days.",
+      "news_impact": "The news is strongly bullish - whale accumulation at 2013 levels, exchange reserves at 7-year lows, and strong ETF inflows create significant upward pressure. The ceasefire announcement already pushed BTC above $70k, showing momentum.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A - no specific whale trader signals provided, but the news indicates massive whale accumulation (270k BTC) which is a strong bullish signal from informed large holders.",
+      "cross_event_note": "N/A",
+      "factors_for": [
+        "Bitcoin already at $71-72k, only needs 11% gain to reach $80k",
+        "Massive whale accumulation of 270k BTC in 30 days - largest since 2013",
+        "Exchange reserves at 7-year low creating supply squeeze",
+        "Strong ETF inflows of $358M on April 9th showing institutional demand",
+        "Bullish momentum from geopolitical news (ceasefire) already pushing price higher",
+        "18.8 days remaining provides reasonable time window for the move"
+      ],
+      "factors_against": [
+        "Market price at only 17.5% suggests informed traders see significant obstacles",
+        "Price has fallen from 25.5% to 17.5% over past week despite bullish news",
+        "$80k represents psychological resistance and new all-time high territory",
+        "11% move in under 3 weeks is substantial even for Bitcoin",
+        "Order book shows more ask depth than bid depth despite bullish sentiment"
+      ],
+      "probability": 0.32,
+      "reasoning": "The market price of 17.5% appears too low given the confluence of bullish factors. Bitcoin is already at $71-72k and needs only an 11% move with 18.8 days remaining. The whale accumulation data (270k BTC - largest since 2013) and exchange reserves at 7-year lows create genuine supply-demand imbalance. However, the recent price decline from 25.5% to 17.5% despite bullish news suggests some resistance. The psychological barrier at $80k (new ATH) adds difficulty, but the fundamental setup is strong.",
+      "confidence": "medium",
+      "information_edge": "Market may be underweighting the significance of the supply squeeze from whale accumulation and low exchange reserves, focusing too much on technical resistance at $80k rather than fundamental demand drivers."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.15
+    Base rate reason:   Bitcoin reaching a new all-time high in any given month is historically rare, occurring perhaps 10-20% of the time during bull markets. Starting from ~$72k to reach $80k requires an 11% move in 18.8 days.
+    Factors FOR YES:
+      + Bitcoin already at $71-72k, only needs 11% gain to reach $80k
+      + Massive whale accumulation of 270k BTC in 30 days - largest since 2013
+      + Exchange reserves at 7-year low creating supply squeeze
+      + Strong ETF inflows of $358M on April 9th showing institutional demand
+      + Bullish momentum from geopolitical news (ceasefire) already pushing price higher
+      + 18.8 days remaining provides reasonable time window for the move
+    Factors AGAINST:
+      - Market price at only 17.5% suggests informed traders see significant obstacles
+      - Price has fallen from 25.5% to 17.5% over past week despite bullish news
+      - $80k represents psychological resistance and new all-time high territory
+      - 11% move in under 3 weeks is substantial even for Bitcoin
+      - Order book shows more ask depth than bid depth despite bullish sentiment
+    Probability:       0.32
+    Confidence:        medium
+    Reasoning:         The market price of 17.5% appears too low given the confluence of bullish factors. Bitcoin is already at $71-72k and needs only an 11% move with 18.8 days remaining. The whale accumulation data (270k BTC - largest since 2013) and exchange reserves at 7-year lows create genuine supply-demand imbalance. However, the recent price decline from 25.5% to 17.5% despite bullish news suggests some resistance. The psychological barrier at $80k (new ATH) adds difficulty, but the fundamental setup is strong.
+    Information edge:  Market may be underweighting the significance of the supply squeeze from whale accumulation and low exchange reserves, focusing too much on technical resistance at $80k rather than fundamental demand drivers.
+
+  Calibration:
+    Raw LLM probability:    32.0%
+    Calibrated probability: 36.2%
+    Adjustment:             +4.2%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.05 (1 sources × 0.05)
+    × deviation penalty:    ×0.80 (deviation 18.7% > 15%)
+    Final confidence:       0.52
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  36.2%   0.52    0.234         8.5%
+  base_rate                0.150  17.5%   0.50    0.075         1.3%
+  momentum                 0.200  15.6%   0.32    0.064         1.0%
+  book_imbalance           0.150  19.3%   0.25    0.037         0.7%
+  whale_profiled           0.000  17.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.410        11.5%
+
+  Final probability: 11.5% / 0.410 = 28.0%
+  Ensemble confidence (agreement): 0.85
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    28.0%
+  Market price:    17.5%
+  Edge:            +10.5%
+  Direction:       YES (market underpriced)
+
+  Kelly sizing:
+    Full Kelly:      12.8% of bankroll
+    Fractional:      2.7% ($6.31)
+    Shares:          36.1 @ $0.1750
+    Max loss:        $6.31
+    Expected profit: $3.80
+    Risk/reward:     4.71
+
+  ✅ TRADE ENTERED
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 3 of 26
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will Arsenal win the 2025–26 English Premier League?
+  Market ID:     566187
+  Market price:  68.5%
+  Category:      Arsenal
+  Volume 24h:    $317,747
+  Liquidity:     $331,169
+  Scanner score: 0.764
+  Days to res:   44.7
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 22.1s
+
+  News:
+    • Arsenal lead Premier League by 9 points over Manchester City with 7 games remaining
+    • Arsenal odds shortened to -455 after Brighton win, City odds lengthened to +350 after Forest draw
+    • Polymarket shows 85.5% implied probability for Arsenal title win
+    • Opta Supercomputer gives Arsenal over 97% chance of winning first title since 2004
+    • Arsenal face crucial away fixture at Manchester City on April 19
+    Sentiment: bullish_yes (strength: 85%)
+    Key facts:
+      - Arsenal currently top Premier League table with 70 points from 31 games (21W-7D-3L, +39 GD)
+      - Manchester City in second with 61 points from 30 games (18W-7D-5L, +32 GD)
+      - Arsenal have played one more game than City but lead by 9 points
+      - Arsenal beat Everton 2-0 on March 14 while City drew 1-1 with West Ham same day
+      - City beat Arsenal 2-0 in EFL Cup final on March 22
+
+  Related markets:
+    [keyword_overlap] Will Manchester City win the 2025–26 English Premier League?: 30%
+    [keyword_overlap] Will Arsenal win the 2025–26 Champions League?: 26%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,298 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.05,
+      "base_rate_reasoning": "Historically, any single team winning the Premier League in a given season has roughly a 5% chance (1 in 20 teams), though the Big 6 clubs have higher base rates around 10-15%.",
+      "news_impact": "The news is extremely bullish for Arsenal - they lead by 9 points with only 7 games remaining, which historically gives teams an extremely high probability of winning the title. Statistical models like Opta give them over 97% chance.",
+      "cross_platform_note": "Traditional sportsbooks show Arsenal at -455 odds (82% implied probability), which is somewhat lower than the 97%+ from statistical models.",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "Arsenal at 68.5% and Manchester City at 30% sums to 98.5%, which is logically consistent as these are the only realistic title contenders at this stage.",
+      "factors_for": [
+        "Arsenal leads by 9 points with only 7 games remaining - historically very difficult to lose from this position",
+        "Statistical models (Opta Supercomputer) give Arsenal over 97% chance based on current standings",
+        "Arsenal has superior goal difference (+39 vs +32) providing additional buffer",
+        "Recent form shows Arsenal winning while City dropping points (draw vs West Ham)"
+      ],
+      "factors_against": [
+        "Manchester City has one game in hand, so the gap could theoretically narrow to 6 points",
+        "City has historically shown strong finishing ability and experience in title races",
+        "Arsenal has historically struggled with pressure in title races",
+        "7 games remaining still provides mathematical possibility for City comeback"
+      ],
+      "probability": 0.89,
+      "reasoning": "Starting from a low base rate of 5%, the current situation dramatically increases Arsenal's chances. A 9-point lead with 7 games remaining is historically very secure - teams in this position win the title over 95% of the time. While City has a game in hand, they would need to win all remaining games while Arsenal collapses, which is statistically unlikely given both teams' quality. The market at 68.5% appears to underweight the statistical reality of such commanding leads.",
+      "confidence": "high",
+      "information_edge": "Market appears to be underweighting historical data on teams with 9+ point leads in final 7 games, possibly due to recency bias from previous Arsenal collapses or overestimating City's comeback ability."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.05
+    Base rate reason:   Historically, any single team winning the Premier League in a given season has roughly a 5% chance (1 in 20 teams), though the Big 6 clubs have higher base rates around 10-15%.
+    Factors FOR YES:
+      + Arsenal leads by 9 points with only 7 games remaining - historically very difficult to lose from this position
+      + Statistical models (Opta Supercomputer) give Arsenal over 97% chance based on current standings
+      + Arsenal has superior goal difference (+39 vs +32) providing additional buffer
+      + Recent form shows Arsenal winning while City dropping points (draw vs West Ham)
+    Factors AGAINST:
+      - Manchester City has one game in hand, so the gap could theoretically narrow to 6 points
+      - City has historically shown strong finishing ability and experience in title races
+      - Arsenal has historically struggled with pressure in title races
+      - 7 games remaining still provides mathematical possibility for City comeback
+    Probability:       0.89
+    Confidence:        high
+    Reasoning:         Starting from a low base rate of 5%, the current situation dramatically increases Arsenal's chances. A 9-point lead with 7 games remaining is historically very secure - teams in this position win the title over 95% of the time. While City has a game in hand, they would need to win all remaining games while Arsenal collapses, which is statistically unlikely given both teams' quality. The market at 68.5% appears to underweight the statistical reality of such commanding leads.
+    Information edge:  Market appears to be underweighting historical data on teams with 9+ point leads in final 7 games, possibly due to recency bias from previous Arsenal collapses or overestimating City's comeback ability.
+
+  Calibration:
+    Raw LLM probability:    89.0%
+    Calibrated probability: 86.4%
+    Adjustment:             -2.6%
+
+  Confidence build-up:
+    Base (from LLM):        0.85 (high)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    × deviation penalty:    ×0.80 (deviation 17.9% > 15%)
+    Final confidence:       0.76
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  86.4%   0.76    0.342        29.5%
+  base_rate                0.150  68.5%   0.50    0.075         5.1%
+  momentum                 0.200  63.8%   0.70    0.140         8.9%
+  book_imbalance           0.150  72.7%   0.50    0.075         5.5%
+  whale_profiled           0.000  68.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.632        49.1%
+
+  Final probability: 49.1% / 0.632 = 77.6%
+  Ensemble confidence (agreement): 0.85
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    77.6%
+  Market price:    68.5%
+  Edge:            +9.1%
+  Direction:       YES (market underpriced)
+
+  Kelly sizing:
+    Full Kelly:      28.9% of bankroll
+    Fractional:      6.1% ($14.25)
+    Shares:          20.8 @ $0.6850
+    Max loss:        $14.25
+    Expected profit: $1.90
+    Risk/reward:     0.46
+
+  ✅ TRADE ENTERED
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 4 of 26
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Rolex Monte Carlo Masters: Carlos Alcaraz vs Jannik Sinner
+  Market ID:     1947793
+  Market price:  48.5%
+  Volume 24h:    $186,974
+  Liquidity:     $326,825
+  Scanner score: 0.896
+  Days to res:   7.2
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news (1 of 5)
+  Time: 20.7s
+
+  News:
+    • Alcaraz and Sinner set for Monte Carlo final showdown with World No. 1 ranking at stake
+    • Sinner on 16-match winning streak after dominating Zverev 6-1, 6-4 in semifinals
+    • Alcaraz leads head-to-head 10-6 overall, 4-1 on clay including 3-0 in last three clay meetings
+    • Sharp bettors backing Sinner despite Alcaraz opening as favorite
+    • Both players in exceptional 2026 form: Alcaraz 22-2, Sinner 24-2 record
+    Sentiment: neutral (strength: 50%)
+    Key facts:
+      - Alcaraz leads Sinner 10-6 in overall head-to-head, 4-1 on clay courts
+      - Sinner has won 16 consecutive matches and is on a 21-match Masters 1000 winning streak
+      - Alcaraz is defending champion at Monte Carlo, seeking second title there
+      - Winner takes World No. 1 ranking on Monday's ATP rankings
+      - Sinner hasn't beaten Alcaraz on clay since 2022 Umag final
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,326 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "With no specific historical base rate provided, I anchor to 50% as the uninformative prior for a head-to-head tennis match between two elite players.",
+      "news_impact": "The news reveals crucial context: Sinner is on a dominant 16-match winning streak and has sharp money backing him, while Alcaraz holds a significant 4-1 clay court advantage in their head-to-head. This creates competing narratives of current form versus historical dominance on surface.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "N/A",
+      "factors_for": [
+        "Alcaraz leads head-to-head 4-1 on clay courts, including 3-0 in last three clay meetings",
+        "Alcaraz is defending champion at Monte Carlo, showing proven ability on this specific court",
+        "Clay is traditionally Alcaraz's strongest surface where his game style excels"
+      ],
+      "factors_against": [
+        "Sinner is on exceptional current form with 16-match winning streak",
+        "Sharp bettors are backing Sinner despite Alcaraz opening as favorite",
+        "Sinner has 21-match Masters 1000 winning streak showing elite consistency",
+        "Market has moved from 53% to 48.5% toward Sinner over past week"
+      ],
+      "probability": 0.52,
+      "reasoning": "Starting from 50% base rate, I weight Alcaraz's 4-1 clay advantage and defending champion status as significant positive factors. However, Sinner's exceptional current form (16-match streak) and sharp money backing him provide strong counter-evidence. The market movement from 53% to 48.5% suggests informed money recognizes Sinner's current dominance. The clay court head-to-head edge for Alcaraz is the deciding factor, but it's a close call given Sinner's momentum.",
+      "confidence": "medium",
+      "information_edge": "The market may be overweighting Sinner's recent form streak while undervaluing Alcaraz's specific clay court dominance in their matchups and home court advantage as defending champion."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   With no specific historical base rate provided, I anchor to 50% as the uninformative prior for a head-to-head tennis match between two elite players.
+    Factors FOR YES:
+      + Alcaraz leads head-to-head 4-1 on clay courts, including 3-0 in last three clay meetings
+      + Alcaraz is defending champion at Monte Carlo, showing proven ability on this specific court
+      + Clay is traditionally Alcaraz's strongest surface where his game style excels
+    Factors AGAINST:
+      - Sinner is on exceptional current form with 16-match winning streak
+      - Sharp bettors are backing Sinner despite Alcaraz opening as favorite
+      - Sinner has 21-match Masters 1000 winning streak showing elite consistency
+      - Market has moved from 53% to 48.5% toward Sinner over past week
+    Probability:       0.52
+    Confidence:        medium
+    Reasoning:         Starting from 50% base rate, I weight Alcaraz's 4-1 clay advantage and defending champion status as significant positive factors. However, Sinner's exceptional current form (16-match streak) and sharp money backing him provide strong counter-evidence. The market movement from 53% to 48.5% suggests informed money recognizes Sinner's current dominance. The clay court head-to-head edge for Alcaraz is the deciding factor, but it's a close call given Sinner's momentum.
+    Information edge:  The market may be overweighting Sinner's recent form streak while undervaluing Alcaraz's specific clay court dominance in their matchups and home court advantage as defending champion.
+
+  Calibration:
+    Raw LLM probability:    52.0%
+    Calibrated probability: 53.6%
+    Adjustment:             +1.6%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.05 (1 sources × 0.05)
+    Final confidence:       0.65
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  53.6%   0.65    0.293        15.7%
+  base_rate                0.150  48.5%   0.50    0.075         3.6%
+  momentum                 0.200  47.7%   0.14    0.027         1.3%
+  book_imbalance           0.150  46.8%   0.24    0.036         1.7%
+  whale_profiled           0.000  48.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.431        22.3%
+
+  Final probability: 22.3% / 0.431 = 51.7%
+  Ensemble confidence (agreement): 0.95
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    51.7%
+  Market price:    48.5%
+  Edge:            +3.2%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: Edge 3.2% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 7 of 26
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will Manchester City win the 2025–26 English Premier League?
+  Market ID:     566188
+  Market price:  30.5%
+  Category:      Man City
+  Volume 24h:    $198,412
+  Liquidity:     $316,036
+  Scanner score: 0.760
+  Days to res:   44.7
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, kalshi, related_markets (3 of 5)
+  Time: 17.0s
+
+  News:
+    • Arsenal lead Premier League by 9 points over Manchester City with game in hand
+    • City trail 70-61 points with Arsenal having played one more match
+    • Key defender Josko Gvardiol out with tibia fracture requiring surgery
+    • Ruben Dias expected to return for crucial Arsenal clash on April 19
+    • City beat Arsenal 2-0 in EFL Cup final but knocked out of Champions League
+    Sentiment: bearish_yes (strength: 70%)
+    Key facts:
+      - Manchester City currently sit 2nd with 61 points from 30 games
+      - Arsenal lead with 70 points from 31 games - 9 point gap
+      - City have crucial fixtures: Chelsea (April 12), Arsenal (April 19)
+      - Gvardiol underwent surgery for broken leg, recovery progressing
+      - City eliminated from Champions League in Round of 16 by Real Madrid
+
+  Related markets:
+    [keyword_overlap] Will Arsenal win the 2025–26 English Premier League?: 68%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,119 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.2,
+      "base_rate_reasoning": "Manchester City has won 6 of the last 7 Premier League titles, but being 9 points behind with 8 games remaining historically gives teams only about a 15-25% chance of winning the title.",
+      "news_impact": "The 9-point deficit to Arsenal with City having played one fewer game creates a significant mathematical challenge. Gvardiol's injury weakens their defense at a crucial time, though Dias's return helps.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "Arsenal's 68% probability creates a logical constraint - if Arsenal is heavily favored, City's chances must be correspondingly lower, suggesting consistency around 25-30%.",
+      "factors_for": [
+        "Manchester City's exceptional track record of 6 titles in 7 years",
+        "Superior squad depth and experience in title races",
+        "Pep Guardiola's tactical expertise in pressure situations",
+        "One game in hand could reduce the gap to 6 points",
+        "Ruben Dias returning for crucial fixtures"
+      ],
+      "factors_against": [
+        "9-point deficit is substantial with limited games remaining",
+        "Arsenal showing strong form and consistency this season",
+        "Key defender Gvardiol out with serious injury requiring surgery",
+        "Must win direct clash against Arsenal to have realistic chance",
+        "Historical data shows teams rarely overcome such deficits"
+      ],
+      "probability": 0.27,
+      "reasoning": "While City has dominated recent Premier League seasons, the current 9-point gap represents a significant mathematical challenge. Historical analysis shows teams in City's position win the title roughly 20% of the time. However, City's exceptional quality, experience, and having a game in hand provide some upside. The market price of 30.5% seems slightly high given Arsenal's strong position at 68%, but not dramatically so.",
+      "confidence": "medium",
+      "information_edge": "Market may be slightly overvaluing City's historical dominance versus the current mathematical reality of the points gap"
+    }
+
+  Parsed response:
+    Base rate anchor:   0.2
+    Base rate reason:   Manchester City has won 6 of the last 7 Premier League titles, but being 9 points behind with 8 games remaining historically gives teams only about a 15-25% chance of winning the title.
+    Factors FOR YES:
+      + Manchester City's exceptional track record of 6 titles in 7 years
+      + Superior squad depth and experience in title races
+      + Pep Guardiola's tactical expertise in pressure situations
+      + One game in hand could reduce the gap to 6 points
+      + Ruben Dias returning for crucial fixtures
+    Factors AGAINST:
+      - 9-point deficit is substantial with limited games remaining
+      - Arsenal showing strong form and consistency this season
+      - Key defender Gvardiol out with serious injury requiring surgery
+      - Must win direct clash against Arsenal to have realistic chance
+      - Historical data shows teams rarely overcome such deficits
+    Probability:       0.27
+    Confidence:        medium
+    Reasoning:         While City has dominated recent Premier League seasons, the current 9-point gap represents a significant mathematical challenge. Historical analysis shows teams in City's position win the title roughly 20% of the time. However, City's exceptional quality, experience, and having a game in hand provide some upside. The market price of 30.5% seems slightly high given Arsenal's strong position at 68%, but not dramatically so.
+    Information edge:  Market may be slightly overvaluing City's historical dominance versus the current mathematical reality of the points gap
+
+  Calibration:
+    Raw LLM probability:    27.0%
+    Calibrated probability: 31.6%
+    Adjustment:             +4.6%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.15 (3 sources × 0.05)
+    Final confidence:       0.75
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  31.6%   0.75    0.338        10.7%
+  base_rate                0.150  30.5%   0.50    0.075         2.3%
+  momentum                 0.200  35.2%   0.70    0.140         4.9%
+  book_imbalance           0.150  26.3%   0.50    0.075         2.0%
+  whale_profiled           0.000  30.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.627        19.9%
+
+  Final probability: 19.9% / 0.627 = 31.6%
+  Ensemble confidence (agreement): 0.94
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    31.6%
+  Market price:    30.5%
+  Edge:            +1.1%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: Edge 1.1% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 9 of 26
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will Arsenal win the 2025–26 Champions League?
+  Market ID:     566140
+  Market price:  26.5%
+  Category:      Arsenal
+  Volume 24h:    $229,791
+  Liquidity:     $404,273
+  Scanner score: 0.743
+  Days to res:   48.7
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 19.2s
+
+  News:
+    • Arsenal beat Sporting CP 1-0 in Champions League quarter-final first leg with Havertz stoppage-time winner
+    • Opta rates Arsenal as Champions League favorites with 28.8% probability of winning trophy
+    • Arsenal lead betting markets at 9/4 odds after perfect 8-0 league phase campaign
+    • Key Arsenal players Saka, Timber, Odegaard injured ahead of second leg vs Sporting
+    • Arsenal have favorable knockout draw avoiding other top contenders until potential final
+    Sentiment: bullish_yes (strength: 75%)
+    Key facts:
+      - Arsenal won 1-0 away to Sporting CP in Champions League quarter-final first leg on April 8, 2026
+      - Opta analytics gives Arsenal 77.5% chance of reaching semifinals and 28.8% chance of winning Champions League
+      - Arsenal are betting favorites at 9/4 odds across multiple sportsbooks
+      - Arsenal completed perfect 8-0 record in Champions League league phase
+      - Key injuries: Bukayo Saka, Jurrien Timber, Martin Odegaard, Eberechi Eze, Piero Hincapie, Mikel Merino out
+
+  Related markets:
+    [keyword_overlap] Will Arsenal win the 2025–26 English Premier League?: 68%
+    [keyword_overlap] Will Atletico Madrid win the 2025–26 Champions League?: 7%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,389 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.06,
+      "base_rate_reasoning": "Historically, the Champions League has 32+ teams competing, giving any single team roughly 3-6% base rate chance. Premier League teams have won about 25% of Champions Leagues in recent decades.",
+      "news_impact": "The news is strongly positive - Arsenal's perfect 8-0 league phase, 1-0 quarter-final first leg win, and Opta rating them as 28.8% favorites all support a higher probability than the base rate would suggest.",
+      "cross_platform_note": "Opta analytics (28.8%) and betting markets (9/4 odds \u2248 31%) both align closely with the current market price of 26.5%.",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "Arsenal's 68% Premier League probability suggests strong current form, which is consistent with Champions League success but doesn't create a logical constraint.",
+      "factors_for": [
+        "Perfect 8-0 Champions League league phase record",
+        "1-0 away win in quarter-final first leg against Sporting",
+        "Opta analytics rates them as tournament favorites at 28.8%",
+        "Leading betting markets as favorites",
+        "Strong Premier League form (68% to win league)"
+      ],
+      "factors_against": [
+        "Key injuries to Saka, Timber, and Odegaard ahead of second leg",
+        "Still need to win 3 more knockout rounds after Sporting",
+        "Historical difficulty of English teams in Champions League",
+        "Competition from other elite European clubs",
+        "Tournament format inherently unpredictable"
+      ],
+      "probability": 0.27,
+      "reasoning": "Arsenal's exceptional Champions League performance (8-0 league phase, quarter-final lead) and analytical backing (Opta 28.8%, betting favorites) justify a probability well above the 6% base rate. However, key injuries and the inherent difficulty of winning 3+ knockout rounds prevent going much higher. The market price of 26.5% appears well-calibrated given the available information.",
+      "confidence": "medium",
+      "information_edge": "none"
+    }
+
+  Parsed response:
+    Base rate anchor:   0.06
+    Base rate reason:   Historically, the Champions League has 32+ teams competing, giving any single team roughly 3-6% base rate chance. Premier League teams have won about 25% of Champions Leagues in recent decades.
+    Factors FOR YES:
+      + Perfect 8-0 Champions League league phase record
+      + 1-0 away win in quarter-final first leg against Sporting
+      + Opta analytics rates them as tournament favorites at 28.8%
+      + Leading betting markets as favorites
+      + Strong Premier League form (68% to win league)
+    Factors AGAINST:
+      - Key injuries to Saka, Timber, and Odegaard ahead of second leg
+      - Still need to win 3 more knockout rounds after Sporting
+      - Historical difficulty of English teams in Champions League
+      - Competition from other elite European clubs
+      - Tournament format inherently unpredictable
+    Probability:       0.27
+    Confidence:        medium
+    Reasoning:         Arsenal's exceptional Champions League performance (8-0 league phase, quarter-final lead) and analytical backing (Opta 28.8%, betting favorites) justify a probability well above the 6% base rate. However, key injuries and the inherent difficulty of winning 3+ knockout rounds prevent going much higher. The market price of 26.5% appears well-calibrated given the available information.
+    Information edge:  none
+
+  Calibration:
+    Raw LLM probability:    27.0%
+    Calibrated probability: 31.6%
+    Adjustment:             +4.6%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.70
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  31.6%   0.70    0.315        10.0%
+  base_rate                0.150  26.5%   0.50    0.075         2.0%
+  momentum                 0.200  25.9%   0.10    0.020         0.5%
+  book_imbalance           0.150  22.8%   0.50    0.075         1.7%
+  whale_profiled           0.000  26.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.485        14.2%
+
+  Final probability: 14.2% / 0.485 = 29.2%
+  Ensemble confidence (agreement): 0.94
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    29.2%
+  Market price:    26.5%
+  Edge:            +2.7%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: Edge 2.7% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 12 of 26
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will WTI Crude Oil (WTI) hit (HIGH) $140 in April?
+  Market ID:     1712295
+  Market price:  11.0%
+  Category:      ↑ $140
+  Volume 24h:    $209,471
+  Liquidity:     $166,677
+  Scanner score: 0.722
+  Days to res:   17.7
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 23.3s
+
+  News:
+    • WTI crude trading around $95-96 per barrel as of April 10-12, down from peaks above $110 earlier in April
+    • Strait of Hormuz remains effectively closed despite ceasefire talks, with Iran controlling access and charging transit fees
+    • EIA forecasts Brent crude to peak at $115/b in Q2 2026, with WTI expected to trade at discount
+    • JPMorgan warns Brent could reach $150/barrel if Strait remains closed into mid-May
+    • Goldman Sachs flags extreme scenario of $135/barrel, calls it largest supply shock in oil market history
+    Sentiment: bearish_yes (strength: 25%)
+    Key facts:
+      - Current WTI price around $95.50-$96.57 per barrel as of April 10-12, 2026
+      - WTI hit $119.43 swing high earlier in April before pulling back
+      - Strait of Hormuz closure has removed ~20% of global oil supply (11 million bpd production offline)
+      - EIA forecasts WTI peak around $100-115 range in Q2 2026 with $15/b Brent-WTI spread
+      - LiteFinance forecasts WTI range of $82.72-$133.91 for April 2026
+
+  Related markets:
+    [keyword_overlap] Will WTI Crude Oil (WTI) hit (HIGH) $120 in April?: 30%
+    [keyword_overlap] Will WTI Crude Oil (WTI) hit (HIGH) $150 in April?: 7%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 7,011 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.15,
+      "base_rate_reasoning": "Oil price spikes to extreme levels ($140+ WTI) are historically rare events, typically requiring severe supply disruptions or geopolitical crises. Even during major crises, such moves happen in a minority of cases.",
+      "news_impact": "The Strait of Hormuz closure has removed ~20% of global oil supply, creating the exact type of supply shock that could drive extreme price moves. However, WTI is currently around $95-96 and has already pulled back from its April high of $119.43, suggesting some market stabilization.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "The $120 target at 30% and $150 target at 7% create logical bounds - my estimate should fall between these levels, closer to the $120 probability given the smaller price gap.",
+      "factors_for": [
+        "Strait of Hormuz closure has removed 11 million bpd (~20% of global supply)",
+        "JPMorgan warns Brent could reach $150/barrel if closure continues into mid-May",
+        "Only needs to hit $140 once during April - any supply shock or escalation could trigger spike",
+        "Oil markets are volatile and prone to overshooting during supply crises",
+        "Iran controlling transit and charging fees maintains supply constraint pressure"
+      ],
+      "factors_against": [
+        "WTI currently trading around $95-96, requiring ~47% price increase to reach $140",
+        "Already pulled back from April high of $119.43, suggesting some market stabilization",
+        "EIA forecasts more modest WTI peak around $100-115 range in Q2 2026",
+        "WTI typically trades at discount to Brent, limiting upside relative to Brent forecasts",
+        "Only 17.7 days remaining in April for the target to be hit"
+      ],
+      "probability": 0.18,
+      "reasoning": "Starting from a 15% base rate for extreme oil price spikes, the Strait of Hormuz closure represents exactly the type of major supply disruption that could drive WTI to $140. However, WTI's current level around $95-96 and pullback from $119.43 suggests some market adaptation. The 18% estimate reflects the genuine supply shock impact while acknowledging the significant price gap needed and limited time remaining. This sits logically between the related markets' 30% for $120 and 7% for $150.",
+      "confidence": "medium",
+      "information_edge": "Market may be underestimating the potential for oil price volatility and overshooting during supply crises, but the pullback from recent highs suggests some stabilization forces are at work."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.15
+    Base rate reason:   Oil price spikes to extreme levels ($140+ WTI) are historically rare events, typically requiring severe supply disruptions or geopolitical crises. Even during major crises, such moves happen in a minority of cases.
+    Factors FOR YES:
+      + Strait of Hormuz closure has removed 11 million bpd (~20% of global supply)
+      + JPMorgan warns Brent could reach $150/barrel if closure continues into mid-May
+      + Only needs to hit $140 once during April - any supply shock or escalation could trigger spike
+      + Oil markets are volatile and prone to overshooting during supply crises
+      + Iran controlling transit and charging fees maintains supply constraint pressure
+    Factors AGAINST:
+      - WTI currently trading around $95-96, requiring ~47% price increase to reach $140
+      - Already pulled back from April high of $119.43, suggesting some market stabilization
+      - EIA forecasts more modest WTI peak around $100-115 range in Q2 2026
+      - WTI typically trades at discount to Brent, limiting upside relative to Brent forecasts
+      - Only 17.7 days remaining in April for the target to be hit
+    Probability:       0.18
+    Confidence:        medium
+    Reasoning:         Starting from a 15% base rate for extreme oil price spikes, the Strait of Hormuz closure represents exactly the type of major supply disruption that could drive WTI to $140. However, WTI's current level around $95-96 and pullback from $119.43 suggests some market adaptation. The 18% estimate reflects the genuine supply shock impact while acknowledging the significant price gap needed and limited time remaining. This sits logically between the related markets' 30% for $120 and 7% for $150.
+    Information edge:  Market may be underestimating the potential for oil price volatility and overshooting during supply crises, but the pullback from recent highs suggests some stabilization forces are at work.
+
+  Calibration:
+    Raw LLM probability:    18.0%
+    Calibrated probability: 22.9%
+    Adjustment:             +4.9%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.70
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  22.9%   0.70    0.315         7.2%
+  base_rate                0.150  11.0%   0.50    0.075         0.8%
+  momentum                 0.200  11.7%   0.12    0.024         0.3%
+  book_imbalance           0.150   8.5%   0.34    0.052         0.4%
+  whale_profiled           0.000  11.0%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.465         8.8%
+
+  Final probability: 8.8% / 0.465 = 18.8%
+  Ensemble confidence (agreement): 0.90
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    18.8%
+  Market price:    11.0%
+  Edge:            +7.8%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: Position $4.60 below minimum $5.00
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 16 of 26
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will Atletico Madrid win the 2025–26 Champions League?
+  Market ID:     566146
+  Market price:  7.2%
+  Category:      Atletico Madrid
+  Volume 24h:    $230,193
+  Liquidity:     $259,480
+  Scanner score: 0.662
+  Days to res:   48.7
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 19.1s
+
+  News:
+    • Atletico Madrid defeats Barcelona 2-0 in Champions League quarterfinal first leg at Camp Nou
+    • Julian Alvarez scores stunning free-kick goal to lead Atletico's victory over Barcelona
+    • Barcelona files complaint with UEFA after controversial penalty decision in defeat to Atletico
+    • Atletico Madrid now overwhelming favorites to advance to Champions League semifinals
+    • Jan Oblak remains sidelined with muscle injury, Juan Musso continues in goal for Atletico
+    Sentiment: bullish_yes (strength: 75%)
+    Key facts:
+      - Atletico Madrid won 2-0 away at Barcelona in the Champions League quarterfinal first leg on April 8, 2026
+      - Goals came from Julian Alvarez (free-kick) and Alexander Sorloth in the 70th minute
+      - This was Atletico's first win at Camp Nou in 20 years
+      - Barcelona was reduced to 10 men after Pau Cubarsi's red card for bringing down Giuliano Simeone
+      - Atletico's Champions League winner odds improved significantly after the victory, though they remain at 20/1 overall
+
+  Related markets:
+    [keyword_overlap] Will Arsenal win the 2025–26 Champions League?: 26%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,312 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.06,
+      "base_rate_reasoning": "Historically, the Champions League is dominated by a small group of elite clubs. Over the past 20 years, only about 8-10 different teams have won, with Real Madrid, Barcelona, Bayern Munich, and a few others accounting for most victories.",
+      "news_impact": "The recent 2-0 victory over Barcelona at Camp Nou is extremely significant - it's Atletico's first win there in 20 years and puts them in a commanding position to reach the semifinals. This substantially increases their tournament chances from the base rate.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "Arsenal is priced at 26% to win the Champions League, which seems high relative to Atletico at 7.2% given Atletico's current strong position in the tournament.",
+      "factors_for": [
+        "Commanding 2-0 first leg lead over Barcelona, historically difficult to overturn",
+        "First victory at Camp Nou in 20 years shows exceptional performance level",
+        "Diego Simeone's tactical expertise in knockout competitions",
+        "Strong defensive foundation that suits Champions League format",
+        "Julian Alvarez providing key attacking threat with quality goals"
+      ],
+      "factors_against": [
+        "Still need to complete the job against Barcelona in the second leg",
+        "Would likely face other elite teams (Real Madrid, Manchester City, etc.) in later rounds",
+        "Historically not among the very top tier of Champions League winners",
+        "Tournament format means single bad performance can end campaign",
+        "Competition from multiple stronger squads still in the tournament"
+      ],
+      "probability": 0.15,
+      "reasoning": "The base rate for Atletico winning the Champions League is low given historical dominance by elite clubs. However, their stunning 2-0 victory over Barcelona at Camp Nou - their first win there in 20 years - represents a major breakthrough that significantly elevates their chances. Being in a commanding position to reach the semifinals is valuable, but they would still need to overcome other elite teams. The market at 7.2% seems to underweight this recent strong performance.",
+      "confidence": "medium",
+      "information_edge": "Market may be undervaluing the psychological and tactical breakthrough of beating Barcelona at Camp Nou, plus Simeone's proven ability to maximize tournament performance"
+    }
+
+  Parsed response:
+    Base rate anchor:   0.06
+    Base rate reason:   Historically, the Champions League is dominated by a small group of elite clubs. Over the past 20 years, only about 8-10 different teams have won, with Real Madrid, Barcelona, Bayern Munich, and a few others accounting for most victories.
+    Factors FOR YES:
+      + Commanding 2-0 first leg lead over Barcelona, historically difficult to overturn
+      + First victory at Camp Nou in 20 years shows exceptional performance level
+      + Diego Simeone's tactical expertise in knockout competitions
+      + Strong defensive foundation that suits Champions League format
+      + Julian Alvarez providing key attacking threat with quality goals
+    Factors AGAINST:
+      - Still need to complete the job against Barcelona in the second leg
+      - Would likely face other elite teams (Real Madrid, Manchester City, etc.) in later rounds
+      - Historically not among the very top tier of Champions League winners
+      - Tournament format means single bad performance can end campaign
+      - Competition from multiple stronger squads still in the tournament
+    Probability:       0.15
+    Confidence:        medium
+    Reasoning:         The base rate for Atletico winning the Champions League is low given historical dominance by elite clubs. However, their stunning 2-0 victory over Barcelona at Camp Nou - their first win there in 20 years - represents a major breakthrough that significantly elevates their chances. Being in a commanding position to reach the semifinals is valuable, but they would still need to overcome other elite teams. The market at 7.2% seems to underweight this recent strong performance.
+    Information edge:  Market may be undervaluing the psychological and tactical breakthrough of beating Barcelona at Camp Nou, plus Simeone's proven ability to maximize tournament performance
+
+  Calibration:
+    Raw LLM probability:    15.0%
+    Calibrated probability: 19.8%
+    Adjustment:             +4.8%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.70
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  19.8%   0.70    0.315         6.2%
+  base_rate                0.150   7.2%   0.50    0.075         0.5%
+  momentum                 0.200   7.2%   0.01    0.002         0.0%
+  book_imbalance           0.150   2.3%   0.50    0.075         0.2%
+  whale_profiled           0.000   7.2%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.467         7.0%
+
+  Final probability: 7.0% / 0.467 = 14.9%
+  Ensemble confidence (agreement): 0.88
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    14.9%
+  Market price:    7.2%
+  Edge:            +7.7%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: Position $4.25 below minimum $5.00
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 21 of 26
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Will the Detroit Pistons win the 2026 NBA Finals?
+  Market ID:     553871
+  Market price:  6.4%
+  Category:      Detroit Pistons
+  Volume 24h:    $146,106
+  Liquidity:     $239,084
+  Scanner score: 0.579
+  Days to res:   79.7
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 15.6s
+
+  News:
+    • Detroit Pistons clinch #1 seed in Eastern Conference with 57-22 record
+    • Cade Cunningham returns from collapsed lung injury after missing 11 games
+    • Pistons went 8-3 without Cunningham, showing impressive depth
+    • Detroit has +2500 odds to win 2026 NBA Finals (250/1 longshot)
+    • Pistons face play-in tournament winner in first round of playoffs
+    Sentiment: bearish_yes (strength: 80%)
+    Key facts:
+      - Detroit secured the #1 seed in Eastern Conference for first time in 19 years
+      - Cade Cunningham returned April 9th after collapsed lung, recorded 13 points/10 assists
+      - Pistons are 57-22 overall, went 8-3 during Cunningham's absence
+      - Current NBA Finals odds: +2500 (FanDuel), making them extreme longshots
+      - Thunder (+115), Spurs (+500), Celtics (+500) are top championship favorites
+
+  Related markets:
+    [keyword_overlap] Will the San Antonio Spurs win the 2026 NBA Finals?: 18%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 4,795 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.033,
+      "base_rate_reasoning": "In any given NBA season, there are 30 teams, so the naive base rate for any team winning the Finals is 1/30 = 3.3%. However, talent distribution is highly uneven, so this should be adjusted based on team quality.",
+      "news_impact": "The news is extremely positive - Detroit clinching the #1 seed with a 57-22 record is a massive improvement from their recent rebuilding years. However, the +2500 Finals odds suggest sportsbooks still view them as longshots despite the regular season success.",
+      "cross_platform_note": "The Spurs are priced at 18% to win the Finals, which seems inconsistent with Detroit's 6.4% given Detroit's superior regular season performance and #1 seed.",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "The Spurs at 18% vs Pistons at 6.4% creates a logical inconsistency - Detroit's #1 seed and 57-22 record should command higher odds than San Antonio.",
+      "factors_for": [
+        "#1 seed in Eastern Conference with 57-22 record",
+        "Showed depth going 8-3 without star player Cunningham",
+        "Cade Cunningham healthy and returned successfully",
+        "Home court advantage throughout Eastern Conference playoffs"
+      ],
+      "factors_against": [
+        "Still viewed as extreme longshots by sportsbooks (+2500 odds)",
+        "Lack of playoff experience as a young team",
+        "Historical difficulty of teams making such dramatic year-over-year improvements",
+        "Western Conference likely has stronger competition"
+      ],
+      "probability": 0.12,
+      "reasoning": "The market appears to be significantly undervaluing Detroit. A 57-22 record and #1 seed represents elite regular season performance that historically correlates with Finals contention. The team showed resilience without Cunningham, and his return adds another dimension. While sportsbooks remain skeptical with +2500 odds, the regular season results suggest Detroit belongs in the 10-15% range rather than 6.4%. The cross-reference to San Antonio at 18% further supports this - Detroit's superior record warrants higher odds.",
+      "confidence": "medium",
+      "information_edge": "Market may be anchoring too heavily on Detroit's recent rebuilding history and not fully pricing in their dramatic improvement and #1 seed achievement."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.033
+    Base rate reason:   In any given NBA season, there are 30 teams, so the naive base rate for any team winning the Finals is 1/30 = 3.3%. However, talent distribution is highly uneven, so this should be adjusted based on team quality.
+    Factors FOR YES:
+      + #1 seed in Eastern Conference with 57-22 record
+      + Showed depth going 8-3 without star player Cunningham
+      + Cade Cunningham healthy and returned successfully
+      + Home court advantage throughout Eastern Conference playoffs
+    Factors AGAINST:
+      - Still viewed as extreme longshots by sportsbooks (+2500 odds)
+      - Lack of playoff experience as a young team
+      - Historical difficulty of teams making such dramatic year-over-year improvements
+      - Western Conference likely has stronger competition
+    Probability:       0.12
+    Confidence:        medium
+    Reasoning:         The market appears to be significantly undervaluing Detroit. A 57-22 record and #1 seed represents elite regular season performance that historically correlates with Finals contention. The team showed resilience without Cunningham, and his return adds another dimension. While sportsbooks remain skeptical with +2500 odds, the regular season results suggest Detroit belongs in the 10-15% range rather than 6.4%. The cross-reference to San Antonio at 18% further supports this - Detroit's superior record warrants higher odds.
+    Information edge:  Market may be anchoring too heavily on Detroit's recent rebuilding history and not fully pricing in their dramatic improvement and #1 seed achievement.
+
+  Calibration:
+    Raw LLM probability:    12.0%
+    Calibrated probability: 16.5%
+    Adjustment:             +4.5%
+
+  Confidence build-up:
+    Base (from LLM):        0.60 (medium)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.70
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  16.5%   0.70    0.315         5.2%
+  base_rate                0.150   6.4%   0.50    0.075         0.5%
+  momentum                 0.200   6.5%   0.01    0.003         0.0%
+  book_imbalance           0.150   3.6%   0.40    0.060         0.2%
+  whale_profiled           0.000   6.4%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.452         5.9%
+
+  Final probability: 5.9% / 0.452 = 13.1%
+  Ensemble confidence (agreement): 0.91
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    13.1%
+  Market price:    6.4%
+  Edge:            +6.7%
+  Direction:       YES (market underpriced)
+
+  ❌ NO TRADE: Position $3.79 below minimum $5.00
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 22 of 26
+══════════════════════════════════════════════════════════════════════════════
+  Question:      US-Iran nuclear deal by April 30?
+  Market ID:     1543487
+  Market price:  12.8%
+  Volume 24h:    $146,608
+  Liquidity:     $29,538
+  Scanner score: 0.557
+  Days to res:   17.7
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 16.5s
+
+  News:
+    • US-Iran peace talks in Pakistan fail after 21 hours - no nuclear deal reached
+    • VP Vance says Iran refused to commit to forgoing nuclear weapons development
+    • Two-week ceasefire between US and Iran announced April 7, expires April 21
+    • Iran demands uranium enrichment rights, US insists on complete nuclear disarmament
+    • Talks stalled over Strait of Hormuz control and nuclear program disagreements
+    Sentiment: bearish_yes (strength: 85%)
+    Key facts:
+      - US-Iran ceasefire announced April 7, 2026 with April 21 deadline approaching
+      - 21-hour marathon talks in Pakistan ended without agreement on April 11
+      - Iran refused to commit to permanently forgoing nuclear weapon development
+      - US demands complete end to uranium enrichment, Iran wants enrichment rights
+      - Strait of Hormuz control remains major sticking point in negotiations
+
+  Related markets:
+    [keyword_overlap] US x Iran permanent peace deal by April 22, 2026?: 8%
+    [keyword_overlap] Trump announces end of military operations against Iran by April 15th?: 6%
+    [keyword_overlap] Iran x Israel/US conflict ends by April 15?: 60%
+    [keyword_overlap] Trump announces end of military operations against Iran by April 30th?: 26%
+    [keyword_overlap] Iran x Israel/US conflict ends by April 30?: 62%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 5,675 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.2,
+      "base_rate_reasoning": "Nuclear deals between adversaries are historically rare and difficult to achieve, especially under tight deadlines. The 50% uninformative prior is too high given the complexity of nuclear negotiations.",
+      "news_impact": "The recent news is strongly negative - 21-hour marathon talks in Pakistan failed completely, with fundamental disagreements on uranium enrichment rights and nuclear weapons development. The ceasefire expires April 21 with only 9 days remaining.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "Related markets show very low probabilities for broader US-Iran peace (8%) and military operations ending (6-26%), which supports a low nuclear deal probability.",
+      "factors_for": [
+        "Two-week ceasefire provides diplomatic window until April 21",
+        "High-level talks occurred recently showing engagement",
+        "Both sides have incentives to avoid prolonged conflict",
+        "Market shows slight buyer imbalance suggesting some optimism"
+      ],
+      "factors_against": [
+        "21-hour Pakistan talks failed completely on April 11",
+        "Fundamental disagreement on uranium enrichment rights",
+        "Iran refused to commit to forgoing nuclear weapons development",
+        "US demands complete nuclear disarmament",
+        "Only 9 days left until ceasefire expires",
+        "Related peace markets trading at very low probabilities"
+      ],
+      "probability": 0.08,
+      "reasoning": "The recent failure of intensive 21-hour talks in Pakistan reveals irreconcilable differences on core issues - Iran wants enrichment rights while the US demands complete disarmament. With the ceasefire expiring April 21 and only 17 days until market resolution, there's insufficient time to bridge such fundamental gaps. The related markets pricing broader peace at 8% and military operations ending at 6-26% confirm the dire diplomatic situation.",
+      "confidence": "high",
+      "information_edge": "Market at 12.8% appears too optimistic given the complete failure of recent intensive negotiations and fundamental policy disagreements revealed in the Pakistan talks."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.2
+    Base rate reason:   Nuclear deals between adversaries are historically rare and difficult to achieve, especially under tight deadlines. The 50% uninformative prior is too high given the complexity of nuclear negotiations.
+    Factors FOR YES:
+      + Two-week ceasefire provides diplomatic window until April 21
+      + High-level talks occurred recently showing engagement
+      + Both sides have incentives to avoid prolonged conflict
+      + Market shows slight buyer imbalance suggesting some optimism
+    Factors AGAINST:
+      - 21-hour Pakistan talks failed completely on April 11
+      - Fundamental disagreement on uranium enrichment rights
+      - Iran refused to commit to forgoing nuclear weapons development
+      - US demands complete nuclear disarmament
+      - Only 9 days left until ceasefire expires
+      - Related peace markets trading at very low probabilities
+    Probability:       0.08
+    Confidence:        high
+    Reasoning:         The recent failure of intensive 21-hour talks in Pakistan reveals irreconcilable differences on core issues - Iran wants enrichment rights while the US demands complete disarmament. With the ceasefire expiring April 21 and only 17 days until market resolution, there's insufficient time to bridge such fundamental gaps. The related markets pricing broader peace at 8% and military operations ending at 6-26% confirm the dire diplomatic situation.
+    Information edge:  Market at 12.8% appears too optimistic given the complete failure of recent intensive negotiations and fundamental policy disagreements revealed in the Pakistan talks.
+
+  Calibration:
+    Raw LLM probability:    8.0%
+    Calibrated probability: 12.1%
+    Adjustment:             +4.1%
+
+  Confidence build-up:
+    Base (from LLM):        0.85 (high)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.95
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450  12.1%   0.95    0.427         5.2%
+  base_rate                0.150  12.8%   0.50    0.075         1.0%
+  momentum                 0.200  11.2%   0.28    0.055         0.6%
+  book_imbalance           0.150  13.7%   0.11    0.017         0.2%
+  whale_profiled           0.000  12.8%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.574         7.0%
+
+  Final probability: 7.0% / 0.574 = 12.1%
+  Ensemble confidence (agreement): 0.98
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    12.1%
+  Market price:    12.8%
+  Edge:            -0.7%
+  Direction:       NO (market overpriced)
+
+  ❌ NO TRADE: Edge 0.7% below minimum 5.0%
+
+
+══════════════════════════════════════════════════════════════════════════════
+  MARKET 26 of 26
+══════════════════════════════════════════════════════════════════════════════
+  Question:      Israel x Hezbollah ceasefire by April 15, 2026?
+  Market ID:     1938984
+  Market price:  6.5%
+  Category:      April 15
+  Volume 24h:    $267,316
+  Liquidity:     $45,129
+  Scanner score: 0.489
+  Days to res:   2.7
+
+─── ENRICHMENT ───────────────────────────────────────────────────────────────
+  Sources found: news, related_markets (2 of 5)
+  Time: 17.3s
+
+  News:
+    • Israel rejects ceasefire with Hezbollah ahead of Lebanon talks scheduled for next week in Washington
+    • Israel-Lebanon direct talks set for Tuesday at State Department despite ongoing Israeli attacks
+    • Iran threatens to withdraw from US ceasefire over continued Israeli strikes on Lebanon
+    • Israel launches 'Operation Eternal Darkness' killing 357 people in Lebanon on April 8
+    • Hezbollah rejects direct negotiations with Israel, calls talks 'violation of Lebanese constitution'
+    Sentiment: bearish_yes (strength: 80%)
+    Key facts:
+      - Israel-Lebanon talks scheduled for Tuesday April 15 at US State Department with ambassadors
+      - Israel explicitly refuses to discuss ceasefire with Hezbollah during upcoming talks
+      - Hezbollah holds 15 of 128 parliamentary seats and categorically rejects direct talks with Israel
+      - Over 1,739 people killed in Lebanon since March 2 war escalation, 350+ on April 8 alone
+      - Iran conditions its participation in US talks on inclusion of Lebanon in ceasefire
+
+  Related markets:
+    [keyword_overlap] Israel x Hezbollah ceasefire by April 30, 2026?: 25%
+    [keyword_overlap] US x Iran permanent peace deal by April 22, 2026?: 8%
+    [keyword_overlap] Iran x Israel/US conflict ends by April 15?: 60%
+    [keyword_overlap] Iran x Israel/US conflict ends by April 30?: 62%
+
+─── LLM ESTIMATION ───────────────────────────────────────────────────────────
+  Model:    claude-sonnet-4
+  Provider: claude
+
+  Prompt length: 6,258 chars
+
+  Raw LLM response:
+    {
+      "base_rate_anchor": 0.5,
+      "base_rate_reasoning": "No specific historical base rate is available for Israel-Hezbollah ceasefires, so starting with an uninformative prior of 50%.",
+      "news_impact": "The recent news is extremely negative for ceasefire prospects - Israel explicitly rejected ceasefire discussions, launched a major operation killing 357 people, and Hezbollah categorically refuses direct talks with Israel.",
+      "cross_platform_note": "N/A",
+      "whale_signal_note": "N/A",
+      "cross_event_note": "The related market for ceasefire by April 30 is at 25%, which should be higher than April 15 given the longer timeframe - this supports a low estimate for the April 15 deadline.",
+      "factors_for": [
+        "Scheduled Israel-Lebanon talks at State Department on Tuesday",
+        "US diplomatic pressure for de-escalation",
+        "High casualty toll may create pressure for ceasefire"
+      ],
+      "factors_against": [
+        "Israel explicitly refuses to discuss Hezbollah ceasefire in upcoming talks",
+        "Hezbollah categorically rejects direct talks with Israel",
+        "Israel just launched major 'Operation Eternal Darkness' killing 357 people",
+        "Only 2.7 days remaining until deadline",
+        "Market requires mutual agreement between parties who won't talk directly"
+      ],
+      "probability": 0.03,
+      "reasoning": "With only 2.7 days until the April 15 deadline, the prospects are extremely dim. Israel has explicitly stated it will not discuss a Hezbollah ceasefire in the scheduled Tuesday talks, while Hezbollah refuses direct negotiations with Israel. The recent escalation with 'Operation Eternal Darkness' killing 357 people signals Israel's intent to continue military pressure rather than seek immediate ceasefire. The market requirement for a 'publicly announced and mutually agreed halt' between parties who won't even talk directly makes this nearly impossible in the remaining timeframe.",
+      "confidence": "high",
+      "information_edge": "The market at 6.5% may still be too optimistic given the explicit Israeli rejection of ceasefire discussions and the extremely short timeframe remaining."
+    }
+
+  Parsed response:
+    Base rate anchor:   0.5
+    Base rate reason:   No specific historical base rate is available for Israel-Hezbollah ceasefires, so starting with an uninformative prior of 50%.
+    Factors FOR YES:
+      + Scheduled Israel-Lebanon talks at State Department on Tuesday
+      + US diplomatic pressure for de-escalation
+      + High casualty toll may create pressure for ceasefire
+    Factors AGAINST:
+      - Israel explicitly refuses to discuss Hezbollah ceasefire in upcoming talks
+      - Hezbollah categorically rejects direct talks with Israel
+      - Israel just launched major 'Operation Eternal Darkness' killing 357 people
+      - Only 2.7 days remaining until deadline
+      - Market requires mutual agreement between parties who won't talk directly
+    Probability:       0.03
+    Confidence:        high
+    Reasoning:         With only 2.7 days until the April 15 deadline, the prospects are extremely dim. Israel has explicitly stated it will not discuss a Hezbollah ceasefire in the scheduled Tuesday talks, while Hezbollah refuses direct negotiations with Israel. The recent escalation with 'Operation Eternal Darkness' killing 357 people signals Israel's intent to continue military pressure rather than seek immediate ceasefire. The market requirement for a 'publicly announced and mutually agreed halt' between parties who won't even talk directly makes this nearly impossible in the remaining timeframe.
+    Information edge:  The market at 6.5% may still be too optimistic given the explicit Israeli rejection of ceasefire discussions and the extremely short timeframe remaining.
+
+  Calibration:
+    Raw LLM probability:    3.0%
+    Calibrated probability: 5.8%
+    Adjustment:             +2.8%
+
+  Confidence build-up:
+    Base (from LLM):        0.85 (high)
+    + enrichment bonus:     +0.10 (2 sources × 0.05)
+    Final confidence:       0.95
+
+─── ENSEMBLE WEIGHTING ───────────────────────────────────────────────────────
+  Component              Base Wt    Prob   Conf   Eff Wt  Contribution
+                                                                              
+  enriched_llm             0.450   5.8%   0.95    0.427         2.5%
+  base_rate                0.150   6.5%   0.50    0.075         0.5%
+  momentum                 0.200   1.8%   0.70    0.140         0.3%
+  book_imbalance           0.150   5.3%   0.17    0.026         0.1%
+  whale_profiled           0.000   6.5%   0.00    0.000         0.0%
+                                                 ───────  ────────────
+  Totals                                           0.668         3.4%
+
+  Final probability: 3.4% / 0.668 = 5.0%
+  Ensemble confidence (agreement): 0.97
+
+─── TRADE DECISION ───────────────────────────────────────────────────────────
+  Our estimate:    5.0%
+  Market price:    6.5%
+  Edge:            -1.5%
+  Direction:       NO (market overpriced)
+
+  ❌ NO TRADE: Edge 1.5% below minimum 5.0%
+
+
+==============================================================================
+  RUN SUMMARY
+==============================================================================
+  Markets evaluated: 26
+  Tradeable:         3
+  Trades entered:    3
+  Elapsed:           422.2s
+==============================================================================
