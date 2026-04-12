@@ -469,7 +469,7 @@ def print_summary(report: dict):
 # CLI
 # ═══════════════════════════════════════════════════════════════
 
-def main():
+def main(argv: list[str] = None):
     parser = argparse.ArgumentParser(
         description="Weather Diagnostics — Analyze event log for strategy tuning"
     )
@@ -480,7 +480,7 @@ def main():
     parser.add_argument("--calibration", action="store_true", help="Calibration by tier")
     parser.add_argument("--json", action="store_true", help="Output as JSON")
     parser.add_argument("--log-file", type=str, default=None, help="Path to event log")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     log_file = Path(args.log_file) if args.log_file else None
     entries = load_log(log_file)

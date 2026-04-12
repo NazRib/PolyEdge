@@ -883,7 +883,7 @@ def main():
     
     if args.diagnostics:
         from weather.diagnostics import main as diag_main
-        diag_main()
+        diag_main([])
         return
     
     if args.check:
