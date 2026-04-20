@@ -1,7 +1,7 @@
 {
-  "bankroll": 265.81969999999995,
+  "bankroll": 818.4022000000001,
   "initial_bankroll": 1000.0,
-  "trade_counter": 86,
+  "trade_counter": 113,
   "trades": [
     {
       "trade_id": "PT-0001",
@@ -876,10 +876,10 @@
       "edge_at_entry": 0.12475291605316452,
       "confidence": 0.55,
       "timestamp": "2026-04-10T10:03:17.922225+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_LOSS",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": false,
+      "pnl": -8.42,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -896,10 +896,10 @@
       "edge_at_entry": 0.3172063652192589,
       "confidence": 0.55,
       "timestamp": "2026-04-10T10:03:17.925088+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_LOSS",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": false,
+      "pnl": -18.03,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -936,10 +936,10 @@
       "edge_at_entry": 0.11099565553648107,
       "confidence": 0.55,
       "timestamp": "2026-04-10T10:03:17.931513+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_WIN",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": true,
+      "pnl": 51.7787,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -956,10 +956,10 @@
       "edge_at_entry": 0.13260877037618224,
       "confidence": 0.6000000000000001,
       "timestamp": "2026-04-10T10:03:17.934582+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_LOSS",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": false,
+      "pnl": -8.0,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -1116,10 +1116,10 @@
       "edge_at_entry": 0.17298814983392136,
       "confidence": 0.7000000000000001,
       "timestamp": "2026-04-11T22:03:04.229605+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_WIN",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": true,
+      "pnl": 60.0797,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -1136,10 +1136,10 @@
       "edge_at_entry": 0.09487509632762048,
       "confidence": 0.7000000000000001,
       "timestamp": "2026-04-11T22:03:04.245398+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_LOSS",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": false,
+      "pnl": -7.56,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -1196,10 +1196,10 @@
       "edge_at_entry": 0.10510795210782004,
       "confidence": 0.8,
       "timestamp": "2026-04-12T04:02:56.376885+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_LOSS",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": false,
+      "pnl": -6.8,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -1216,10 +1216,10 @@
       "edge_at_entry": 0.23514455796067754,
       "confidence": 0.8,
       "timestamp": "2026-04-12T04:02:56.391100+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_LOSS",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": false,
+      "pnl": -14.82,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -1236,10 +1236,10 @@
       "edge_at_entry": 0.16516679243850552,
       "confidence": 0.7000000000000001,
       "timestamp": "2026-04-12T10:03:13.008830+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_LOSS",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": false,
+      "pnl": -9.98,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -1256,10 +1256,10 @@
       "edge_at_entry": 0.12496328310271537,
       "confidence": 0.7000000000000001,
       "timestamp": "2026-04-12T10:03:13.012843+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_LOSS",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": false,
+      "pnl": -7.3,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -1276,10 +1276,10 @@
       "edge_at_entry": 0.10503004529151894,
       "confidence": 0.7000000000000001,
       "timestamp": "2026-04-12T10:03:13.018417+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_LOSS",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": false,
+      "pnl": -5.29,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -1296,10 +1296,10 @@
       "edge_at_entry": 0.15168943358195366,
       "confidence": 0.7000000000000001,
       "timestamp": "2026-04-12T10:03:13.023634+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_LOSS",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": false,
+      "pnl": -8.65,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -1336,10 +1336,10 @@
       "edge_at_entry": 0.1421853862749229,
       "confidence": 0.8,
       "timestamp": "2026-04-12T16:03:15.789480+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_WIN",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": true,
+      "pnl": 78.82509999999999,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -1356,10 +1356,10 @@
       "edge_at_entry": 0.10906193330294434,
       "confidence": 0.8,
       "timestamp": "2026-04-12T16:03:15.800712+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_WIN",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": true,
+      "pnl": 19.8571,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -1376,10 +1376,10 @@
       "edge_at_entry": 0.15132179138710167,
       "confidence": 0.7000000000000001,
       "timestamp": "2026-04-12T16:03:15.820012+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_WIN",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": true,
+      "pnl": 96.4314,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -1396,10 +1396,10 @@
       "edge_at_entry": 0.10001796888008291,
       "confidence": 0.7500000000000001,
       "timestamp": "2026-04-12T16:03:15.830028+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_LOSS",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": false,
+      "pnl": -5.3,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -1416,10 +1416,10 @@
       "edge_at_entry": 0.14784789946097643,
       "confidence": 0.7500000000000001,
       "timestamp": "2026-04-12T16:03:15.842146+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_LOSS",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": false,
+      "pnl": -8.17,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -1436,10 +1436,10 @@
       "edge_at_entry": 0.08106729841176252,
       "confidence": 0.7500000000000001,
       "timestamp": "2026-04-12T16:03:15.853027+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_LOSS",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": false,
+      "pnl": -5.1,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -1456,10 +1456,10 @@
       "edge_at_entry": 0.3881071132040785,
       "confidence": 0.7000000000000001,
       "timestamp": "2026-04-12T16:03:15.866645+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_WIN",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": true,
+      "pnl": 225.6158,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -1476,10 +1476,10 @@
       "edge_at_entry": 0.123415018354927,
       "confidence": 0.7000000000000001,
       "timestamp": "2026-04-12T22:03:10.706146+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_LOSS",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": false,
+      "pnl": -5.4,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -1496,10 +1496,10 @@
       "edge_at_entry": 0.1967489944185432,
       "confidence": 0.7000000000000001,
       "timestamp": "2026-04-12T22:03:10.727508+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_LOSS",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": false,
+      "pnl": -8.79,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -1516,10 +1516,10 @@
       "edge_at_entry": 0.1425248441324018,
       "confidence": 0.7000000000000001,
       "timestamp": "2026-04-12T22:03:10.732994+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_LOSS",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": false,
+      "pnl": -7.3,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -1536,10 +1536,10 @@
       "edge_at_entry": 0.8448086768972559,
       "confidence": 0.9,
       "timestamp": "2026-04-13T04:03:07.111564+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_LOSS",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": false,
+      "pnl": -14.36,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -1556,10 +1556,10 @@
       "edge_at_entry": 0.09722510207709123,
       "confidence": 0.8,
       "timestamp": "2026-04-13T10:03:17.338192+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_LOSS",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": false,
+      "pnl": -5.66,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -1576,10 +1576,10 @@
       "edge_at_entry": 0.13307692609705363,
       "confidence": 0.7000000000000001,
       "timestamp": "2026-04-13T10:03:17.352612+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_LOSS",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": false,
+      "pnl": -6.4,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -1596,10 +1596,10 @@
       "edge_at_entry": 0.1248082518133169,
       "confidence": 0.7000000000000001,
       "timestamp": "2026-04-13T10:03:17.361610+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_LOSS",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": false,
+      "pnl": -6.44,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -1616,10 +1616,10 @@
       "edge_at_entry": 0.14111609906878564,
       "confidence": 0.7000000000000001,
       "timestamp": "2026-04-13T10:03:17.373717+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_LOSS",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": false,
+      "pnl": -6.58,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -1636,10 +1636,10 @@
       "edge_at_entry": 0.09501818296479964,
       "confidence": 0.8,
       "timestamp": "2026-04-13T10:03:17.386619+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_WIN",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": true,
+      "pnl": 24.475099999999998,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -1656,10 +1656,10 @@
       "edge_at_entry": 0.19513857168299917,
       "confidence": 0.7500000000000001,
       "timestamp": "2026-04-13T10:03:17.407567+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_LOSS",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": false,
+      "pnl": -9.71,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -1676,10 +1676,10 @@
       "edge_at_entry": 0.18379380084510555,
       "confidence": 0.7500000000000001,
       "timestamp": "2026-04-13T10:03:17.423696+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_WIN",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": true,
+      "pnl": 34.0668,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -1696,10 +1696,10 @@
       "edge_at_entry": 0.15066416498725327,
       "confidence": 0.7000000000000001,
       "timestamp": "2026-04-13T10:03:17.443446+00:00",
-      "status": "OPEN",
+      "status": "RESOLVED_LOSS",
       "exit_price": null,
-      "resolution": null,
-      "pnl": 0.0,
+      "resolution": false,
+      "pnl": -7.25,
       "strategy_tag": "",
       "model_tag": ""
     },
@@ -1716,6 +1716,546 @@
       "edge_at_entry": 0.17216862918458126,
       "confidence": 0.7000000000000001,
       "timestamp": "2026-04-13T10:03:17.458880+00:00",
+      "status": "RESOLVED_LOSS",
+      "exit_price": null,
+      "resolution": false,
+      "pnl": -6.88,
+      "strategy_tag": "",
+      "model_tag": ""
+    },
+    {
+      "trade_id": "PT-0087",
+      "market_id": "1924436",
+      "question": "Atlanta 2026-04-13 \u2014 84-85\u00b0F",
+      "side": "YES",
+      "entry_price": 0.012,
+      "shares": 830.6623,
+      "dollar_amount": 9.97,
+      "estimated_probability": 0.18086798916691188,
+      "market_price_at_entry": 0.012,
+      "edge_at_entry": 0.16886798916691187,
+      "confidence": 0.9,
+      "timestamp": "2026-04-13T22:03:09.090115+00:00",
+      "status": "RESOLVED_LOSS",
+      "exit_price": null,
+      "resolution": false,
+      "pnl": -9.97,
+      "strategy_tag": "",
+      "model_tag": ""
+    },
+    {
+      "trade_id": "PT-0088",
+      "market_id": "1953482",
+      "question": "NYC 2026-04-14 \u2014 88-89\u00b0F",
+      "side": "YES",
+      "entry_price": 0.0155,
+      "shares": 338.8507,
+      "dollar_amount": 5.25,
+      "estimated_probability": 0.11841219893608708,
+      "market_price_at_entry": 0.0155,
+      "edge_at_entry": 0.10291219893608708,
+      "confidence": 0.8,
+      "timestamp": "2026-04-13T22:03:09.097142+00:00",
+      "status": "RESOLVED_LOSS",
+      "exit_price": null,
+      "resolution": false,
+      "pnl": -5.25,
+      "strategy_tag": "",
+      "model_tag": ""
+    },
+    {
+      "trade_id": "PT-0089",
+      "market_id": "1965515",
+      "question": "Beijing 2026-04-15 \u2014 23\u00b0C",
+      "side": "YES",
+      "entry_price": 0.09,
+      "shares": 72.0525,
+      "dollar_amount": 6.48,
+      "estimated_probability": 0.22650788533543875,
+      "market_price_at_entry": 0.09,
+      "edge_at_entry": 0.13650788533543876,
+      "confidence": 0.7000000000000001,
+      "timestamp": "2026-04-13T22:03:09.106371+00:00",
+      "status": "RESOLVED_WIN",
+      "exit_price": null,
+      "resolution": true,
+      "pnl": 65.57249999999999,
+      "strategy_tag": "",
+      "model_tag": ""
+    },
+    {
+      "trade_id": "PT-0090",
+      "market_id": "1965596",
+      "question": "Denver 2026-04-15 \u2014 62-63\u00b0F",
+      "side": "YES",
+      "entry_price": 0.081,
+      "shares": 64.2811,
+      "dollar_amount": 5.21,
+      "estimated_probability": 0.1940628898099643,
+      "market_price_at_entry": 0.081,
+      "edge_at_entry": 0.1130628898099643,
+      "confidence": 0.7000000000000001,
+      "timestamp": "2026-04-13T22:03:09.112633+00:00",
+      "status": "RESOLVED_LOSS",
+      "exit_price": null,
+      "resolution": false,
+      "pnl": -5.21,
+      "strategy_tag": "",
+      "model_tag": ""
+    },
+    {
+      "trade_id": "PT-0091",
+      "market_id": "1965610",
+      "question": "Houston 2026-04-15 \u2014 80-81\u00b0F",
+      "side": "YES",
+      "entry_price": 0.195,
+      "shares": 31.3679,
+      "dollar_amount": 6.12,
+      "estimated_probability": 0.3133865021399615,
+      "market_price_at_entry": 0.195,
+      "edge_at_entry": 0.11838650213996149,
+      "confidence": 0.7000000000000001,
+      "timestamp": "2026-04-13T22:03:09.118924+00:00",
+      "status": "RESOLVED_LOSS",
+      "exit_price": null,
+      "resolution": false,
+      "pnl": -6.12,
+      "strategy_tag": "",
+      "model_tag": ""
+    },
+    {
+      "trade_id": "PT-0092",
+      "market_id": "1953725",
+      "question": "Beijing 2026-04-14 \u2014 20\u00b0C",
+      "side": "YES",
+      "entry_price": 0.065,
+      "shares": 190.8285,
+      "dollar_amount": 12.4,
+      "estimated_probability": 0.23278536602196595,
+      "market_price_at_entry": 0.065,
+      "edge_at_entry": 0.16778536602196595,
+      "confidence": 0.95,
+      "timestamp": "2026-04-14T04:03:03.969980+00:00",
+      "status": "RESOLVED_LOSS",
+      "exit_price": null,
+      "resolution": false,
+      "pnl": -12.4,
+      "strategy_tag": "",
+      "model_tag": ""
+    },
+    {
+      "trade_id": "PT-0093",
+      "market_id": "1953726",
+      "question": "Beijing 2026-04-14 \u2014 21\u00b0C",
+      "side": "YES",
+      "entry_price": 0.05,
+      "shares": 127.7345,
+      "dollar_amount": 6.39,
+      "estimated_probability": 0.14087589504727674,
+      "market_price_at_entry": 0.05,
+      "edge_at_entry": 0.09087589504727674,
+      "confidence": 0.95,
+      "timestamp": "2026-04-14T04:03:03.975741+00:00",
+      "status": "RESOLVED_LOSS",
+      "exit_price": null,
+      "resolution": false,
+      "pnl": -6.39,
+      "strategy_tag": "",
+      "model_tag": ""
+    },
+    {
+      "trade_id": "PT-0094",
+      "market_id": "1965311",
+      "question": "NYC 2026-04-15 \u2014 92-93\u00b0F",
+      "side": "YES",
+      "entry_price": 0.015,
+      "shares": 457.2072,
+      "dollar_amount": 6.86,
+      "estimated_probability": 0.13017609232336377,
+      "market_price_at_entry": 0.015,
+      "edge_at_entry": 0.11517609232336377,
+      "confidence": 0.8500000000000001,
+      "timestamp": "2026-04-14T04:03:03.983129+00:00",
+      "status": "RESOLVED_LOSS",
+      "exit_price": null,
+      "resolution": false,
+      "pnl": -6.86,
+      "strategy_tag": "",
+      "model_tag": ""
+    },
+    {
+      "trade_id": "PT-0095",
+      "market_id": "1965516",
+      "question": "Beijing 2026-04-15 \u2014 24\u00b0C",
+      "side": "YES",
+      "entry_price": 0.205,
+      "shares": 41.0006,
+      "dollar_amount": 8.41,
+      "estimated_probability": 0.3212399362162916,
+      "market_price_at_entry": 0.205,
+      "edge_at_entry": 0.11623993621629161,
+      "confidence": 0.8500000000000001,
+      "timestamp": "2026-04-14T04:03:03.990094+00:00",
+      "status": "RESOLVED_LOSS",
+      "exit_price": null,
+      "resolution": false,
+      "pnl": -8.41,
+      "strategy_tag": "",
+      "model_tag": ""
+    },
+    {
+      "trade_id": "PT-0096",
+      "market_id": "1953783",
+      "question": "Denver 2026-04-14 \u2014 56-57\u00b0F",
+      "side": "YES",
+      "entry_price": 0.0315,
+      "shares": 277.7103,
+      "dollar_amount": 8.75,
+      "estimated_probability": 0.1373430157879188,
+      "market_price_at_entry": 0.0315,
+      "edge_at_entry": 0.1058430157879188,
+      "confidence": 0.9,
+      "timestamp": "2026-04-14T10:03:02.635686+00:00",
+      "status": "RESOLVED_WIN",
+      "exit_price": null,
+      "resolution": true,
+      "pnl": 268.9603,
+      "strategy_tag": "",
+      "model_tag": ""
+    },
+    {
+      "trade_id": "PT-0097",
+      "market_id": "1953478",
+      "question": "NYC 2026-04-14 \u2014 80-81\u00b0F",
+      "side": "YES",
+      "entry_price": 0.03,
+      "shares": 246.5825,
+      "dollar_amount": 7.4,
+      "estimated_probability": 0.12144201883808911,
+      "market_price_at_entry": 0.03,
+      "edge_at_entry": 0.09144201883808911,
+      "confidence": 0.9,
+      "timestamp": "2026-04-14T16:02:57.431457+00:00",
+      "status": "RESOLVED_LOSS",
+      "exit_price": null,
+      "resolution": false,
+      "pnl": -7.4,
+      "strategy_tag": "",
+      "model_tag": ""
+    },
+    {
+      "trade_id": "PT-0098",
+      "market_id": "1965234",
+      "question": "London 2026-04-15 \u2014 16\u00b0C",
+      "side": "YES",
+      "entry_price": 0.115,
+      "shares": 104.4162,
+      "dollar_amount": 12.01,
+      "estimated_probability": 0.26086745838424535,
+      "market_price_at_entry": 0.115,
+      "edge_at_entry": 0.14586745838424536,
+      "confidence": 0.8500000000000001,
+      "timestamp": "2026-04-14T16:02:57.440633+00:00",
+      "status": "RESOLVED_LOSS",
+      "exit_price": null,
+      "resolution": false,
+      "pnl": -12.01,
+      "strategy_tag": "",
+      "model_tag": ""
+    },
+    {
+      "trade_id": "PT-0099",
+      "market_id": "1953501",
+      "question": "Atlanta 2026-04-14 \u2014 86-87\u00b0F",
+      "side": "YES",
+      "entry_price": 0.02,
+      "shares": 1024.4008,
+      "dollar_amount": 20.49,
+      "estimated_probability": 0.1898617694427604,
+      "market_price_at_entry": 0.02,
+      "edge_at_entry": 0.1698617694427604,
+      "confidence": 0.9,
+      "timestamp": "2026-04-14T22:02:55.029022+00:00",
+      "status": "RESOLVED_LOSS",
+      "exit_price": null,
+      "resolution": false,
+      "pnl": -20.49,
+      "strategy_tag": "",
+      "model_tag": ""
+    },
+    {
+      "trade_id": "PT-0100",
+      "market_id": "1953784",
+      "question": "Denver 2026-04-14 \u2014 58-59\u00b0F",
+      "side": "YES",
+      "entry_price": 0.011,
+      "shares": 1603.224,
+      "dollar_amount": 17.64,
+      "estimated_probability": 0.16330693666645554,
+      "market_price_at_entry": 0.011,
+      "edge_at_entry": 0.15230693666645553,
+      "confidence": 0.9,
+      "timestamp": "2026-04-14T22:02:55.036448+00:00",
+      "status": "RESOLVED_LOSS",
+      "exit_price": null,
+      "resolution": false,
+      "pnl": -17.64,
+      "strategy_tag": "",
+      "model_tag": ""
+    },
+    {
+      "trade_id": "PT-0101",
+      "market_id": "1965309",
+      "question": "NYC 2026-04-15 \u2014 88-89\u00b0F",
+      "side": "YES",
+      "entry_price": 0.15,
+      "shares": 67.532,
+      "dollar_amount": 10.13,
+      "estimated_probability": 0.23700025719225476,
+      "market_price_at_entry": 0.15,
+      "edge_at_entry": 0.08700025719225477,
+      "confidence": 0.8,
+      "timestamp": "2026-04-14T22:02:55.044280+00:00",
+      "status": "RESOLVED_LOSS",
+      "exit_price": null,
+      "resolution": false,
+      "pnl": -10.13,
+      "strategy_tag": "",
+      "model_tag": ""
+    },
+    {
+      "trade_id": "PT-0102",
+      "market_id": "1965514",
+      "question": "Beijing 2026-04-15 \u2014 22\u00b0C",
+      "side": "YES",
+      "entry_price": 0.0205,
+      "shares": 752.0518,
+      "dollar_amount": 15.42,
+      "estimated_probability": 0.1756237212398942,
+      "market_price_at_entry": 0.0205,
+      "edge_at_entry": 0.1551237212398942,
+      "confidence": 0.8,
+      "timestamp": "2026-04-14T22:02:55.052161+00:00",
+      "status": "RESOLVED_LOSS",
+      "exit_price": null,
+      "resolution": false,
+      "pnl": -15.42,
+      "strategy_tag": "",
+      "model_tag": ""
+    },
+    {
+      "trade_id": "PT-0103",
+      "market_id": "2011052",
+      "question": "London 2026-04-20 \u2014 14\u00b0C",
+      "side": "YES",
+      "entry_price": 0.0105,
+      "shares": 4762.108798040694,
+      "dollar_amount": 50,
+      "estimated_probability": 0.270772473232055,
+      "market_price_at_entry": 0.0105,
+      "edge_at_entry": 0.260272473232055,
+      "confidence": 0.9,
+      "timestamp": "2026-04-20T16:03:08.433523+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "",
+      "model_tag": ""
+    },
+    {
+      "trade_id": "PT-0104",
+      "market_id": "2011128",
+      "question": "NYC 2026-04-20 \u2014 54-55\u00b0F",
+      "side": "YES",
+      "entry_price": 0.0315,
+      "shares": 521.5582,
+      "dollar_amount": 16.43,
+      "estimated_probability": 0.11402570422026,
+      "market_price_at_entry": 0.0315,
+      "edge_at_entry": 0.08252570422026,
+      "confidence": 0.9,
+      "timestamp": "2026-04-20T16:03:08.441528+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "",
+      "model_tag": ""
+    },
+    {
+      "trade_id": "PT-0105",
+      "market_id": "2011127",
+      "question": "NYC 2026-04-20 \u2014 52-53\u00b0F",
+      "side": "YES",
+      "entry_price": 0.235,
+      "shares": 86.6657,
+      "dollar_amount": 20.37,
+      "estimated_probability": 0.31706650512040946,
+      "market_price_at_entry": 0.235,
+      "edge_at_entry": 0.08206650512040947,
+      "confidence": 0.9,
+      "timestamp": "2026-04-20T16:03:08.449116+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "",
+      "model_tag": ""
+    },
+    {
+      "trade_id": "PT-0106",
+      "market_id": "2011147",
+      "question": "Atlanta 2026-04-20 \u2014 72-73\u00b0F",
+      "side": "YES",
+      "entry_price": 0.0505,
+      "shares": 990.053267594741,
+      "dollar_amount": 50,
+      "estimated_probability": 0.3276762767593927,
+      "market_price_at_entry": 0.0505,
+      "edge_at_entry": 0.2771762767593927,
+      "confidence": 0.95,
+      "timestamp": "2026-04-20T16:03:08.457518+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "",
+      "model_tag": ""
+    },
+    {
+      "trade_id": "PT-0107",
+      "market_id": "2011148",
+      "question": "Atlanta 2026-04-20 \u2014 74-75\u00b0F",
+      "side": "YES",
+      "entry_price": 0.195,
+      "shares": 198.713,
+      "dollar_amount": 38.75,
+      "estimated_probability": 0.3617833525187727,
+      "market_price_at_entry": 0.195,
+      "edge_at_entry": 0.1667833525187727,
+      "confidence": 0.95,
+      "timestamp": "2026-04-20T16:03:08.468208+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "",
+      "model_tag": ""
+    },
+    {
+      "trade_id": "PT-0108",
+      "market_id": "2011400",
+      "question": "Houston 2026-04-20 \u2014 68-69\u00b0F",
+      "side": "YES",
+      "entry_price": 0.125,
+      "shares": 181.2377,
+      "dollar_amount": 22.65,
+      "estimated_probability": 0.2414623825124842,
+      "market_price_at_entry": 0.125,
+      "edge_at_entry": 0.1164623825124842,
+      "confidence": 0.9,
+      "timestamp": "2026-04-20T16:03:08.478607+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "",
+      "model_tag": ""
+    },
+    {
+      "trade_id": "PT-0109",
+      "market_id": "2019114",
+      "question": "London 2026-04-21 \u2014 12\u00b0C",
+      "side": "YES",
+      "entry_price": 0.0175,
+      "shares": 912.121,
+      "dollar_amount": 15.96,
+      "estimated_probability": 0.1118998551922207,
+      "market_price_at_entry": 0.0175,
+      "edge_at_entry": 0.0943998551922207,
+      "confidence": 0.9,
+      "timestamp": "2026-04-20T16:03:08.489615+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "",
+      "model_tag": ""
+    },
+    {
+      "trade_id": "PT-0110",
+      "market_id": "2019115",
+      "question": "London 2026-04-21 \u2014 13\u00b0C",
+      "side": "YES",
+      "entry_price": 0.185,
+      "shares": 100.1673,
+      "dollar_amount": 18.53,
+      "estimated_probability": 0.2775079805039822,
+      "market_price_at_entry": 0.185,
+      "edge_at_entry": 0.09250798050398218,
+      "confidence": 0.9,
+      "timestamp": "2026-04-20T16:03:08.499233+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "",
+      "model_tag": ""
+    },
+    {
+      "trade_id": "PT-0111",
+      "market_id": "2019212",
+      "question": "Atlanta 2026-04-21 \u2014 76-77\u00b0F",
+      "side": "YES",
+      "entry_price": 0.085,
+      "shares": 160.5554,
+      "dollar_amount": 13.65,
+      "estimated_probability": 0.17284277657840635,
+      "market_price_at_entry": 0.085,
+      "edge_at_entry": 0.08784277657840635,
+      "confidence": 0.8,
+      "timestamp": "2026-04-20T16:03:08.508405+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "",
+      "model_tag": ""
+    },
+    {
+      "trade_id": "PT-0112",
+      "market_id": "2019316",
+      "question": "Hong Kong 2026-04-21 \u2014 29\u00b0C",
+      "side": "YES",
+      "entry_price": 0.125,
+      "shares": 175.9475,
+      "dollar_amount": 21.99,
+      "estimated_probability": 0.26248849988422035,
+      "market_price_at_entry": 0.125,
+      "edge_at_entry": 0.13748849988422035,
+      "confidence": 0.8,
+      "timestamp": "2026-04-20T16:03:08.516558+00:00",
+      "status": "OPEN",
+      "exit_price": null,
+      "resolution": null,
+      "pnl": 0.0,
+      "strategy_tag": "",
+      "model_tag": ""
+    },
+    {
+      "trade_id": "PT-0113",
+      "market_id": "2019399",
+      "question": "Beijing 2026-04-21 \u2014 24\u00b0C",
+      "side": "YES",
+      "entry_price": 0.06,
+      "shares": 573.6148,
+      "dollar_amount": 34.42,
+      "estimated_probability": 0.2970942046552257,
+      "market_price_at_entry": 0.06,
+      "edge_at_entry": 0.23709420465522568,
+      "confidence": 0.8,
+      "timestamp": "2026-04-20T16:03:08.525398+00:00",
       "status": "OPEN",
       "exit_price": null,
       "resolution": null,
@@ -1729,325 +2269,613 @@
       "predicted": 0.3476715239724594,
       "actual": 0,
       "market_id": "1842813",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150297+00:00"
     },
     {
       "predicted": 0.3141449439466603,
       "actual": 0,
       "market_id": "1843067",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150303+00:00"
     },
     {
       "predicted": 0.3160890194719139,
       "actual": 0,
       "market_id": "1854753",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150304+00:00"
     },
     {
       "predicted": 0.3598500537455722,
       "actual": 0,
       "market_id": "1854410",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150305+00:00"
     },
     {
       "predicted": 0.2679293254451521,
       "actual": 0,
       "market_id": "1854409",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150306+00:00"
     },
     {
       "predicted": 0.10436110488874155,
       "actual": 0,
       "market_id": "1854407",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150306+00:00"
     },
     {
       "predicted": 0.16120751464131358,
       "actual": 0,
       "market_id": "1854548",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150307+00:00"
     },
     {
       "predicted": 0.23305691579068774,
       "actual": 0,
       "market_id": "1854822",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150307+00:00"
     },
     {
       "predicted": 0.2970659406119457,
       "actual": 0,
       "market_id": "1854823",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150308+00:00"
     },
     {
       "predicted": 0.30890671092335686,
       "actual": 1,
       "market_id": "1854754",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150309+00:00"
     },
     {
       "predicted": 0.28470758872543983,
       "actual": 0,
       "market_id": "1854821",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150309+00:00"
     },
     {
       "predicted": 0.2536219607491552,
       "actual": 0,
       "market_id": "1854549",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150310+00:00"
     },
     {
       "predicted": 0.2937057244144685,
       "actual": 0,
       "market_id": "1871938",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150310+00:00"
     },
     {
       "predicted": 0.3556314150085358,
       "actual": 0,
       "market_id": "1854648",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150311+00:00"
     },
     {
       "predicted": 0.24160095344953572,
       "actual": 1,
       "market_id": "1854526",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150311+00:00"
     },
     {
       "predicted": 0.23949590242559315,
       "actual": 0,
       "market_id": "1854551",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150312+00:00"
     },
     {
       "predicted": 0.1974608644687256,
       "actual": 0,
       "market_id": "1871582",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150313+00:00"
     },
     {
       "predicted": 0.29255596877942996,
       "actual": 0,
       "market_id": "1871583",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150313+00:00"
     },
     {
       "predicted": 0.20521209722212266,
       "actual": 0,
       "market_id": "1871584",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150314+00:00"
     },
     {
       "predicted": 0.1377886100169261,
       "actual": 0,
       "market_id": "1871729",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150314+00:00"
     },
     {
       "predicted": 0.2564335595991759,
       "actual": 1,
       "market_id": "1871705",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150315+00:00"
     },
     {
       "predicted": 0.42910247499970816,
       "actual": 0,
       "market_id": "1871853",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150315+00:00"
     },
     {
       "predicted": 0.39353971040308766,
       "actual": 0,
       "market_id": "1871706",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150316+00:00"
     },
     {
       "predicted": 0.2068242936985965,
       "actual": 0,
       "market_id": "1886566",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150316+00:00"
     },
     {
       "predicted": 0.2413294755461491,
       "actual": 0,
       "market_id": "1886567",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150317+00:00"
     },
     {
       "predicted": 0.3096616537704057,
       "actual": 0,
       "market_id": "1871731",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150317+00:00"
     },
     {
       "predicted": 0.14674210451003475,
       "actual": 0,
       "market_id": "1886637",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150318+00:00"
     },
     {
       "predicted": 0.17160653386985425,
       "actual": 0,
       "market_id": "1886358",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150319+00:00"
     },
     {
       "predicted": 0.27089603360836806,
       "actual": 0,
       "market_id": "1886337",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150320+00:00"
     },
     {
       "predicted": 0.16135765539361235,
       "actual": 0,
       "market_id": "1886338",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150321+00:00"
     },
     {
       "predicted": 0.09959460875647325,
       "actual": 0,
       "market_id": "1886362",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150321+00:00"
     },
     {
       "predicted": 0.1261398610956284,
       "actual": 0,
       "market_id": "1886361",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150322+00:00"
     },
     {
       "predicted": 0.9117569940558475,
       "actual": 0,
       "market_id": "1901621",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150323+00:00"
     },
     {
       "predicted": 0.7189749291637787,
       "actual": 1,
       "market_id": "1901959",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150323+00:00"
     },
     {
       "predicted": 0.21215174802853953,
       "actual": 0,
       "market_id": "1902034",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150324+00:00"
     },
     {
       "predicted": 0.20034734343815624,
       "actual": 0,
       "market_id": "1901729",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150324+00:00"
     },
     {
       "predicted": 0.18652774846179765,
       "actual": 0,
       "market_id": "1915088",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150325+00:00"
     },
     {
       "predicted": 0.27602216696403437,
       "actual": 0,
       "market_id": "1915089",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150325+00:00"
     },
     {
       "predicted": 0.2854304062133451,
       "actual": 0,
       "market_id": "1914783",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150326+00:00"
     },
     {
       "predicted": 0.15531321936126422,
       "actual": 0,
       "market_id": "1914782",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150326+00:00"
     },
     {
       "predicted": 0.32623632090874644,
       "actual": 0,
       "market_id": "1914784",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150327+00:00"
     },
     {
       "predicted": 0.2738549506718365,
       "actual": 0,
       "market_id": "1915090",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150327+00:00"
     },
     {
       "predicted": 0.9912727420272857,
       "actual": 1,
       "market_id": "1915162",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150328+00:00"
     },
     {
       "predicted": 0.17147367167721367,
       "actual": 0,
       "market_id": "1924642",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150329+00:00"
     },
     {
       "predicted": 0.2506432839911866,
       "actual": 0,
       "market_id": "1914904",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150329+00:00"
     },
     {
       "predicted": 0.15064549948793776,
       "actual": 0,
       "market_id": "1924641",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150330+00:00"
     },
     {
       "predicted": 0.1411171142066959,
       "actual": 0,
       "market_id": "1914859",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150330+00:00"
     },
     {
       "predicted": 0.4212666794817313,
       "actual": 0,
       "market_id": "1886474",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150331+00:00"
     },
     {
       "predicted": 0.42481693915227214,
       "actual": 1,
       "market_id": "1901878",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150331+00:00"
     },
     {
       "predicted": 0.28609357444002326,
       "actual": 0,
       "market_id": "1901879",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150332+00:00"
     },
     {
       "predicted": 0.39537128395850885,
       "actual": 0,
       "market_id": "1915005",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150332+00:00"
     },
     {
       "predicted": 0.18523731048460884,
       "actual": 0,
       "market_id": "1915004",
-      "time": "2026-04-13T16:13:55.036526+00:00"
+      "time": "2026-04-20T16:02:28.150333+00:00"
     },
     {
       "predicted": 0.15210213140838663,
       "actual": 0,
       "market_id": "1924336",
-      "time": "2026-04-13T16:13:58.093684+00:00"
+      "time": "2026-04-20T16:02:28.150333+00:00"
     },
     {
       "predicted": 0.22851345249562965,
       "actual": 0,
       "market_id": "1924337",
-      "time": "2026-04-13T16:14:00.222461+00:00"
+      "time": "2026-04-20T16:02:28.150334+00:00"
+    },
+    {
+      "predicted": 0.22099565553648107,
+      "actual": 1,
+      "market_id": "1924643",
+      "time": "2026-04-20T16:02:28.150335+00:00"
+    },
+    {
+      "predicted": 0.21760877037618223,
+      "actual": 0,
+      "market_id": "1924713",
+      "time": "2026-04-20T16:02:28.150335+00:00"
+    },
+    {
+      "predicted": 0.25564455796067753,
+      "actual": 0,
+      "market_id": "1924712",
+      "time": "2026-04-20T16:02:28.150336+00:00"
+    },
+    {
+      "predicted": 0.34798814983392135,
+      "actual": 1,
+      "market_id": "1924338",
+      "time": "2026-04-20T16:02:28.150336+00:00"
+    },
+    {
+      "predicted": 0.3097529160531645,
+      "actual": 0,
+      "market_id": "1924418",
+      "time": "2026-04-20T16:02:28.150337+00:00"
+    },
+    {
+      "predicted": 0.36520636521925887,
+      "actual": 0,
+      "market_id": "1924535",
+      "time": "2026-04-20T16:02:28.150337+00:00"
+    },
+    {
+      "predicted": 0.3548750963276205,
+      "actual": 0,
+      "market_id": "1924536",
+      "time": "2026-04-20T16:02:28.150338+00:00"
+    },
+    {
+      "predicted": 0.13460795210782003,
+      "actual": 0,
+      "market_id": "1924534",
+      "time": "2026-04-20T16:02:28.150338+00:00"
+    },
+    {
+      "predicted": 0.2381853862749229,
+      "actual": 1,
+      "market_id": "1924417",
+      "time": "2026-04-20T16:02:28.150339+00:00"
+    },
+    {
+      "predicted": 0.3940619333029443,
+      "actual": 1,
+      "market_id": "1924435",
+      "time": "2026-04-20T16:02:28.150339+00:00"
+    },
+    {
+      "predicted": 0.18086798916691188,
+      "actual": 0,
+      "market_id": "1924436",
+      "time": "2026-04-20T16:02:28.150340+00:00"
+    },
+    {
+      "predicted": 0.30516679243850553,
+      "actual": 0,
+      "market_id": "1953401",
+      "time": "2026-04-20T16:02:28.150341+00:00"
+    },
+    {
+      "predicted": 0.2599632831027154,
+      "actual": 0,
+      "market_id": "1953400",
+      "time": "2026-04-20T16:02:28.150341+00:00"
+    },
+    {
+      "predicted": 0.4486071132040785,
+      "actual": 1,
+      "market_id": "1953723",
+      "time": "2026-04-20T16:02:28.150342+00:00"
+    },
+    {
+      "predicted": 0.2462489944185432,
+      "actual": 0,
+      "market_id": "1953796",
+      "time": "2026-04-20T16:02:28.150342+00:00"
+    },
+    {
+      "predicted": 0.18722510207709123,
+      "actual": 0,
+      "market_id": "1953724",
+      "time": "2026-04-20T16:02:28.150343+00:00"
+    },
+    {
+      "predicted": 0.23278536602196595,
+      "actual": 0,
+      "market_id": "1953725",
+      "time": "2026-04-20T16:02:28.150343+00:00"
+    },
+    {
+      "predicted": 0.14087589504727674,
+      "actual": 0,
+      "market_id": "1953726",
+      "time": "2026-04-20T16:02:28.150344+00:00"
+    },
+    {
+      "predicted": 0.12144201883808911,
+      "actual": 0,
+      "market_id": "1953478",
+      "time": "2026-04-20T16:02:28.150345+00:00"
+    },
+    {
+      "predicted": 0.12203004529151894,
+      "actual": 0,
+      "market_id": "1953399",
+      "time": "2026-04-20T16:02:28.150345+00:00"
+    },
+    {
+      "predicted": 0.29668943358195365,
+      "actual": 0,
+      "market_id": "1953479",
+      "time": "2026-04-20T16:02:28.150346+00:00"
+    },
+    {
+      "predicted": 0.22082179138710167,
+      "actual": 1,
+      "market_id": "1953480",
+      "time": "2026-04-20T16:02:28.150346+00:00"
+    },
+    {
+      "predicted": 0.2250179688800829,
+      "actual": 0,
+      "market_id": "1953499",
+      "time": "2026-04-20T16:02:28.150347+00:00"
+    },
+    {
+      "predicted": 0.3228478994609764,
+      "actual": 0,
+      "market_id": "1953601",
+      "time": "2026-04-20T16:02:28.150348+00:00"
+    },
+    {
+      "predicted": 0.3760672984117625,
+      "actual": 0,
+      "market_id": "1953602",
+      "time": "2026-04-20T16:02:28.150348+00:00"
+    },
+    {
+      "predicted": 0.134915018354927,
+      "actual": 0,
+      "market_id": "1953481",
+      "time": "2026-04-20T16:02:28.150350+00:00"
+    },
+    {
+      "predicted": 0.3375248441324018,
+      "actual": 0,
+      "market_id": "1953797",
+      "time": "2026-04-20T16:02:28.150350+00:00"
+    },
+    {
+      "predicted": 0.9848086768972559,
+      "actual": 0,
+      "market_id": "1953788",
+      "time": "2026-04-20T16:02:28.150351+00:00"
+    },
+    {
+      "predicted": 0.18557692609705362,
+      "actual": 0,
+      "market_id": "1965232",
+      "time": "2026-04-20T16:02:28.150351+00:00"
+    },
+    {
+      "predicted": 0.2598082518133169,
+      "actual": 0,
+      "market_id": "1965233",
+      "time": "2026-04-20T16:02:28.150352+00:00"
+    },
+    {
+      "predicted": 0.20361609906878564,
+      "actual": 0,
+      "market_id": "1965310",
+      "time": "2026-04-20T16:02:28.150354+00:00"
+    },
+    {
+      "predicted": 0.28501818296479964,
+      "actual": 1,
+      "market_id": "1965332",
+      "time": "2026-04-20T16:02:28.150354+00:00"
+    },
+    {
+      "predicted": 0.29013857168299917,
+      "actual": 0,
+      "market_id": "1965432",
+      "time": "2026-04-20T16:02:28.150355+00:00"
+    },
+    {
+      "predicted": 0.41879380084510553,
+      "actual": 1,
+      "market_id": "1965433",
+      "time": "2026-04-20T16:02:28.150355+00:00"
+    },
+    {
+      "predicted": 0.33566416498725327,
+      "actual": 0,
+      "market_id": "1965597",
+      "time": "2026-04-20T16:02:28.150356+00:00"
+    },
+    {
+      "predicted": 0.21716862918458127,
+      "actual": 0,
+      "market_id": "1965609",
+      "time": "2026-04-20T16:02:28.150356+00:00"
+    },
+    {
+      "predicted": 0.11841219893608708,
+      "actual": 0,
+      "market_id": "1953482",
+      "time": "2026-04-20T16:02:28.150357+00:00"
+    },
+    {
+      "predicted": 0.22650788533543875,
+      "actual": 1,
+      "market_id": "1965515",
+      "time": "2026-04-20T16:02:28.150358+00:00"
+    },
+    {
+      "predicted": 0.1940628898099643,
+      "actual": 0,
+      "market_id": "1965596",
+      "time": "2026-04-20T16:02:28.150358+00:00"
+    },
+    {
+      "predicted": 0.3133865021399615,
+      "actual": 0,
+      "market_id": "1965610",
+      "time": "2026-04-20T16:02:28.150359+00:00"
+    },
+    {
+      "predicted": 0.13017609232336377,
+      "actual": 0,
+      "market_id": "1965311",
+      "time": "2026-04-20T16:02:28.150359+00:00"
+    },
+    {
+      "predicted": 0.3212399362162916,
+      "actual": 0,
+      "market_id": "1965516",
+      "time": "2026-04-20T16:02:28.150360+00:00"
+    },
+    {
+      "predicted": 0.1373430157879188,
+      "actual": 1,
+      "market_id": "1953783",
+      "time": "2026-04-20T16:02:28.150360+00:00"
+    },
+    {
+      "predicted": 0.26086745838424535,
+      "actual": 0,
+      "market_id": "1965234",
+      "time": "2026-04-20T16:02:28.150361+00:00"
+    },
+    {
+      "predicted": 0.1898617694427604,
+      "actual": 0,
+      "market_id": "1953501",
+      "time": "2026-04-20T16:02:28.150362+00:00"
+    },
+    {
+      "predicted": 0.16330693666645554,
+      "actual": 0,
+      "market_id": "1953784",
+      "time": "2026-04-20T16:02:28.150362+00:00"
+    },
+    {
+      "predicted": 0.23700025719225476,
+      "actual": 0,
+      "market_id": "1965309",
+      "time": "2026-04-20T16:02:28.150363+00:00"
+    },
+    {
+      "predicted": 0.1756237212398942,
+      "actual": 0,
+      "market_id": "1965514",
+      "time": "2026-04-20T16:02:28.150363+00:00"
     }
   ]
 }
