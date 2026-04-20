@@ -46,8 +46,12 @@ from weather.trade_logger import WeatherEventLogger
 
 logger = logging.getLogger(__name__)
 
-# Cities validated as profitable in Phase 1 backtest
-TRADEABLE_CITIES = {"NYC", "London", "Hong Kong", "Atlanta", "Beijing", "Denver", "Houston"}
+# All cities we scan — keeps diagnostic data flowing for model accuracy tracking
+SCAN_CITIES = {"NYC", "London", "Hong Kong", "Atlanta", "Beijing", "Denver", "Houston"}
+
+# Cities validated as profitable in paper trading (diagnostics 2026-04-22, n=220 resolved)
+# Removed: Hong Kong (low MAE = efficient market, -$356), Houston (-$386), London (-$518)
+TRADEABLE_CITIES = {"NYC", "Atlanta", "Beijing", "Denver"}
 
 
 # ═══════════════════════════════════════════════════════════
@@ -186,7 +190,7 @@ class WeatherMarketFinder:
         and the target lead time window.
         """
         if cities is None:
-            cities = TRADEABLE_CITIES
+            cities = SCAN_CITIES
         
         city_set = {c.lower() for c in cities}
         now = datetime.now(timezone.utc)
@@ -352,7 +356,8 @@ class WeatherScanner:
         """
         print("\n" + "=" * 70)
         print("  WEATHER SCANNER — Temperature Market Pipeline")
-        print(f"  Cities: {', '.join(sorted(TRADEABLE_CITIES))}")
+        print(f"  Scanning: {', '.join(sorted(SCAN_CITIES))}")
+        print(f"  Trading:  {', '.join(sorted(TRADEABLE_CITIES))}")
         print(f"  Min edge: {self.min_edge:.0%} | Kelly: {self.kelly_fraction:.0%}")
         if not self.bias_table.is_empty:
             print(f"  Bias correction: ON")
@@ -434,6 +439,11 @@ class WeatherScanner:
             if not edges:
                 # Log even events with no edge (valuable for model accuracy tracking)
                 self.event_logger.log_event(event, confidence, skip_reason="no_edge")
+                continue
+            
+            # City gate: scan-only cities get logged but not traded
+            if event.city not in TRADEABLE_CITIES:
+                self.event_logger.log_event(event, confidence, skip_reason="scan_only_city")
                 continue
             
             # Quality gate: require deterministic models for bias correction

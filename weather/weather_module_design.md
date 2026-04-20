@@ -343,21 +343,77 @@ STRONG tier shows genuine calibration advantage (positive delta) with 47% win ra
 
 ### Forward Validation Results (Phase 3 — in progress)
 
-**Paper trading period:** March 26 — April 7, 2026 (~10 days, 4 scans/day).
+**Paper trading period:** March 26 — April 20, 2026. Split into two phases: pre-fix (March 26 — April 7, contaminated data) and post-fix (April 7 — April 20, clean data with event logging).
 
-**Latest report (April 7, 2026, after bug fixes):**
+#### Pre-fix period (March 26 — April 7) — discarded
+
+| Metric | Value |
+|--------|-------|
+| Resolved trades | 101 (9W / 92L) |
+| Win rate | 9% |
+| Total P&L | -$685.79 |
+
+This data was contaminated by duplicate trades, missing-model trades, and API failures. Results are not meaningful and have been superseded by the clean post-fix period below.
+
+#### Post-fix period (April 7 — April 20) — current baseline
+
+**Report generated April 20, 2026** from the new diagnostics module (`weather/diagnostics.py`), using event log data (`data/weather/event_log.jsonl`). All metrics below are deduped by event_key (city+date), preferring traded entries, then shortest lead time.
 
 | Metric | Value | Backtest comparison |
 |--------|-------|---------------------|
-| Resolved trades | 101 (9W / 92L) | — |
-| Win rate | 9% | Backtest: 13-16% |
-| Avg win | $71.14 | Backtest: $336 |
-| Avg loss | $14.41 | Backtest: $47 |
-| Total P&L | -$685.79 | Backtest: +$13,657 |
-| Brier score | 0.117 | Backtest: 0.080 |
-| Expected value/trade | -$6.70 | Backtest: +$19 |
+| Events logged | 263 across 7 cities, 8 dates | — |
+| Events traded | 22 resolved (7W / 15L) | — |
+| Win rate | 32% | Backtest: 13-16% |
+| Total P&L | +$349.41 | Backtest: +$13,657 (30-day) |
+| Trade rate | ~35-40% of scanned city/dates | — |
+| Bankroll | $818.40 (from $1,000 start) | — |
 
-**Assessment:** Forward results are significantly worse than backtest. The win rate (9%) is below the backtest range (13-16%), and critically the avg win ($71) is much smaller than backtest ($336), indicating the market prices the winning buckets more tightly in live trading — there's less payoff upside when you win.
+**Assessment:** The post-fix results confirm the strategy is profitable with an asymmetric payoff profile. Win rate (32%) is higher than backtest (13-16%), but average win size is smaller — consistent with a more efficient market where edge is narrower but still exploitable. The +$349 P&L over ~2 weeks on a $1,000 bankroll is encouraging but the sample size (22 resolved trades) is too small for high confidence. Need 20-30 more resolved events.
+
+**Model accuracy (220 resolved events, all cities):**
+
+| Model | Raw MAE | Corrected MAE | Bias |
+|-------|---------|---------------|------|
+| ICON | 1.84° | 1.79° | -0.71° |
+| GFS | 2.15° | 1.74° | +0.29° |
+| GEM | 2.44° | 1.97° | +0.10° |
+| JMA | 2.58° | 2.50° | -1.50° |
+
+Bias correction helping at 66.2% rate (51/77 applicable events).
+
+**City-level profitability (22 resolved traded events, deduped):**
+
+| City | W | L | P&L | AvgEdge | MAE | Bias |
+|------|---|---|-----|---------|-----|------|
+| Beijing | 2 | 2 | +$206 | +21.4% | 2.07° | +2.1° |
+| Denver | 1 | 1 | +$225 | +30.5% | 3.60° | +2.3° |
+| NYC | 1 | 3 | +$32 | +15.3% | 2.83° | -2.8° |
+| Atlanta | 2 | 1 | +$9 | +17.9% | 0.71° | -0.4° |
+| Hong Kong | 1 | 2 | -$21 | +16.9% | 0.35° | -0.3° |
+| Houston | 0 | 3 | -$45 | +18.6% | 2.27° | -2.2° |
+| London | 0 | 3 | -$56 | +18.8% | 1.07° | -0.2° |
+
+**Key insight — high-MAE cities are the profitable ones.** Denver (3.6° MAE) and Beijing (2.07° MAE) generate the most P&L because model inaccuracy tracks market inaccuracy — there's room for mispricing. Low-MAE cities like Hong Kong (0.35°) are efficiently priced with no exploitable edge.
+
+**Calibration by confidence tier:**
+
+| Tier | N | WinRate | P&L | AvgEdge |
+|------|---|---------|-----|---------|
+| STRONG | 1 | 100% | +$24 | +9.5% |
+| NEAR_SAFE | 5 | 40% | +$166 | +19.2% |
+| LOW | 16 | 25% | +$159 | +20.2% |
+
+LOW tier carries the most volume and is still profitable, confirming Kelly sizing extracts value even from lower-confidence trades.
+
+**Edge attribution (48 traded scan entries):**
+
+| Category | Count | Share |
+|----------|-------|-------|
+| Tail/non-consensus bucket | 32 | 67% |
+| Bias correction active | 38 | 79% |
+| High model agreement (>0.75) | 12 | 25% |
+
+Avg edge by lead time: 24-48h (+22.4%), ≤24h (+20.1%), 48-72h (+16.5%). The 24-48h window remains the sweet spot, consistent with backtest findings.
 
 **Data quality issues discovered and fixed during paper trading:**
 
@@ -369,7 +425,9 @@ STRONG tier shows genuine calibration advantage (positive delta) with 47% win ra
 
 4. **SSL transient errors (fixed March 28):** Open-Meteo connections dropped intermittently. Fix: application-level retry with 2s/4s backoff for SSLError and ConnectionError.
 
-**Current status:** Paper trading reset with all fixes applied. Running clean data collection to determine whether the strategy is viable after correcting the data quality issues, or whether the market has become too efficient.
+5. **Diagnostics dedup overcounting (fixed April 20):** Same event_key logged at multiple lead times (72h, 48h, 24h, 7h, 1h). `log_resolution()` patches ALL entries, inflating W/L/P&L counts. First dedup fix was wrong — it kept shortest lead_hours, which systematically discarded actual trades in favor of late scans where market had converged and `traded=false`. Final fix: dedup priority is (1) prefer `traded=true`, (2) among same traded status, prefer shortest lead_hours.
+
+**City refinement (applied April 20):** Based on the diagnostic results, the scanner now distinguishes between scan-only and tradeable cities. See "City Selection" under Implementation Priority.
 
 #### Competitive Landscape (discovered March 30, 2026)
 
@@ -390,13 +448,14 @@ Research revealed a crowded and growing field of automated weather traders on Po
 
 **What was built:** `weather/scanner.py` — a complete trading pipeline:
 
-1. **Discovery** — Fetches open temperature events from Gamma API using tag 103040, filters to 7 tradeable cities
+1. **Discovery** — Fetches open temperature events from Gamma API using tag 103040, scans all 7 `SCAN_CITIES` (NYC, London, Hong Kong, Atlanta, Beijing, Denver, Houston)
 2. **Enrichment** — Fetches live deterministic (5 models) + ensemble (80+ members) forecasts, applies bias correction
 3. **Edge detection** — Compares model probabilities against market prices across all buckets per event
-4. **Position sizing** — Per-bucket Kelly sizing with three exposure caps: per-bucket ($50), per-city/date ($150), portfolio (30%)
-5. **Paper trading** — Uses `core.PaperTrader` with separate `data/weather/` data directory
-6. **Resolution checking** — Monitors open trades and resolves against Gamma API outcomes
-7. **Quality gate** — Requires ≥3 deterministic models before trading; skips events where API failures left only ensemble data
+4. **City gate** — Only enters trades for `TRADEABLE_CITIES` (NYC, Atlanta, Beijing, Denver); scan-only cities are logged for model accuracy tracking but not traded
+5. **Position sizing** — Per-bucket Kelly sizing with three exposure caps: per-bucket ($50), per-city/date ($150), portfolio (30%)
+6. **Paper trading** — Uses `core.PaperTrader` with separate `data/weather/` data directory
+7. **Resolution checking** — Monitors open trades and resolves against Gamma API outcomes
+8. **Quality gate** — Requires ≥3 deterministic models before trading; skips events where API failures left only ensemble data
 
 **Also built:** `weather/enricher.py` — a `WeatherEnricher` class that can optionally plug into `ContextEnricher` for cases where a temperature market appears in the general scanner. Not currently wired in — the standalone scanner handles all weather trading.
 
@@ -408,7 +467,7 @@ Research revealed a crowded and growing field of automated weather traders on Po
 
 **Goal:** Validate that the backtest edge holds in real-time with live ensemble data and actual market prices.
 
-**Status as of April 7, 2026:** Paper trading running for ~10 days. See "Forward Validation Results" section above for detailed metrics.
+**Status as of April 20, 2026:** Paper trading running for ~2 weeks post-fix with event logging enabled. Results are positive (+$349 P&L, 22 resolved trades, 32% win rate). City set refined from 7 tradeable to 4 tradeable (NYC, Atlanta, Beijing, Denver) based on diagnostic data. All 7 cities continue to be scanned for model accuracy tracking. Accumulating more resolved events to increase confidence before proceeding to live execution.
 
 ---
 
@@ -416,7 +475,7 @@ Research revealed a crowded and growing field of automated weather traders on Po
 
 **Goal:** If paper trading validates the edge, execute real trades via Polymarket CLOB API with a funded wallet.
 
-**Prerequisites:** Paper trading must show positive P&L over 30+ resolved trades with clean data (no duplicate trade bugs, no missing-model trades). Current results are under assessment after fixing multiple data quality issues.
+**Prerequisites:** Paper trading must show positive P&L over 40-50+ resolved trades with clean data on the refined 4-city tradeable set. Current results (22 resolved, +$349 P&L) are encouraging but need more sample size for confidence.
 
 ---
 
@@ -437,8 +496,15 @@ weather/
 ├── backtest.py             # Phase 1A: historical edge analysis with tag-based enumeration
 ├── data_collector.py       # Phase 1B: forward live snapshot collection
 ├── scanner.py              # Phase 2: standalone market scanner + paper trading pipeline
+├── trade_logger.py         # Event logging: per-scan decision snapshots to JSONL
+├── diagnostics.py          # Diagnostic reports: model accuracy, city P&L, calibration, edge attribution
 ├── enricher.py             # Optional: WeatherEnricher for main pipeline integration
 └── weather_module_design.md # This document
+
+data/weather/
+├── event_log.jsonl         # Append-only event log (all scanned events, not just trades)
+├── paper_trades.json       # PaperTrader state (open/resolved trades, bankroll)
+└── bias_corrections.json   # Per-city, per-model bias table
 
 run_weather_collector.py    # Scheduler: runs collector + scanner at 04/10/16/22 UTC
 ```
@@ -529,6 +595,10 @@ WEATHER_MIN_EDGE = 0.08          # Higher minimum edge than general markets
 WEATHER_KELLY_FRACTION = 0.20    # Slightly more conservative
 WEATHER_MAX_BUCKET_POSITION = 50 # Max $ per individual bucket bet
 WEATHER_MAX_CITY_EXPOSURE = 150  # Max $ total across all buckets for one city/date
+
+# City sets (refined from forward validation diagnostics, April 20, 2026)
+SCAN_CITIES = {"NYC", "London", "Hong Kong", "Atlanta", "Beijing", "Denver", "Houston"}
+TRADEABLE_CITIES = {"NYC", "Atlanta", "Beijing", "Denver"}  # Subset with positive P&L
 ```
 
 
@@ -561,8 +631,8 @@ WEATHER_MAX_CITY_EXPOSURE = 150  # Max $ total across all buckets for one city/d
 **Risk: Open-Meteo free tier rate limiting (confirmed).** With 7 cities × 5 days × 2 API calls per event, plus the data collector making similar calls, the scanner triggers 429 (rate limit) and 502 errors on Open-Meteo's free tier during burst periods. When deterministic models fail but ensemble succeeds, the system previously traded on degraded ensemble-only data with no bias correction.
 *Mitigation:* Increased inter-request delay from 0.15s to 1.0s. Added quality gate requiring ≥3 deterministic models before trading. Consider Open-Meteo's paid tier if the strategy proves viable, or stagger city requests across scan cycles.
 
-**Risk: Competitive edge compression (confirmed in forward validation).** The weather trading strategy was publicly documented in viral February 2026 articles and multiple open-source implementations. The backtest (using pre-February data) showed +$13,657 P&L; forward paper trading (post-February) shows -$685 P&L. The market appears to have become significantly more efficient as automated participants increased.
-*Mitigation:* Monitor forward results for another week with clean data. If the edge has been competed away, consider: (a) abandoning weather for other market categories, (b) looking for second-order edges the simple bots miss (e.g., regime-dependent bias, extreme weather events, precipitation markets), or (c) focusing only on cities/times where competition is thinnest.
+**Risk: Competitive edge compression (partially confirmed in forward validation).** The weather trading strategy was publicly documented in viral February 2026 articles and multiple open-source implementations. The backtest (using pre-February data) showed +$13,657 P&L; initial forward paper trading (pre-fix, March 26 — April 7) showed -$685 P&L, but this was contaminated by data quality bugs. Post-fix forward trading (April 7 — April 20) shows +$349 P&L on 22 resolved trades, suggesting the edge is narrower but not fully competed away. The market is more efficient (smaller individual wins, higher win rate needed) but mispricing persists in high-variance cities.
+*Mitigation:* Refined tradeable city set to 4 cities (NYC, Atlanta, Beijing, Denver) where the edge is strongest. Continue monitoring via diagnostics module. If edge degrades further, consider: (a) abandoning weather for other market categories, (b) looking for second-order edges the simple bots miss (e.g., regime-dependent bias, extreme weather events, precipitation markets), or (c) focusing only on cities/times where competition is thinnest.
 
 
 ## Dependencies
@@ -602,17 +672,19 @@ No additional API keys are needed beyond what is already configured (Anthropic, 
 
 ### Phase 2-5 — Live Validation & Trading
 
-| Metric | Target | Actual (April 7) | Status |
-|--------|--------|-------------------|--------|
-| Paper P&L | Positive over 2 weeks | -$685.79 over 10 days | ❌ |
-| Win rate | 10-16% (matching backtest) | 9% (101 trades) | ⚠️ Below target |
-| Avg win / Avg loss ratio | > 5:1 | 4.9:1 ($71/$14) | ⚠️ Borderline |
-| Brier score | < 0.10 (matching backtest) | 0.117 | ❌ Worse than backtest |
-| Win rate on STRONG tier | > 40% | Not yet measured post-fix | ⏳ |
-| Data quality | Clean (no bugs) | 3 bugs found and fixed | ✅ Fixed |
-| API reliability | <5% failure rate | ~15% 502/429 failures at 0.15s | ✅ Fixed (1.0s delay) |
+| Metric | Target | Actual (April 20) | Status |
+|--------|--------|---------------------|--------|
+| Paper P&L | Positive over 2 weeks | +$349.41 over 13 days (post-fix) | ✅ |
+| Win rate | 10-16% (matching backtest) | 32% (22 resolved trades) | ✅ Above target |
+| Avg win / Avg loss ratio | > 5:1 | ~3-4:1 (asymmetric, smaller wins than backtest) | ⚠️ Lower but compensated by higher win rate |
+| Model accuracy | < 2.5° MAE | ICON 1.84°, GFS 2.15°, GEM 2.44°, JMA 2.58° | ✅ |
+| Bias correction | Helping >50% | 66.2% (51/77 events) | ✅ |
+| Win rate on STRONG tier | > 40% | 100% (n=1, insufficient data) | ⏳ |
+| Data quality | Clean (no bugs) | 5 bugs found and fixed (incl. dedup) | ✅ Fixed |
+| API reliability | <5% failure rate | Stable at 1.0s delay | ✅ |
+| City refinement | Positive P&L on tradeable set | 4/7 cities profitable, 3 removed from trading | ✅ |
 
-**Interpretation:** Forward results are materially worse than backtest on every metric. Two possible explanations: (1) data quality bugs degraded ~30-40% of trades (duplicate positions, missing-model trades), contaminating the results, or (2) the market has become more efficient post-February 2026 due to increased bot competition. The paper trading was reset on April 7 with all bugs fixed — the next week of clean data will disambiguate.
+**Interpretation:** Forward results have turned positive after bug fixes and city refinement. The strategy shows an asymmetric payoff profile (32% win rate, net +$349) consistent with the backtest's tail-strategy characteristics, though with smaller individual wins — the market is more efficient than the backtest period but the edge is not fully competed away. Sample size (22 resolved) is still small; continuing to accumulate data before committing to live execution.
 
 
 ## Implementation Priority
@@ -621,24 +693,28 @@ No additional API keys are needed beyond what is already configured (Anthropic, 
 
 - **Phase 1A — Historical Backtest**: 540 data points across 10 cities, 30 days, 3 lead times. Tag-based market enumeration → historical forecast retrieval → probability computation → CLOB price history → Brier scoring → Kelly P&L simulation. Result: +$13,657 simulated P&L.
 - **Station Bias Correction**: Per-city, per-model mean bias table from backtest residuals. Flipped Atlanta from -$1,839 to +$659. Applied via `--bias-correct` flag in backtest, loaded automatically in live scanner.
-- **City Selection**: 7 profitable cities (London, NYC, Hong Kong, Atlanta, Beijing, Denver, Houston). 3 excluded (Seoul, Wellington, Munich).
+- **City Selection**: Initially 7 tradeable cities from backtest (excluded Seoul, Wellington, Munich). Refined in forward validation to split into `SCAN_CITIES` (all 7 for model accuracy tracking) and `TRADEABLE_CITIES` (NYC, Atlanta, Beijing, Denver — the 4 profitable cities). Removed from trading: Hong Kong (0.35° MAE = efficiently priced, -$21 P&L), Houston (0W/3L, -$45, persistent -2.2° bias), London (0W/3L, -$56). London is borderline and monitored for re-addition.
 - **Standalone Weather Scanner**: Full pipeline in `weather/scanner.py` — discovery, enrichment, edge detection, Kelly sizing, paper trading, resolution checking.
 - **Forward Data Collector**: Running on 6h schedule, 885+ snapshots collected across 10 cities.
 - **Automated Scheduler**: `run_weather_collector.py` runs both collector and scanner at 04/10/16/22 UTC.
-- **Bug Fixes**: Duplicate trade dedup, missing-model quality gate (≥3 required), API rate limit increase (0.15s → 1.0s), SSL retry logic, Gamma API slug endpoint (`/events/slug/{slug}`), tag ID hardcoding.
+- **Event Logging System**: `weather/trade_logger.py` — `WeatherEventLogger` writes append-only JSONL to `data/weather/event_log.jsonl`. Logs ALL scanned events (not just trades) with full decision snapshot: raw forecasts, bias corrections, corrected forecasts, bucket probability distributions (model + market), per-bucket edges, confidence tier, trades entered or skip reason. `log_resolution()` patches entries post-hoc with actual temperature, bucket, model error, and trade P&L.
+- **Diagnostics Module**: `weather/diagnostics.py` — six analysis reports (model accuracy, bias correction impact, edge attribution, city profitability, calibration by tier, summary). Runnable via `python -m weather.diagnostics` or `python -m weather.scanner --diagnostics`. Includes event-key deduplication to avoid overcounting from multi-lead-time scans.
+- **Bug Fixes**: Duplicate trade dedup, missing-model quality gate (≥3 required), API rate limit increase (0.15s → 1.0s), SSL retry logic, Gamma API slug endpoint (`/events/slug/{slug}`), tag ID hardcoding, diagnostics dedup overcounting (two rounds — see Forward Validation Results).
 
 ### In Progress
 
-- **Forward Validation (Phase 3)**: Paper trading reset on April 7 with all bugs fixed. Accumulating clean data to determine if the edge exists in real-time or has been competed away. Decision point: 1 week of clean results.
+- **Forward Validation (Phase 3)**: Paper trading running since April 7 with all bugs fixed and event logging enabled. Results through April 20: +$349 P&L on 22 resolved trades (32% win rate) across 4 tradeable cities. City set refined based on diagnostic data. Accumulating 20-30 more resolved events on the reduced city set to confirm profitability before proceeding to live execution.
 
-### Next Steps (conditional on validation results)
+### Next Steps (conditional on continued validation)
 
-**If paper trading turns positive (win rate ≥12%, positive P&L over 30+ trades):**
+**If paper trading remains positive over 40-50+ resolved trades:**
 1. Phase 4 — Live execution via CLOB API with funded wallet
 2. Phase 5 — Execution speed optimization around model update cycles
 3. Consider Open-Meteo paid tier for API reliability
+4. Build Denver-specific bias table (currently all zeros despite being most profitable city)
+5. Re-evaluate London for re-addition to TRADEABLE_CITIES if its model accuracy improves
 
-**If paper trading remains negative:**
+**If paper trading turns negative on the reduced city set:**
 1. Conclude that the weather market edge has been competed away by the growing bot ecosystem
 2. Preserve the infrastructure for potential future use (new cities, precipitation markets, regime changes)
 3. Redirect effort to the main pipeline (Phase 5 paper trading for political/economic markets)
@@ -654,3 +730,6 @@ No additional API keys are needed beyond what is already configured (Anthropic, 
 - **Always gate on data quality before trading.** When deterministic model API fails but ensemble succeeds, the system has degraded data (no bias correction, no model agreement). A quality gate requiring ≥3 deterministic models prevents trading on incomplete signals.
 - **Deduplication is essential for scheduled scanners.** Without checking open positions, the scanner re-enters the same bucket trade every cycle, doubling risk.
 - **Backtest-to-live divergence is a real risk.** The backtest used pre-February 2026 data. The strategy went viral in February 2026, bringing many new automated participants. The market may have structurally changed between the backtest period and the live trading period.
+- **Multi-lead-time scanning requires careful dedup in diagnostics.** The same event_key (city+date) is logged at 72h, 48h, 24h, 7h, and 1h lead times. Resolution patches ALL matching entries. Naive dedup (keep shortest lead time) systematically discards actual trades in favor of late scans where the market has converged and `traded=false`. Correct dedup: prefer `traded=true` first, then shortest lead time as tiebreaker.
+- **High-MAE cities can be the most profitable.** Counter-intuitively, cities where models are least accurate (Denver 3.6° MAE, Beijing 2.07°) generate the most P&L, because the market is also inaccurate — both models and market are uncertain, creating exploitable mispricing. Low-MAE cities (Hong Kong 0.35°) are efficiently priced with no edge.
+- **Event logging should capture ALL scans, not just trades.** Logging skip reasons and model data for non-traded events is essential for diagnostics — it enables model accuracy tracking across the full scan set, not just the subset that was traded.

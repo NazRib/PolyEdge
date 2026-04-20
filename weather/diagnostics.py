@@ -45,6 +45,42 @@ def load_log(log_file: Path = None) -> list[dict]:
     return entries
 
 
+def _dedup_by_event_key(entries: list[dict]) -> list[dict]:
+    """
+    Deduplicate entries by event_key for P&L metrics.
+
+    The same city/date gets logged multiple times at different lead hours
+    (72h, 48h, 24h, 7h, 1h). When log_resolution patches entries, it sets
+    trade_pnl on ALL entries with the same event_key — including late scans
+    where traded=false because the market had already converged.
+
+    Selection priority:
+        1. Prefer entries where traded=True (actual trade decisions)
+        2. Among same traded status, prefer shortest lead_hours
+    """
+    best = {}
+    for e in entries:
+        key = e.get("event_key", "")
+        if not key:
+            continue
+        existing = best.get(key)
+        if existing is None:
+            best[key] = e
+            continue
+
+        # Prefer traded over non-traded
+        e_traded = bool(e.get("traded"))
+        ex_traded = bool(existing.get("traded"))
+        if e_traded and not ex_traded:
+            best[key] = e
+        elif e_traded == ex_traded:
+            # Same traded status — prefer shorter lead_hours
+            if e.get("lead_hours", 999) < existing.get("lead_hours", 999):
+                best[key] = e
+
+    return list(best.values())
+
+
 # ═══════════════════════════════════════════════════════════════
 # 1. MODEL ACCURACY
 # ═══════════════════════════════════════════════════════════════
@@ -299,9 +335,9 @@ def print_edge_report(report: dict):
 
 def city_report(entries: list[dict]) -> dict:
     """Per-city scan count, trade count, P&L, and model accuracy."""
+    # Per-scan metrics (every entry counts)
     by_city = defaultdict(lambda: {
-        "scanned": 0, "traded": 0, "resolved": 0,
-        "wins": 0, "losses": 0, "total_pnl": 0.0,
+        "scanned": 0, "traded": 0,
         "avg_edge": [], "model_errors": [],
     })
 
@@ -315,28 +351,34 @@ def city_report(entries: list[dict]) -> dict:
             c["avg_edge"].append(e.get("max_edge", 0))
 
         if e.get("resolved"):
-            c["resolved"] += 1
-            pnl = e.get("trade_pnl")
-            if pnl is not None:
-                c["total_pnl"] += pnl
-                if pnl > 0:
-                    c["wins"] += 1
-                elif pnl < 0:
-                    c["losses"] += 1
-
             err = e.get("model_error")
             if err is not None:
                 c["model_errors"].append(err)
 
+    # P&L metrics — deduped by event_key to avoid overcounting
+    deduped = _dedup_by_event_key(entries)
+    pnl_by_city = defaultdict(lambda: {"wins": 0, "losses": 0, "total_pnl": 0.0})
+
+    for e in deduped:
+        if not e.get("resolved") or not e.get("traded") or e.get("trade_pnl") is None:
+            continue
+        city = e["city"]
+        p = pnl_by_city[city]
+        p["total_pnl"] += e["trade_pnl"]
+        if e["trade_pnl"] > 0:
+            p["wins"] += 1
+        elif e["trade_pnl"] < 0:
+            p["losses"] += 1
+
     result = {}
     for city, c in sorted(by_city.items()):
+        p = pnl_by_city[city]
         result[city] = {
             "scanned": c["scanned"],
             "traded": c["traded"],
-            "resolved": c["resolved"],
-            "wins": c["wins"],
-            "losses": c["losses"],
-            "total_pnl": round(c["total_pnl"], 2),
+            "wins": p["wins"],
+            "losses": p["losses"],
+            "total_pnl": round(p["total_pnl"], 2),
             "avg_edge": round(np.mean(c["avg_edge"]), 4) if c["avg_edge"] else 0,
             "model_mae": round(np.mean(np.abs(c["model_errors"])), 2) if c["model_errors"] else None,
             "model_bias": round(np.mean(c["model_errors"]), 2) if c["model_errors"] else None,
@@ -366,9 +408,11 @@ def print_city_report(report: dict):
 def calibration_by_tier(entries: list[dict]) -> dict:
     """
     For resolved traded events, check if confidence tiers predict win rate.
+    Deduped by event_key to avoid overcounting from multi-lead-time scans.
     """
+    deduped = _dedup_by_event_key(entries)
     resolved_traded = [
-        e for e in entries
+        e for e in deduped
         if e.get("resolved") and e.get("traded") and e.get("trade_pnl") is not None
     ]
     if not resolved_traded:
@@ -423,12 +467,15 @@ def summary_report(entries: list[dict]) -> dict:
     n_total = len(entries)
     n_traded = sum(1 for e in entries if e.get("traded"))
     n_resolved = sum(1 for e in entries if e.get("resolved"))
-    n_resolved_traded = sum(
-        1 for e in entries
-        if e.get("resolved") and e.get("traded") and e.get("trade_pnl") is not None
-    )
 
-    total_pnl = sum(e.get("trade_pnl", 0) or 0 for e in entries if e.get("resolved") and e.get("traded"))
+    # P&L metrics deduped to avoid overcounting from multi-lead-time scans
+    deduped = _dedup_by_event_key(entries)
+    deduped_traded_resolved = [
+        e for e in deduped
+        if e.get("resolved") and e.get("traded") and e.get("trade_pnl") is not None
+    ]
+    n_resolved_traded = len(deduped_traded_resolved)
+    total_pnl = sum(e.get("trade_pnl", 0) or 0 for e in deduped_traded_resolved)
 
     # Trade rate
     trade_rate = n_traded / n_total if n_total else 0
