@@ -1,5 +1,5 @@
 """
-Weather Market Scanner & Paper Trader
+Weather Market Scanner & Trader
 Standalone pipeline for temperature prediction markets.
 
 Operates independently from the main Polymarket Edge pipeline because
@@ -14,6 +14,8 @@ Usage:
     python -m weather.scanner --paper-trade      # Scan + enter paper trades
     python -m weather.scanner --check            # Check open trades for resolution
     python -m weather.scanner --report           # Paper trading performance report
+    python -m weather.scanner --live --dry-run   # Live mode dry run (no real orders)
+    python -m weather.scanner --live             # Live execution with real USDC
 """
 
 import json
@@ -34,6 +36,9 @@ from weather.config import (
     WEATHER_MAX_BUCKET_POSITION, WEATHER_MAX_CITY_EXPOSURE,
     WEATHER_MAX_PORTFOLIO_PCT, WEATHER_DATA_DIR,
     POLYMARKET_TAG_TEMPERATURE, BIAS_TABLE_FILE,
+    LIVE_DRY_RUN, LIVE_ORDER_TIMEOUT_SECONDS,
+    LIVE_DAILY_LOSS_LIMIT, LIVE_MIN_BOOK_DEPTH,
+    LIVE_TICK_SIZE, LIVE_BANKROLL,
 )
 from weather.models import OpenMeteoClient
 from weather.bias import BiasTable
@@ -310,7 +315,11 @@ class WeatherScanner:
     Standalone weather trading pipeline.
     
     Pipeline: discover events → fetch forecasts → bias correct →
-    compute probabilities → find edges → size positions → paper trade.
+    compute probabilities → find edges → size positions → execute.
+    
+    Supports two execution modes:
+        - "paper" (default): Uses PaperTrader for simulated trades
+        - "live": Uses LiveExecutor for real CLOB orders
     
     Usage:
         scanner = WeatherScanner()
@@ -319,6 +328,10 @@ class WeatherScanner:
         events = scanner.scan()
         
         # Scan and paper trade
+        trades = scanner.scan_and_trade()
+        
+        # Scan and live trade (dry run)
+        scanner = WeatherScanner(execution_mode="live", dry_run=True)
         trades = scanner.scan_and_trade()
         
         # Check resolutions
@@ -332,6 +345,8 @@ class WeatherScanner:
         kelly_fraction: float = WEATHER_KELLY_FRACTION,
         max_bucket_position: float = WEATHER_MAX_BUCKET_POSITION,
         max_city_exposure: float = WEATHER_MAX_CITY_EXPOSURE,
+        execution_mode: str = "paper",
+        dry_run: bool = LIVE_DRY_RUN,
     ):
         self.finder = WeatherMarketFinder()
         self.weather_client = OpenMeteoClient()
@@ -341,10 +356,52 @@ class WeatherScanner:
         self.kelly_fraction = kelly_fraction
         self.max_bucket_position = max_bucket_position
         self.max_city_exposure = max_city_exposure
+        self.execution_mode = execution_mode
         
-        # Paper trader with weather-specific data directory
-        from core.paper_trader import PaperTrader
-        self.trader = PaperTrader(bankroll=bankroll, data_dir=WEATHER_DATA_DIR)
+        if execution_mode == "live":
+            from core.wallet import create_clob_client, preflight_check
+            from core.live_executor import LiveExecutor
+            
+            clob_client = create_clob_client()
+            
+            # Run pre-flight diagnostics before proceeding
+            live_bankroll = bankroll if bankroll != 1000.0 else LIVE_BANKROLL
+            # Run pre-flight diagnostics before proceeding.
+            # The required_balance is a sanity check — enough for a few trades,
+            # NOT the full bankroll. Individual weather trades are $5-20.
+            min_required = 20.0
+            if not preflight_check(clob_client, required_balance=min_required):
+                if not dry_run:
+                    raise RuntimeError(
+                        "Pre-flight check failed. Resolve issues before live trading."
+                    )
+                # In dry-run, warn but continue — balance doesn't matter
+                logger.warning("Pre-flight check had warnings (continuing in dry-run mode)")
+            
+            # Cap the executor's bankroll at the actual on-chain balance
+            # so position sizing reflects what's actually available.
+            from core.wallet import get_usdc_balance
+            actual_balance = get_usdc_balance(clob_client)
+            if actual_balance is not None:
+                live_bankroll = min(live_bankroll, actual_balance)
+                logger.info(f"Bankroll set to ${live_bankroll:.2f} (on-chain: ${actual_balance:.2f})")
+            
+            self.trader = LiveExecutor(
+                clob_client=clob_client,
+                bankroll=live_bankroll,
+                data_dir=WEATHER_DATA_DIR,
+                dry_run=dry_run,
+                daily_loss_limit=LIVE_DAILY_LOSS_LIMIT,
+                order_timeout_seconds=LIVE_ORDER_TIMEOUT_SECONDS,
+                min_book_depth=LIVE_MIN_BOOK_DEPTH,
+                tick_size=LIVE_TICK_SIZE,
+            )
+            mode_str = "LIVE (DRY RUN)" if dry_run else "LIVE"
+            logger.info(f"Weather scanner initialized in {mode_str} mode")
+        else:
+            from core.paper_trader import PaperTrader
+            self.trader = PaperTrader(bankroll=bankroll, data_dir=WEATHER_DATA_DIR)
+        
         self.event_logger = WeatherEventLogger()
     
     def scan(self) -> list[WeatherEvent]:
@@ -356,6 +413,12 @@ class WeatherScanner:
         """
         print("\n" + "=" * 70)
         print("  WEATHER SCANNER — Temperature Market Pipeline")
+        if self.execution_mode == "live":
+            dry = getattr(self.trader, 'dry_run', False)
+            mode_label = "LIVE (DRY RUN)" if dry else "LIVE (REAL MONEY)"
+            print(f"  Mode:     {mode_label}")
+        else:
+            print(f"  Mode:     PAPER TRADING")
         print(f"  Scanning: {', '.join(sorted(SCAN_CITIES))}")
         print(f"  Trading:  {', '.join(sorted(TRADEABLE_CITIES))}")
         print(f"  Min edge: {self.min_edge:.0%} | Kelly: {self.kelly_fraction:.0%}")
@@ -487,7 +550,8 @@ class WeatherScanner:
                     bankroll=self.trader.bankroll,
                     kelly_fraction=self.kelly_fraction,
                     min_edge=self.min_edge,
-                    max_position_pct=0.05,  # Tighter per-position cap for weather
+                    max_position_pct=0.10,  # Per-position cap (% of bankroll)
+                    min_bet=1.0,            # Polymarket minimum is ~1 share
                     confidence=confidence,
                 )
                 
@@ -512,7 +576,7 @@ class WeatherScanner:
                         edge=position.edge,
                     )
                 
-                # Build ProbabilityEstimate for the PaperTrader
+                # Build ProbabilityEstimate for the trader (paper or live)
                 estimate = ProbabilityEstimate(
                     market_id=edge_info["market_id"],
                     question=f"{event.city} {event.target_date} — {edge_info['label']}",
@@ -529,6 +593,8 @@ class WeatherScanner:
                         "n_ensemble": event.n_ensemble,
                         "confidence_tier": event.confidence_tier,
                         "bias_corrected": event.bias_corrected,
+                        "token_id": edge_info.get("token_id", ""),
+                        "event_slug": event.event_slug,
                     },
                 )
                 
@@ -820,12 +886,26 @@ def main():
         help="Scan and enter paper trades for tradeable edges"
     )
     parser.add_argument(
+        "--live", action="store_true",
+        help="Live execution mode — place real orders via CLOB API. "
+             "Requires POLYMARKET_PRIVATE_KEY env var. "
+             "Defaults to dry-run unless --no-dry-run is set."
+    )
+    parser.add_argument(
+        "--dry-run", action="store_true", default=False,
+        help="Simulate live execution without placing real orders (default for --live)"
+    )
+    parser.add_argument(
+        "--no-dry-run", action="store_true", default=False,
+        help="Disable dry-run mode — actually place orders with real USDC"
+    )
+    parser.add_argument(
         "--check", action="store_true",
         help="Check open trades for resolution"
     )
     parser.add_argument(
         "--report", action="store_true",
-        help="Print paper trading performance report"
+        help="Print trading performance report"
     )
     parser.add_argument(
         "--bankroll", type=float, default=1000.0,
@@ -852,12 +932,38 @@ def main():
         datefmt="%H:%M:%S",
     )
     
+    # Determine execution mode
+    if args.live:
+        execution_mode = "live"
+        # --live defaults to dry-run unless --no-dry-run is explicitly set
+        dry_run = not args.no_dry_run
+        if not dry_run:
+            # Final safety gate: require explicit confirmation for real money
+            print("\n" + "!" * 70)
+            print("  ⚠️  LIVE TRADING MODE — REAL MONEY")
+            print("  This will place real orders on Polymarket using your funded wallet.")
+            print("!" * 70)
+            confirm = input("\n  Type 'CONFIRM' to proceed: ").strip()
+            if confirm != "CONFIRM":
+                print("  Aborted.")
+                return
+    else:
+        execution_mode = "paper"
+        dry_run = True
+    
     scanner = WeatherScanner(
         bankroll=args.bankroll,
         min_edge=args.min_edge,
+        execution_mode=execution_mode,
+        dry_run=dry_run,
     )
     
     if args.report:
+        # Use LiveExecutor's report if in live mode
+        if execution_mode == "live" and hasattr(scanner.trader, 'report'):
+            print(scanner.trader.report())
+            return
+        
         snap = scanner.trader.snapshot()
         open_trades = [t for t in scanner.trader.trades if t.status == "OPEN"]
         resolved = [t for t in scanner.trader.trades if t.status.startswith("RESOLVED")]
@@ -865,7 +971,7 @@ def main():
         losses = [t for t in resolved if t.status == "RESOLVED_LOSS"]
         
         print(f"\n{'=' * 70}")
-        print(f"  WEATHER PAPER TRADING REPORT")
+        print(f"  WEATHER {'LIVE' if execution_mode == 'live' else 'PAPER'} TRADING REPORT")
         print(f"{'=' * 70}")
         print(f"  Bankroll: ${scanner.trader.bankroll:,.2f} "
               f"(started: ${scanner.trader.initial_bankroll:,.2f})")
@@ -900,7 +1006,7 @@ def main():
         scanner.check_resolutions()
         return
     
-    if args.paper_trade:
+    if args.paper_trade or args.live:
         scanner.scan_and_trade()
     else:
         events = scanner.scan()
@@ -914,7 +1020,7 @@ def main():
         # Show detailed opportunity table
         if events:
             print(f"\n{'─' * 70}")
-            print(f"  TRADEABLE EDGES (run with --paper-trade to enter)")
+            print(f"  TRADEABLE EDGES (run with --paper-trade or --live to enter)")
             print(f"{'─' * 70}")
             
             for event in events:

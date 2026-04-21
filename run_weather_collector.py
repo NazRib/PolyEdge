@@ -1,12 +1,12 @@
 """
 Weather Pipeline Scheduler
-Runs data collection + scanner paper trading at 04, 10, 16, 22 UTC
+Runs data collection + scanner trading at 04, 10, 16, 22 UTC
 (4h after each major model update cycle).
 
 Each run:
     1. Collects snapshots (forecasts + market prices) for forward validation
     2. Checks open trades for resolution
-    3. Scans for tradeable edges and enters paper trades
+    3. Scans for tradeable edges and enters trades (paper or live)
 
 Leave this running in a terminal.
 
@@ -15,6 +15,8 @@ Usage:
     python run_weather_collector.py --once           # Run one cycle and exit
     python run_weather_collector.py --scan-only      # Skip data collection
     python run_weather_collector.py --collect-only   # Skip scanner
+    python run_weather_collector.py --live           # Live mode (dry-run by default)
+    python run_weather_collector.py --live --no-dry-run  # Real money
 """
 
 import subprocess
@@ -60,8 +62,10 @@ def run_step(label: str, module: str, args: list[str]) -> bool:
         return False
 
 
-def run_cycle(collect: bool = True, scan: bool = True):
+def run_cycle(collect: bool = True, scan: bool = True, scanner_args: list[str] = None):
     """Run one full cycle: collect → check resolutions → scan & trade."""
+    if scanner_args is None:
+        scanner_args = ["--paper-trade"]
     results = {}
 
     # Step 1: Data collection (snapshot for validation)
@@ -77,14 +81,17 @@ def run_cycle(collect: bool = True, scan: bool = True):
         results["check"] = run_step(
             "Resolution check",
             "weather.scanner",
-            ["--check"],
+            ["--check"] + ([a for a in scanner_args if a.startswith("--live") or a.startswith("--no-dry")]),
         )
 
-        # Step 3: Scan and paper trade
+        # Step 3: Scan and trade
+        trade_label = "Scan & trade"
+        if "--live" in scanner_args:
+            trade_label += " (LIVE" + (" DRY-RUN)" if "--no-dry-run" not in scanner_args else ")")
         results["trade"] = run_step(
-            "Scan & paper trade",
+            trade_label,
             "weather.scanner",
-            ["--paper-trade"],
+            scanner_args,
         )
 
     return results
@@ -106,16 +113,35 @@ def main():
         "--once", action="store_true",
         help="Run one cycle immediately and exit"
     )
+    parser.add_argument(
+        "--live", action="store_true",
+        help="Run scanner in live execution mode (dry-run by default)"
+    )
+    parser.add_argument(
+        "--no-dry-run", action="store_true",
+        help="Disable dry-run — place real orders"
+    )
     args = parser.parse_args()
 
     collect = not args.scan_only
     scan = not args.collect_only
 
+    # Build scanner args
+    if args.live:
+        scanner_args = ["--live"]
+        if args.no_dry_run:
+            scanner_args.append("--no-dry-run")
+    else:
+        scanner_args = ["--paper-trade"]
+
     mode_parts = []
     if collect:
         mode_parts.append("collect")
     if scan:
-        mode_parts.append("scan + trade")
+        if args.live:
+            mode_parts.append("LIVE trade" + (" (dry-run)" if not args.no_dry_run else ""))
+        else:
+            mode_parts.append("paper trade")
     mode = " + ".join(mode_parts)
 
     print("=" * 55)
@@ -129,7 +155,7 @@ def main():
         print(f"\n{'─' * 55}")
         print(f"  {datetime.now(timezone.utc):%H:%M:%S} UTC — Single run")
         print(f"{'─' * 55}")
-        run_cycle(collect=collect, scan=scan)
+        run_cycle(collect=collect, scan=scan, scanner_args=scanner_args)
         return
 
     while True:
@@ -147,7 +173,7 @@ def main():
         print(f"  {datetime.now(timezone.utc):%H:%M:%S} UTC — Running cycle")
         print(f"{'─' * 55}")
 
-        results = run_cycle(collect=collect, scan=scan)
+        results = run_cycle(collect=collect, scan=scan, scanner_args=scanner_args)
 
         passed = sum(1 for v in results.values() if v)
         total = len(results)

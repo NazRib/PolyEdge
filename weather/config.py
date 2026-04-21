@@ -155,6 +155,23 @@ BACKTEST_LEAD_HOURS = [72, 48, 24] # Snapshot lead times before resolution
 BACKTEST_MIN_MODELS = 3            # Skip market-dates with fewer than this many models
 
 
+# ─── Live Execution Parameters ─────────────────────────
+# These only apply when running with --live flag.
+# All defaults are conservative; tune after validation.
+
+LIVE_DRY_RUN = True                # Default safe: dry-run mode. Set False for real trades.
+LIVE_ORDER_TIMEOUT_SECONDS = 120   # Cancel unfilled GTC orders after this long
+LIVE_DAILY_LOSS_LIMIT = 100.0      # Hard stop if daily losses exceed this ($)
+LIVE_MIN_BOOK_DEPTH = 100.0        # Minimum order book depth ($) to trade
+LIVE_TICK_SIZE = "0.01"            # Price tick for weather markets
+LIVE_BANKROLL = 500.0              # Starting bankroll for live weather trading
+LIVE_MAX_SINGLE_ORDER = 50.0       # Max $ per single order (same as bucket position cap)
+
+# Weather taker fee rate (peak at 50% probability, March 2026)
+# Maker orders (GTC limit) pay 0%. We always prefer maker.
+WEATHER_TAKER_FEE_PEAK = 0.0125   # 1.25%
+
+
 # ─── Data Storage ────────────────────────────────────────
 
 WEATHER_DATA_DIR = "data/weather"
