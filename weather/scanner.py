@@ -490,7 +490,7 @@ class WeatherScanner:
         
         # Build set of market_ids we already have open trades in
         open_market_ids = {
-            t.market_id for t in self.trader.trades if t.status == "OPEN"
+            t.market_id for t in self.trader.trades if t.status in ("OPEN", "FILLED")
         }
         
         for event in events:
@@ -659,7 +659,7 @@ class WeatherScanner:
         
         # Portfolio status
         snap = self.trader.snapshot()
-        open_trades = [t for t in self.trader.trades if t.status == "OPEN"]
+        open_trades = [t for t in self.trader.trades if t.status in ("OPEN", "FILLED")]
         print(f"\n  📊 Weather Portfolio:")
         print(f"     Bankroll: ${self.trader.bankroll:,.2f}")
         print(f"     Open trades: {len(open_trades)}")
@@ -673,7 +673,7 @@ class WeatherScanner:
     
     def check_resolutions(self):
         """Check open weather trades for market resolution."""
-        open_trades = [t for t in self.trader.trades if t.status == "OPEN"]
+        open_trades = [t for t in self.trader.trades if t.status in ("OPEN", "FILLED")]
         if not open_trades:
             return
         
@@ -860,17 +860,22 @@ class WeatherScanner:
         total = 0.0
         date_str = target_date.isoformat()
         for trade in self.trader.trades:
-            if trade.status != "OPEN":
+            if trade.status not in ("OPEN", "FILLED"):
                 continue
             if city in trade.question and date_str in trade.question:
-                total += trade.dollar_amount
+                # Use actual fill amount if available (live trades may be partial)
+                amount = getattr(trade, "fill_amount", 0) or trade.dollar_amount
+                total += amount
         return total
     
     def _get_total_weather_exposure(self) -> float:
         """Get total $ in all open weather trades."""
-        return sum(
-            t.dollar_amount for t in self.trader.trades if t.status == "OPEN"
-        )
+        total = 0.0
+        for t in self.trader.trades:
+            if t.status in ("OPEN", "FILLED"):
+                amount = getattr(t, "fill_amount", 0) or t.dollar_amount
+                total += amount
+        return total
 
 
 # ═══════════════════════════════════════════════════════════
@@ -898,6 +903,10 @@ def main():
     parser.add_argument(
         "--no-dry-run", action="store_true", default=False,
         help="Disable dry-run mode — actually place orders with real USDC"
+    )
+    parser.add_argument(
+        "--confirmed", action="store_true", default=False,
+        help="Skip the interactive CONFIRM prompt (for scheduler/automated use)"
     )
     parser.add_argument(
         "--check", action="store_true",
@@ -937,7 +946,7 @@ def main():
         execution_mode = "live"
         # --live defaults to dry-run unless --no-dry-run is explicitly set
         dry_run = not args.no_dry_run
-        if not dry_run:
+        if not dry_run and not args.confirmed:
             # Final safety gate: require explicit confirmation for real money
             print("\n" + "!" * 70)
             print("  ⚠️  LIVE TRADING MODE — REAL MONEY")
@@ -965,7 +974,7 @@ def main():
             return
         
         snap = scanner.trader.snapshot()
-        open_trades = [t for t in scanner.trader.trades if t.status == "OPEN"]
+        open_trades = [t for t in scanner.trader.trades if t.status in ("OPEN", "FILLED")]
         resolved = [t for t in scanner.trader.trades if t.status.startswith("RESOLVED")]
         wins = [t for t in resolved if t.status == "RESOLVED_WIN"]
         losses = [t for t in resolved if t.status == "RESOLVED_LOSS"]
@@ -992,7 +1001,8 @@ def main():
         if open_trades:
             print(f"\n  Open positions:")
             for t in open_trades:
-                print(f"    {t.question[:55]} | ${t.dollar_amount:.2f} | Edge: {t.edge_at_entry:+.0%}")
+                amount = getattr(t, "fill_amount", 0) or t.dollar_amount
+                print(f"    {t.question[:55]} | ${amount:.2f} | Edge: {t.edge_at_entry:+.0%}")
         
         print()
         return
