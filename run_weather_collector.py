@@ -78,10 +78,15 @@ def run_cycle(collect: bool = True, scan: bool = True, scanner_args: list[str] =
 
     # Step 2: Check open trades for resolution
     if scan:
+        # Resolution check needs --live (to load live_trades.json) but
+        # never --no-dry-run (it doesn't place orders, so no confirmation needed)
+        check_args = ["--check"]
+        if "--live" in scanner_args:
+            check_args.append("--live")
         results["check"] = run_step(
             "Resolution check",
             "weather.scanner",
-            ["--check"] + ([a for a in scanner_args if a.startswith("--live") or a.startswith("--no-dry")]),
+            check_args,
         )
 
         # Step 3: Scan and trade
@@ -131,6 +136,7 @@ def main():
         scanner_args = ["--live"]
         if args.no_dry_run:
             scanner_args.append("--no-dry-run")
+            scanner_args.append("--confirmed")  # Skip interactive prompt in subprocess
     else:
         scanner_args = ["--paper-trade"]
 
@@ -150,6 +156,17 @@ def main():
     print(f"  Schedule: {SCHEDULE_HOURS_UTC} UTC")
     print(f"  Started:  {datetime.now(timezone.utc):%Y-%m-%d %H:%M:%S} UTC")
     print("=" * 55)
+
+    # One-time confirmation for real-money mode
+    if args.live and args.no_dry_run:
+        print("\n" + "!" * 55)
+        print("  ⚠️  LIVE TRADING — REAL MONEY")
+        print("  The scheduler will place real orders on every cycle.")
+        print("!" * 55)
+        confirm = input("\n  Type 'CONFIRM' to proceed: ").strip()
+        if confirm != "CONFIRM":
+            print("  Aborted.")
+            return
 
     if args.once:
         print(f"\n{'─' * 55}")

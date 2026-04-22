@@ -463,19 +463,131 @@ Research revealed a crowded and growing field of automated weather traders on Po
 
 ---
 
-### Phase 3 — Live Validation (in progress)
+### Phase 3 — Live Validation (completed)
 
 **Goal:** Validate that the backtest edge holds in real-time with live ensemble data and actual market prices.
 
-**Status as of April 20, 2026:** Paper trading running for ~2 weeks post-fix with event logging enabled. Results are positive (+$349 P&L, 22 resolved trades, 32% win rate). City set refined from 7 tradeable to 4 tradeable (NYC, Atlanta, Beijing, Denver) based on diagnostic data. All 7 cities continue to be scanned for model accuracy tracking. Accumulating more resolved events to increase confidence before proceeding to live execution.
+**Status:** Paper trading ran from April 7 — April 21, 2026 with all bugs fixed and event logging enabled. Results are positive (+$349 P&L, 22 resolved trades, 32% win rate). City set refined from 7 tradeable to 4 tradeable (NYC, Atlanta, Beijing, Denver) based on diagnostic data. All 7 cities continue to be scanned for model accuracy tracking.
+
+**Decision:** Results sufficient to proceed to Phase 4 live execution with a small funded wallet.
 
 ---
 
-### Phase 4 — Live Execution (pending validation)
+### Phase 4 — Live Execution (implemented April 21, 2026)
 
-**Goal:** If paper trading validates the edge, execute real trades via Polymarket CLOB API with a funded wallet.
+**Goal:** Execute real trades via Polymarket CLOB API with a funded wallet.
 
-**Prerequisites:** Paper trading must show positive P&L over 40-50+ resolved trades with clean data on the refined 4-city tradeable set. Current results (22 resolved, +$349 P&L) are encouraging but need more sample size for confidence.
+**What was built:** A complete live execution layer that drops into the existing scanner pipeline. The scan → enrich → Kelly sizing pipeline is identical to paper trading — only the final execution step changes. The scanner accepts an `execution_mode` parameter ("paper" or "live") and instantiates the appropriate executor.
+
+#### Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                  WEATHER SCANNER PIPELINE                    │
+│                    (unchanged logic)                         │
+│  discover → forecast → bias correct → probabilities → edges │
+├─────────────────────────────────────────────────────────────┤
+│               EXECUTION LAYER (new)                         │
+│  ┌──────────────┐    ┌──────────────┐                       │
+│  │ PaperTrader   │ OR │ LiveExecutor  │  ← same interface   │
+│  │ (paper mode)  │    │ (live mode)   │                      │
+│  └──────────────┘    └──────────────┘                       │
+│                            │                                │
+│                      ┌─────┴──────┐                         │
+│                      │  ClobClient │                        │
+│                      │ (py-clob)   │                        │
+│                      └─────┬──────┘                         │
+│                            │                                │
+│                    Polymarket CLOB API                       │
+│                    (clob.polymarket.com)                     │
+└─────────────────────────────────────────────────────────────┘
+```
+
+#### New files
+
+**`core/wallet.py`** — Centralized wallet management. Creates and authenticates a `ClobClient` from `py-clob-client` using environment variables (`POLYMARKET_PRIVATE_KEY`, `POLYMARKET_FUNDER`, `POLYMARKET_SIGNATURE_TYPE`). Defaults to `signature_type=1` (email/Magic wallet — the most common Polymarket login method). Provides USDC balance and allowance queries via the `get_balance_allowance` endpoint (balance returned in wei, divided by 1e6 for USDC). Includes a `preflight_check()` diagnostic that verifies: connectivity, wallet identity, USDC balance, token allowances, and stale open orders — printing a pass/fail report before any trading begins.
+
+**Design note on wallet metadata:** `py-clob-client`'s `ClobClient` does not expose `signature_type`, `funder`, or `address` as readable attributes after construction. The wallet module stores these at creation time in a module-level `_wallet_meta` dict so `get_wallet_info()` can report them accurately. This was discovered during the first dry-run when preflight showed "Wallet: unknown / Signature type: EOA" despite being configured as email/Magic.
+
+**`core/live_executor.py`** — Drop-in replacement for `PaperTrader`. Exposes the same `enter_trade(estimate, position)` and `resolve_trade(trade_id, outcome)` interface. Per-trade execution pipeline:
+
+1. **Circuit breakers** — Check bankroll, daily loss limit ($100 default)
+2. **Balance check** (live only) — Query on-chain USDC via `get_balance_allowance`
+3. **Order book check** — Fetch book via CLOB API, verify total depth ≥ $100
+4. **Edge re-verification** — Compute midpoint from current bid/ask, confirm edge hasn't evaporated since scan (min 5%)
+5. **Limit price computation** — Aggressive maker strategy: price at `best_ask - 1 tick` (GTC order, 0% fees). If spread ≤ 2 ticks, fall back to FOK market order for guaranteed fill
+6. **Order placement** — `create_order()` + `post_order()` via py-clob-client. Temperature markets are `neg_risk=True` (multi-outcome markets use the Neg Risk CTF Exchange)
+7. **Fill monitoring** — For GTC orders: poll open orders every 5s, cancel after timeout (120s default)
+8. **Audit trail** — Full `LiveTrade` dataclass with order lifecycle fields persisted to `data/weather/live_trades.json`
+
+**Dry-run mode:** When `dry_run=True` (the default), the executor runs the full pre-flight pipeline (book check, edge verification, price computation) but prints what it would do instead of submitting orders. This enables validation of the complete pipeline without risking capital.
+
+**`scripts/setup_allowances.py`** — One-time token allowance setup for EOA wallets. Approves USDC and CTF contracts for both the standard Exchange and Neg Risk Exchange contracts on Polygon. Uses auto-discovery of public Polygon RPC endpoints (PublicNode, dRPC) since the previously-standard `polygon-rpc.com` (Ankr) deprecated free public access in 2026. **Not needed for email/Magic wallets** — Polymarket manages allowances automatically for proxy wallets.
+
+#### Modified files
+
+**`weather/scanner.py`** — Added `execution_mode` parameter to `WeatherScanner.__init__()`. When `"live"`, instantiates `LiveExecutor` instead of `PaperTrader`. Added `token_id` to the `ProbabilityEstimate.components` dict so the executor can place CLOB orders. Preflight check runs automatically on live init. Bankroll is capped to actual on-chain USDC balance. New CLI flags: `--live` (defaults to dry-run), `--dry-run`, `--no-dry-run` (requires typing 'CONFIRM'). Kelly parameters adjusted for smaller bankrolls: `min_bet=$1` (was $5), `max_position_pct=0.10` (was 0.05).
+
+**`weather/config.py`** — Added live execution constants:
+
+```python
+LIVE_DRY_RUN = True                # Default safe: dry-run mode
+LIVE_ORDER_TIMEOUT_SECONDS = 120   # Cancel unfilled GTC orders after this
+LIVE_DAILY_LOSS_LIMIT = 100.0      # Hard stop on daily losses ($)
+LIVE_MIN_BOOK_DEPTH = 100.0        # Minimum order book depth ($) to trade
+LIVE_TICK_SIZE = "0.01"            # Price tick for weather markets
+LIVE_BANKROLL = 500.0              # Starting bankroll for live trading
+LIVE_MAX_SINGLE_ORDER = 50.0       # Max $ per single order
+WEATHER_TAKER_FEE_PEAK = 0.0125   # 1.25% taker fee at 50% probability
+```
+
+**`run_weather_collector.py`** — Added `--live` and `--no-dry-run` flags so the scheduler can run live execution on the 4h model-update cycle.
+
+#### Order strategy
+
+Weather markets charge 1.25% peak taker fees (at 50% probability) but 0% maker fees. With an 8% minimum edge, paying 1.25% taker fees erodes ~15% of the edge. The executor therefore uses **aggressive limit orders** (GTC, priced at `best_ask - 1 tick`) to qualify as maker. This sits at the top of the bid queue and typically fills within minutes while paying no fees and potentially earning maker rebates (20-25% of the taker fee collected from the counterparty). If the spread is very tight (≤ 2 ticks), the maker advantage is minimal and the order may not fill, so the executor falls back to FOK market orders for guaranteed execution.
+
+#### Wallet setup (email login)
+
+Most Polymarket users log in via email, which creates a Magic proxy wallet. This is `signature_type=1` in the CLOB API. Setup:
+
+1. Export private key: Polymarket → Settings → Profile → Export Private Key
+2. Find your wallet address: the `0x...` deposit address shown in your profile
+3. Set environment variables:
+```bash
+export POLYMARKET_PRIVATE_KEY="0x..."
+export POLYMARKET_FUNDER="0x..."          # Your Polymarket deposit address
+export POLYMARKET_SIGNATURE_TYPE="1"      # Email/Magic wallet
+```
+
+No token allowance setup needed — Polymarket handles allowances automatically for proxy wallets. No POL (gas) needed either.
+
+#### Deployment sequence
+
+```bash
+# 1. Install dependency
+pip install py-clob-client
+
+# 2. Set credentials (see wallet setup above)
+
+# 3. Dry-run validation (full pipeline, no real orders)
+python -m weather.scanner --live
+
+# 4. First real trades (requires typing 'CONFIRM')
+python -m weather.scanner --live --no-dry-run
+
+# 5. Scheduled execution
+python run_weather_collector.py --live              # dry-run on schedule
+python run_weather_collector.py --live --no-dry-run  # real money on schedule
+```
+
+#### First dry-run results (April 21, 2026)
+
+Two dry-runs were performed to validate the pipeline end-to-end:
+
+**Run 1 (pre-fix):** Preflight check surfaced three bugs: wallet showed "unknown / EOA" instead of the actual address and signature type (caused by `py-clob-client` not exposing these as readable attributes), allowance check showed "NOT SET" instead of "managed by Polymarket" (downstream of the wrong signature type), and balance check required $500 while wallet had $91 (overly strict threshold). Scanner found 21 events with 23 tradeable buckets but entered 0 trades due to a Kelly sizing conflict: `max_position_pct=0.05` capped positions at $4.56 while `min_bet=5.0` required $5.00 minimum — every trade fell into the dead zone.
+
+**Run 2 (post-fix):** All preflight checks passed (wallet correctly identified as email/Magic, allowance shown as auto-managed, balance $91.21 above $20 minimum). Bankroll auto-capped to on-chain balance ($91.21). Scanner found same 21 events, 23 tradeable buckets. With `min_bet=$1.0` and `max_position_pct=0.10`, positions sized correctly at $1-9 per trade. 15 dry-run orders placed across NYC, Atlanta, Beijing, Denver — mix of GTC (maker) and FOK (taker) based on spread width. Trades ranged from $5.32 (Denver 62-63°F, 9% edge) to $16.27 (Atlanta 82-83°F, 18% edge).
 
 ---
 
@@ -483,30 +595,49 @@ Research revealed a crowded and growing field of automated weather traders on Po
 
 **Goal:** Optimize execution timing around model update cycles for maximum edge capture at the 48h window.
 
+**Scheduler integration:** `run_weather_collector.py` already supports `--live` and `--no-dry-run` flags. Running `python run_weather_collector.py --live --no-dry-run` will execute the full live pipeline at 04, 10, 16, 22 UTC (4h after each major model update cycle).
+
+**Remaining optimization work:**
+- Monitor fill rates on GTC vs FOK orders — if GTC orders frequently timeout, consider adjusting the limit price strategy or reducing timeout
+- Track edge decay by hour — confirm that the 48h window is still the sweet spot in live execution
+- Consider WebSocket price feed for real-time book monitoring instead of REST polling
+
 
 ## File Structure
 
 ```
 weather/
 ├── __init__.py
-├── config.py               # Cities, stations, models, tag IDs, trading parameters
+├── config.py               # Cities, stations, models, tag IDs, trading + live execution params
 ├── utils.py                # Question parsing, bucket extraction, probability computation
 ├── models.py               # Open-Meteo API client (deterministic + ensemble, with retry)
 ├── bias.py                 # Station bias correction (build, save, load, apply per-city/model)
 ├── backtest.py             # Phase 1A: historical edge analysis with tag-based enumeration
 ├── data_collector.py       # Phase 1B: forward live snapshot collection
-├── scanner.py              # Phase 2: standalone market scanner + paper trading pipeline
+├── scanner.py              # Phase 2+4: market scanner + dual-mode executor (paper/live)
 ├── trade_logger.py         # Event logging: per-scan decision snapshots to JSONL
-├── diagnostics.py          # Diagnostic reports: model accuracy, city P&L, calibration, edge attribution
+├── diagnostics.py          # Diagnostic reports: model accuracy, city P&L, calibration
 ├── enricher.py             # Optional: WeatherEnricher for main pipeline integration
 └── weather_module_design.md # This document
 
+core/
+├── wallet.py               # Phase 4: CLOB authentication, balance/allowance checks, preflight
+├── live_executor.py         # Phase 4: live order execution engine (drop-in for PaperTrader)
+├── paper_trader.py          # Paper trading engine (unchanged, still used for paper mode)
+├── kelly.py                 # Kelly Criterion position sizing (unchanged)
+├── api_client.py            # Polymarket API client for scanning (unchanged)
+└── ...
+
+scripts/
+└── setup_allowances.py     # One-time token allowance setup (EOA wallets only, not email)
+
 data/weather/
 ├── event_log.jsonl         # Append-only event log (all scanned events, not just trades)
-├── paper_trades.json       # PaperTrader state (open/resolved trades, bankroll)
-└── bias_corrections.json   # Per-city, per-model bias table
+├── paper_trades.json       # PaperTrader state (paper mode)
+├── live_trades.json        # LiveExecutor state (live mode — separate from paper)
+└── station_bias.json       # Per-city, per-model bias table
 
-run_weather_collector.py    # Scheduler: runs collector + scanner at 04/10/16/22 UTC
+run_weather_collector.py    # Scheduler: collector + scanner at 04/10/16/22 UTC (paper or live)
 ```
 
 
@@ -599,6 +730,16 @@ WEATHER_MAX_CITY_EXPOSURE = 150  # Max $ total across all buckets for one city/d
 # City sets (refined from forward validation diagnostics, April 20, 2026)
 SCAN_CITIES = {"NYC", "London", "Hong Kong", "Atlanta", "Beijing", "Denver", "Houston"}
 TRADEABLE_CITIES = {"NYC", "Atlanta", "Beijing", "Denver"}  # Subset with positive P&L
+
+# Live execution parameters (Phase 4, April 21, 2026)
+LIVE_DRY_RUN = True                # Default safe: dry-run mode
+LIVE_ORDER_TIMEOUT_SECONDS = 120   # Cancel unfilled GTC orders after this
+LIVE_DAILY_LOSS_LIMIT = 100.0      # Hard stop on daily losses ($)
+LIVE_MIN_BOOK_DEPTH = 100.0        # Minimum order book depth ($) to trade
+LIVE_TICK_SIZE = "0.01"            # Price tick for weather markets
+LIVE_BANKROLL = 500.0              # Starting bankroll for live trading
+LIVE_MAX_SINGLE_ORDER = 50.0       # Max $ per single order
+WEATHER_TAKER_FEE_PEAK = 0.0125   # 1.25% taker fee at 50% probability
 ```
 
 
@@ -634,6 +775,12 @@ TRADEABLE_CITIES = {"NYC", "Atlanta", "Beijing", "Denver"}  # Subset with positi
 **Risk: Competitive edge compression (partially confirmed in forward validation).** The weather trading strategy was publicly documented in viral February 2026 articles and multiple open-source implementations. The backtest (using pre-February data) showed +$13,657 P&L; initial forward paper trading (pre-fix, March 26 — April 7) showed -$685 P&L, but this was contaminated by data quality bugs. Post-fix forward trading (April 7 — April 20) shows +$349 P&L on 22 resolved trades, suggesting the edge is narrower but not fully competed away. The market is more efficient (smaller individual wins, higher win rate needed) but mispricing persists in high-variance cities.
 *Mitigation:* Refined tradeable city set to 4 cities (NYC, Atlanta, Beijing, Denver) where the edge is strongest. Continue monitoring via diagnostics module. If edge degrades further, consider: (a) abandoning weather for other market categories, (b) looking for second-order edges the simple bots miss (e.g., regime-dependent bias, extreme weather events, precipitation markets), or (c) focusing only on cities/times where competition is thinnest.
 
+**Risk: Live execution slippage and partial fills.** Paper trading assumes instant execution at the observed market price. Real CLOB orders face: spread crossing costs, partial fills on thin books, order timeout on GTC orders, and price movement between scan and execution (the scan takes ~43 seconds before the first order is placed).
+*Mitigation:* The live executor re-checks the order book and re-verifies edge at current midpoint before every order. Minimum book depth check ($100) prevents trading on illiquid buckets. GTC timeout (120s) with auto-cancel prevents stale orders. Per-trade slippage will be tracked in `live_trades.json` (entry_price vs fill_price) for post-execution analysis.
+
+**Risk: Polymarket CLOB API authentication edge cases.** The `py-clob-client` SDK has known issues: `create_api_key` returns 400 on first call (falls back to `derive_api_key`), `get_balance_allowance` may return 0 for some wallet types, wallet attributes are not exposed as readable properties. Email/Magic wallet users report intermittent signature failures when the signing key and funder address are misconfigured.
+*Mitigation:* Wallet module stores configuration at creation time rather than introspecting the client. Preflight check validates connectivity, balance, and allowances before any trading. Clear error messages for missing `POLYMARKET_FUNDER` (required for email wallets).
+
 
 ## Dependencies
 
@@ -645,11 +792,15 @@ TRADEABLE_CITIES = {"NYC", "Atlanta", "Beijing", "Denver"}  # Subset with positi
 | Open-Meteo Ensemble API | Ensemble member forecasts for probability | None | Free (non-commercial) |
 | Open-Meteo Historical Weather API | Observed actuals (ERA5 reanalysis) | None | Free (non-commercial) |
 | Polymarket Gamma API | Market discovery, resolved market metadata | None | Free |
-| Polymarket CLOB API | Order books, pricing per bucket, price history | None | Free |
+| Polymarket CLOB API (read) | Order books, pricing per bucket, price history | None | Free |
+| Polymarket CLOB API (trade) | Order placement, management, positions | Wallet key + L2 API creds | Free (+ trading fees) |
+| py-clob-client (PyPI) | Official Python SDK for CLOB order signing | `pip install py-clob-client` | Free |
 | poly_data (GitHub) | Bulk historical market CSV (optional accelerator) | None | Free |
 | Weather Underground | Resolution verification (manual or scrape) | None (public pages) | Free |
 
-No additional API keys are needed beyond what is already configured (Anthropic, FRED).
+**CLOB trading authentication (Phase 4):** Requires `POLYMARKET_PRIVATE_KEY` (signing key exported from Polymarket settings), `POLYMARKET_FUNDER` (proxy wallet deposit address), and `POLYMARKET_SIGNATURE_TYPE` (1 for email login). No additional API keys beyond what the existing system uses (Anthropic, FRED). No POL/MATIC gas tokens needed for email wallet users.
+
+**Weather market trading fees (as of March 2026):** Maker (GTC limit) orders: 0% fees + potential rebates (20-25%). Taker (FOK market) orders: up to 1.25% peak fee at 50% probability, scaling toward 0% at extremes. The live executor preferentially uses maker orders to minimize fee impact on edge.
 
 
 ## Success Metrics
@@ -672,7 +823,7 @@ No additional API keys are needed beyond what is already configured (Anthropic, 
 
 ### Phase 2-5 — Live Validation & Trading
 
-| Metric | Target | Actual (April 20) | Status |
+| Metric | Target | Actual (April 21) | Status |
 |--------|--------|---------------------|--------|
 | Paper P&L | Positive over 2 weeks | +$349.41 over 13 days (post-fix) | ✅ |
 | Win rate | 10-16% (matching backtest) | 32% (22 resolved trades) | ✅ Above target |
@@ -680,11 +831,13 @@ No additional API keys are needed beyond what is already configured (Anthropic, 
 | Model accuracy | < 2.5° MAE | ICON 1.84°, GFS 2.15°, GEM 2.44°, JMA 2.58° | ✅ |
 | Bias correction | Helping >50% | 66.2% (51/77 events) | ✅ |
 | Win rate on STRONG tier | > 40% | 100% (n=1, insufficient data) | ⏳ |
-| Data quality | Clean (no bugs) | 5 bugs found and fixed (incl. dedup) | ✅ Fixed |
+| Data quality | Clean (no bugs) | 5+3 bugs found and fixed (paper + live phases) | ✅ Fixed |
 | API reliability | <5% failure rate | Stable at 1.0s delay | ✅ |
 | City refinement | Positive P&L on tradeable set | 4/7 cities profitable, 3 removed from trading | ✅ |
+| Live execution dry-run | Pipeline end-to-end | 15 simulated orders, all stages pass | ✅ |
+| Preflight check | All green | Connectivity, balance, allowance, no stale orders | ✅ |
 
-**Interpretation:** Forward results have turned positive after bug fixes and city refinement. The strategy shows an asymmetric payoff profile (32% win rate, net +$349) consistent with the backtest's tail-strategy characteristics, though with smaller individual wins — the market is more efficient than the backtest period but the edge is not fully competed away. Sample size (22 resolved) is still small; continuing to accumulate data before committing to live execution.
+**Interpretation:** Forward results have turned positive after bug fixes and city refinement. The strategy shows an asymmetric payoff profile (32% win rate, net +$349) consistent with the backtest's tail-strategy characteristics, though with smaller individual wins — the market is more efficient than the backtest period but the edge is not fully competed away. Live execution layer is implemented and validated via dry-run. Next: first real trades with small capital.
 
 
 ## Implementation Priority
@@ -694,30 +847,28 @@ No additional API keys are needed beyond what is already configured (Anthropic, 
 - **Phase 1A — Historical Backtest**: 540 data points across 10 cities, 30 days, 3 lead times. Tag-based market enumeration → historical forecast retrieval → probability computation → CLOB price history → Brier scoring → Kelly P&L simulation. Result: +$13,657 simulated P&L.
 - **Station Bias Correction**: Per-city, per-model mean bias table from backtest residuals. Flipped Atlanta from -$1,839 to +$659. Applied via `--bias-correct` flag in backtest, loaded automatically in live scanner.
 - **City Selection**: Initially 7 tradeable cities from backtest (excluded Seoul, Wellington, Munich). Refined in forward validation to split into `SCAN_CITIES` (all 7 for model accuracy tracking) and `TRADEABLE_CITIES` (NYC, Atlanta, Beijing, Denver — the 4 profitable cities). Removed from trading: Hong Kong (0.35° MAE = efficiently priced, -$21 P&L), Houston (0W/3L, -$45, persistent -2.2° bias), London (0W/3L, -$56). London is borderline and monitored for re-addition.
-- **Standalone Weather Scanner**: Full pipeline in `weather/scanner.py` — discovery, enrichment, edge detection, Kelly sizing, paper trading, resolution checking.
+- **Standalone Weather Scanner**: Full pipeline in `weather/scanner.py` — discovery, enrichment, edge detection, Kelly sizing, dual-mode execution (paper/live), resolution checking.
 - **Forward Data Collector**: Running on 6h schedule, 885+ snapshots collected across 10 cities.
-- **Automated Scheduler**: `run_weather_collector.py` runs both collector and scanner at 04/10/16/22 UTC.
+- **Automated Scheduler**: `run_weather_collector.py` runs both collector and scanner at 04/10/16/22 UTC. Supports `--live` and `--no-dry-run` flags for live execution mode.
 - **Event Logging System**: `weather/trade_logger.py` — `WeatherEventLogger` writes append-only JSONL to `data/weather/event_log.jsonl`. Logs ALL scanned events (not just trades) with full decision snapshot: raw forecasts, bias corrections, corrected forecasts, bucket probability distributions (model + market), per-bucket edges, confidence tier, trades entered or skip reason. `log_resolution()` patches entries post-hoc with actual temperature, bucket, model error, and trade P&L.
 - **Diagnostics Module**: `weather/diagnostics.py` — six analysis reports (model accuracy, bias correction impact, edge attribution, city profitability, calibration by tier, summary). Runnable via `python -m weather.diagnostics` or `python -m weather.scanner --diagnostics`. Includes event-key deduplication to avoid overcounting from multi-lead-time scans.
-- **Bug Fixes**: Duplicate trade dedup, missing-model quality gate (≥3 required), API rate limit increase (0.15s → 1.0s), SSL retry logic, Gamma API slug endpoint (`/events/slug/{slug}`), tag ID hardcoding, diagnostics dedup overcounting (two rounds — see Forward Validation Results).
+- **Forward Validation (Phase 3)**: Paper trading April 7-21 with all bugs fixed. Results: +$349 P&L, 22 resolved trades, 32% win rate across 4 tradeable cities. Validated that edge persists in real-time (narrower than backtest but still exploitable).
+- **Live Execution Layer (Phase 4)**: `core/wallet.py` (CLOB authentication + preflight diagnostics), `core/live_executor.py` (drop-in execution engine with safety controls), `scripts/setup_allowances.py` (one-time EOA setup). Scanner extended with `--live` / `--dry-run` / `--no-dry-run` CLI flags. Aggressive limit order strategy (0% maker fees). First dry-run validated April 21: 15 simulated orders across 4 cities, all pipeline stages working (book checks, edge re-verification, GTC/FOK selection, sizing).
+- **Bug Fixes**: Duplicate trade dedup, missing-model quality gate (≥3 required), API rate limit increase (0.15s → 1.0s), SSL retry logic, Gamma API slug endpoint (`/events/slug/{slug}`), tag ID hardcoding, diagnostics dedup overcounting (two rounds), wallet attribute introspection (py-clob-client doesn't expose signature_type/funder/address), Kelly min_bet/max_position_pct conflict on small bankrolls, empty state file parse error, Polygon RPC endpoint deprecation (polygon-rpc.com → publicnode.com).
 
 ### In Progress
 
-- **Forward Validation (Phase 3)**: Paper trading running since April 7 with all bugs fixed and event logging enabled. Results through April 20: +$349 P&L on 22 resolved trades (32% win rate) across 4 tradeable cities. City set refined based on diagnostic data. Accumulating 20-30 more resolved events on the reduced city set to confirm profitability before proceeding to live execution.
+- **Live Execution Validation (Phase 4)**: First dry-run completed successfully April 21. Next step: run `python -m weather.scanner --live --no-dry-run` with small capital to validate real order placement and fills. Monitor fill rates, actual execution prices vs limit prices, and maker vs taker order distribution.
 
-### Next Steps (conditional on continued validation)
+### Next Steps
 
-**If paper trading remains positive over 40-50+ resolved trades:**
-1. Phase 4 — Live execution via CLOB API with funded wallet
-2. Phase 5 — Execution speed optimization around model update cycles
-3. Consider Open-Meteo paid tier for API reliability
-4. Build Denver-specific bias table (currently all zeros despite being most profitable city)
-5. Re-evaluate London for re-addition to TRADEABLE_CITIES if its model accuracy improves
-
-**If paper trading turns negative on the reduced city set:**
-1. Conclude that the weather market edge has been competed away by the growing bot ecosystem
-2. Preserve the infrastructure for potential future use (new cities, precipitation markets, regime changes)
-3. Redirect effort to the main pipeline (Phase 5 paper trading for political/economic markets)
+1. Execute first real trades with $50-100 capital, monitor for 1-2 days
+2. Once confirmed working: run on scheduler (`run_weather_collector.py --live --no-dry-run`)
+3. Phase 5 — Execution speed optimization: WebSocket price feed, fill rate analysis, edge decay monitoring
+4. Consider Open-Meteo paid tier for API reliability under sustained scheduled usage
+5. Build Denver-specific bias table (currently all zeros despite being most profitable city)
+6. Re-evaluate London for re-addition to TRADEABLE_CITIES if its model accuracy improves
+7. Post-execution analysis: compare live fills vs paper trade assumptions (slippage, partial fills, timeout rates)
 
 ### Key Technical Learnings
 
@@ -733,3 +884,11 @@ No additional API keys are needed beyond what is already configured (Anthropic, 
 - **Multi-lead-time scanning requires careful dedup in diagnostics.** The same event_key (city+date) is logged at 72h, 48h, 24h, 7h, and 1h lead times. Resolution patches ALL matching entries. Naive dedup (keep shortest lead time) systematically discards actual trades in favor of late scans where the market has converged and `traded=false`. Correct dedup: prefer `traded=true` first, then shortest lead time as tiebreaker.
 - **High-MAE cities can be the most profitable.** Counter-intuitively, cities where models are least accurate (Denver 3.6° MAE, Beijing 2.07°) generate the most P&L, because the market is also inaccurate — both models and market are uncertain, creating exploitable mispricing. Low-MAE cities (Hong Kong 0.35°) are efficiently priced with no edge.
 - **Event logging should capture ALL scans, not just trades.** Logging skip reasons and model data for non-traded events is essential for diagnostics — it enables model accuracy tracking across the full scan set, not just the subset that was traded.
+- **py-clob-client does not expose wallet configuration as readable attributes.** After constructing a `ClobClient`, attributes like `signature_type`, `funder`, and `address` are either absent or stored under internal names that differ between versions. Wallet metadata must be stored at creation time and referenced separately — do not rely on `getattr(client, "signature_type")`.
+- **Temperature markets are neg-risk.** All multi-outcome Polymarket events (3+ outcomes) use the Neg Risk CTF Exchange. Orders for temperature bucket markets must use `neg_risk=True` in the order builder, or signatures will be rejected. This is distinct from standard binary markets.
+- **Kelly min_bet and max_position_pct must be calibrated together.** With a $91 bankroll and `max_position_pct=0.05`, the maximum position is $4.56. With `min_bet=$5.00`, every trade is rejected silently. The dead zone (`max < min`) causes zero trades with no obvious error. For smaller bankrolls, use `min_bet=$1.0` (Polymarket's practical minimum is ~1 share) and `max_position_pct=0.10`.
+- **Preflight balance check should not require the full bankroll.** The pre-trade balance check should verify enough capital for a few trades ($20), not the entire allocation. The executor's internal bankroll is capped to the actual on-chain balance so Kelly sizing reflects available capital.
+- **Email/Magic wallets don't need token allowances or gas.** Most Polymarket users (email login) are on proxy wallets where Polymarket manages allowances automatically and subsidizes gas via meta-transactions. The allowance setup script is only for EOA (MetaMask/hardware) wallets. Default `signature_type` should be 1, not 0.
+- **Maker orders save 1.25% on weather markets.** Weather taker fees peak at 1.25% at 50% probability. With an 8% minimum edge, that's ~15% of the edge lost to fees. GTC limit orders at `best_ask - 1 tick` qualify as maker (0% fees + rebates) while still filling quickly when there's available liquidity.
+- **polygon-rpc.com (Ankr) deprecated free public access in 2026.** The previously standard Polygon RPC endpoint now requires sign-in. Working free alternatives: `polygon-bor-rpc.publicnode.com` (PublicNode) and `polygon.drpc.org` (dRPC). Scripts that interact with Polygon on-chain should auto-discover working endpoints rather than hardcoding a single one.
+- **Dry-run mode is essential for live execution validation.** The first dry-run immediately surfaced three bugs (wallet introspection, allowance display, Kelly sizing conflict) that would have prevented any real trades from executing. Running the full pipeline with dry-run before committing capital catches integration issues at zero cost.

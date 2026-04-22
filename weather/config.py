@@ -160,7 +160,7 @@ BACKTEST_MIN_MODELS = 3            # Skip market-dates with fewer than this many
 # All defaults are conservative; tune after validation.
 
 LIVE_DRY_RUN = True                # Default safe: dry-run mode. Set False for real trades.
-LIVE_ORDER_TIMEOUT_SECONDS = 120   # Cancel unfilled GTC orders after this long
+LIVE_ORDER_TIMEOUT_SECONDS = 60    # Cancel unfilled GTC orders after this long
 LIVE_DAILY_LOSS_LIMIT = 100.0      # Hard stop if daily losses exceed this ($)
 LIVE_MIN_BOOK_DEPTH = 100.0        # Minimum order book depth ($) to trade
 LIVE_TICK_SIZE = "0.01"            # Price tick for weather markets

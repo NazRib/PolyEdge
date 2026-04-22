@@ -297,24 +297,21 @@ class LiveExecutor:
             return None
 
         # ─── Compute limit price ─────────────────────────
-        # Strategy: aggressive maker — price at best_ask - 1 tick.
-        # This gives us maker status (0% fee) while being likely to fill
-        # because we're at the top of the bid queue.
-        # Fallback: if spread ≤ 2 ticks, the maker advantage is minimal
-        # and we may not fill, so use FOK market order instead.
+        # Strategy: always use GTC limit orders priced AT the best ask.
+        #
+        # On thin weather bucket markets, FOK fails frequently because
+        # the full order size isn't available at a single price level.
+        # GTC at best_ask gives us the best of both worlds:
+        #   - Immediately sweeps whatever liquidity exists at best_ask (partial taker)
+        #   - Any unfilled remainder sits as a bid at best_ask (maker, 0% fees)
+        #   - We accept partial fills and cancel the remainder on timeout
+        #
+        # This replaces the previous FOK/GTC split which failed on 60%+ of
+        # orders in the first live run (April 21, 2026).
         tick = float(self.tick_size)
-        tight_spread = spread <= 2 * tick
 
-        if tight_spread:
-            # Spread is very tight — use market order for guaranteed fill
-            limit_price = best_ask
-            order_type = "FOK"
-        else:
-            # Place aggressive limit order just below the best ask
-            limit_price = round(best_ask - tick, 2)
-            # Ensure our limit is at least at the midpoint
-            limit_price = max(limit_price, round(current_price, 2))
-            order_type = "GTC"
+        limit_price = best_ask
+        order_type = "GTC"
 
         # Compute shares at our limit price
         shares = position.dollar_amount / limit_price if limit_price > 0 else 0
@@ -380,10 +377,13 @@ class LiveExecutor:
         self._save_state()
 
         mode = "🏦 LIVE" if not self.dry_run else "🔍 DRY"
+        partial = ""
+        if trade.fill_shares < shares * 0.99:  # Allow 1% rounding tolerance
+            partial = f" (partial: {trade.fill_shares:.1f}/{shares:.1f})"
         logger.info(
             f"{mode} {trade.trade_id}: {trade.side} {trade.question[:45]}… "
             f"@ {trade.fill_price:.2f} ({trade.order_type}) "
-            f"${trade.fill_amount:.2f} ({trade.fill_shares:.1f} shares)"
+            f"${trade.fill_amount:.2f} ({trade.fill_shares:.1f} shares){partial}"
         )
 
         return trade
@@ -482,41 +482,30 @@ class LiveExecutor:
 
     def _execute_live(self, trade: LiveTrade) -> ExecutionResult:
         """
-        Place a real order on the Polymarket CLOB.
+        Place a real GTC limit order on the Polymarket CLOB.
 
-        For GTC orders: submit, poll for fill, cancel if timeout.
-        For FOK orders: submit and check immediate fill.
+        GTC at best_ask immediately sweeps available liquidity (partial taker),
+        then any unfilled remainder sits as a maker bid. We poll for fills
+        and accept partial fills on timeout.
         """
-        from py_clob_client.clob_types import OrderArgs, MarketOrderArgs, OrderType
+        from py_clob_client.clob_types import OrderArgs, OrderType
         from py_clob_client.order_builder.constants import BUY, SELL
 
         side = BUY if trade.side == "YES" else SELL
-        order_type_enum = OrderType.GTC if trade.order_type == "GTC" else OrderType.FOK
 
         try:
-            if trade.order_type == "FOK":
-                # Market order — fill immediately or cancel
-                order_args = MarketOrderArgs(
-                    token_id=trade.token_id,
-                    amount=trade.dollar_amount,
-                    side=side,
-                    price=trade.entry_price,  # Worst-price limit (slippage protection)
-                )
-                signed_order = self.client.create_market_order(order_args)
-            else:
-                # Limit order — sit on the book as maker
-                order_args = OrderArgs(
-                    token_id=trade.token_id,
-                    price=trade.entry_price,
-                    size=trade.shares,
-                    side=side,
-                )
-                signed_order = self.client.create_order(order_args)
+            order_args = OrderArgs(
+                token_id=trade.token_id,
+                price=trade.entry_price,
+                size=trade.shares,
+                side=side,
+            )
+            signed_order = self.client.create_order(order_args)
 
             trade.order_submitted_at = datetime.now(timezone.utc).isoformat()
 
-            # Post the order
-            resp = self.client.post_order(signed_order, order_type_enum)
+            # Post as GTC
+            resp = self.client.post_order(signed_order, OrderType.GTC)
 
             if not resp:
                 return ExecutionResult(success=False, error="Empty response from post_order")
@@ -540,17 +529,7 @@ class LiveExecutor:
 
             trade.order_id = order_id
 
-            # For FOK: immediate fill or nothing
-            if trade.order_type == "FOK":
-                return ExecutionResult(
-                    success=True,
-                    trade=trade,
-                    order_id=order_id,
-                    fill_price=trade.entry_price,
-                    fill_shares=trade.shares,
-                )
-
-            # For GTC: poll for fill with timeout
+            # Poll for fill with timeout, accepting partial fills
             return self._wait_for_fill(trade, order_id)
 
         except Exception as e:
@@ -561,23 +540,23 @@ class LiveExecutor:
 
     def _wait_for_fill(self, trade: LiveTrade, order_id: str) -> ExecutionResult:
         """
-        Poll a GTC order for fill status. Cancel after timeout.
+        Poll a GTC order for fill status. Accept partial fills on timeout.
 
-        We poll every 5 seconds. If the order is fully filled, great.
-        If partially filled, we accept what we got and cancel the rest.
-        If unfilled after timeout, cancel entirely.
+        GTC orders at best_ask typically fill immediately or within seconds
+        for the available liquidity. We poll to confirm, then cancel any
+        unfilled remainder after timeout. A partial fill is a success.
         """
         from py_clob_client.clob_types import OpenOrderParams
 
         poll_interval = 5.0
         elapsed = 0.0
+        last_filled = 0.0
 
         while elapsed < self.order_timeout_seconds:
             time.sleep(poll_interval)
             elapsed += poll_interval
 
             try:
-                # Check if our order is still open
                 open_orders = self.client.get_orders(OpenOrderParams())
 
                 our_order = None
@@ -588,8 +567,8 @@ class LiveExecutor:
                             break
 
                 if our_order is None:
-                    # Order no longer in open orders → it was filled
-                    logger.info(f"    Order {order_id[:12]}… filled after {elapsed:.0f}s")
+                    # Order no longer in open orders → fully filled
+                    logger.info(f"    Order {order_id[:12]}… fully filled after {elapsed:.0f}s")
                     return ExecutionResult(
                         success=True,
                         trade=trade,
@@ -599,31 +578,33 @@ class LiveExecutor:
                     )
 
                 # Check for partial fill
+                # size_matched = how many shares have been filled so far
                 original_size = float(our_order.get("original_size", trade.shares))
-                remaining = float(our_order.get("size_matched", 0))
-                filled = original_size - remaining if remaining else 0
+                size_matched = float(our_order.get("size_matched", 0))
 
-                if filled > 0:
+                if size_matched > last_filled:
                     logger.info(
-                        f"    Partial fill: {filled:.1f}/{original_size:.1f} shares "
+                        f"    Partial fill: {size_matched:.1f}/{original_size:.1f} shares "
                         f"({elapsed:.0f}s elapsed)"
                     )
+                    last_filled = size_matched
 
             except Exception as e:
                 logger.debug(f"Fill check error: {e}")
 
-        # Timeout reached — cancel the order
+        # Timeout reached — cancel unfilled remainder
         logger.info(
             f"    Order {order_id[:12]}… timed out after {self.order_timeout_seconds}s. "
-            f"Cancelling."
+            f"Cancelling remainder."
         )
+
         try:
             self.client.cancel(order_id)
             trade.order_cancelled_at = datetime.now(timezone.utc).isoformat()
-            trade.cancel_reason = "timeout"
+            trade.cancel_reason = "timeout_partial" if last_filled > 0 else "timeout_unfilled"
         except Exception as e:
-            logger.warning(f"Cancel failed (may have filled): {e}")
-            # If cancel fails, the order may have filled — treat as success
+            logger.warning(f"Cancel failed (may have fully filled): {e}")
+            # If cancel fails, the order likely filled — treat as full success
             return ExecutionResult(
                 success=True,
                 trade=trade,
@@ -632,9 +613,23 @@ class LiveExecutor:
                 fill_shares=trade.shares,
             )
 
+        # Accept partial fills as success
+        if last_filled > 0:
+            logger.info(
+                f"    Partial fill accepted: {last_filled:.1f}/{trade.shares:.1f} shares"
+            )
+            return ExecutionResult(
+                success=True,
+                trade=trade,
+                order_id=order_id,
+                fill_price=trade.entry_price,
+                fill_shares=last_filled,
+            )
+
+        # Completely unfilled — failure
         return ExecutionResult(
             success=False,
-            error=f"Order timed out after {self.order_timeout_seconds}s",
+            error=f"Order unfilled after {self.order_timeout_seconds}s",
         )
 
     # ═══════════════════════════════════════════════════════

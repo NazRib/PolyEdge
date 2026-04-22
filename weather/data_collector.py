@@ -280,8 +280,14 @@ class WeatherDataCollector:
         # Load existing snapshots
         existing = []
         if os.path.exists(SNAPSHOTS_FILE):
-            with open(SNAPSHOTS_FILE) as f:
-                existing = json.load(f)
+            try:
+                with open(SNAPSHOTS_FILE) as f:
+                    content = f.read().strip()
+                    if content:
+                        existing = json.loads(content)
+            except (json.JSONDecodeError, ValueError) as e:
+                logger.warning(f"Could not parse {SNAPSHOTS_FILE}, starting fresh: {e}")
+                existing = []
         
         # Append new
         for s in snapshots:
@@ -298,8 +304,16 @@ class WeatherDataCollector:
             print("No snapshots collected yet.")
             return
         
-        with open(SNAPSHOTS_FILE) as f:
-            data = json.load(f)
+        try:
+            with open(SNAPSHOTS_FILE) as f:
+                content = f.read().strip()
+                if not content:
+                    print("No snapshots collected yet (empty file).")
+                    return
+                data = json.loads(content)
+        except (json.JSONDecodeError, ValueError):
+            print("No snapshots collected yet (corrupted file).")
+            return
         
         print(f"\n{'=' * 60}")
         print(f"  WEATHER DATA COLLECTOR — Status")

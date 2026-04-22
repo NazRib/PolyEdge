@@ -900,6 +900,10 @@ def main():
         help="Disable dry-run mode — actually place orders with real USDC"
     )
     parser.add_argument(
+        "--confirmed", action="store_true", default=False,
+        help="Skip the interactive CONFIRM prompt (for scheduler/automated use)"
+    )
+    parser.add_argument(
         "--check", action="store_true",
         help="Check open trades for resolution"
     )
@@ -937,7 +941,7 @@ def main():
         execution_mode = "live"
         # --live defaults to dry-run unless --no-dry-run is explicitly set
         dry_run = not args.no_dry_run
-        if not dry_run:
+        if not dry_run and not args.confirmed:
             # Final safety gate: require explicit confirmation for real money
             print("\n" + "!" * 70)
             print("  ⚠️  LIVE TRADING MODE — REAL MONEY")
