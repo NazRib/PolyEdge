@@ -25,7 +25,7 @@ import time
 import argparse
 from datetime import datetime, timezone, timedelta
 
-SCHEDULE_HOURS_UTC = [4, 10, 16, 22]
+SCHEDULE_HOURS_UTC = list(range(0,24,2))
 
 
 def next_run_time() -> datetime:
