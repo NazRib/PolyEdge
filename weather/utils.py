@@ -266,6 +266,51 @@ def parse_buckets_from_outcomes(outcomes: list[str], unit: str = "F") -> list[Bu
     return buckets
 
 
+def find_winning_bucket(
+    temperature: float,
+    bucket_labels: list[str],
+    unit: str = "F",
+) -> Optional[str]:
+    """
+    Determine which bucket a temperature falls into.
+
+    Given an observed temperature and the set of bucket labels from a
+    market, returns the label of the winning bucket.  Temperature is
+    compared in whole-degree precision (matching Polymarket resolution
+    rules which record whole-degree highs).
+
+    Args:
+        temperature: Observed daily high (°F or °C).
+        bucket_labels: List of bucket outcome labels from the market.
+        unit: "F" or "C".
+
+    Returns:
+        The matching bucket label, or None if no bucket matches.
+    """
+    temp_rounded = round(temperature)
+    buckets = parse_buckets_from_outcomes(bucket_labels, unit)
+    if not buckets:
+        return None
+
+    for bucket in buckets:
+        # Bucket boundaries: low inclusive, high exclusive.
+        # Edge buckets use -inf / +inf for the open end.
+        if bucket.low <= temp_rounded < bucket.high:
+            return bucket.label
+
+    # Fallback: check the highest edge bucket for values at or above its
+    # lower bound (handles "90°F or above" when temp == 90 exactly).
+    for bucket in reversed(buckets):
+        if bucket.is_edge and temp_rounded >= bucket.low:
+            return bucket.label
+
+    logger.warning(
+        f"Temperature {temp_rounded}° did not match any bucket "
+        f"({len(buckets)} parsed from {len(bucket_labels)} labels)"
+    )
+    return None
+
+
 # ═══════════════════════════════════════════════════════════
 # 3. PROBABILITY COMPUTATION
 # ═══════════════════════════════════════════════════════════
