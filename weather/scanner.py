@@ -45,14 +45,16 @@ from weather.bias import BiasTable
 from weather.utils import (
     parse_question, parse_buckets_from_outcomes, Bucket,
     compute_bucket_probabilities, compute_bucket_probs_from_point_forecasts,
-    model_agreement, classify_confidence,
+    model_agreement, classify_confidence, find_winning_bucket,
 )
 from weather.trade_logger import WeatherEventLogger
 
 logger = logging.getLogger(__name__)
 
-# All cities we scan — keeps diagnostic data flowing for model accuracy tracking
-SCAN_CITIES = {"NYC", "London", "Hong Kong", "Atlanta", "Beijing", "Denver", "Houston"}
+# All cities we scan — keeps diagnostic data flowing for model accuracy tracking.
+# Includes every city in the STATIONS registry so we accumulate forward data
+# for re-evaluation even on cities we're not currently trading.
+SCAN_CITIES = set(STATIONS.keys())
 
 # Cities validated as profitable in paper trading (diagnostics 2026-04-22, n=220 resolved)
 # Removed: Hong Kong (low MAE = efficient market, -$356), Houston (-$386), London (-$518)
@@ -471,6 +473,7 @@ class WeatherScanner:
         
         # First check resolutions
         self.check_resolutions()
+        self.check_event_resolutions()
         
         # Scan
         events = self.scan()
@@ -767,6 +770,119 @@ class WeatherScanner:
                 actual_bucket=actual_bucket,
                 trade_pnl=event_pnl.get(event_key, 0.0),
             )
+
+    def check_event_resolutions(self):
+        """
+        Resolve event log entries that have no open trade.
+
+        check_resolutions() only processes entries linked to open paper/live
+        trades.  Scan-only cities (and events that were skipped for any
+        reason) never get resolution data patched in, which means we
+        cannot compute shadow P&L or model accuracy for them.
+
+        This method fills that gap:
+          1. Loads all unresolved event log entries whose target_date has
+             already passed.
+          2. Groups by event_key to avoid duplicate API calls.
+          3. Fetches the actual observed temperature from Open-Meteo.
+          4. Determines the winning bucket from the temperature + bucket
+             labels already stored in the log entry.
+          5. Patches the entry via log_resolution().
+        """
+        all_entries = self.event_logger.load_all()
+        if not all_entries:
+            return
+
+        today = date.today()
+
+        # Collect unresolved event_keys whose target date has passed.
+        # Keep one representative entry per key so we can read its
+        # bucket labels and station info.
+        pending: dict[str, dict] = {}   # event_key → representative entry
+        for entry in all_entries:
+            if entry.get("resolved"):
+                continue
+            ek = entry.get("event_key", "")
+            if not ek:
+                continue
+            target_str = entry.get("target_date", "")
+            if not target_str:
+                continue
+            try:
+                target = date.fromisoformat(target_str)
+            except ValueError:
+                continue
+            if target >= today:
+                continue  # market hasn't resolved yet
+            if ek not in pending:
+                pending[ek] = entry
+
+        if not pending:
+            return
+
+        print(f"\n  🔎 Resolving {len(pending)} past event(s) from event log...")
+        resolved_count = 0
+
+        for event_key, entry in pending.items():
+            city = entry.get("city", "")
+            target_str = entry.get("target_date", "")
+            station = STATIONS.get(city)
+            if not station:
+                logger.debug(f"No station for {city}, skipping {event_key}")
+                continue
+
+            # Fetch actual observed temperature
+            try:
+                target = date.fromisoformat(target_str)
+                actual_temp = self.weather_client.get_observed_temperature(
+                    station, target,
+                )
+            except Exception as exc:
+                logger.debug(
+                    f"Could not fetch observed temp for {event_key}: {exc}"
+                )
+                continue
+
+            if actual_temp is None:
+                logger.debug(f"No observed data for {event_key}")
+                continue
+
+            # Determine winning bucket from temperature + stored labels
+            bucket_labels = list(
+                entry.get("model_bucket_probs", {}).keys()
+            )
+            if not bucket_labels:
+                bucket_labels = list(
+                    entry.get("market_bucket_probs", {}).keys()
+                )
+            actual_bucket = find_winning_bucket(
+                actual_temp, bucket_labels, station.unit,
+            )
+            if not actual_bucket:
+                logger.debug(
+                    f"Could not match {actual_temp}° to buckets for "
+                    f"{event_key}"
+                )
+                continue
+
+            # Patch the event log (trade_pnl=0 for non-traded entries)
+            self.event_logger.log_resolution(
+                event_key=event_key,
+                actual_temperature=actual_temp,
+                actual_bucket=actual_bucket,
+                trade_pnl=0.0,
+            )
+            resolved_count += 1
+            logger.info(
+                f"    {city} {target_str}: actual={actual_temp}° "
+                f"→ {actual_bucket}"
+            )
+
+        if resolved_count:
+            print(
+                f"    Resolved {resolved_count} event log entries "
+                f"(non-traded)"
+            )
     
     # ─── Internal: Forecast & Probability ────────────────
     
@@ -1014,6 +1130,7 @@ def main():
     
     if args.check:
         scanner.check_resolutions()
+        scanner.check_event_resolutions()
         return
     
     if args.paper_trade or args.live:
