@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(gh --version)",
+      "PowerShell(gh auth status)"
+    ]
+  }
+}
